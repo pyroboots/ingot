@@ -1,0 +1,12 @@
+/home/pyro/RiderProjects/ingot.Core/ingot/bin/Debug/net10.0/ingot.deps.json
+/home/pyro/RiderProjects/ingot.Core/ingot/bin/Debug/net10.0/ingot.dll
+/home/pyro/RiderProjects/ingot.Core/ingot/bin/Debug/net10.0/ingot.pdb
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/ingot.csproj.AssemblyReference.cache
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/ingot.GeneratedMSBuildEditorConfig.editorconfig
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/ingot.AssemblyInfoInputs.cache
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/ingot.AssemblyInfo.cs
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/ingot.csproj.CoreCompileInputs.cache
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/ingot.dll
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/refint/ingot.dll
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/ingot.pdb
+/home/pyro/RiderProjects/ingot.Core/ingot/obj/Debug/net10.0/ref/ingot.dll
