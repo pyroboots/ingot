@@ -2,7 +2,9 @@
 using ingot.Core.Components;
 using ingot.Core.Components.Entity;
 using ingot.Core.Content;
+using ingot.Core.TraitSystem;
 using ingot.Core.Types;
+using Item = ingot.Core.TraitSystem.Item;
 
 namespace ingot.Test;
 
@@ -10,7 +12,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Entity cow = new("minecraft:cow");
+        /*Entity cow = new("minecraft:cow");
         
         ComponentGroup babyGroup = cow.AddComponentGroup(new("minecraft:cow_baby"));
         babyGroup.AddComponent(new EntityIsBabyComponent());
@@ -42,6 +44,8 @@ class Program
             EffectDuration = 5
         });
         
-        Console.WriteLine(cow.Compile());
+        Console.WriteLine(cow.Compile());*/
+        
+        Item.Compile<Lasagna>();
     }
 }
