@@ -17,6 +17,7 @@ internal class JsonHelper
     public static void Property(ref JsonTextWriter w, string key, object? value)
     {
         if (value is null) return;
+        if (value is string && ((string)value) == string.Empty) return;
         
         w.WritePropertyName(key);
         if (value is ICompileableFragment)

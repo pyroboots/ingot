@@ -1,6 +1,6 @@
 namespace ingot.Core.TraitSystem;
 
-[Trait("minecraft:food")]
+[Trait("minecraft:food", TraitSystem.TraitType.Item)]
 public interface IFood
 {
     [TraitProperty]

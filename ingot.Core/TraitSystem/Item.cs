@@ -1,64 +1,79 @@
 using System.Reflection;
+using ingot.Core.Common;
+using Newtonsoft.Json;
+using Version = ingot.Core.Common.Version;
+using static ingot.Core.JsonHelper;
 
 namespace ingot.Core.TraitSystem;
 
-public class Item
+public abstract class Item
 {
-    private static IEnumerable<MethodInfo> GetMethods(Type type)
+    public abstract string Identifier { get; }
+
+    public Version FormatVersion = new("1.20.10");
+
+    // header props
+    public enum CatalogueCategory 
+    { Construction, Nature, Equipment, Items, None }
+    public CatalogueCategory Category = CatalogueCategory.Items;
+    public string? Group = null;
+    public bool HiddenInCommands = false;
+
+    // component shortcuts
+    public virtual string Texture => "minecraft:stick"; // minecraft:icon
+    public virtual int MaxStackSize => 64; // minecraft:max_stack_size
+    public virtual string DisplayName => Identifier; // minecraft:display_name
+    public virtual bool AllowOffhand => false; // minecraft:allow_off_hand
+
+    public static string Compile<TItem>() where TItem : Item, new()
     {
-        if (type == null) throw new ArgumentNullException(nameof(type));
+        TItem inst = Activator.CreateInstance<TItem>();
+        
+        CompileTimeLogging.Push(inst.Identifier);
 
-        List<MethodInfo> result = new();
+        StringWriter sw = new();
+        JsonTextWriter w = new(sw);
+        w.Formatting = Formatting.Indented;
+        w.Indentation = 4;
 
-        // get all declared methods on the class
-        MethodInfo[] declaredMethods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        w.WriteStartObject();
 
-        foreach (MethodInfo method in declaredMethods)
+        Property(ref w, "format_version", inst.FormatVersion.ToString());
+        Object(ref w, "minecraft:item", w =>
         {
-            Console.WriteLine(method.Name);
-
-            foreach (Type iface in type.GetInterfaces()
-                         .Where(i => i.GetCustomAttribute<TraitAttribute>() != null))
+            CompileTimeLogging.Push("description");
+            Object(ref w, "description", w =>
             {
-                Console.WriteLine(iface.GetMethod(method.Name)?.GetCustomAttribute<TraitPropertyAttribute>()?.Path);
-            }
-            
-            result.Add(method);
-        }
-
-        // get methods not overriden from interface
-        foreach (Type iface in type.GetInterfaces().Where(i => i.GetCustomAttribute<TraitAttribute>() != null))
-        {
-            InterfaceMapping map = type.GetInterfaceMap(iface);
-
-            for (int i = 0; i < map.InterfaceMethods.Length; i++)
-            {
-                var interfaceMethod = map.InterfaceMethods[i];
-                var targetMethod = map.TargetMethods[i];
-
-                // if implemented in interface
-                if (targetMethod.DeclaringType == iface && interfaceMethod.GetCustomAttribute<TraitPropertyAttribute>() != null)
+                Property(ref w, "identifier", inst.Identifier);
+                Object(ref w, "menu_category", w =>
                 {
-                    result.Add(interfaceMethod);
-                }
-            }
-        }
+                    if (inst.Group?.Length > 256)
+                        CompileTimeLogging.Warn(ref w, "item catalogue group exceeds 256 char limit");
 
-        return result.DistinctBy(m => m.Name); // just in case any duplicates
-    }
-    
-    public static string Compile<TItem>()
-    {
-        Type item = typeof(TItem);
-        TItem instance = Activator.CreateInstance<TItem>();
+                    Property(ref w, "group", inst.Group);
+                    string categoryName = Enum.GetName(typeof(CatalogueCategory), inst.Category)!.ToLower();
+                    Property(ref w, "category", categoryName);
+                    Property(ref w, "hidden_in_commands", inst.HiddenInCommands);
+                });
+            });
+            CompileTimeLogging.Pop();
 
-        foreach (MethodInfo mi in GetMethods(item))
-        {
-            Console.WriteLine($"n: {mi.Name}");
-            Console.WriteLine($"v: {mi.Invoke(instance, null)}");
-            Console.WriteLine($"a: {mi.GetCustomAttribute<TraitPropertyAttribute>()?.Path}");
-        }
+            CompileTimeLogging.Push("components");
+            Object(ref w, "components", w =>
+            {
+                Object(ref w, "minecraft:icon", w => Property(ref w, "texture", inst.Texture));
+                Object(ref w, "minecraft:display_name", w => Property(ref w, "value", inst.DisplayName));
+                Object(ref w, "minecraft:max_stack_size", w => Property(ref w, "value", inst.MaxStackSize));
+                Object(ref w, "minecraft:allow_off_hand", w => Property(ref w, "value", inst.AllowOffhand));
 
-        return "";
+                foreach (Trait t in TraitSystem.GetTraits<TItem>(TraitSystem.TraitType.Item))
+                    t.Compile(ref w);
+            });
+            CompileTimeLogging.Pop();
+        });
+
+        CompileTimeLogging.Pop();
+
+        return sw.ToString();
     }
 }

@@ -1,5 +1,6 @@
 namespace ingot.Core.TraitSystem;
 
+[AttributeUsage(AttributeTargets.Method)]
 public class TraitPropertyAttribute : Attribute
 {
     public string Path { get; }

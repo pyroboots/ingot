@@ -46,6 +46,6 @@ class Program
         
         Console.WriteLine(cow.Compile());*/
         
-        Item.Compile<Lasagna>();
+        Console.WriteLine(Item.Compile<Lasagna>());
     }
 }
