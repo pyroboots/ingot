@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "gjwAf+pf7Uo=",
+  "success": true,
+  "projectFilePath": "/home/pyro/RiderProjects/ingot/ingot.Generators/ingot.Generators.csproj",
+  "expectedPackageFiles": [
+    "/home/pyro/.nuget/packages/htmlagilitypack/1.12.4/htmlagilitypack.1.12.4.nupkg.sha512",
+    "/home/pyro/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.4/microsoft.aspnetcore.app.ref.10.0.4.nupkg.sha512"
+  ],
+  "logs": []
+}

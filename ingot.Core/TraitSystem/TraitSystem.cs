@@ -13,68 +13,80 @@ public class TraitSystem
     }
     
     public static List<Trait> GetTraits<T>(TraitType constraint)
+{
+    CompileTimeLogging.Push("TraitSystem");
+    
+    JsonTextWriter? dummyWriter = null;
+    Type type = typeof(T);
+    T instance = Activator.CreateInstance<T>();
+    List<Trait> traits = new();
+
+    // get all trait interfaces
+    foreach (Type iface in type.GetInterfaces())
     {
-        CompileTimeLogging.Push("TraitSystem");
+        TraitAttribute? traitAttr = iface.GetCustomAttribute<TraitAttribute>();
+        // skip if not trait
+        if (traitAttr == null)
+            continue;
         
-        JsonTextWriter? dummyWriter = null;
-        Type type =  typeof(T);
-        T instance = Activator.CreateInstance<T>();
-        List<Trait> traits = new();
-
-        // find all trait interfaces
-        foreach (Type iface in type.GetInterfaces())
+        CompileTimeLogging.Push(traitAttr.Identifier);
+        if (traitAttr.Constraint != constraint)
         {
-            TraitAttribute? traitAttr = iface.GetCustomAttribute<TraitAttribute>();
-            // skip if not a trait
-            if (traitAttr == null)
-                continue;
-            
-            CompileTimeLogging.Push(traitAttr.Identifier);
-            if (traitAttr.Constraint != constraint)
-            {
-                CompileTimeLogging.Warn(ref dummyWriter, 
-                    $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint}), omitting from compiled json");
-                continue;
-            }
-            
-            Trait trait = new(traitAttr.Identifier, iface);
-            traits.Add(trait);
-
-            InterfaceMapping map = type.GetInterfaceMap(iface);
-            for (int i = 0; i < map.InterfaceMethods.Length; i++)
-            {
-                MethodInfo interfaceMethod = map.InterfaceMethods[i];
-                MethodInfo targetMethod = map.TargetMethods[i];
-
-                TraitPropertyAttribute? propertyAttr = interfaceMethod.GetCustomAttribute<TraitPropertyAttribute>();
-                if (propertyAttr == null)
-                    continue;
-
-                // get the actual method to call
-                MethodInfo methodToCall = targetMethod.DeclaringType == iface 
-                    ? interfaceMethod 
-                    : targetMethod;
-                
-                CompileTimeLogging.Push(methodToCall.Name);
-                object? value;
-                value = methodToCall.Invoke(instance, null);
-                if (value == null || (value is string && value as string is ""))
-                    CompileTimeLogging.Warn(ref dummyWriter, "value is null or empty, entry omitted from compiled json");
-                CompileTimeLogging.Pop();
-
-                TraitProperty traitProperty = new TraitProperty(
-                    path: propertyAttr.Path,
-                    name: interfaceMethod.Name,
-                    value: value!
-                );
-
-                trait.Properties.Add(traitProperty);
-            }
-            
-            CompileTimeLogging.Pop();
+            CompileTimeLogging.Warn(ref dummyWriter, 
+                $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint}), omitting from compiled json");
+            continue;
         }
-        CompileTimeLogging.Pop();
+        
+        Trait trait = new(traitAttr.Identifier, iface);
+        traits.Add(trait);
 
-        return traits;
+        // get all properties on the interface including inherited
+        foreach (PropertyInfo property in iface.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        {
+            CompileTimeLogging.Push(property.Name);
+            
+            TraitPropertyAttribute? propertyAttr = property.GetCustomAttribute<TraitPropertyAttribute>();
+            if (propertyAttr == null)
+                continue;
+
+            // since were using properties now instead of methods,
+            // we get the getter method of the property
+            MethodInfo? getter = property.GetGetMethod();
+            if (getter == null)
+            {
+                CompileTimeLogging.Warn(ref dummyWriter, $"property {property.Name} has no getter, omitting");
+                continue;
+            }
+
+            object? value = null;
+            try
+            {
+                // get the value by invoking the getter
+                value = getter.Invoke(instance, null);
+            }
+            catch (Exception ex)
+            {
+                CompileTimeLogging.Warn(ref dummyWriter, $"failed to get value for property {property.Name}: {ex.Message}");
+            }
+
+            if (value == null || (value is string str && string.IsNullOrEmpty(str)))
+                CompileTimeLogging.Warn(ref dummyWriter, "value is null or empty, entry omitted from compiled json");
+
+            CompileTimeLogging.Pop();
+
+            TraitProperty traitProperty = new TraitProperty(
+                path: propertyAttr.Path,
+                name: property.Name,           // use prop name instead of method name
+                value: value!
+            );
+
+            trait.Properties.Add(traitProperty);
+        }
+        
+        CompileTimeLogging.Pop();
     }
+    CompileTimeLogging.Pop();
+
+    return traits;
+}
 }

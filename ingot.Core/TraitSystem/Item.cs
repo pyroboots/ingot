@@ -1,5 +1,3 @@
-using System.Reflection;
-using ingot.Core.Common;
 using Newtonsoft.Json;
 using Version = ingot.Core.Common.Version;
 using static ingot.Core.JsonHelper;
@@ -9,18 +7,17 @@ namespace ingot.Core.TraitSystem;
 public abstract class Item
 {
     public abstract string Identifier { get; }
-
-    public Version FormatVersion = new("1.20.10");
+    public virtual Version FormatVersion => new("1.20.10");
 
     // header props
     public enum CatalogueCategory 
     { Construction, Nature, Equipment, Items, None }
-    public CatalogueCategory Category = CatalogueCategory.Items;
-    public string? Group = null;
-    public bool HiddenInCommands = false;
+    public virtual CatalogueCategory Category => CatalogueCategory.Items;
+    public virtual string? Group => null;
+    public virtual bool HiddenInCommands => false;
 
     // component shortcuts
-    public virtual string Texture => "minecraft:stick"; // minecraft:icon
+    public abstract string Texture { get; } // minecraft:icon
     public virtual int MaxStackSize => 64; // minecraft:max_stack_size
     public virtual string DisplayName => Identifier; // minecraft:display_name
     public virtual bool AllowOffhand => false; // minecraft:allow_off_hand

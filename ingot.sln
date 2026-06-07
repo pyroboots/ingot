@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ingot.Core", "ingot.Core\in
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ingot.Test", "ingot.Test\ingot.Test.csproj", "{96E4EE0A-A54C-4BEA-91BF-5613CFA5DA32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ingot.Generators", "ingot.Generators\ingot.Generators.csproj", "{BB056BE0-A402-4789-9A51-A9FBA3C195DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{96E4EE0A-A54C-4BEA-91BF-5613CFA5DA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96E4EE0A-A54C-4BEA-91BF-5613CFA5DA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96E4EE0A-A54C-4BEA-91BF-5613CFA5DA32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB056BE0-A402-4789-9A51-A9FBA3C195DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB056BE0-A402-4789-9A51-A9FBA3C195DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB056BE0-A402-4789-9A51-A9FBA3C195DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB056BE0-A402-4789-9A51-A9FBA3C195DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

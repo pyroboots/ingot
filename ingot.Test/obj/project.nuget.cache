@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "6FDNtZ04FII=",
+  "dgSpecHash": "2Ey9D/a0eJg=",
   "success": true,
   "projectFilePath": "/home/pyro/RiderProjects/ingot/ingot.Test/ingot.Test.csproj",
   "expectedPackageFiles": [
+    "/home/pyro/.nuget/packages/htmlagilitypack/1.12.4/htmlagilitypack.1.12.4.nupkg.sha512",
     "/home/pyro/.nuget/packages/newtonsoft.json/13.0.5-beta1/newtonsoft.json.13.0.5-beta1.nupkg.sha512",
     "/home/pyro/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.4/microsoft.aspnetcore.app.ref.10.0.4.nupkg.sha512"
   ],

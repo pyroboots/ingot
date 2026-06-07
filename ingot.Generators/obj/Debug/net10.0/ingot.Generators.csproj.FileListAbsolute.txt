@@ -1,0 +1,13 @@
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Generators.csproj.AssemblyReference.cache
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Generators.GeneratedMSBuildEditorConfig.editorconfig
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Generators.AssemblyInfoInputs.cache
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Generators.AssemblyInfo.cs
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Generators.csproj.CoreCompileInputs.cache
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Generators.sourcelink.json
+/home/pyro/RiderProjects/ingot/ingot.Generators/bin/Debug/net10.0/ingot.Generators.deps.json
+/home/pyro/RiderProjects/ingot/ingot.Generators/bin/Debug/net10.0/ingot.Generators.dll
+/home/pyro/RiderProjects/ingot/ingot.Generators/bin/Debug/net10.0/ingot.Generators.pdb
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Generators.dll
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/refint/ingot.Generators.dll
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Generators.pdb
+/home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ref/ingot.Generators.dll
