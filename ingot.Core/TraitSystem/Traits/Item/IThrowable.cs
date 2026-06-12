@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:throwable", TraitSystem.TraitType.Item)]
-public interface IThrowable
+public interface IThrowable : IItemTrait
 {
     [TraitProperty]
     /* Determines whether the item should use the swing animation when thrown. Default is set to false. */

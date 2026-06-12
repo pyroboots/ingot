@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:seed", TraitSystem.TraitType.Item)]
-public interface ISeed
+public interface ISeed : IItemTrait
 {
     [TraitProperty]
     /* The block identifier that will be placed when the seed is planted (e.g., 'wheat', 'beetroot', 'cave_vines'). */

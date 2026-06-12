@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:damage", TraitSystem.TraitType.Item)]
-public interface IDamage
+public interface IDamage : IItemTrait
 {
     [TraitProperty]
     /* The amount of extra damage this item deals when attacking. This value is added to the base attack damage. Must be a positive integer. */

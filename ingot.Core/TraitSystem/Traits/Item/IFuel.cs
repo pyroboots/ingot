@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:fuel", TraitSystem.TraitType.Item)]
-public interface IFuel
+public interface IFuel : IItemTrait
 {
     [TraitProperty]
     /* How long in seconds will this fuel cook items for. Value must be &gt;= 0.05. */

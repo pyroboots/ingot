@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:damage_absorption", TraitSystem.TraitType.Item)]
-public interface IDamageAbsorption
+public interface IDamageAbsorption : IItemTrait
 {
     [TraitProperty]
     /* List of damage causes that can be absorbed by the item. By default, no damage cause is absorbed. Value must have at least 1 items. */

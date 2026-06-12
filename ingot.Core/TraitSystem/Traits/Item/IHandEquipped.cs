@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:hand_equipped", TraitSystem.TraitType.Item)]
-public interface IHandEquipped
+public interface IHandEquipped : IItemTrait
 {
     [TraitProperty]
     /* Determines whether the item is rendered like a tool while in the player's hand. */

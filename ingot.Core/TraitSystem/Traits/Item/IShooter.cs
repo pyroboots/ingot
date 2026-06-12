@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:shooter", TraitSystem.TraitType.Item)]
-public interface IShooter
+public interface IShooter : IItemTrait
 {
     [TraitProperty]
     /* A list of ammunition entries that define which items can be used as projectiles for this shooter. */

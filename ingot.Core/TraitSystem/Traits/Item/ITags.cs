@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:tags", TraitSystem.TraitType.Item)]
-public interface ITags
+public interface ITags : IItemTrait
 {
     [TraitProperty]
     /* An array that can contain multiple item tags. */

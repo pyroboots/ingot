@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:allow_off_hand", TraitSystem.TraitType.Item)]
-public interface IAllowOffHand
+public interface IAllowOffHand : IItemTrait
 {
     [TraitProperty]
     /* Determines whether the item can be placed in the off hand slot. */

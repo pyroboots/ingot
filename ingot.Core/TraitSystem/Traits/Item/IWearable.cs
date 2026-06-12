@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:wearable", TraitSystem.TraitType.Item)]
-public interface IWearable
+public interface IWearable : IItemTrait
 {
     [TraitProperty]
     /* Determines whether the Player's location is hidden on Locator Maps and the Locator Bar when the wearable item is worn. Default is false. */

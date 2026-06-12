@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:dyeable", TraitSystem.TraitType.Item)]
-public interface IDyeable
+public interface IDyeable : IItemTrait
 {
     [TraitProperty]
     public virtual string DefaultColor => "[255, 255, 255]";

@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:max_stack_size", TraitSystem.TraitType.Item)]
-public interface IMaxStackSize
+public interface IMaxStackSize : IItemTrait
 {
     [TraitProperty]
     /* How many of an item that can be stacked together. */

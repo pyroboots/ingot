@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:bundle_interaction", TraitSystem.TraitType.Item)]
-public interface IBundleInteraction
+public interface IBundleInteraction : IItemTrait
 {
     [TraitProperty]
     /* The maximum number of slots in the bundle viewable by the plater. Can be from 1 to 64. Default is 12. Value must be &gt;= 1. Value must be &lt;= 64. */

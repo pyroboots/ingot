@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:block_placer", TraitSystem.TraitType.Item)]
-public interface IBlockPlacer
+public interface IBlockPlacer : IItemTrait
 {
     [TraitProperty]
     /* If true, block placement through this item will be aligned while holding the interaction button down. Defaults to false. */

@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:projectile", TraitSystem.TraitType.Item)]
-public interface IProjectile
+public interface IProjectile : IItemTrait
 {
     [TraitProperty]
     /* Specifies how long a player must charge a projectile for it to critically hit. */

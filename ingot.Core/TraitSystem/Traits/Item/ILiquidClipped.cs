@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:liquid_clipped", TraitSystem.TraitType.Item)]
-public interface ILiquidClipped
+public interface ILiquidClipped : IItemTrait
 {
     [TraitProperty]
     /* Deterines whether the item interacts with liquid blocks on use. */

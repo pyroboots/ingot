@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:food", TraitSystem.TraitType.Item)]
-public interface IFood
+public interface IFood : IItemTrait
 {
     [TraitProperty]
     /* If true you can always eat this item (even when not hungry). Default is set to false. */

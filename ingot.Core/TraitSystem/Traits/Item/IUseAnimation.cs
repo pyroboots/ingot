@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:use_animation", TraitSystem.TraitType.Item)]
-public interface IUseAnimation
+public interface IUseAnimation : IItemTrait
 {
     [TraitProperty]
     /* Specifies which animation to play when the item is used. */

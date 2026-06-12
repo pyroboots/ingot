@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:durability_sensor", TraitSystem.TraitType.Item)]
-public interface IDurabilitySensor
+public interface IDurabilitySensor : IItemTrait
 {
     [TraitProperty]
     /* The list of both durability thresholds and effects emitted when each threshold is met. */

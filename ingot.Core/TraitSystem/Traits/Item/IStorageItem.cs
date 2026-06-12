@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:storage_item", TraitSystem.TraitType.Item)]
-public interface IStorageItem
+public interface IStorageItem : IItemTrait
 {
     [TraitProperty]
     /* Determines whether another Storage Item is allowed inside of this item. Default is true. */

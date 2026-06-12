@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:hover_text_color", TraitSystem.TraitType.Item)]
-public interface IHoverTextColor
+public interface IHoverTextColor : IItemTrait
 {
     [TraitProperty]
     /* The color of the item hover text. */

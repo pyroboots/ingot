@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:glint", TraitSystem.TraitType.Item)]
-public interface IGlint
+public interface IGlint : IItemTrait
 {
     [TraitProperty]
     /* Whether the item has the enchanted glint render effect. */

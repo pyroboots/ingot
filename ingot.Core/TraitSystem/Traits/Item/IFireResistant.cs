@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:fire_resistant", TraitSystem.TraitType.Item)]
-public interface IFireResistant
+public interface IFireResistant : IItemTrait
 {
     [TraitProperty]
     /* Determines whether the item is immune to burning when dropped in fire or lava. */

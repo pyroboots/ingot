@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:stacked_by_data", TraitSystem.TraitType.Item)]
-public interface IStackedByData
+public interface IStackedByData : IItemTrait
 {
     [TraitProperty]
     /* Determines whether the same item with different aux values can stack. Also defines whether the item entities can merge while floating in the world. */

@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:digger", TraitSystem.TraitType.Item)]
-public interface IDigger
+public interface IDigger : IItemTrait
 {
     [TraitProperty]
     /* An array of objects that define which blocks this item can dig and at what speed. Each entry specifies a block (by ID or tag query) and a speed multiplier. */

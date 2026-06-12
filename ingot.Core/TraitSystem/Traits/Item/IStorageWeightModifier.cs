@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:storage_weight_modifier", TraitSystem.TraitType.Item)]
-public interface IStorageWeightModifier
+public interface IStorageWeightModifier : IItemTrait
 {
     [TraitProperty]
     /* The weight of this item when inside another Storage Item. Default is 4. 0 means item is not allowed in another Storage Item. */

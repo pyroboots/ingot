@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:swing_duration", TraitSystem.TraitType.Item)]
-public interface ISwingDuration
+public interface ISwingDuration : IItemTrait
 {
     [TraitProperty]
     /* Duration, in seconds, of the item's swing animation played when mining or attacking. Affects visuals only and does not impact attack frequency or other gameplay mechanics. */

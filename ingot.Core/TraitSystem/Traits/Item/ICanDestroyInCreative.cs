@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:can_destroy_in_creative", TraitSystem.TraitType.Item)]
-public interface ICanDestroyInCreative
+public interface ICanDestroyInCreative : IItemTrait
 {
     [TraitProperty]
     /* Determines whether the item can be used to destroy blocks while in creative mode. */

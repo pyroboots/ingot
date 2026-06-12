@@ -1,4 +1,5 @@
-using ingot.Core.Content;
+using ingot.Core;
+using ingot.Core.TraitSystem;
 
 namespace ingot.Core;
 
@@ -8,28 +9,22 @@ public class BehaviourPack
     public Dictionary<string, Block> Blocks = new();
     public Dictionary<string, Item> Items = new();
 
-    public Entity AddEntity(string identifier)
+    public void AddEntity<TEntity>() where TEntity : Entity, new()
     {
-        Entity entity = new(identifier);
-        Entities.Add(identifier, entity);
-        
-        return entity;
+        Entity inst = new TEntity();
+        Entities.Add(inst.Identifier, inst);
     }
     
-    public Block AddBlock(string identifier)
+    public void AddBlock<TBlock>() where  TBlock : Block, new()
     {
-        Block block = new(identifier);
-        Blocks.Add(identifier, block);
-        
-        return block;
+        Block inst = new TBlock();
+        Blocks.Add(inst.Identifier, inst);
     }
     
-    public Item AddItem(string identifier)
+    public void AddItem<TItem>() where  TItem : Item, new()
     {
-        Item item = new(identifier);
-        Items.Add(identifier, item);
-        
-        return item;
+        Item inst = new TItem();
+        Items.Add(inst.Identifier, inst);
     }
 
     public void Compile(string dir)
@@ -45,7 +40,7 @@ public class BehaviourPack
             Entity entity = kvp.Value;
 
             string path = Path.Combine(dir, "entities", $"{filename}.json");
-            string file = entity.Compile();
+            string file = Entity.Compile(entity.GetType());
             File.WriteAllText(path, file);
         }
     }

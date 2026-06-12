@@ -4,6 +4,6 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:interact_button", TraitSystem.TraitType.Item)]
-public interface IInteractButton
+public interface IInteractButton : IItemTrait
 {
 }

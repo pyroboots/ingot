@@ -26,14 +26,12 @@ internal class JsonHelper
             JsonSerializer.CreateDefault().Serialize(w, value);
     }
 
-    public static void Array(ref JsonTextWriter w, string key, object?[]? values)
+    public static void Array(ref JsonTextWriter w, string key, Action<JsonTextWriter> items)
     {
-        if (values is null) return;
-        w.WritePropertyName(key);
+        if (key != "")
+            w.WritePropertyName(key);
         w.WriteStartArray();
-        foreach (object? val in values)
-            if (val is not null)
-                JsonSerializer.CreateDefault().Serialize(w, val);
+        items(w);
         w.WriteEndArray();
     }
 }

@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:rarity", TraitSystem.TraitType.Item)]
-public interface IRarity
+public interface IRarity : IItemTrait
 {
     [TraitProperty]
     /* Sets the base rarity of the item. The rarity of an item automatically increases when enchanted, either to Rare when the base rarity is Common or Uncommon, or Epic when the base rarity is Rare. */

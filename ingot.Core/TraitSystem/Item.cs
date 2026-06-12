@@ -22,9 +22,10 @@ public abstract class Item
     public virtual string DisplayName => Identifier; // minecraft:display_name
     public virtual bool AllowOffhand => false; // minecraft:allow_off_hand
 
-    public static string Compile<TItem>() where TItem : Item, new()
+    public static string Compile<TItem>() where TItem : Item, new() => Compile(typeof(TItem));
+    public static string Compile(Type tItem)
     {
-        TItem inst = Activator.CreateInstance<TItem>();
+        Item inst = (Activator.CreateInstance(tItem) as Item)!;
         
         CompileTimeLogging.Push(inst.Identifier);
 
@@ -63,7 +64,7 @@ public abstract class Item
                 Object(ref w, "minecraft:max_stack_size", w => Property(ref w, "value", inst.MaxStackSize));
                 Object(ref w, "minecraft:allow_off_hand", w => Property(ref w, "value", inst.AllowOffhand));
 
-                foreach (Trait t in TraitSystem.GetTraits<TItem>(TraitSystem.TraitType.Item))
+                foreach (Trait t in TraitSystem.GetTraits(tItem, TraitSystem.TraitType.Item))
                     t.Compile(ref w);
             });
             CompileTimeLogging.Pop();

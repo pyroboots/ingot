@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:display_name", TraitSystem.TraitType.Item)]
-public interface IDisplayName
+public interface IDisplayName : IItemTrait
 {
     [TraitProperty]
     /* Name shown for an item. */

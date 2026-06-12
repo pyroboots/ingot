@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:storage_weight_limit", TraitSystem.TraitType.Item)]
-public interface IStorageWeightLimit
+public interface IStorageWeightLimit : IItemTrait
 {
     [TraitProperty]
     /* The maximum allowed weight of the sum of all contained items. Maximum is 64. Default is 64. Value must be &lt;= 64. */

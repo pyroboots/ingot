@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:swing_sounds", TraitSystem.TraitType.Item)]
-public interface ISwingSounds
+public interface ISwingSounds : IItemTrait
 {
     [TraitProperty]
     /* Sound played when an attack hits and deals critical damage. */

@@ -91,7 +91,7 @@ public class TraitGenerator
         sb.AppendLine(nspace);
         sb.AppendLine();
         sb.AppendLine($"[Trait(\"{componentName}\", TraitSystem.TraitType.{constraint})]");
-        sb.AppendLine($"public interface {ifaceName}");
+        sb.AppendLine($"public interface {ifaceName} : I{constraint}Trait");
         sb.AppendLine("{");
 
         List<string[]> rows = ParseCsv(csv);
@@ -147,6 +147,12 @@ public class TraitGenerator
                     // edge cases like {} for empty strings
                     if (formattedDefault == "{}") formattedDefault = "\"\"";
                     else formattedDefault = $"\"{formattedDefault}\"";
+                }
+                else if (mappedType == "dynamic")
+                {
+                    char q = '"';
+                    formattedDefault = $"{q}{q}{q}{formattedDefault}{q}{q}{q}";
+                    Console.WriteLine($"{ifaceName} has unknown type '{rawType}', generated '{propName}' as dynamic and cast to string");
                 }
             }
 
@@ -235,12 +241,12 @@ public class TraitGenerator
             "minecraft:bundle_interaction",
             "minecraft:can_destroy_in_creative",
             "minecraft:compostable",
-            //"minecraft:cooldown",
+            "minecraft:cooldown",
             "minecraft:damage",
             "minecraft:damage_absorption",
             "minecraft:digger",
             "minecraft:display_name",
-            //"minecraft:durability",
+            "minecraft:durability",
             "minecraft:durability_sensor",
             "minecraft:dyeable",
             "minecraft:enchantable",
@@ -253,13 +259,13 @@ public class TraitGenerator
             "minecraft:hover_text_color",
             "minecraft:icon",
             "minecraft:interact_button",
-            //"minecraft:kinetic_weapon",
+            "minecraft:kinetic_weapon",
             "minecraft:liquid_clipped",
             "minecraft:max_stack_size",
-            //"minecraft:piercing_weapon",
+            "minecraft:piercing_weapon",
             "minecraft:projectile",
             "minecraft:rarity",
-            //"minecraft:record",
+            "minecraft:record",
             //"minecraft:repairable",
             "minecraft:seed",
             "minecraft:shooter",
@@ -273,7 +279,7 @@ public class TraitGenerator
             "minecraft:tags",
             "minecraft:throwable",
             "minecraft:use_animation",
-            //"minecraft:use_modifiers",
+            "minecraft:use_modifiers",
             "minecraft:wearable",
         };
 

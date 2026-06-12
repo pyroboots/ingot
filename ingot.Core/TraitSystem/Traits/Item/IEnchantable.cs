@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:enchantable", TraitSystem.TraitType.Item)]
-public interface IEnchantable
+public interface IEnchantable : IItemTrait
 {
     [TraitProperty]
     /* Specifies which types of enchantments can be applied. */

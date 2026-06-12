@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:should_despawn", TraitSystem.TraitType.Item)]
-public interface IShouldDespawn
+public interface IShouldDespawn : IItemTrait
 {
     [TraitProperty]
     /* Determines whether the item should eventually despawn while floating in the world. */

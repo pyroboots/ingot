@@ -4,7 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 
 [Trait("minecraft:icon", TraitSystem.TraitType.Item)]
-public interface IIcon
+public interface IIcon : IItemTrait
 {
     [TraitProperty]
     /* This map contains the different textures that can be used for the item's icon. */
