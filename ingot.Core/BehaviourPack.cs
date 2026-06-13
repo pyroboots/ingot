@@ -1,9 +1,5 @@
-using ingot.Core;
 using ingot.Core.Content;
 using ingot.Core.Content.Block;
-using ingot.Core.TraitSystem;
-using Newtonsoft.Json;
-using static ingot.Core.Common.JsonHelper;
 using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core;
