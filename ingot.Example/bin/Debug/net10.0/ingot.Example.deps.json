@@ -44,7 +44,8 @@
       },
       "ingot.Generators/1.0.0": {
         "dependencies": {
-          "HtmlAgilityPack": "1.12.4"
+          "HtmlAgilityPack": "1.12.4",
+          "ingot.Core": "1.0.0"
         },
         "runtime": {
           "ingot.Generators.dll": {

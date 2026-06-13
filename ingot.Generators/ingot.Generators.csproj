@@ -10,4 +10,8 @@
       <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ingot.Core\ingot.Core.csproj" />
+    </ItemGroup>
+
 </Project>

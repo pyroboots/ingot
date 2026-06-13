@@ -1,7 +1,6 @@
-using ingot.Core.Common;
 using Newtonsoft.Json;
 
-namespace ingot.Core;
+namespace ingot.Core.Common;
 
 internal class JsonHelper
 {

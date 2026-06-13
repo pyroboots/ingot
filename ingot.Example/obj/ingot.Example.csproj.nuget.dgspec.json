@@ -716,7 +716,11 @@
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/home/pyro/RiderProjects/ingot/ingot.Core/ingot.Core.csproj": {
+                "projectPath": "/home/pyro/RiderProjects/ingot/ingot.Core/ingot.Core.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

@@ -1,8 +1,9 @@
+using ingot.Core.TraitSystem;
 using Newtonsoft.Json;
 using Version = ingot.Core.Common.Version;
-using static ingot.Core.JsonHelper;
+using static ingot.Core.Common.JsonHelper;
 
-namespace ingot.Core.TraitSystem;
+namespace ingot.Core.Content;
 
 public abstract class Item
 {
@@ -64,7 +65,7 @@ public abstract class Item
                 Object(ref w, "minecraft:max_stack_size", w => Property(ref w, "value", inst.MaxStackSize));
                 Object(ref w, "minecraft:allow_off_hand", w => Property(ref w, "value", inst.AllowOffhand));
 
-                foreach (Trait t in TraitSystem.GetTraits(tItem, TraitSystem.TraitType.Item))
+                foreach (Trait t in TraitSystem.TraitSystem.GetTraits(tItem, TraitSystem.TraitSystem.TraitType.Item))
                     t.Compile(ref w);
             });
             CompileTimeLogging.Pop();

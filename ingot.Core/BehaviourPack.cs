@@ -1,4 +1,6 @@
 using ingot.Core;
+using ingot.Core.Content;
+using ingot.Core.Content.Block;
 using ingot.Core.TraitSystem;
 
 namespace ingot.Core;

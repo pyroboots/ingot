@@ -3,236 +3,204 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using ingot.Core.Common;
 
 namespace ingot.Generators;
 
+public record TraitProperty(
+    string Name,
+    string DefaultValue,
+    string RawType,
+    string Description
+);
+
 public class TraitGenerator
 {
-    private static string GenerateCsv(string html)
+    private readonly HttpClient _httpClient = new HttpClient();
+
+    // convert ms doc types to c# types
+    // NOTE: works on a contains basis, order of presidence.
+    private static readonly Dictionary<string, string> TypeMappings = new(StringComparer.OrdinalIgnoreCase)
     {
-        HtmlDocument doc = new();
+        ["x, y, z coordinate array"] = "Vector3",
+        ["Array of numbers"] = "int[]",
+        ["Boolean"] = "bool",
+        ["bool"] = "bool",
+        ["Integer"] = "int",
+        ["integer"] = "int",
+        ["Decimal"] = "float",
+        ["decimal"] = "float",
+        ["String"] = "string",
+        ["string"] = "string",
+        ["Array"] = "string[]",
+        ["Object"] = "dynamic",
+        ["keyed set of strings"] = "Dictionary<string, string>",
+    };
+
+    // formatters
+    private static readonly Dictionary<string, Func<string, string>> ValueTransformers = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["bool"] = v => bool.TryParse(v, out bool b) ? b.ToString().ToLowerInvariant() : "false",
+        ["int"] = v => int.TryParse(v, out int i) ? i.ToString() : "0",
+        ["float"] = v =>
+        {
+            if (string.IsNullOrEmpty(v)) return "0f";
+            if (!v.EndsWith("f", StringComparison.OrdinalIgnoreCase) && float.TryParse(v, out _))
+                return v + "f";
+            return v;
+        },
+        ["string"] = v =>
+        {
+            if (string.IsNullOrEmpty(v) || v == "{}") return "\"\"";
+            return $"\"{v.Replace("\"", "\\\"")}\"";
+        },
+        ["string[]"] = v =>
+        {
+            if (string.IsNullOrWhiteSpace(v) || v == "[]") return "Array.Empty<string>()";
+            string[] parts = v.Split(',');
+            string joined = string.Join(", ", parts.Select(s => $"\"{s.Trim()}\""));
+            return $"new[] {{ {joined} }}";
+        },
+        ["int[]"] = v => v,
+        ["Vector3"] = v => $"new Vector3({v})",
+        ["Dictionary<string, string>"] = v => string.IsNullOrWhiteSpace(v) ? "new Dictionary<string, string>()" : v,
+        
+        ["dynamic?"] = v => "null",
+    };
+
+    public static string GenerateTraitInterfaceFromMsDoc(string html, string interfaceName, string componentName, string constraint, string? @namespace = null)
+    {
+        List<TraitProperty> properties = ParseHtmlToProperties(html);
+        return GenerateInterfaceCode(interfaceName, componentName, constraint, properties, @namespace);
+    }
+
+    private static List<TraitProperty> ParseHtmlToProperties(string html)
+    {
+        HtmlDocument doc = new HtmlDocument();
         doc.LoadHtml(html);
-    
-        // find the table in the msdoc
+
         HtmlNode? table = doc.DocumentNode.SelectSingleNode("//table");
-    
-        if (table == null)
-            return "Table not found!";
-    
-        StringBuilder csvBuilder = new();
+        if (table == null) 
+            return new List<TraitProperty>();
+
+        List<TraitProperty> properties = new List<TraitProperty>();
         HtmlNodeCollection? rows = table.SelectNodes(".//tr");
-    
-        if (rows == null) return string.Empty;
-    
+
+        if (rows == null) 
+            return properties;
+
+        bool isHeader = true;
+
         foreach (HtmlNode row in rows)
         {
             HtmlNodeCollection? cells = row.SelectNodes("th|td");
-            if (cells == null || cells.Count < 4) continue;
-    
+            if (cells == null || cells.Count < 4) 
+                continue;
+
             string name = cells[0].InnerText.Trim();
             string defaultVal = cells[1].InnerText.Trim();
             string type = cells[2].InnerText.Trim();
             string desc = cells[3].InnerText.Trim();
-            
-            if (name == "Name")
+
+            if (isHeader && name.Equals("Name", StringComparison.OrdinalIgnoreCase))
             {
-                AppendCsvLine(csvBuilder, new[] { "name", "default", "type", "desc" });
+                isHeader = false;
                 continue;
             }
-    
-            // convert types to c#, rough, isnt perfect but will work most of the time
-            if (type.Contains("Boolean")) type = "bool";
-            else if (type.Contains("Array")) type = "string[]";
-            else if (type.Contains("Object")) type = "dynamic";
-            else if (type.Contains("integer")) type = "int";
-            else if (type.Contains("decimal")) type = "float";
-            else if (type.Contains("keyed")) type = "Dictionary<string, string>";
-            else if (type == "String") type = "string";
-    
-            // clean default val
-            if (defaultVal.Equals("not set", StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(defaultVal)) 
-                defaultVal = "";
-    
-            // sometimes names have extra info in brackets, we dont need those
-            string cleanName = name;
-            cleanName = Regex.Replace(cleanName, @"\s*\(Use On\)", "", RegexOptions.IgnoreCase);
-            cleanName = Regex.Replace(cleanName, @"\s*\(as .*?\)", "", RegexOptions.IgnoreCase);
-            cleanName = cleanName.Trim().ToLower().Replace(" ", "_");
-    
-            // trim
+            isHeader = false;
+
+            if (desc.Contains("Deprecated", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            string cleanName = CleanPropertyName(name);
             string cleanDesc = Regex.Replace(desc, @"\s+", " ").Trim();
-    
-            // add the row
-            AppendCsvLine(csvBuilder, new[] { 
-                cleanName, 
-                defaultVal, 
-                type.ToLower(), 
-                cleanDesc 
-            });
+            string cleanDefault = defaultVal.Equals("not set", StringComparison.OrdinalIgnoreCase) 
+                || string.IsNullOrEmpty(defaultVal) 
+                ? "" : defaultVal;
+
+            properties.Add(new TraitProperty(cleanName, cleanDefault, type, cleanDesc));
         }
-    
-        return csvBuilder.ToString().TrimEnd();
+
+        return properties;
     }
 
-    private static void AppendCsvLine(StringBuilder sb, string[] fields)
+    private static string CleanPropertyName(string name)
     {
-        // escape content
-        string[] formattedFields = fields.Select(f => $"\"{f.Replace("\"", "\"\"")}\"").ToArray();
-        sb.AppendLine(string.Join(",", formattedFields));
+        name = Regex.Replace(name, @"\s*\(Use On\)", "", RegexOptions.IgnoreCase);
+        name = Regex.Replace(name, @"\s*\(as .*?\)", "", RegexOptions.IgnoreCase);
+        name = name.Trim().ToLowerInvariant().Replace(" ", "_");
+        return name;
     }
-    
-    private static string GenerateTraitInterface(string ifaceName, string componentName, string constraint, string csv, string? nspace = null)
-    {
-        StringBuilder sb = new();
-        HashSet<string> seenProperties = new();
 
-        // class header
+    private static string GenerateInterfaceCode(string interfaceName, string componentName, string constraint, List<TraitProperty> properties, string? nspace)
+    {
         nspace ??= $"namespace ingot.Core.TraitSystem.Traits.{constraint};";
+
+        StringBuilder sb = new StringBuilder();
+        HashSet<string> seen = new HashSet<string>();
+
         sb.AppendLine(nspace);
+        sb.AppendLine("using System.Numerics;");
+        sb.AppendLine("using System.Collections.Generic;");
         sb.AppendLine();
         sb.AppendLine($"[Trait(\"{componentName}\", TraitSystem.TraitType.{constraint})]");
-        sb.AppendLine($"public interface {ifaceName} : I{constraint}Trait");
+        sb.AppendLine($"public interface {interfaceName} : I{constraint}Trait");
         sb.AppendLine("{");
 
-        List<string[]> rows = ParseCsv(csv);
-        bool isFirstRow = true;
-
-        foreach (string[] row in rows)
+        foreach (TraitProperty prop in properties)
         {
-            if (row.Length < 4) continue; // skip rows if theyre broken
-
-            string rawName = row[0].Trim();
-            string rawDefault = row[1].Trim();
-            string rawType = row[2].Trim();
-            string desc = row[3].Trim();
-
-            // skip header, not a property
-            if (isFirstRow && rawName.Equals("name", StringComparison.OrdinalIgnoreCase))
-            {
-                isFirstRow = false;
+            string pascalName = Formatting.SnakeToPascalCase(prop.Name);
+            if (!seen.Add(pascalName)) 
                 continue;
-            }
-            isFirstRow = false;
 
-            // if its deprecated, get rid of it
-            // was thinking of adding the Deprecated attribute, but i decided against it
-            if (desc.Contains("Deprecated", StringComparison.OrdinalIgnoreCase)) continue;
-            
-            string propName = ToPascalCase(rawName);
-            if (!seenProperties.Add(propName)) continue;
-            
-            string mappedType = rawType switch
-            {
-                "integer number" => "int",
-                "integer" => "int",
-                "decimal number" => "float",
-                "decimal" => "float",
-                "bool" => "bool",
-                "string" => "string",
-                "string[]" => "string[]",
-                "keyed set of strings" => "Dictionary<string, string>",
-                _ => "dynamic"
-            };
+            string csharpType = MapType(prop.RawType);
+            bool isAbstract = string.IsNullOrEmpty(prop.DefaultValue);
+            string defaultExpr = isAbstract ? "" : FormatDefaultValue(csharpType, prop.DefaultValue);
 
-            // if it has no default value, then it must be implemented
-            bool isAbstract = string.IsNullOrEmpty(rawDefault);
-            string formattedDefault = rawDefault;
-
-            if (!isAbstract)
-            {
-                if (mappedType == "float" && !formattedDefault.EndsWith("f", StringComparison.OrdinalIgnoreCase))
-                    formattedDefault += "f";
-                else if (mappedType == "string")
-                {
-                    // edge cases like {} for empty strings
-                    if (formattedDefault == "{}") formattedDefault = "\"\"";
-                    else formattedDefault = $"\"{formattedDefault}\"";
-                }
-                else if (mappedType == "dynamic")
-                {
-                    char q = '"';
-                    formattedDefault = $"{q}{q}{q}{formattedDefault}{q}{q}{q}";
-                    Console.WriteLine($"{ifaceName} has unknown type '{rawType}', generated '{propName}' as dynamic and cast to string");
-                }
-            }
-
-            // add property
             sb.AppendLine("    [TraitProperty]");
-            if (!string.IsNullOrEmpty(desc))
-                sb.AppendLine($"    /* {desc} */");
+            if (!string.IsNullOrEmpty(prop.Description))
+                sb.AppendLine($"    /* {prop.Description} */");
+
             if (isAbstract)
-                sb.AppendLine($"    public abstract {mappedType} {propName} {{ get; }}");
+                sb.AppendLine($"    public abstract {csharpType} {pascalName} {{ get; }}");
             else
-                sb.AppendLine($"    public virtual {mappedType} {propName} => {formattedDefault};");
+                sb.AppendLine($"    public virtual {csharpType} {pascalName} => {defaultExpr};");
+
             sb.AppendLine();
         }
-        
-        if (seenProperties.Count > 0) sb.Length -= Environment.NewLine.Length;
+
+        // trim
+        if (properties.Count > 0)
+            sb.Length -= Environment.NewLine.Length;
+
         sb.AppendLine("}");
         return sb.ToString();
     }
-    
-    public static string GenerateTraitInterfaceFromMsDoc(string html, string ifaceName, string componentName, string constraint)
-    {
-        string csv = GenerateCsv(html);
-        string iface = GenerateTraitInterface(ifaceName, componentName, constraint, csv);
-        
-        return iface;
-    }
 
-    private static string ToPascalCase(string snakeCase)
+    private static string MapType(string rawType)
     {
-        if (string.IsNullOrEmpty(snakeCase)) return snakeCase;
-        return string.Join("", snakeCase
-            .Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(word => char.ToUpper(word[0]) + word.Substring(1).ToLower()));
-    }
-
-    private static List<string[]> ParseCsv(string csv)
-    {
-        var result = new List<string[]>();
-        using var reader = new StringReader(csv);
-        string line;
-
-        while ((line = reader.ReadLine()) != null)
+        foreach (KeyValuePair<string, string> mapping in TypeMappings)
         {
-            if (string.IsNullOrWhiteSpace(line)) continue;
-
-            var row = new List<string>();
-            bool inQuotes = false;
-            var currentField = new StringBuilder();
-
-            for (int i = 0; i < line.Length; i++)
-            {
-                char c = line[i];
-
-                if (c == '\"')
-                {
-                    // escaped quotes ("")
-                    if (inQuotes && i + 1 < line.Length && line[i + 1] == '\"')
-                    {
-                        currentField.Append('\"');
-                        i++; 
-                    }
-                    else
-                        inQuotes = !inQuotes;
-                }
-                else if (c == ',' && !inQuotes)
-                {
-                    row.Add(currentField.ToString());
-                    currentField.Clear();
-                }
-                else
-                    currentField.Append(c);
-            }
-            row.Add(currentField.ToString());
-            result.Add(row.ToArray());
+            if (rawType.Contains(mapping.Key, StringComparison.OrdinalIgnoreCase))
+                return mapping.Value;
         }
-
-        return result;
+        Console.WriteLine($"/!\\ could not map type '{rawType}', fell back to nullable dynamic");
+        return "dynamic?"; // fallback
     }
 
-    public static void GenerateAllItemTraits(string outputDir)
+    private static string FormatDefaultValue(string csharpType, string rawValue)
+    {
+        if (ValueTransformers.TryGetValue(csharpType, out Func<string, string>? transformer))
+            return transformer(rawValue);
+
+        // fallback
+        if (csharpType == "string")
+            return $"\"{rawValue.Replace("\"", "\\\"")}\"";
+
+        return rawValue;
+    }
+
+    public void GenerateAllItemTraits(string outputDir)
     {
         string[] components =
         {
@@ -250,7 +218,6 @@ public class TraitGenerator
             "minecraft:durability_sensor",
             "minecraft:dyeable",
             "minecraft:enchantable",
-            //"minecraft:entity_placer",
             "minecraft:fire_resistant",
             "minecraft:food",
             "minecraft:fuel",
@@ -266,7 +233,6 @@ public class TraitGenerator
             "minecraft:projectile",
             "minecraft:rarity",
             "minecraft:record",
-            //"minecraft:repairable",
             "minecraft:seed",
             "minecraft:shooter",
             "minecraft:should_despawn",
@@ -283,27 +249,87 @@ public class TraitGenerator
             "minecraft:wearable",
         };
 
+        GenerateTraitsForComponents(components, outputDir, "Item", "minecraftblock_");
+    }
+
+    public void GenerateAllBlockTraits(string outputDir)
+    {
+        string[] components =
+        {
+            "minecraft:chest_obstruction",
+            "minecraft:collision_box",
+            "minecraft:connection_rule",
+            "minecraft:crafting_table",          // from "Crafting Table" link
+            //"minecraft:destroy_time",          // use destructible_by_mining instead
+            "minecraft:destructible_by_explosion",
+            "minecraft:destructible_by_mining",
+            "minecraft:destruction_particles",   // from "Destruction Particles"
+            //"minecraft:display_name",          // handled in block
+            "minecraft:entity_fall_on",
+            //"minecraft:explosion_resistance",
+            "minecraft:flammable",
+            //"minecraft:flower_pottable",       // who needs flower pots anyway
+            //"minecraft:friction",              // handled in block
+            "minecraft:geometry",
+            "minecraft:instrument_sound",
+            //"minecraft:light_dampening",       // handled in block
+            //"minecraft:light_emission",        // handled in block
+            "minecraft:liquid_detection",        // from "Liquid Detection"
+            //"minecraft:loot",                  // handled in block
+            "minecraft:map_color",
+            //"minecraft:material_instances",    // handled in block
+            "minecraft:movable",
+            "minecraft:placement_filter",        // from "Placement Filter"
+            "minecraft:precipitation_interactions",
+            "minecraft:random_offset",
+            "minecraft:redstone_conductivity",   // from "Redstone Conductivity"
+            "minecraft:redstone_consumer",
+            "minecraft:redstone_producer",
+            //"minecraft:replaceable",           // handled in block
+            "minecraft:selection_box",
+            "minecraft:support",
+            "minecraft:tick",
+            //"minecraft:transformation",        // from "Transformation"
+        };
+
+        GenerateTraitsForComponents(components, outputDir, "Block", "minecraftblock_");
+    }
+
+    private void GenerateTraitsForComponents(string[] components, string outputDir, string constraint, string urlPrefix)
+    {
         Stopwatch sw = Stopwatch.StartNew();
-        HttpClient hc = new();
-        int i = 0;
+        int success = 0;
+
         foreach (string component in components)
         {
-            i++;
-            Console.WriteLine($"({i}/{components.Length}) generating '{component}' iface");
-            
-            string page = component.Replace(":", "_"); // minecraft_allow_off_hand
-            string url = $"https://learn.microsoft.com/en-us/minecraft/creator/reference/content/itemreference/examples/itemcomponents/{page}?view=minecraft-bedrock-stable";
-            string html = hc.GetStringAsync(url).Result;
+            Console.WriteLine($"generating '{component}' interface...");
 
-            string pascalName = ToPascalCase(component.Split(":")[1]);
-            string iface = GenerateTraitInterfaceFromMsDoc(html, $"I{pascalName}", component, "Item");
-            string path = Path.Combine(outputDir, $"I{pascalName}.cs");
+            try
+            {
+                string[] parts = component.Split(':');
+                string pageName = parts[1];
+                string url = $"https://learn.microsoft.com/en-us/minecraft/creator/reference/content/{constraint.ToLowerInvariant()}reference/examples/{constraint.ToLowerInvariant()}components/{urlPrefix}{pageName}?view=minecraft-bedrock-stable";
+                
+                string html = _httpClient.GetStringAsync(url).Result;
 
-            iface = $"// autogenerated from \n//{url}\n\n" + iface;
-            File.WriteAllText(path, iface);
+                string pascalName = Formatting.SnakeToPascalCase(pageName);
+                string ifaceName = $"I{pascalName}";
+
+                string code = GenerateTraitInterfaceFromMsDoc(html, ifaceName, component, constraint);
+                string fullCode = $"// autogenerated by ingot trait generator from\n// {url}\n\n{code}";
+
+                string path = Path.Combine(outputDir, $"{ifaceName}.cs");
+                File.WriteAllText(path, fullCode);
+
+                success++;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"failed to generate {component}: {ex.Message}");
+            }
         }
+
         sw.Stop();
-        
-        Console.WriteLine($"done ({sw.ElapsedMilliseconds}ms | {sw.ElapsedMilliseconds / components.Length}ms/c avg)");
+        Console.WriteLine($"completed {success}/{components.Length} traits in {sw.ElapsedMilliseconds}ms");
     }
 }

@@ -1,3 +1,4 @@
+using ingot.Core.Content;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 

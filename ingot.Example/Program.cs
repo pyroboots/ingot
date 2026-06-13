@@ -1,4 +1,5 @@
-﻿using ingot.Core.TraitSystem;
+﻿using ingot.Core.Content.Block;
+using ingot.Core.TraitSystem;
 using ingot.Generators;
 
 namespace ingot.Example;
@@ -7,8 +8,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        //TraitGenerator.GenerateAllItemTraits("/home/pyro/RiderProjects/ingot/ingot.Core/TraitSystem/Traits/Item/");
+        //TraitGenerator generator = new();
+        //generator.GenerateAllBlockTraits("/home/pyro/RiderProjects/ingot/ingot.Core/TraitSystem/Traits/Block/");
 
         string block = Block.Compile<DenseLasagnaBlock>();
+        Console.WriteLine(block);
     }
 }

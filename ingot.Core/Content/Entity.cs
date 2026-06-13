@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
-using static ingot.Core.JsonHelper;
+using static ingot.Core.Common.JsonHelper;
 
-namespace ingot.Core.TraitSystem;
+namespace ingot.Core.Content;
 
 public abstract class Entity
 {
