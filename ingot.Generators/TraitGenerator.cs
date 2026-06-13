@@ -24,6 +24,7 @@ public class TraitGenerator
     {
         ["x, y, z coordinate array"] = "Vector3",
         ["Array of numbers"] = "int[]",
+        ["Array of strings"] = "string[]",
         ["Boolean"] = "bool",
         ["bool"] = "bool",
         ["Integer"] = "int",
@@ -32,7 +33,6 @@ public class TraitGenerator
         ["decimal"] = "float",
         ["String"] = "string",
         ["string"] = "string",
-        ["Array"] = "string[]",
         ["Object"] = "dynamic",
         ["keyed set of strings"] = "Dictionary<string, string>",
     };
@@ -157,9 +157,13 @@ public class TraitGenerator
             bool isAbstract = string.IsNullOrEmpty(prop.DefaultValue);
             string defaultExpr = isAbstract ? "" : FormatDefaultValue(csharpType, prop.DefaultValue);
 
-            sb.AppendLine("    [TraitProperty]");
             if (!string.IsNullOrEmpty(prop.Description))
-                sb.AppendLine($"    /* {prop.Description} */");
+            {
+                sb.AppendLine($"    /// <summary>");
+                sb.AppendLine($"    /// {prop.Description}");
+                sb.AppendLine($"    /// </summary>");
+            }
+            sb.AppendLine("    [TraitProperty]");
 
             if (isAbstract)
                 sb.AppendLine($"    public abstract {csharpType} {pascalName} {{ get; }}");
@@ -204,7 +208,7 @@ public class TraitGenerator
     {
         string[] components =
         {
-            "minecraft:allow_off_hand",
+            //"minecraft:allow_off_hand", // handled in item
             "minecraft:block_placer",
             "minecraft:bundle_interaction",
             "minecraft:can_destroy_in_creative",
@@ -213,7 +217,7 @@ public class TraitGenerator
             "minecraft:damage",
             "minecraft:damage_absorption",
             "minecraft:digger",
-            "minecraft:display_name",
+            //"minecraft:display_name", // handled in item
             "minecraft:durability",
             "minecraft:durability_sensor",
             "minecraft:dyeable",
@@ -224,11 +228,11 @@ public class TraitGenerator
             "minecraft:glint",
             "minecraft:hand_equipped",
             "minecraft:hover_text_color",
-            "minecraft:icon",
+            //"minecraft:icon", // handled in item
             "minecraft:interact_button",
             "minecraft:kinetic_weapon",
             "minecraft:liquid_clipped",
-            "minecraft:max_stack_size",
+            //"minecraft:max_stack_size", // handled in item
             "minecraft:piercing_weapon",
             "minecraft:projectile",
             "minecraft:rarity",
@@ -248,8 +252,8 @@ public class TraitGenerator
             "minecraft:use_modifiers",
             "minecraft:wearable",
         };
-
-        GenerateTraitsForComponents(components, outputDir, "Item", "minecraftblock_");
+        
+        GenerateTraitsForComponents(components, outputDir, "Item", "minecraft_");
     }
 
     public void GenerateAllBlockTraits(string outputDir)

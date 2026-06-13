@@ -2,16 +2,34 @@ using Newtonsoft.Json;
 
 namespace ingot.Core;
 
+/// <summary>
+/// Internal use class for emitting compile time logs
+/// </summary>
 public static class CompileTimeLogging
 {
     private static Stack<string> _traceStack = new(["pack"]);
     private static List<string> _logs = new();
+    /// <summary>
+    /// Push a new section onto the trace stack
+    /// </summary>
+    /// <param name="trace">Name of the section to show up in any produced logs or warnings</param>
     public static void Push(string trace) => _traceStack.Push(trace);
+    /// <summary>
+    /// Ends the previous section
+    /// </summary>
     public static void Pop() => _traceStack.Pop();
+    /// <summary>
+    /// Whether logs produced by <see cref="Info"/> appear in the console
+    /// </summary>
     public static bool ShowInfoLogs = false;
 
     private static string _getTrace() => string.Join('/', _traceStack.ToArray().Reverse());
 
+    /// <summary>
+    /// Writes a warning to the console and in the JSON output
+    /// </summary>
+    /// <param name="w">Used to write the warning in the JSON source</param>
+    /// <param name="msg">Message to write</param>
     public static void Warn(ref JsonTextWriter? w, string msg)
     {
         string warning = $"/!\\ [{_getTrace()}] {msg}";
@@ -28,12 +46,12 @@ public static class CompileTimeLogging
         }
     }
 
-    public static void Log(string msg)
+    public static void Info(string msg)
     {
         string log = $"(i) [{_getTrace()}] {msg}";
         _logs.Add(log);
         
-        Console.WriteLine(log);
+        if (ShowInfoLogs) Console.WriteLine(log);
     }
     
     public static List<string> GetLogs() => _logs;

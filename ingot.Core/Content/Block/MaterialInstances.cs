@@ -5,6 +5,9 @@ using Formatting = ingot.Core.Common.Formatting;
 
 namespace ingot.Core.Content.Block;
 
+/// <summary>
+/// Texture and material configuration for the face of a <see cref="Block"/>
+/// </summary>
 public struct MaterialInstance : ICompileableFragment
 {
     public MaterialInstance(string texture) => Texture = texture;
@@ -44,6 +47,7 @@ public struct MaterialInstance : ICompileableFragment
     public string Texture;
     public TintMethods TintMethod = TintMethods.None;
     
+    /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
     {
         // lambda cannot access struct members
@@ -66,6 +70,9 @@ public struct MaterialInstance : ICompileableFragment
     }
 }
 
+/// <summary>
+/// Texture and material configuration for the faces of a <see cref="Block"/>
+/// </summary>
 public struct MaterialInstances : ICompileableFragment
 {
     public MaterialInstances() { }
@@ -79,6 +86,10 @@ public struct MaterialInstances : ICompileableFragment
     public MaterialInstance? North = null;
     public MaterialInstance? South = null;
     
+    /// <summary>
+    /// Compiles <see cref="MaterialInstances"/> to JSON
+    /// </summary>
+    /// <param name="writer">JSON source stream to write to</param>
     public void Compile(ref JsonTextWriter writer)
     {
         // lambda cannot access struct members

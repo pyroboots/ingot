@@ -2,8 +2,15 @@ using System.Text;
 
 namespace ingot.Core.Common;
 
-public class Formatting
+/// <summary>
+/// Internal use class to convert C# naming conventions to Minecraft and vice versa
+/// </summary>
+public static class Formatting
 {
+    /// <summary>
+    /// Converts <c>snake_case</c> to <c>PascalCase</c>
+    /// </summary>
+    /// <param name="input">Snake case string</param>
     public static string SnakeToPascalCase(string input)
     {
         if (string.IsNullOrEmpty(input)) 
@@ -21,6 +28,10 @@ public class Formatting
         return result.ToString();
     }
     
+    /// <summary>
+    /// Converts <c>PascalCase</c> to <c>snake_case</c>
+    /// </summary>
+    /// <param name="input">Pascal case string</param>
     public static string PascalToSnakeCase(string input)
     {
         if (string.IsNullOrEmpty(input))

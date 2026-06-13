@@ -6,6 +6,9 @@ using Formatting = ingot.Core.Common.Formatting;
 
 namespace ingot.Core.TraitSystem;
 
+/// <summary>
+/// Contains reflected data of a member in a trait interface
+/// </summary>
 public struct TraitProperty
 {
     public TraitProperty(string path, string name, dynamic value)
@@ -20,6 +23,9 @@ public struct TraitProperty
     public dynamic Value;
 }
 
+/// <summary>
+/// Contains reflected data of a trait interface
+/// </summary>
 public class Trait : Identifiable, ICompileableFragment
 {
     public Trait(string identifier, Type root) : base(identifier) => RootTrait = root;

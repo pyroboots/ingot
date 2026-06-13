@@ -2,6 +2,9 @@ using Newtonsoft.Json;
 
 namespace ingot.Core.Common;
 
+/// <summary>
+/// Internal use implementation of a semantic version
+/// </summary>
 public class Version : ICompileableFragment
 {
     public int Major;

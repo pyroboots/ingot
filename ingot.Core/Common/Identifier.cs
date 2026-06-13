@@ -6,9 +6,18 @@ namespace ingot.Core.Common;
 using System;
 using System.Text.RegularExpressions;
 
-public sealed class Identifier : IEquatable<Identifier>
+/// <summary>
+/// Internal use class to represent a Minecraft identifier
+/// </summary>
+public class Identifier : IEquatable<Identifier>
 {
+    /// <summary>
+    /// The <c>minecraft</c> part in <c>minecraft:dirt</c>
+    /// </summary>
     public string Namespace { get; }
+    /// <summary>
+    /// The <c>dirt</c> part in <c>minecraft:dirt</c>
+    /// </summary>
     public string Name { get; }
 
     private static readonly Regex ValidPartRegex = new(

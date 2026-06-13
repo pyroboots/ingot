@@ -4,19 +4,49 @@ using static ingot.Core.Common.JsonHelper;
 
 namespace ingot.Core.Content.Block;
 
+/// <summary>
+/// C# representation of a block permutation
+/// </summary>
 public abstract class BlockPermutation
 {
+    /// <summary>
+    /// Molang condition that determines when this permutation is active
+    /// </summary>
     public abstract string Condition { get; }
     
-    // component shortcuts
-    public virtual string? DisplayName => null; // minecraft:display_name
-    public virtual float? Friction => null; // minecraft:friction
-    public virtual int? LightDampening => null; // minecraft:light_dampening
-    public virtual int? LightEmission => null; // minecraft:light_emission
-    public virtual bool? Replaceable => null; // minecraft:replaceable
-    public virtual string? Loot => null;  // minecraft:loot
-    public virtual MaterialInstances? MaterialInstances => null; // minecraft:material_instances
+    /// <summary>
+    /// Shortcut for the <c>minecraft:display_name</c> component
+    /// </summary>
+    public virtual string? DisplayName => null;
+    /// <summary>
+    /// Shortcut for the <c>minecraft:friction</c> component
+    /// </summary>
+    public virtual float? Friction => null;
+    /// <summary>
+    /// Shortcut for the <c>minecraft:light_dampening</c> component
+    /// </summary>
+    public virtual int? LightDampening => null;
+    /// <summary>
+    /// Shortcut for the <c>minecraft:light_emission</c> component
+    /// </summary>
+    public virtual int? LightEmission => null;
+    /// <summary>
+    /// Shortcut for the <c>minecraft:replaceable</c> component
+    /// </summary>
+    public virtual bool? Replaceable => null;
+    /// <summary>
+    /// Shortcut for the <c>minecraft:loot</c> component
+    /// </summary>
+    public virtual string? Loot => null;
+    /// <summary>
+    /// Texture and materials for the <see cref="BlockPermutation"/>. Shortcut for the <c>minecraft:material_instances</c> component
+    /// </summary>
+    public virtual MaterialInstances? MaterialInstances => null;
 
+    /// <summary>
+    /// Compiles the <typeparamref name="TBlockPermutation"/> to JSON
+    /// </summary>
+    /// <typeparam name="TBlockPermutation">The type class block permutation to compile</typeparam>
     public static void Compile<TBlockPermutation>(ref JsonTextWriter writer) where TBlockPermutation : BlockPermutation => Compile(typeof(TBlockPermutation), ref writer);
     public static void Compile(Type tBlockPermutation, ref JsonTextWriter writer)
     {

@@ -3,8 +3,14 @@ using Newtonsoft.Json;
 
 namespace ingot.Core.TraitSystem;
 
-public class TraitSystem
+/// <summary>
+/// Handles trait reflection
+/// </summary>
+public static class TraitSystem
 {
+    /// <summary>
+    /// Type of trait
+    /// </summary>
     public enum TraitType
     {
         Block,
@@ -12,7 +18,17 @@ public class TraitSystem
         Item
     }
 
+    /// <summary>
+    /// Gets all traits of type <typeparamref name="T"/>
+    /// </summary>
+    /// <param name="constraint"><see cref="TraitType"/> to reflect</param>
+    /// <typeparam name="T">Content class to reflect</typeparam>
     public static List<Trait> GetTraits<T>(TraitType constraint) => GetTraits(typeof(T), constraint);
+    /// <summary>
+    /// Gets all traits of type <paramref name="t"/>
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="constraint"><see cref="Type"/> of content class to reflect</param>
     public static List<Trait> GetTraits(Type t, TraitType constraint)
     {
         CompileTimeLogging.Push("TraitSystem");
@@ -91,6 +107,12 @@ public class TraitSystem
         return traits;
     }
     
+    /// <summary>
+    /// Gets the implemented <typeparamref name="TTrait"/> of <typeparamref name="TObject"/>
+    /// </summary>
+    /// <param name="constraint"><see cref="TraitType"/> to reflect</param>
+    /// <typeparam name="TObject">Content class to reflect</typeparam>
+    /// <typeparam name="TTrait">Trait interface to reflect in <typeparamref name="TObject"/></typeparam>
     public static Trait GetTrait<TObject, TTrait>(TraitType constraint) where TTrait : class
     {
         CompileTimeLogging.Push("TraitSystem");

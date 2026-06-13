@@ -5,24 +5,57 @@ using static ingot.Core.Common.JsonHelper;
 
 namespace ingot.Core.Content;
 
+/// <summary>
+/// Implements basic properties of an item
+/// </summary>
 public abstract class Item
 {
+    /// <summary>
+    /// Item identifier used in the game
+    /// </summary>
     public abstract string Identifier { get; }
+    /// <summary>
+    /// Minimum component version
+    /// </summary>
     public virtual Version FormatVersion => new("1.20.10");
 
     // header props
     public enum CatalogueCategory 
     { Construction, Nature, Equipment, Items, None }
+    /// <summary>
+    /// Which section of the creative inventory the item appears in
+    /// </summary>
     public virtual CatalogueCategory Category => CatalogueCategory.Items;
+    /// <summary>
+    /// Which item group of <see cref="CatalogueCategory"/> the item appears in
+    /// </summary>
     public virtual string? Group => null;
+    /// <summary>
+    /// Whether the item is visible by command item arguments
+    /// </summary>
     public virtual bool HiddenInCommands => false;
+    
+    /// <summary>
+    /// Shortcut for the <c>minecraft:icon</c> component
+    /// </summary>
+    public abstract string Texture { get; }
+    /// <summary>
+    /// Shortcut for the <c>minecraft:max_stack_size</c> component
+    /// </summary>
+    public virtual int MaxStackSize => 64;
+    /// <summary>
+    /// Shortcut for the <c>minecraft:display_name</c> component
+    /// </summary>
+    public virtual string DisplayName => Identifier;
+    /// <summary>
+    /// Shortcut for the <c>minecraft:allow_off_hand</c> component
+    /// </summary>
+    public virtual bool AllowOffhand => false;
 
-    // component shortcuts
-    public abstract string Texture { get; } // minecraft:icon
-    public virtual int MaxStackSize => 64; // minecraft:max_stack_size
-    public virtual string DisplayName => Identifier; // minecraft:display_name
-    public virtual bool AllowOffhand => false; // minecraft:allow_off_hand
-
+    /// <summary>
+    /// Compiles the <typeparamref name="TItem"/> to JSON
+    /// </summary>
+    /// <typeparam name="TItem">The type class to compile</typeparam>
     public static string Compile<TItem>() where TItem : Item, new() => Compile(typeof(TItem));
     public static string Compile(Type tItem)
     {
@@ -65,14 +98,14 @@ public abstract class Item
                 Object(ref w, "minecraft:max_stack_size", w => Property(ref w, "value", inst.MaxStackSize));
                 Object(ref w, "minecraft:allow_off_hand", w => Property(ref w, "value", inst.AllowOffhand));
 
-                CompileTimeLogging.Log("compiling traits...");
+                CompileTimeLogging.Info("compiling traits...");
                 List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tItem, TraitSystem.TraitSystem.TraitType.Item);
                 int c = 0;
                 foreach (Trait t in traits)
                 {
                     c++;
                     t.Compile(ref w);
-                    CompileTimeLogging.Log($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
+                    CompileTimeLogging.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
                 }
             });
             CompileTimeLogging.Pop();

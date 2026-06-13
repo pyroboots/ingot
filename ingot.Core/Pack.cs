@@ -7,6 +7,9 @@ using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core;
 
+/// <summary>
+/// C# representation of a full pack with behaviour and resources
+/// </summary>
 public class Pack
 {
     public required string Name;
@@ -28,21 +31,26 @@ public class Pack
     public required ResourcePack ResourcePack;
     public bool LinkPacks = true;
 
+    /// <summary>
+    /// Compiles both <see cref="BehaviourPack"/> and <see cref="ResourcePack"/> and generates pack manifests
+    /// </summary>
+    /// <param name="outputDir">Output directory to place the behaviour pack and resource pack</param>
+    /// <param name="verbose">Whether to print info logs to the console</param>
     public void Compile(string outputDir, bool verbose = true)
     {
         Stopwatch timer = Stopwatch.StartNew();
         
         CompileTimeLogging.Push(Name);
         CompileTimeLogging.ShowInfoLogs = verbose;
-        CompileTimeLogging.Log("pack compilation started");
+        CompileTimeLogging.Info("pack compilation started");
         
-        CompileTimeLogging.Log("compiling bp...");
+        CompileTimeLogging.Info("compiling bp...");
         BehaviourPack.Compile(Path.Combine(outputDir, "bp"));
-        CompileTimeLogging.Log($"compiled bp");
+        CompileTimeLogging.Info($"compiled bp");
         
-        CompileTimeLogging.Log("compiling rp...");
+        CompileTimeLogging.Info("compiling rp...");
         ResourcePack.Compile(Path.Combine(outputDir, "rp"));
-        CompileTimeLogging.Log($"compiled rp");
+        CompileTimeLogging.Info($"compiled rp");
         
         using (StringWriter sw = new())
         {
@@ -111,7 +119,7 @@ public class Pack
             
             File.WriteAllText(Path.Combine(outputDir, "bp", "manifest.json"), sw.ToString());
         }
-        CompileTimeLogging.Log("compiled bp manifest");
+        CompileTimeLogging.Info("compiled bp manifest");
         
         using (StringWriter sw = new())
         {
@@ -164,7 +172,7 @@ public class Pack
             
             File.WriteAllText(Path.Combine(outputDir, "rp", "manifest.json"), sw.ToString());
         }
-        CompileTimeLogging.Log("compiled rp manifest");
+        CompileTimeLogging.Info("compiled rp manifest");
         
         if (PackIcon is not null)
         {
@@ -178,8 +186,8 @@ public class Pack
         {
             File.WriteAllText(Path.Combine(outputDir, "ingot.log"), string.Join('\n', CompileTimeLogging.GetLogs()));
             Console.WriteLine();
-            CompileTimeLogging.Log($"pack compiled in {timer.ElapsedMilliseconds}ms");
-            CompileTimeLogging.Log($"ingot compilation log available at {Path.Combine(outputDir, "ingot.log")}");
+            CompileTimeLogging.Info($"pack compiled in {timer.ElapsedMilliseconds}ms");
+            CompileTimeLogging.Info($"ingot compilation log available at {Path.Combine(outputDir, "ingot.log")}");
         }
         
         CompileTimeLogging.ShowInfoLogs = false;
