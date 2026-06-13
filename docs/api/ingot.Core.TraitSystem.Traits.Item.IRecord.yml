@@ -1,0 +1,271 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.IRecord
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IRecord
+  id: IRecord
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal
+  - ingot.Core.TraitSystem.Traits.Item.IRecord.Duration
+  - ingot.Core.TraitSystem.Traits.Item.IRecord.SoundEvent
+  langs:
+  - csharp
+  - vb
+  name: IRecord
+  nameWithType: IRecord
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRecord
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IRecord.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IRecord
+    path: ../ingot.Core/TraitSystem/Traits/Item/IRecord.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:record", TraitSystem.TraitType.Item)]
+
+      public interface IRecord : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:record", TraitSystem.TraitType.Item)>
+
+      Public Interface IRecord Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:record
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal
+  id: ComparatorSignal
+  parent: ingot.Core.TraitSystem.Traits.Item.IRecord
+  langs:
+  - csharp
+  - vb
+  name: ComparatorSignal
+  nameWithType: IRecord.ComparatorSignal
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IRecord.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ComparatorSignal
+    path: ../ingot.Core/TraitSystem/Traits/Item/IRecord.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Specifies signal strength for comparator blocks to use, from 1 - 13.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      int ComparatorSignal { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property ComparatorSignal As Integer
+  overload: ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.IRecord.Duration
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IRecord.Duration
+  id: Duration
+  parent: ingot.Core.TraitSystem.Traits.Item.IRecord
+  langs:
+  - csharp
+  - vb
+  name: Duration
+  nameWithType: IRecord.Duration
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRecord.Duration
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IRecord.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Duration
+    path: ../ingot.Core/TraitSystem/Traits/Item/IRecord.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Specifies duration of sound event in seconds, float value.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      float Duration { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Duration As Single
+  overload: ingot.Core.TraitSystem.Traits.Item.IRecord.Duration*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.IRecord.SoundEvent
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IRecord.SoundEvent
+  id: SoundEvent
+  parent: ingot.Core.TraitSystem.Traits.Item.IRecord
+  langs:
+  - csharp
+  - vb
+  name: SoundEvent
+  nameWithType: IRecord.SoundEvent
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRecord.SoundEvent
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IRecord.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: SoundEvent
+    path: ../ingot.Core/TraitSystem/Traits/Item/IRecord.cs
+    startLine: 25
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: 'Sound event type: 13, cat, blocks, chirp, far, mall, mellohi, stal, strad, ward, 11, wait, pigstep, otherside, 5, relic.'
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? SoundEvent { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property SoundEvent As Object
+  overload: ingot.Core.TraitSystem.Traits.Item.IRecord.SoundEvent*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal
+  href: ingot.Core.TraitSystem.Traits.Item.IRecord.html#ingot_Core_TraitSystem_Traits_Item_IRecord_ComparatorSignal
+  name: ComparatorSignal
+  nameWithType: IRecord.ComparatorSignal
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.TraitSystem.Traits.Item.IRecord.Duration*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IRecord.Duration
+  href: ingot.Core.TraitSystem.Traits.Item.IRecord.html#ingot_Core_TraitSystem_Traits_Item_IRecord_Duration
+  name: Duration
+  nameWithType: IRecord.Duration
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRecord.Duration
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: ingot.Core.TraitSystem.Traits.Item.IRecord.SoundEvent*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IRecord.SoundEvent
+  href: ingot.Core.TraitSystem.Traits.Item.IRecord.html#ingot_Core_TraitSystem_Traits_Item_IRecord_SoundEvent
+  name: SoundEvent
+  nameWithType: IRecord.SoundEvent
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRecord.SoundEvent
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object

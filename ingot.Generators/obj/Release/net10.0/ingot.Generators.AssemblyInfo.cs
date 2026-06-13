@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ingot.Generators")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28b7ff1818836ad8cd43874d9f8dd20c0ba21781")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b749f218e9f547c243a1055bcc8b66572b23a46")]
 [assembly: System.Reflection.AssemblyProductAttribute("ingot.Generators")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ingot.Generators")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

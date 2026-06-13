@@ -1,0 +1,155 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingDuration
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.ISwingDuration
+  id: ISwingDuration
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value
+  langs:
+  - csharp
+  - vb
+  name: ISwingDuration
+  nameWithType: ISwingDuration
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingDuration
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/ISwingDuration.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ISwingDuration
+    path: ../ingot.Core/TraitSystem/Traits/Item/ISwingDuration.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:swing_duration", TraitSystem.TraitType.Item)]
+
+      public interface ISwingDuration : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:swing_duration", TraitSystem.TraitType.Item)>
+
+      Public Interface ISwingDuration Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:swing_duration
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value
+  id: Value
+  parent: ingot.Core.TraitSystem.Traits.Item.ISwingDuration
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: ISwingDuration.Value
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/ISwingDuration.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Value
+    path: ../ingot.Core/TraitSystem/Traits/Item/ISwingDuration.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Duration, in seconds, of the item's swing animation played when mining or attacking. Affects visuals only and does not impact attack frequency or other gameplay mechanics.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      float Value { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Value As Single
+  overload: ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value
+  href: ingot.Core.TraitSystem.Traits.Item.ISwingDuration.html#ingot_Core_TraitSystem_Traits_Item_ISwingDuration_Value
+  name: Value
+  nameWithType: ISwingDuration.Value
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

@@ -1,0 +1,160 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption
+  id: IDamageAbsorption
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses
+  langs:
+  - csharp
+  - vb
+  name: IDamageAbsorption
+  nameWithType: IDamageAbsorption
+  fullName: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IDamageAbsorption.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IDamageAbsorption
+    path: ../ingot.Core/TraitSystem/Traits/Item/IDamageAbsorption.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:damage_absorption", TraitSystem.TraitType.Item)]
+
+      public interface IDamageAbsorption : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:damage_absorption", TraitSystem.TraitType.Item)>
+
+      Public Interface IDamageAbsorption Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:damage_absorption
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses
+  id: AbsorbableCauses
+  parent: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption
+  langs:
+  - csharp
+  - vb
+  name: AbsorbableCauses
+  nameWithType: IDamageAbsorption.AbsorbableCauses
+  fullName: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IDamageAbsorption.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AbsorbableCauses
+    path: ../ingot.Core/TraitSystem/Traits/Item/IDamageAbsorption.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: List of damage causes that can be absorbed by the item. By default, no damage cause is absorbed. Value must have at least 1 items.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      string[] AbsorbableCauses { get; }
+    parameters: []
+    return:
+      type: System.String[]
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property AbsorbableCauses As String()
+  overload: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses
+  href: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.html#ingot_Core_TraitSystem_Traits_Item_IDamageAbsorption_AbsorbableCauses
+  name: AbsorbableCauses
+  nameWithType: IDamageAbsorption.AbsorbableCauses
+  fullName: ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses
+- uid: System.String[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )

@@ -1,0 +1,630 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Example.DenseLasagnaGlowyPermutation
+  commentId: T:ingot.Example.DenseLasagnaGlowyPermutation
+  id: DenseLasagnaGlowyPermutation
+  parent: ingot.Example
+  children:
+  - ingot.Example.DenseLasagnaGlowyPermutation.Condition
+  - ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
+  langs:
+  - csharp
+  - vb
+  name: DenseLasagnaGlowyPermutation
+  nameWithType: DenseLasagnaGlowyPermutation
+  fullName: ingot.Example.DenseLasagnaGlowyPermutation
+  type: Class
+  source:
+    remote:
+      path: ingot.Example/DenseLasagnaBlock.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: DenseLasagnaGlowyPermutation
+    path: ../ingot.Example/DenseLasagnaBlock.cs
+    startLine: 25
+  assemblies:
+  - ingot.Example
+  namespace: ingot.Example
+  syntax:
+    content: 'public class DenseLasagnaGlowyPermutation : BlockPermutation'
+    content.vb: Public Class DenseLasagnaGlowyPermutation Inherits BlockPermutation
+  inheritance:
+  - System.Object
+  - ingot.Core.Content.Block.BlockPermutation
+  inheritedMembers:
+  - ingot.Core.Content.Block.BlockPermutation.DisplayName
+  - ingot.Core.Content.Block.BlockPermutation.Friction
+  - ingot.Core.Content.Block.BlockPermutation.LightDampening
+  - ingot.Core.Content.Block.BlockPermutation.Replaceable
+  - ingot.Core.Content.Block.BlockPermutation.Loot
+  - ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+  - ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  - ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: ingot.Example.DenseLasagnaGlowyPermutation.Condition
+  commentId: P:ingot.Example.DenseLasagnaGlowyPermutation.Condition
+  id: Condition
+  parent: ingot.Example.DenseLasagnaGlowyPermutation
+  langs:
+  - csharp
+  - vb
+  name: Condition
+  nameWithType: DenseLasagnaGlowyPermutation.Condition
+  fullName: ingot.Example.DenseLasagnaGlowyPermutation.Condition
+  type: Property
+  source:
+    remote:
+      path: ingot.Example/DenseLasagnaBlock.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Condition
+    path: ../ingot.Example/DenseLasagnaBlock.cs
+    startLine: 27
+  assemblies:
+  - ingot.Example
+  namespace: ingot.Example
+  summary: Molang condition that determines when this permutation is active
+  example: []
+  syntax:
+    content: public override string Condition { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property Condition As String
+  overridden: ingot.Core.Content.Block.BlockPermutation.Condition
+  overload: ingot.Example.DenseLasagnaGlowyPermutation.Condition*
+- uid: ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
+  commentId: P:ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
+  id: LightEmission
+  parent: ingot.Example.DenseLasagnaGlowyPermutation
+  langs:
+  - csharp
+  - vb
+  name: LightEmission
+  nameWithType: DenseLasagnaGlowyPermutation.LightEmission
+  fullName: ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
+  type: Property
+  source:
+    remote:
+      path: ingot.Example/DenseLasagnaBlock.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: LightEmission
+    path: ../ingot.Example/DenseLasagnaBlock.cs
+    startLine: 29
+  assemblies:
+  - ingot.Example
+  namespace: ingot.Example
+  summary: Shortcut for the <code>minecraft:light_emission</code> component
+  example: []
+  syntax:
+    content: public override int? LightEmission { get; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Overrides ReadOnly Property LightEmission As Integer?
+  overridden: ingot.Core.Content.Block.BlockPermutation.LightEmission
+  overload: ingot.Example.DenseLasagnaGlowyPermutation.LightEmission*
+references:
+- uid: ingot.Example
+  commentId: N:ingot.Example
+  href: ingot.html
+  name: ingot.Example
+  nameWithType: ingot.Example
+  fullName: ingot.Example
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Example
+    name: Example
+    href: ingot.Example.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Example
+    name: Example
+    href: ingot.Example.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: ingot.Core.Content.Block.BlockPermutation
+  commentId: T:ingot.Core.Content.Block.BlockPermutation
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.BlockPermutation.html
+  name: BlockPermutation
+  nameWithType: BlockPermutation
+  fullName: ingot.Core.Content.Block.BlockPermutation
+- uid: ingot.Core.Content.Block.BlockPermutation.DisplayName
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.DisplayName
+  parent: ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_DisplayName
+  name: DisplayName
+  nameWithType: BlockPermutation.DisplayName
+  fullName: ingot.Core.Content.Block.BlockPermutation.DisplayName
+- uid: ingot.Core.Content.Block.BlockPermutation.Friction
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.Friction
+  parent: ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Friction
+  name: Friction
+  nameWithType: BlockPermutation.Friction
+  fullName: ingot.Core.Content.Block.BlockPermutation.Friction
+- uid: ingot.Core.Content.Block.BlockPermutation.LightDampening
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.LightDampening
+  parent: ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_LightDampening
+  name: LightDampening
+  nameWithType: BlockPermutation.LightDampening
+  fullName: ingot.Core.Content.Block.BlockPermutation.LightDampening
+- uid: ingot.Core.Content.Block.BlockPermutation.Replaceable
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.Replaceable
+  parent: ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Replaceable
+  name: Replaceable
+  nameWithType: BlockPermutation.Replaceable
+  fullName: ingot.Core.Content.Block.BlockPermutation.Replaceable
+- uid: ingot.Core.Content.Block.BlockPermutation.Loot
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.Loot
+  parent: ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Loot
+  name: Loot
+  nameWithType: BlockPermutation.Loot
+  fullName: ingot.Core.Content.Block.BlockPermutation.Loot
+- uid: ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+  parent: ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_MaterialInstances
+  name: MaterialInstances
+  nameWithType: BlockPermutation.MaterialInstances
+  fullName: ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+- uid: ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Content.Block.BlockPermutation
+  isExternal: true
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
+  name: Compile<TBlockPermutation>(ref JsonTextWriter)
+  nameWithType: BlockPermutation.Compile<TBlockPermutation>(ref JsonTextWriter)
+  fullName: ingot.Core.Content.Block.BlockPermutation.Compile<TBlockPermutation>(ref Newtonsoft.Json.JsonTextWriter)
+  nameWithType.vb: BlockPermutation.Compile(Of TBlockPermutation)(JsonTextWriter)
+  fullName.vb: ingot.Core.Content.Block.BlockPermutation.Compile(Of TBlockPermutation)(Newtonsoft.Json.JsonTextWriter)
+  name.vb: Compile(Of TBlockPermutation)(JsonTextWriter)
+  spec.csharp:
+  - uid: ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+    name: Compile
+    href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
+  - name: <
+  - name: TBlockPermutation
+  - name: '>'
+  - name: (
+  - name: ref
+  - name: " "
+  - uid: Newtonsoft.Json.JsonTextWriter
+    name: JsonTextWriter
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+    name: Compile
+    href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TBlockPermutation
+  - name: )
+  - name: (
+  - uid: Newtonsoft.Json.JsonTextWriter
+    name: JsonTextWriter
+    isExternal: true
+  - name: )
+- uid: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Content.Block.BlockPermutation
+  isExternal: true
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
+  name: Compile(Type, ref JsonTextWriter)
+  nameWithType: BlockPermutation.Compile(Type, ref JsonTextWriter)
+  fullName: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type, ref Newtonsoft.Json.JsonTextWriter)
+  nameWithType.vb: BlockPermutation.Compile(Type, JsonTextWriter)
+  fullName.vb: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type, Newtonsoft.Json.JsonTextWriter)
+  name.vb: Compile(Type, JsonTextWriter)
+  spec.csharp:
+  - uid: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+    name: Compile
+    href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
+  - name: (
+  - uid: System.Type
+    name: Type
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.type
+  - name: ','
+  - name: " "
+  - name: ref
+  - name: " "
+  - uid: Newtonsoft.Json.JsonTextWriter
+    name: JsonTextWriter
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+    name: Compile
+    href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
+  - name: (
+  - uid: System.Type
+    name: Type
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.type
+  - name: ','
+  - name: " "
+  - uid: Newtonsoft.Json.JsonTextWriter
+    name: JsonTextWriter
+    isExternal: true
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.Content.Block
+  commentId: N:ingot.Core.Content.Block
+  href: ingot.html
+  name: ingot.Core.Content.Block
+  nameWithType: ingot.Core.Content.Block
+  fullName: ingot.Core.Content.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+- uid: ingot.Core.Content.Block.BlockPermutation.Condition
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.Condition
+  parent: ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Condition
+  name: Condition
+  nameWithType: BlockPermutation.Condition
+  fullName: ingot.Core.Content.Block.BlockPermutation.Condition
+- uid: ingot.Example.DenseLasagnaGlowyPermutation.Condition*
+  commentId: Overload:ingot.Example.DenseLasagnaGlowyPermutation.Condition
+  href: ingot.Example.DenseLasagnaGlowyPermutation.html#ingot_Example_DenseLasagnaGlowyPermutation_Condition
+  name: Condition
+  nameWithType: DenseLasagnaGlowyPermutation.Condition
+  fullName: ingot.Example.DenseLasagnaGlowyPermutation.Condition
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: ingot.Core.Content.Block.BlockPermutation.LightEmission
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.LightEmission
+  parent: ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_LightEmission
+  name: LightEmission
+  nameWithType: BlockPermutation.LightEmission
+  fullName: ingot.Core.Content.Block.BlockPermutation.LightEmission
+- uid: ingot.Example.DenseLasagnaGlowyPermutation.LightEmission*
+  commentId: Overload:ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
+  href: ingot.Example.DenseLasagnaGlowyPermutation.html#ingot_Example_DenseLasagnaGlowyPermutation_LightEmission
+  name: LightEmission
+  nameWithType: DenseLasagnaGlowyPermutation.LightEmission
+  fullName: ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

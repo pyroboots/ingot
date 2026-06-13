@@ -1,0 +1,242 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingSounds
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.ISwingSounds
+  id: ISwingSounds
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit
+  - ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackHit
+  - ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackMiss
+  langs:
+  - csharp
+  - vb
+  name: ISwingSounds
+  nameWithType: ISwingSounds
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingSounds
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/ISwingSounds.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ISwingSounds
+    path: ../ingot.Core/TraitSystem/Traits/Item/ISwingSounds.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:swing_sounds", TraitSystem.TraitType.Item)]
+
+      public interface ISwingSounds : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:swing_sounds", TraitSystem.TraitType.Item)>
+
+      Public Interface ISwingSounds Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:swing_sounds
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit
+  id: AttackCriticalHit
+  parent: ingot.Core.TraitSystem.Traits.Item.ISwingSounds
+  langs:
+  - csharp
+  - vb
+  name: AttackCriticalHit
+  nameWithType: ISwingSounds.AttackCriticalHit
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/ISwingSounds.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AttackCriticalHit
+    path: ../ingot.Core/TraitSystem/Traits/Item/ISwingSounds.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Sound played when an attack hits and deals critical damage.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? AttackCriticalHit { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property AttackCriticalHit As Object
+  overload: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackHit
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackHit
+  id: AttackHit
+  parent: ingot.Core.TraitSystem.Traits.Item.ISwingSounds
+  langs:
+  - csharp
+  - vb
+  name: AttackHit
+  nameWithType: ISwingSounds.AttackHit
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackHit
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/ISwingSounds.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AttackHit
+    path: ../ingot.Core/TraitSystem/Traits/Item/ISwingSounds.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Sound played when an attack hits.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? AttackHit { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property AttackHit As Object
+  overload: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackHit*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackMiss
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackMiss
+  id: AttackMiss
+  parent: ingot.Core.TraitSystem.Traits.Item.ISwingSounds
+  langs:
+  - csharp
+  - vb
+  name: AttackMiss
+  nameWithType: ISwingSounds.AttackMiss
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackMiss
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/ISwingSounds.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AttackMiss
+    path: ../ingot.Core/TraitSystem/Traits/Item/ISwingSounds.cs
+    startLine: 25
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Sound played when an attack misses or deals no damage due to invulnerability.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? AttackMiss { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property AttackMiss As Object
+  overload: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackMiss*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit
+  href: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.html#ingot_Core_TraitSystem_Traits_Item_ISwingSounds_AttackCriticalHit
+  name: AttackCriticalHit
+  nameWithType: ISwingSounds.AttackCriticalHit
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackHit*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackHit
+  href: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.html#ingot_Core_TraitSystem_Traits_Item_ISwingSounds_AttackHit
+  name: AttackHit
+  nameWithType: ISwingSounds.AttackHit
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackHit
+- uid: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackMiss*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackMiss
+  href: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.html#ingot_Core_TraitSystem_Traits_Item_ISwingSounds_AttackMiss
+  name: AttackMiss
+  nameWithType: ISwingSounds.AttackMiss
+  fullName: ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackMiss

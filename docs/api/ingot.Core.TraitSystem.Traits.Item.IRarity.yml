@@ -1,0 +1,146 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.IRarity
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IRarity
+  id: IRarity
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.IRarity.Value
+  langs:
+  - csharp
+  - vb
+  name: IRarity
+  nameWithType: IRarity
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRarity
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IRarity.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IRarity
+    path: ../ingot.Core/TraitSystem/Traits/Item/IRarity.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:rarity", TraitSystem.TraitType.Item)]
+
+      public interface IRarity : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:rarity", TraitSystem.TraitType.Item)>
+
+      Public Interface IRarity Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:rarity
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.IRarity.Value
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IRarity.Value
+  id: Value
+  parent: ingot.Core.TraitSystem.Traits.Item.IRarity
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: IRarity.Value
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRarity.Value
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IRarity.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Value
+    path: ../ingot.Core/TraitSystem/Traits/Item/IRarity.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Sets the base rarity of the item. The rarity of an item automatically increases when enchanted, either to Rare when the base rarity is Common or Uncommon, or Epic when the base rarity is Rare.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? Value { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Value As Object
+  overload: ingot.Core.TraitSystem.Traits.Item.IRarity.Value*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.IRarity.Value*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IRarity.Value
+  href: ingot.Core.TraitSystem.Traits.Item.IRarity.html#ingot_Core_TraitSystem_Traits_Item_IRarity_Value
+  name: Value
+  nameWithType: IRarity.Value
+  fullName: ingot.Core.TraitSystem.Traits.Item.IRarity.Value
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object

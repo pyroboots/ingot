@@ -1,0 +1,871 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.Content.Block.BlockPermutation
+  commentId: T:ingot.Core.Content.Block.BlockPermutation
+  id: BlockPermutation
+  parent: ingot.Core.Content.Block
+  children:
+  - ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  - ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  - ingot.Core.Content.Block.BlockPermutation.Condition
+  - ingot.Core.Content.Block.BlockPermutation.DisplayName
+  - ingot.Core.Content.Block.BlockPermutation.Friction
+  - ingot.Core.Content.Block.BlockPermutation.LightDampening
+  - ingot.Core.Content.Block.BlockPermutation.LightEmission
+  - ingot.Core.Content.Block.BlockPermutation.Loot
+  - ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+  - ingot.Core.Content.Block.BlockPermutation.Replaceable
+  langs:
+  - csharp
+  - vb
+  name: BlockPermutation
+  nameWithType: BlockPermutation
+  fullName: ingot.Core.Content.Block.BlockPermutation
+  type: Class
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: BlockPermutation
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 9
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: C# representation of a block permutation
+  example: []
+  syntax:
+    content: public abstract class BlockPermutation
+    content.vb: Public MustInherit Class BlockPermutation
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - ingot.Example.DenseLasagnaGlowyPermutation
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: ingot.Core.Content.Block.BlockPermutation.Condition
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.Condition
+  id: Condition
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: Condition
+  nameWithType: BlockPermutation.Condition
+  fullName: ingot.Core.Content.Block.BlockPermutation.Condition
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Condition
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 14
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Molang condition that determines when this permutation is active
+  example: []
+  syntax:
+    content: public abstract string Condition { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public MustOverride ReadOnly Property Condition As String
+  overload: ingot.Core.Content.Block.BlockPermutation.Condition*
+- uid: ingot.Core.Content.Block.BlockPermutation.DisplayName
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.DisplayName
+  id: DisplayName
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: BlockPermutation.DisplayName
+  fullName: ingot.Core.Content.Block.BlockPermutation.DisplayName
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: DisplayName
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Shortcut for the <code>minecraft:display_name</code> component
+  example: []
+  syntax:
+    content: public virtual string? DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overridable ReadOnly Property DisplayName As String
+  overload: ingot.Core.Content.Block.BlockPermutation.DisplayName*
+- uid: ingot.Core.Content.Block.BlockPermutation.Friction
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.Friction
+  id: Friction
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: Friction
+  nameWithType: BlockPermutation.Friction
+  fullName: ingot.Core.Content.Block.BlockPermutation.Friction
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Friction
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 23
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Shortcut for the <code>minecraft:friction</code> component
+  example: []
+  syntax:
+    content: public virtual float? Friction { get; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Single}
+    content.vb: Public Overridable ReadOnly Property Friction As Single?
+  overload: ingot.Core.Content.Block.BlockPermutation.Friction*
+- uid: ingot.Core.Content.Block.BlockPermutation.LightDampening
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.LightDampening
+  id: LightDampening
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: LightDampening
+  nameWithType: BlockPermutation.LightDampening
+  fullName: ingot.Core.Content.Block.BlockPermutation.LightDampening
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: LightDampening
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 27
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Shortcut for the <code>minecraft:light_dampening</code> component
+  example: []
+  syntax:
+    content: public virtual int? LightDampening { get; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Overridable ReadOnly Property LightDampening As Integer?
+  overload: ingot.Core.Content.Block.BlockPermutation.LightDampening*
+- uid: ingot.Core.Content.Block.BlockPermutation.LightEmission
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.LightEmission
+  id: LightEmission
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: LightEmission
+  nameWithType: BlockPermutation.LightEmission
+  fullName: ingot.Core.Content.Block.BlockPermutation.LightEmission
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: LightEmission
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 31
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Shortcut for the <code>minecraft:light_emission</code> component
+  example: []
+  syntax:
+    content: public virtual int? LightEmission { get; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Overridable ReadOnly Property LightEmission As Integer?
+  overload: ingot.Core.Content.Block.BlockPermutation.LightEmission*
+- uid: ingot.Core.Content.Block.BlockPermutation.Replaceable
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.Replaceable
+  id: Replaceable
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: Replaceable
+  nameWithType: BlockPermutation.Replaceable
+  fullName: ingot.Core.Content.Block.BlockPermutation.Replaceable
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Replaceable
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 35
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Shortcut for the <code>minecraft:replaceable</code> component
+  example: []
+  syntax:
+    content: public virtual bool? Replaceable { get; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Boolean}
+    content.vb: Public Overridable ReadOnly Property Replaceable As Boolean?
+  overload: ingot.Core.Content.Block.BlockPermutation.Replaceable*
+- uid: ingot.Core.Content.Block.BlockPermutation.Loot
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.Loot
+  id: Loot
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: Loot
+  nameWithType: BlockPermutation.Loot
+  fullName: ingot.Core.Content.Block.BlockPermutation.Loot
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Loot
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 39
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Shortcut for the <code>minecraft:loot</code> component
+  example: []
+  syntax:
+    content: public virtual string? Loot { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overridable ReadOnly Property Loot As String
+  overload: ingot.Core.Content.Block.BlockPermutation.Loot*
+- uid: ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+  commentId: P:ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+  id: MaterialInstances
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: MaterialInstances
+  nameWithType: BlockPermutation.MaterialInstances
+  fullName: ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: MaterialInstances
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 43
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Texture and materials for the <xref href="ingot.Core.Content.Block.BlockPermutation" data-throw-if-not-resolved="false"></xref>. Shortcut for the <code>minecraft:material_instances</code> component
+  example: []
+  syntax:
+    content: public virtual MaterialInstances? MaterialInstances { get; }
+    parameters: []
+    return:
+      type: System.Nullable{ingot.Core.Content.Block.MaterialInstances}
+    content.vb: Public Overridable ReadOnly Property MaterialInstances As MaterialInstances?
+  overload: ingot.Core.Content.Block.BlockPermutation.MaterialInstances*
+- uid: ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  id: Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: Compile<TBlockPermutation>(ref JsonTextWriter)
+  nameWithType: BlockPermutation.Compile<TBlockPermutation>(ref JsonTextWriter)
+  fullName: ingot.Core.Content.Block.BlockPermutation.Compile<TBlockPermutation>(ref Newtonsoft.Json.JsonTextWriter)
+  type: Method
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Compile
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 49
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Compiles the <code class="typeparamref">TBlockPermutation</code> to JSON
+  example: []
+  syntax:
+    content: 'public static void Compile<TBlockPermutation>(ref JsonTextWriter writer) where TBlockPermutation : BlockPermutation'
+    parameters:
+    - id: writer
+      type: Newtonsoft.Json.JsonTextWriter
+    typeParameters:
+    - id: TBlockPermutation
+      description: The type class block permutation to compile
+    content.vb: Public Shared Sub Compile(Of TBlockPermutation As BlockPermutation)(writer As JsonTextWriter)
+  overload: ingot.Core.Content.Block.BlockPermutation.Compile*
+  nameWithType.vb: BlockPermutation.Compile(Of TBlockPermutation)(JsonTextWriter)
+  fullName.vb: ingot.Core.Content.Block.BlockPermutation.Compile(Of TBlockPermutation)(Newtonsoft.Json.JsonTextWriter)
+  name.vb: Compile(Of TBlockPermutation)(JsonTextWriter)
+- uid: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  id: Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Content.Block.BlockPermutation
+  langs:
+  - csharp
+  - vb
+  name: Compile(Type, ref JsonTextWriter)
+  nameWithType: BlockPermutation.Compile(Type, ref JsonTextWriter)
+  fullName: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type, ref Newtonsoft.Json.JsonTextWriter)
+  type: Method
+  source:
+    remote:
+      path: ingot.Core/Content/Block/BlockPermutation.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Compile
+    path: ../ingot.Core/Content/Block/BlockPermutation.cs
+    startLine: 50
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public static void Compile(Type tBlockPermutation, ref JsonTextWriter writer)
+    parameters:
+    - id: tBlockPermutation
+      type: System.Type
+    - id: writer
+      type: Newtonsoft.Json.JsonTextWriter
+    content.vb: Public Shared Sub Compile(tBlockPermutation As Type, writer As JsonTextWriter)
+  overload: ingot.Core.Content.Block.BlockPermutation.Compile*
+  nameWithType.vb: BlockPermutation.Compile(Type, JsonTextWriter)
+  fullName.vb: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type, Newtonsoft.Json.JsonTextWriter)
+  name.vb: Compile(Type, JsonTextWriter)
+references:
+- uid: ingot.Core.Content.Block
+  commentId: N:ingot.Core.Content.Block
+  href: ingot.html
+  name: ingot.Core.Content.Block
+  nameWithType: ingot.Core.Content.Block
+  fullName: ingot.Core.Content.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.Content.Block.BlockPermutation.Condition*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.Condition
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Condition
+  name: Condition
+  nameWithType: BlockPermutation.Condition
+  fullName: ingot.Core.Content.Block.BlockPermutation.Condition
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: ingot.Core.Content.Block.BlockPermutation.DisplayName*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.DisplayName
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_DisplayName
+  name: DisplayName
+  nameWithType: BlockPermutation.DisplayName
+  fullName: ingot.Core.Content.Block.BlockPermutation.DisplayName
+- uid: ingot.Core.Content.Block.BlockPermutation.Friction*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.Friction
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Friction
+  name: Friction
+  nameWithType: BlockPermutation.Friction
+  fullName: ingot.Core.Content.Block.BlockPermutation.Friction
+- uid: System.Nullable{System.Single}
+  commentId: T:System.Nullable{System.Single}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float?
+  nameWithType: float?
+  fullName: float?
+  nameWithType.vb: Single?
+  fullName.vb: Single?
+  name.vb: Single?
+  spec.csharp:
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: '?'
+  spec.vb:
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: ingot.Core.Content.Block.BlockPermutation.LightDampening*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.LightDampening
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_LightDampening
+  name: LightDampening
+  nameWithType: BlockPermutation.LightDampening
+  fullName: ingot.Core.Content.Block.BlockPermutation.LightDampening
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: ingot.Core.Content.Block.BlockPermutation.LightEmission*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.LightEmission
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_LightEmission
+  name: LightEmission
+  nameWithType: BlockPermutation.LightEmission
+  fullName: ingot.Core.Content.Block.BlockPermutation.LightEmission
+- uid: ingot.Core.Content.Block.BlockPermutation.Replaceable*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.Replaceable
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Replaceable
+  name: Replaceable
+  nameWithType: BlockPermutation.Replaceable
+  fullName: ingot.Core.Content.Block.BlockPermutation.Replaceable
+- uid: System.Nullable{System.Boolean}
+  commentId: T:System.Nullable{System.Boolean}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool?
+  nameWithType: bool?
+  fullName: bool?
+  nameWithType.vb: Boolean?
+  fullName.vb: Boolean?
+  name.vb: Boolean?
+  spec.csharp:
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '?'
+  spec.vb:
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '?'
+- uid: ingot.Core.Content.Block.BlockPermutation.Loot*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.Loot
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Loot
+  name: Loot
+  nameWithType: BlockPermutation.Loot
+  fullName: ingot.Core.Content.Block.BlockPermutation.Loot
+- uid: ingot.Core.Content.Block.BlockPermutation
+  commentId: T:ingot.Core.Content.Block.BlockPermutation
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.BlockPermutation.html
+  name: BlockPermutation
+  nameWithType: BlockPermutation
+  fullName: ingot.Core.Content.Block.BlockPermutation
+- uid: ingot.Core.Content.Block.BlockPermutation.MaterialInstances*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_MaterialInstances
+  name: MaterialInstances
+  nameWithType: BlockPermutation.MaterialInstances
+  fullName: ingot.Core.Content.Block.BlockPermutation.MaterialInstances
+- uid: System.Nullable{ingot.Core.Content.Block.MaterialInstances}
+  commentId: T:System.Nullable{ingot.Core.Content.Block.MaterialInstances}
+  parent: System
+  definition: System.Nullable`1
+  href: ingot.Core.Content.Block.MaterialInstances.html
+  name: MaterialInstances?
+  nameWithType: MaterialInstances?
+  fullName: ingot.Core.Content.Block.MaterialInstances?
+  spec.csharp:
+  - uid: ingot.Core.Content.Block.MaterialInstances
+    name: MaterialInstances
+    href: ingot.Core.Content.Block.MaterialInstances.html
+  - name: '?'
+  spec.vb:
+  - uid: ingot.Core.Content.Block.MaterialInstances
+    name: MaterialInstances
+    href: ingot.Core.Content.Block.MaterialInstances.html
+  - name: '?'
+- uid: ingot.Core.Content.Block.BlockPermutation.Compile*
+  commentId: Overload:ingot.Core.Content.Block.BlockPermutation.Compile
+  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
+  name: Compile
+  nameWithType: BlockPermutation.Compile
+  fullName: ingot.Core.Content.Block.BlockPermutation.Compile
+- uid: Newtonsoft.Json.JsonTextWriter
+  commentId: T:Newtonsoft.Json.JsonTextWriter
+  parent: Newtonsoft.Json
+  isExternal: true
+  name: JsonTextWriter
+  nameWithType: JsonTextWriter
+  fullName: Newtonsoft.Json.JsonTextWriter
+- uid: Newtonsoft.Json
+  commentId: N:Newtonsoft.Json
+  isExternal: true
+  name: Newtonsoft.Json
+  nameWithType: Newtonsoft.Json
+  fullName: Newtonsoft.Json
+  spec.csharp:
+  - uid: Newtonsoft
+    name: Newtonsoft
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json
+    name: Json
+    isExternal: true
+  spec.vb:
+  - uid: Newtonsoft
+    name: Newtonsoft
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json
+    name: Json
+    isExternal: true
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.type
+  name: Type
+  nameWithType: Type
+  fullName: System.Type

@@ -1,0 +1,155 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.ICompostable
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.ICompostable
+  id: ICompostable
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance
+  langs:
+  - csharp
+  - vb
+  name: ICompostable
+  nameWithType: ICompostable
+  fullName: ingot.Core.TraitSystem.Traits.Item.ICompostable
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/ICompostable.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ICompostable
+    path: ../ingot.Core/TraitSystem/Traits/Item/ICompostable.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:compostable", TraitSystem.TraitType.Item)]
+
+      public interface ICompostable : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:compostable", TraitSystem.TraitType.Item)>
+
+      Public Interface ICompostable Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:compostable
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance
+  id: CompostingChance
+  parent: ingot.Core.TraitSystem.Traits.Item.ICompostable
+  langs:
+  - csharp
+  - vb
+  name: CompostingChance
+  nameWithType: ICompostable.CompostingChance
+  fullName: ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/ICompostable.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: CompostingChance
+    path: ../ingot.Core/TraitSystem/Traits/Item/ICompostable.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: The chance of this item to create a layer upon composting with the composter. Valid value range is 1 - 100 inclusive Value must be &gt;= 1. Value must be &lt;= 100.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      int CompostingChance { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property CompostingChance As Integer
+  overload: ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance
+  href: ingot.Core.TraitSystem.Traits.Item.ICompostable.html#ingot_Core_TraitSystem_Traits_Item_ICompostable_CompostingChance
+  name: CompostingChance
+  nameWithType: ICompostable.CompostingChance
+  fullName: ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

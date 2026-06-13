@@ -1,0 +1,242 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Block.IRandomOffset
+  commentId: T:ingot.Core.TraitSystem.Traits.Block.IRandomOffset
+  id: IRandomOffset
+  parent: ingot.Core.TraitSystem.Traits.Block
+  children:
+  - ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X
+  - ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Y
+  - ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Z
+  langs:
+  - csharp
+  - vb
+  name: IRandomOffset
+  nameWithType: IRandomOffset
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRandomOffset
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRandomOffset.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IRandomOffset
+    path: ../ingot.Core/TraitSystem/Traits/Block/IRandomOffset.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  syntax:
+    content: >-
+      [Trait("minecraft:random_offset", TraitSystem.TraitType.Block)]
+
+      public interface IRandomOffset : IBlockTrait
+    content.vb: >-
+      <Trait("minecraft:random_offset", TraitSystem.TraitType.Block)>
+
+      Public Interface IRandomOffset Inherits IBlockTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:random_offset
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 0
+- uid: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X
+  id: X
+  parent: ingot.Core.TraitSystem.Traits.Block.IRandomOffset
+  langs:
+  - csharp
+  - vb
+  name: X
+  nameWithType: IRandomOffset.X
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRandomOffset.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: X
+    path: ../ingot.Core/TraitSystem/Traits/Block/IRandomOffset.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: X coordinate
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? X { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property X As Object
+  overload: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Y
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Y
+  id: Y
+  parent: ingot.Core.TraitSystem.Traits.Block.IRandomOffset
+  langs:
+  - csharp
+  - vb
+  name: Y
+  nameWithType: IRandomOffset.Y
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Y
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRandomOffset.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Y
+    path: ../ingot.Core/TraitSystem/Traits/Block/IRandomOffset.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: Y coordinate
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? Y { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Y As Object
+  overload: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Y*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Z
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Z
+  id: Z
+  parent: ingot.Core.TraitSystem.Traits.Block.IRandomOffset
+  langs:
+  - csharp
+  - vb
+  name: Z
+  nameWithType: IRandomOffset.Z
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Z
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRandomOffset.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Z
+    path: ../ingot.Core/TraitSystem/Traits/Block/IRandomOffset.cs
+    startLine: 25
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: Z coordinate
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? Z { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Z As Object
+  overload: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Z*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Block
+  commentId: N:ingot.Core.TraitSystem.Traits.Block
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Block
+  nameWithType: ingot.Core.TraitSystem.Traits.Block
+  fullName: ingot.Core.TraitSystem.Traits.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Block
+    name: Block
+    href: ingot.Core.TraitSystem.Traits.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Block
+    name: Block
+    href: ingot.Core.TraitSystem.Traits.Block.html
+- uid: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X
+  href: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.html#ingot_Core_TraitSystem_Traits_Block_IRandomOffset_X
+  name: X
+  nameWithType: IRandomOffset.X
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Y*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Y
+  href: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.html#ingot_Core_TraitSystem_Traits_Block_IRandomOffset_Y
+  name: Y
+  nameWithType: IRandomOffset.Y
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Y
+- uid: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Z*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Z
+  href: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.html#ingot_Core_TraitSystem_Traits_Block_IRandomOffset_Z
+  name: Z
+  nameWithType: IRandomOffset.Z
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRandomOffset.Z

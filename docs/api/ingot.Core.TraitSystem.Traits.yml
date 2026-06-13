@@ -1,0 +1,76 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits
+  commentId: N:ingot.Core.TraitSystem.Traits
+  id: ingot.Core.TraitSystem.Traits
+  children:
+  - ingot.Core.TraitSystem.Traits.IBlockTrait
+  - ingot.Core.TraitSystem.Traits.IEntityTrait
+  - ingot.Core.TraitSystem.Traits.IItemTrait
+  langs:
+  - csharp
+  - vb
+  name: ingot.Core.TraitSystem.Traits
+  nameWithType: ingot.Core.TraitSystem.Traits
+  fullName: ingot.Core.TraitSystem.Traits
+  type: Namespace
+  assemblies:
+  - ingot.Core
+references:
+- uid: ingot.Core.TraitSystem.Traits.IBlockTrait
+  commentId: T:ingot.Core.TraitSystem.Traits.IBlockTrait
+  href: ingot.Core.TraitSystem.Traits.IBlockTrait.html
+  name: IBlockTrait
+  nameWithType: IBlockTrait
+  fullName: ingot.Core.TraitSystem.Traits.IBlockTrait
+- uid: ingot.Core.TraitSystem.Traits.IEntityTrait
+  commentId: T:ingot.Core.TraitSystem.Traits.IEntityTrait
+  href: ingot.Core.TraitSystem.Traits.IEntityTrait.html
+  name: IEntityTrait
+  nameWithType: IEntityTrait
+  fullName: ingot.Core.TraitSystem.Traits.IEntityTrait
+- uid: ingot.Core.TraitSystem.Traits.IItemTrait
+  commentId: T:ingot.Core.TraitSystem.Traits.IItemTrait
+  parent: ingot.Core.TraitSystem.Traits
+  href: ingot.Core.TraitSystem.Traits.IItemTrait.html
+  name: IItemTrait
+  nameWithType: IItemTrait
+  fullName: ingot.Core.TraitSystem.Traits.IItemTrait
+- uid: ingot.Core.TraitSystem.Traits
+  commentId: N:ingot.Core.TraitSystem.Traits
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits
+  nameWithType: ingot.Core.TraitSystem.Traits
+  fullName: ingot.Core.TraitSystem.Traits
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html

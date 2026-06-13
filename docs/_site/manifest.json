@@ -1,0 +1,1544 @@
+{
+  "source_base_path": "/home/pyro/RiderProjects/ingot/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.BehaviourPack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.BehaviourPack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.BehaviourPack",
+      "Summary": "<p sourcefile=\"api/ingot.Core.BehaviourPack.yml\" sourcestartlinenumber=\"1\">C# representation of a Minecraft behaviour pack</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Common.Formatting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Common.Formatting.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Common.Formatting",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Common.Formatting.yml\" sourcestartlinenumber=\"1\">Internal use class to convert C# naming conventions to Minecraft and vice versa</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Common.ICompileableFragment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Common.ICompileableFragment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Common.ICompileableFragment",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Common.ICompileableFragment.yml\" sourcestartlinenumber=\"1\">Internal use interface make a class compilable to JSON</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Common.Identifiable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Common.Identifiable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Common.Identifiable",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Common.Identifiable.yml\" sourcestartlinenumber=\"1\">Internal use class to implement a Minecraft identifier</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Common.Identifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Common.Identifier.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Common.Identifier",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Common.Identifier.yml\" sourcestartlinenumber=\"1\">Internal use class to represent a Minecraft identifier</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Common.Version.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Common.Version.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Common.Version",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Common.Version.yml\" sourcestartlinenumber=\"1\">Internal use implementation of a semantic version</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Common.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Common.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Common",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.CompileTimeLogging.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.CompileTimeLogging.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.CompileTimeLogging",
+      "Summary": "<p sourcefile=\"api/ingot.Core.CompileTimeLogging.yml\" sourcestartlinenumber=\"1\">Internal use class for emitting compile time logs</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Block.Block.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Block.Block.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Block.Block",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Content.Block.Block.yml\" sourcestartlinenumber=\"1\">Implements basic properties of a block</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Block.BlockPermutation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Block.BlockPermutation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Block.BlockPermutation",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Content.Block.BlockPermutation.yml\" sourcestartlinenumber=\"1\">C# representation of a block permutation</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Block.MaterialInstance.RenderMethods.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Block.MaterialInstance.RenderMethods.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Block.MaterialInstance.RenderMethods",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Block.MaterialInstance.TintMethods.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Block.MaterialInstance.TintMethods.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Block.MaterialInstance.TintMethods",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Block.MaterialInstance.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Block.MaterialInstance.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Block.MaterialInstance",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Content.Block.MaterialInstance.yml\" sourcestartlinenumber=\"1\">Texture and material configuration for the face of a <xref href=\"ingot.Core.Content.Block.Block\" data-throw-if-not-resolved=\"false\"></xref></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Block.MaterialInstances.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Block.MaterialInstances.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Block.MaterialInstances",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Content.Block.MaterialInstances.yml\" sourcestartlinenumber=\"1\">Texture and material configuration for the faces of a <xref href=\"ingot.Core.Content.Block.Block\" data-throw-if-not-resolved=\"false\"></xref></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Block.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Block.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Block",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Entity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Entity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Entity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Item.CatalogueCategory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Item.CatalogueCategory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Item.CatalogueCategory",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.Item.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.Item.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content.Item",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Content.Item.yml\" sourcestartlinenumber=\"1\">Implements basic properties of an item</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Content.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Content.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Content",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Pack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Pack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Pack",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Pack.yml\" sourcestartlinenumber=\"1\">C# representation of a full pack with behaviour and resources</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.ResourcePack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.ResourcePack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.ResourcePack",
+      "Summary": "<p sourcefile=\"api/ingot.Core.ResourcePack.yml\" sourcestartlinenumber=\"1\">C# representation of a Minecraft resource pack</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Trait.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Trait.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Trait",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.Trait.yml\" sourcestartlinenumber=\"1\">Contains reflected data of a trait interface</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.TraitAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.TraitAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.TraitAttribute",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.TraitAttribute.yml\" sourcestartlinenumber=\"1\">Marks an interface as a valid trait</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.TraitProperty.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.TraitProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.TraitProperty",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.TraitProperty.yml\" sourcestartlinenumber=\"1\">Contains reflected data of a member in a trait interface</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.TraitPropertyAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.TraitPropertyAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.TraitPropertyAttribute",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.TraitPropertyAttribute.yml\" sourcestartlinenumber=\"1\">Marks a property in a trait interface as a property to be serialized in reflection</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.TraitSystem.TraitType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.TraitSystem.TraitType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.TraitSystem.TraitType",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.TraitSystem.TraitType.yml\" sourcestartlinenumber=\"1\">Type of trait</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.TraitSystem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.TraitSystem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.TraitSystem",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.TraitSystem.yml\" sourcestartlinenumber=\"1\">Handles trait reflection</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IChestObstruction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IChestObstruction.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IChestObstruction",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ICollisionBox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ICollisionBox.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.ICollisionBox",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IConnectionRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IConnectionRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IConnectionRule",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ICraftingTable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ICraftingTable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.ICraftingTable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IDestructibleByExplosion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IDestructibleByExplosion.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IDestructibleByExplosion",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IDestructibleByMining.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IDestructibleByMining.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IDestructibleByMining",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IDestructionParticles",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IEntityFallOn.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IEntityFallOn.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IEntityFallOn",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IFlammable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IFlammable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IFlammable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IGeometry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IGeometry.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IGeometry",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IInstrumentSound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IInstrumentSound.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IInstrumentSound",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ILiquidDetection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ILiquidDetection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.ILiquidDetection",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IMapColor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IMapColor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IMapColor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IMovable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IMovable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IMovable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IPlacementFilter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IPlacementFilter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IPlacementFilter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IPrecipitationInteractions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IPrecipitationInteractions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IPrecipitationInteractions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IRandomOffset.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IRandomOffset.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IRandomOffset",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IRedstoneConductivity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IRedstoneConductivity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IRedstoneConductivity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IRedstoneConsumer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IRedstoneConsumer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IRedstoneConsumer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ISelectionBox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ISelectionBox.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.ISelectionBox",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ISupport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ISupport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.ISupport",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ITick.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.ITick.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block.ITick",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Block.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Block.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Block",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.IBlockTrait.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.IBlockTrait.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.IBlockTrait",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.Traits.IBlockTrait.yml\" sourcestartlinenumber=\"1\">Tag interface for block traits</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.IEntityTrait.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.IEntityTrait.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.IEntityTrait",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.Traits.IEntityTrait.yml\" sourcestartlinenumber=\"1\">Tag interface for entity traits</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.IItemTrait.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.IItemTrait.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.IItemTrait",
+      "Summary": "<p sourcefile=\"api/ingot.Core.TraitSystem.Traits.IItemTrait.yml\" sourcestartlinenumber=\"1\">Tag interface for item traits</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IBlockPlacer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IBlockPlacer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IBlockPlacer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IBundleInteraction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IBundleInteraction.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IBundleInteraction",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ICanDestroyInCreative.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ICanDestroyInCreative.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.ICanDestroyInCreative",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ICompostable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ICompostable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.ICompostable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ICooldown.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ICooldown.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.ICooldown",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDamage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDamage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IDamage",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDigger.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDigger.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IDigger",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDurability.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDurability.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IDurability",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDyeable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IDyeable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IDyeable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IEnchantable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IEnchantable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IEnchantable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IFireResistant.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IFireResistant.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IFireResistant",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IFood.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IFood.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IFood",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IFuel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IFuel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IFuel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IGlint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IGlint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IGlint",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IHandEquipped.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IHandEquipped.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IHandEquipped",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IHoverTextColor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IHoverTextColor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IHoverTextColor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IInteractButton.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IInteractButton.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IInteractButton",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IKineticWeapon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IKineticWeapon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IKineticWeapon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ILiquidClipped.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ILiquidClipped.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.ILiquidClipped",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IPiercingWeapon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IPiercingWeapon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IPiercingWeapon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IProjectile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IProjectile.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IProjectile",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IRarity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IRarity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IRarity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IRecord.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IRecord.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IRecord",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ISeed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ISeed.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.ISeed",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IShooter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IShooter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IShooter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IShouldDespawn.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IShouldDespawn.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IShouldDespawn",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IStackedByData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IStackedByData.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IStackedByData",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IStorageItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IStorageItem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IStorageItem",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IStorageWeightModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IStorageWeightModifier.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IStorageWeightModifier",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ISwingDuration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ISwingDuration.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.ISwingDuration",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ISwingSounds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ISwingSounds.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.ISwingSounds",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ITags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.ITags.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.ITags",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IThrowable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IThrowable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IThrowable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IUseAnimation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IUseAnimation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IUseAnimation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IUseModifiers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IUseModifiers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IUseModifiers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IWearable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.IWearable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item.IWearable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.Item.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.Item.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits.Item",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.Traits.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.Traits.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem.Traits",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.TraitSystem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.TraitSystem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.TraitSystem",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Example.DenseLasagnaBlock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Example.DenseLasagnaBlock.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Example.DenseLasagnaBlock",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Example.DenseLasagnaGlowyPermutation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Example.DenseLasagnaGlowyPermutation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Example.DenseLasagnaGlowyPermutation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Example.LasagnaItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Example.LasagnaItem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Example.LasagnaItem",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Example.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Example.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Example",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Generators.TraitGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Generators.TraitGenerator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Generators.TraitGenerator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Generators.TraitProperty.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Generators.TraitProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Generators.TraitProperty",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Generators.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Generators.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Generators",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "api/toc.json"
+        },
+        ".html": {
+          "relative_path": "api/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/introduction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "docs/toc.json"
+        },
+        ".html": {
+          "relative_path": "docs/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

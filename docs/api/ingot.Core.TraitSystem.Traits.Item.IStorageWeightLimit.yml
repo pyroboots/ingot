@@ -1,0 +1,155 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit
+  id: IStorageWeightLimit
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit
+  langs:
+  - csharp
+  - vb
+  name: IStorageWeightLimit
+  nameWithType: IStorageWeightLimit
+  fullName: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IStorageWeightLimit.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IStorageWeightLimit
+    path: ../ingot.Core/TraitSystem/Traits/Item/IStorageWeightLimit.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:storage_weight_limit", TraitSystem.TraitType.Item)]
+
+      public interface IStorageWeightLimit : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:storage_weight_limit", TraitSystem.TraitType.Item)>
+
+      Public Interface IStorageWeightLimit Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:storage_weight_limit
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit
+  id: MaxWeightLimit
+  parent: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit
+  langs:
+  - csharp
+  - vb
+  name: MaxWeightLimit
+  nameWithType: IStorageWeightLimit.MaxWeightLimit
+  fullName: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IStorageWeightLimit.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: MaxWeightLimit
+    path: ../ingot.Core/TraitSystem/Traits/Item/IStorageWeightLimit.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: The maximum allowed weight of the sum of all contained items. Maximum is 64. Default is 64. Value must be &lt;= 64.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      int MaxWeightLimit { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property MaxWeightLimit As Integer
+  overload: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit
+  href: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.html#ingot_Core_TraitSystem_Traits_Item_IStorageWeightLimit_MaxWeightLimit
+  name: MaxWeightLimit
+  nameWithType: IStorageWeightLimit.MaxWeightLimit
+  fullName: ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
