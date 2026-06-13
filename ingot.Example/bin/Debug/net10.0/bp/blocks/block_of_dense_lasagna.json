@@ -1,0 +1,30 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:block": {
+        "description": {
+            "identifier": "test:block_of_dense_lasagna",
+            "states": {
+                "test:radioactive": [
+                    true,
+                    false
+                ]
+            }
+        },
+        "permutations": [
+            {
+                "condition": "q.get_block_state('test:radioactive') == true",
+                "components": {
+                    "minecraft:light_emission": 7
+                }
+            }
+        ],
+        "components": {
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "block_of_dense_lasagna"
+                }
+            }
+        }
+    }
+}

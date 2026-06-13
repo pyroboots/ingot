@@ -65,8 +65,15 @@ public abstract class Item
                 Object(ref w, "minecraft:max_stack_size", w => Property(ref w, "value", inst.MaxStackSize));
                 Object(ref w, "minecraft:allow_off_hand", w => Property(ref w, "value", inst.AllowOffhand));
 
-                foreach (Trait t in TraitSystem.TraitSystem.GetTraits(tItem, TraitSystem.TraitSystem.TraitType.Item))
+                CompileTimeLogging.Log("compiling traits...");
+                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tItem, TraitSystem.TraitSystem.TraitType.Item);
+                int c = 0;
+                foreach (Trait t in traits)
+                {
+                    c++;
                     t.Compile(ref w);
+                    CompileTimeLogging.Log($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
+                }
             });
             CompileTimeLogging.Pop();
         });

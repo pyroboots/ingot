@@ -53,8 +53,15 @@ public abstract class Block
             CompileTimeLogging.Push("permutations");
             Array(ref w, "permutations", w =>
             {
+                CompileTimeLogging.Log("compiling block permutations...");
+                int c = 0;
                 foreach (BlockPermutation p in inst.Permutations)
+                {
+                    c++;
                     BlockPermutation.Compile(p.GetType(), ref w);
+                    CompileTimeLogging.Log($"({c}/{inst.Permutations.Count}) compiled block permutation {p.GetType().Name}");
+                }
+                CompileTimeLogging.Log("compiled block permutations");
             });
             CompileTimeLogging.Pop();
             
@@ -69,9 +76,16 @@ public abstract class Block
                 Property(ref w, "minecraft:loot", inst.Loot);
                 
                 inst.MaterialInstances.Compile(ref w);
-                
-                foreach (Trait t in TraitSystem.TraitSystem.GetTraits(tBlock, TraitSystem.TraitSystem.TraitType.Block))
+
+                CompileTimeLogging.Log("compiling traits...");
+                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tBlock, TraitSystem.TraitSystem.TraitType.Block);
+                int c = 0;
+                foreach (Trait t in traits)
+                {
+                    c++;
                     t.Compile(ref w);
+                    CompileTimeLogging.Log($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
+                }
             });
             CompileTimeLogging.Pop();
         });

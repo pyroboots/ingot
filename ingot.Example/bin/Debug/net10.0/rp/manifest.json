@@ -1,0 +1,46 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "ingot example",
+        "description": "Example pack made with ingot",
+        "uuid": "2263a1f8-eeea-47f3-a787-1e5bfaf09757",
+        "version": [
+            1,
+            0,
+            0
+        ],
+        "min_engine_version": [
+            1,
+            20,
+            0
+        ]
+    },
+    "modules": [
+        {
+            "description": "ingot example Resources",
+            "type": "resources",
+            "uuid": "1de70079-dfd9-4b4e-9c9a-d1aa1f50b2c3",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "80930fd9-be6e-4000-aefa-9a99cdd57c93",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        }
+    ],
+    "metadata": {
+        "authors": [],
+        "generated_with": {
+            "ingot": "https://github.com/pyroboots/ingot"
+        }
+    }
+}

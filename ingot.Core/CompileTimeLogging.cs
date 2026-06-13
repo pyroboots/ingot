@@ -8,6 +8,7 @@ public static class CompileTimeLogging
     private static List<string> _logs = new();
     public static void Push(string trace) => _traceStack.Push(trace);
     public static void Pop() => _traceStack.Pop();
+    public static bool ShowInfoLogs = false;
 
     private static string _getTrace() => string.Join('/', _traceStack.ToArray().Reverse());
 
@@ -26,4 +27,14 @@ public static class CompileTimeLogging
             w.WriteComment(msg);
         }
     }
+
+    public static void Log(string msg)
+    {
+        string log = $"(i) [{_getTrace()}] {msg}";
+        _logs.Add(log);
+        
+        Console.WriteLine(log);
+    }
+    
+    public static List<string> GetLogs() => _logs;
 }

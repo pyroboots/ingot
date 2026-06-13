@@ -24,6 +24,8 @@ public class Version : ICompileableFragment
     }
     public override string ToString() => $"{Major}.{Minor}.{Patch}";
     
+    public int[] AsArray() => new[] { Major, Minor, Patch };
+    
     public void Compile(ref JsonTextWriter writer)
     {
         writer.WriteStartArray();

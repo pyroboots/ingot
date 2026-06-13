@@ -1,6 +1,4 @@
-﻿using ingot.Core.Content.Block;
-using ingot.Core.TraitSystem;
-using ingot.Generators;
+﻿using ingot.Core;
 
 namespace ingot.Example;
 
@@ -8,10 +6,20 @@ class Program
 {
     static void Main(string[] args)
     {
-        //TraitGenerator generator = new();
-        //generator.GenerateAllBlockTraits("/home/pyro/RiderProjects/ingot/ingot.Core/TraitSystem/Traits/Block/");
-
-        string block = Block.Compile<DenseLasagnaBlock>();
-        Console.WriteLine(block);
+        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+            .AddItem<LasagnaItem>()
+            .AddBlock<DenseLasagnaBlock>();
+        
+        Pack pack = new()
+        {
+            Description = "Example pack made with ingot",
+            Name = "ingot example",
+            BehaviourPack = bp,
+            ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
+            LinkPacks = true,
+            ScriptsEnabled = true,
+        };
+        
+        pack.Compile("./");
     }
 }
