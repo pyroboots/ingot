@@ -1,0 +1,137 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.Common.ICompileableFragment
+  commentId: T:ingot.Core.Common.ICompileableFragment
+  id: ICompileableFragment
+  parent: ingot.Core.Common
+  children:
+  - ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
+  langs:
+  - csharp
+  - vb
+  name: ICompileableFragment
+  nameWithType: ICompileableFragment
+  fullName: ingot.Core.Common.ICompileableFragment
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/Common/ICompileableFragment.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ICompileableFragment
+    path: ingot.Core/Common/ICompileableFragment.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Common
+  summary: Internal use interface make a class compilable to JSON
+  example: []
+  syntax:
+    content: public interface ICompileableFragment
+    content.vb: Public Interface ICompileableFragment
+  derivedClasses:
+  - ingot.Core.Common.Version
+  - ingot.Core.Content.Block.MaterialInstance
+  - ingot.Core.Content.Block.MaterialInstances
+  - ingot.Core.TraitSystem.Trait
+- uid: ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
+  id: Compile(Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Common.ICompileableFragment
+  langs:
+  - csharp
+  - vb
+  name: Compile(ref JsonTextWriter)
+  nameWithType: ICompileableFragment.Compile(ref JsonTextWriter)
+  fullName: ingot.Core.Common.ICompileableFragment.Compile(ref Newtonsoft.Json.JsonTextWriter)
+  type: Method
+  source:
+    remote:
+      path: ingot.Core/Common/ICompileableFragment.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Compile
+    path: ingot.Core/Common/ICompileableFragment.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Common
+  summary: Compiles this class to JSON
+  example: []
+  syntax:
+    content: void Compile(ref JsonTextWriter writer)
+    parameters:
+    - id: writer
+      type: Newtonsoft.Json.JsonTextWriter
+      description: JSON source stream to write to
+    content.vb: Sub Compile(writer As JsonTextWriter)
+  overload: ingot.Core.Common.ICompileableFragment.Compile*
+  nameWithType.vb: ICompileableFragment.Compile(JsonTextWriter)
+  fullName.vb: ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter)
+  name.vb: Compile(JsonTextWriter)
+references:
+- uid: ingot.Core.Common
+  commentId: N:ingot.Core.Common
+  href: ingot.html
+  name: ingot.Core.Common
+  nameWithType: ingot.Core.Common
+  fullName: ingot.Core.Common
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Common
+    name: Common
+    href: ingot.Core.Common.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Common
+    name: Common
+    href: ingot.Core.Common.html
+- uid: ingot.Core.Common.ICompileableFragment.Compile*
+  commentId: Overload:ingot.Core.Common.ICompileableFragment.Compile
+  href: ingot.Core.Common.ICompileableFragment.html#ingot_Core_Common_ICompileableFragment_Compile_Newtonsoft_Json_JsonTextWriter__
+  name: Compile
+  nameWithType: ICompileableFragment.Compile
+  fullName: ingot.Core.Common.ICompileableFragment.Compile
+- uid: Newtonsoft.Json.JsonTextWriter
+  commentId: T:Newtonsoft.Json.JsonTextWriter
+  parent: Newtonsoft.Json
+  isExternal: true
+  name: JsonTextWriter
+  nameWithType: JsonTextWriter
+  fullName: Newtonsoft.Json.JsonTextWriter
+- uid: Newtonsoft.Json
+  commentId: N:Newtonsoft.Json
+  isExternal: true
+  name: Newtonsoft.Json
+  nameWithType: Newtonsoft.Json
+  fullName: Newtonsoft.Json
+  spec.csharp:
+  - uid: Newtonsoft
+    name: Newtonsoft
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json
+    name: Json
+    isExternal: true
+  spec.vb:
+  - uid: Newtonsoft
+    name: Newtonsoft
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json
+    name: Json
+    isExternal: true

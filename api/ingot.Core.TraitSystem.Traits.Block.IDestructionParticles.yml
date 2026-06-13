@@ -1,0 +1,271 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles
+  commentId: T:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles
+  id: IDestructionParticles
+  parent: ingot.Core.TraitSystem.Traits.Block
+  children:
+  - ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount
+  - ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.Texture
+  - ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.TintMethod
+  langs:
+  - csharp
+  - vb
+  name: IDestructionParticles
+  nameWithType: IDestructionParticles
+  fullName: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IDestructionParticles.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IDestructionParticles
+    path: ingot.Core/TraitSystem/Traits/Block/IDestructionParticles.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  syntax:
+    content: >-
+      [Trait("minecraft:destruction_particles", TraitSystem.TraitType.Block)]
+
+      public interface IDestructionParticles : IBlockTrait
+    content.vb: >-
+      <Trait("minecraft:destruction_particles", TraitSystem.TraitType.Block)>
+
+      Public Interface IDestructionParticles Inherits IBlockTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:destruction_particles
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 0
+- uid: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount
+  id: ParticleCount
+  parent: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles
+  langs:
+  - csharp
+  - vb
+  name: ParticleCount
+  nameWithType: IDestructionParticles.ParticleCount
+  fullName: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IDestructionParticles.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ParticleCount
+    path: ingot.Core/TraitSystem/Traits/Block/IDestructionParticles.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: Sets number of particles to spawn on block destruction. Value must be &lt;= 255.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      int ParticleCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property ParticleCount As Integer
+  overload: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.Texture
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.Texture
+  id: Texture
+  parent: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles
+  langs:
+  - csharp
+  - vb
+  name: Texture
+  nameWithType: IDestructionParticles.Texture
+  fullName: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.Texture
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IDestructionParticles.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Texture
+    path: ingot.Core/TraitSystem/Traits/Block/IDestructionParticles.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: The texture name used for the particle.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      string Texture { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Texture As String
+  overload: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.Texture*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.TintMethod
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.TintMethod
+  id: TintMethod
+  parent: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles
+  langs:
+  - csharp
+  - vb
+  name: TintMethod
+  nameWithType: IDestructionParticles.TintMethod
+  fullName: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.TintMethod
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IDestructionParticles.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: TintMethod
+    path: ingot.Core/TraitSystem/Traits/Block/IDestructionParticles.cs
+    startLine: 25
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: Tint multiplied to the color. Tint method logic varies, but often refers to the "rain" and "temperature" of the biome the block is placed in to compute the tint.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? TintMethod { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property TintMethod As Object
+  overload: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.TintMethod*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Block
+  commentId: N:ingot.Core.TraitSystem.Traits.Block
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Block
+  nameWithType: ingot.Core.TraitSystem.Traits.Block
+  fullName: ingot.Core.TraitSystem.Traits.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Block
+    name: Block
+    href: ingot.Core.TraitSystem.Traits.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Block
+    name: Block
+    href: ingot.Core.TraitSystem.Traits.Block.html
+- uid: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount
+  href: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.html#ingot_Core_TraitSystem_Traits_Block_IDestructionParticles_ParticleCount
+  name: ParticleCount
+  nameWithType: IDestructionParticles.ParticleCount
+  fullName: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.Texture*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.Texture
+  href: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.html#ingot_Core_TraitSystem_Traits_Block_IDestructionParticles_Texture
+  name: Texture
+  nameWithType: IDestructionParticles.Texture
+  fullName: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.Texture
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.TintMethod*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.TintMethod
+  href: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.html#ingot_Core_TraitSystem_Traits_Block_IDestructionParticles_TintMethod
+  name: TintMethod
+  nameWithType: IDestructionParticles.TintMethod
+  fullName: ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.TintMethod
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object

@@ -1,0 +1,555 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.ResourcePack
+  commentId: T:ingot.Core.ResourcePack
+  id: ResourcePack
+  parent: ingot.Core
+  children:
+  - ingot.Core.ResourcePack.#ctor(System.String,ingot.Core.Common.Version)
+  - ingot.Core.ResourcePack.Compile(System.String)
+  - ingot.Core.ResourcePack.Create(System.String,ingot.Core.Common.Version)
+  - ingot.Core.ResourcePack.ResourcePackVersion
+  - ingot.Core.ResourcePack.Uuid
+  langs:
+  - csharp
+  - vb
+  name: ResourcePack
+  nameWithType: ResourcePack
+  fullName: ingot.Core.ResourcePack
+  type: Class
+  source:
+    remote:
+      path: ingot.Core/ResourcePack.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ResourcePack
+    path: ingot.Core/ResourcePack.cs
+    startLine: 6
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core
+  summary: C# representation of a Minecraft resource pack
+  example: []
+  syntax:
+    content: public class ResourcePack
+    content.vb: Public Class ResourcePack
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: ingot.Core.ResourcePack.Uuid
+  commentId: F:ingot.Core.ResourcePack.Uuid
+  id: Uuid
+  parent: ingot.Core.ResourcePack
+  langs:
+  - csharp
+  - vb
+  name: Uuid
+  nameWithType: ResourcePack.Uuid
+  fullName: ingot.Core.ResourcePack.Uuid
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/ResourcePack.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Uuid
+    path: ingot.Core/ResourcePack.cs
+    startLine: 11
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core
+  summary: Minecraft UUID to be used at runtime
+  example: []
+  syntax:
+    content: public string Uuid
+    return:
+      type: System.String
+    content.vb: Public Uuid As String
+- uid: ingot.Core.ResourcePack.ResourcePackVersion
+  commentId: F:ingot.Core.ResourcePack.ResourcePackVersion
+  id: ResourcePackVersion
+  parent: ingot.Core.ResourcePack
+  langs:
+  - csharp
+  - vb
+  name: ResourcePackVersion
+  nameWithType: ResourcePack.ResourcePackVersion
+  fullName: ingot.Core.ResourcePack.ResourcePackVersion
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/ResourcePack.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ResourcePackVersion
+    path: ingot.Core/ResourcePack.cs
+    startLine: 15
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core
+  summary: Version of the <xref href="ingot.Core.ResourcePack" data-throw-if-not-resolved="false"></xref>. When <xref href="ingot.Core.BehaviourPack" data-throw-if-not-resolved="false"></xref> is linked, it will require at least this version.
+  example: []
+  syntax:
+    content: public Version ResourcePackVersion
+    return:
+      type: ingot.Core.Common.Version
+    content.vb: Public ResourcePackVersion As Version
+- uid: ingot.Core.ResourcePack.Create(System.String,ingot.Core.Common.Version)
+  commentId: M:ingot.Core.ResourcePack.Create(System.String,ingot.Core.Common.Version)
+  id: Create(System.String,ingot.Core.Common.Version)
+  parent: ingot.Core.ResourcePack
+  langs:
+  - csharp
+  - vb
+  name: Create(string, Version?)
+  nameWithType: ResourcePack.Create(string, Version?)
+  fullName: ingot.Core.ResourcePack.Create(string, ingot.Core.Common.Version?)
+  type: Method
+  source:
+    remote:
+      path: ingot.Core/ResourcePack.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Create
+    path: ingot.Core/ResourcePack.cs
+    startLine: 21
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core
+  summary: Helper factory method to initiate API-style syntax
+  example: []
+  syntax:
+    content: public static ResourcePack Create(string uuid, Version? version = null)
+    parameters:
+    - id: uuid
+      type: System.String
+      description: Minecraft UUID to be used at runtime
+    - id: version
+      type: ingot.Core.Common.Version
+      description: Version of the <xref href="ingot.Core.BehaviourPack" data-throw-if-not-resolved="false"></xref>. When <xref href="ingot.Core.ResourcePack" data-throw-if-not-resolved="false"></xref> is linked, it will require at least this version.
+    return:
+      type: ingot.Core.ResourcePack
+    content.vb: Public Shared Function Create(uuid As String, version As Version = Nothing) As ResourcePack
+  overload: ingot.Core.ResourcePack.Create*
+  nameWithType.vb: ResourcePack.Create(String, Version)
+  fullName.vb: ingot.Core.ResourcePack.Create(String, ingot.Core.Common.Version)
+  name.vb: Create(String, Version)
+- uid: ingot.Core.ResourcePack.#ctor(System.String,ingot.Core.Common.Version)
+  commentId: M:ingot.Core.ResourcePack.#ctor(System.String,ingot.Core.Common.Version)
+  id: '#ctor(System.String,ingot.Core.Common.Version)'
+  parent: ingot.Core.ResourcePack
+  langs:
+  - csharp
+  - vb
+  name: ResourcePack(string, Version?)
+  nameWithType: ResourcePack.ResourcePack(string, Version?)
+  fullName: ingot.Core.ResourcePack.ResourcePack(string, ingot.Core.Common.Version?)
+  type: Constructor
+  source:
+    remote:
+      path: ingot.Core/ResourcePack.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: .ctor
+    path: ingot.Core/ResourcePack.cs
+    startLine: 22
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core
+  syntax:
+    content: public ResourcePack(string uuid, Version? version = null)
+    parameters:
+    - id: uuid
+      type: System.String
+    - id: version
+      type: ingot.Core.Common.Version
+    content.vb: Public Sub New(uuid As String, version As Version = Nothing)
+  overload: ingot.Core.ResourcePack.#ctor*
+  nameWithType.vb: ResourcePack.New(String, Version)
+  fullName.vb: ingot.Core.ResourcePack.New(String, ingot.Core.Common.Version)
+  name.vb: New(String, Version)
+- uid: ingot.Core.ResourcePack.Compile(System.String)
+  commentId: M:ingot.Core.ResourcePack.Compile(System.String)
+  id: Compile(System.String)
+  parent: ingot.Core.ResourcePack
+  langs:
+  - csharp
+  - vb
+  name: Compile(string)
+  nameWithType: ResourcePack.Compile(string)
+  fullName: ingot.Core.ResourcePack.Compile(string)
+  type: Method
+  source:
+    remote:
+      path: ingot.Core/ResourcePack.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Compile
+    path: ingot.Core/ResourcePack.cs
+    startLine: 32
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core
+  summary: Compiles the <xref href="ingot.Core.ResourcePack" data-throw-if-not-resolved="false"></xref> to output <code class="paramref">dir</code>
+  example: []
+  syntax:
+    content: public void Compile(string dir)
+    parameters:
+    - id: dir
+      type: System.String
+      description: Output directory
+    content.vb: Public Sub Compile(dir As String)
+  overload: ingot.Core.ResourcePack.Compile*
+  nameWithType.vb: ResourcePack.Compile(String)
+  fullName.vb: ingot.Core.ResourcePack.Compile(String)
+  name.vb: Compile(String)
+references:
+- uid: ingot.Core
+  commentId: N:ingot.Core
+  href: ingot.html
+  name: ingot.Core
+  nameWithType: ingot.Core
+  fullName: ingot.Core
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: ingot.Core.ResourcePack
+  commentId: T:ingot.Core.ResourcePack
+  parent: ingot.Core
+  href: ingot.Core.ResourcePack.html
+  name: ResourcePack
+  nameWithType: ResourcePack
+  fullName: ingot.Core.ResourcePack
+- uid: ingot.Core.BehaviourPack
+  commentId: T:ingot.Core.BehaviourPack
+  parent: ingot.Core
+  href: ingot.Core.BehaviourPack.html
+  name: BehaviourPack
+  nameWithType: BehaviourPack
+  fullName: ingot.Core.BehaviourPack
+- uid: ingot.Core.Common.Version
+  commentId: T:ingot.Core.Common.Version
+  parent: ingot.Core.Common
+  href: ingot.Core.Common.Version.html
+  name: Version
+  nameWithType: Version
+  fullName: ingot.Core.Common.Version
+- uid: ingot.Core.Common
+  commentId: N:ingot.Core.Common
+  href: ingot.html
+  name: ingot.Core.Common
+  nameWithType: ingot.Core.Common
+  fullName: ingot.Core.Common
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Common
+    name: Common
+    href: ingot.Core.Common.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Common
+    name: Common
+    href: ingot.Core.Common.html
+- uid: ingot.Core.ResourcePack.Create*
+  commentId: Overload:ingot.Core.ResourcePack.Create
+  href: ingot.Core.ResourcePack.html#ingot_Core_ResourcePack_Create_System_String_ingot_Core_Common_Version_
+  name: Create
+  nameWithType: ResourcePack.Create
+  fullName: ingot.Core.ResourcePack.Create
+- uid: ingot.Core.ResourcePack.#ctor*
+  commentId: Overload:ingot.Core.ResourcePack.#ctor
+  href: ingot.Core.ResourcePack.html#ingot_Core_ResourcePack__ctor_System_String_ingot_Core_Common_Version_
+  name: ResourcePack
+  nameWithType: ResourcePack.ResourcePack
+  fullName: ingot.Core.ResourcePack.ResourcePack
+  nameWithType.vb: ResourcePack.New
+  fullName.vb: ingot.Core.ResourcePack.New
+  name.vb: New
+- uid: ingot.Core.ResourcePack.Compile*
+  commentId: Overload:ingot.Core.ResourcePack.Compile
+  href: ingot.Core.ResourcePack.html#ingot_Core_ResourcePack_Compile_System_String_
+  name: Compile
+  nameWithType: ResourcePack.Compile
+  fullName: ingot.Core.ResourcePack.Compile

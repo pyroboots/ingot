@@ -1,0 +1,1382 @@
+### YamlMime:ManagedReference
+items:
+- uid: xenon.Core.XenonBoolClass
+  commentId: T:xenon.Core.XenonBoolClass
+  id: XenonBoolClass
+  parent: xenon.Core
+  children:
+  - xenon.Core.XenonBoolClass.All(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.And(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Any(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Constructor(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.FromNum(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Methods
+  - xenon.Core.XenonBoolClass.Name
+  - xenon.Core.XenonBoolClass.Nand(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Nor(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Not(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Or(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Ternary(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.ToNum(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Whichever(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Xnor(Lua.LuaTable)
+  - xenon.Core.XenonBoolClass.Xor(Lua.LuaTable)
+  langs:
+  - csharp
+  - vb
+  name: XenonBoolClass
+  nameWithType: XenonBoolClass
+  fullName: xenon.Core.XenonBoolClass
+  type: Class
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: XenonBoolClass
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 4
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: 'public class XenonBoolClass : XenonClass<XenonBoolClass>'
+    content.vb: Public Class XenonBoolClass Inherits XenonClass(Of XenonBoolClass)
+  inheritance:
+  - System.Object
+  - xenon.XenonClass{xenon.Core.XenonBoolClass}
+  inheritedMembers:
+  - xenon.XenonClass{xenon.Core.XenonBoolClass}.Keyword
+  - xenon.XenonClass{xenon.Core.XenonBoolClass}.Static
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: xenon.Core.XenonBoolClass.Constructor(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Constructor(Lua.LuaTable)
+  id: Constructor(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Constructor(LuaTable)
+  nameWithType: XenonBoolClass.Constructor(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Constructor(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Constructor
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 6
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  example: []
+  syntax:
+    content: public override ValueTask<LuaValue> Constructor(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Overrides Function Constructor(args As LuaTable) As ValueTask(Of LuaValue)
+  overridden: xenon.XenonClass{xenon.Core.XenonBoolClass}.Constructor(Lua.LuaTable)
+  overload: xenon.Core.XenonBoolClass.Constructor*
+- uid: xenon.Core.XenonBoolClass.And(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.And(Lua.LuaTable)
+  id: And(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: And(LuaTable)
+  nameWithType: XenonBoolClass.And(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.And(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: And
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 8
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> And(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function [And](args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.And*
+- uid: xenon.Core.XenonBoolClass.Or(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Or(Lua.LuaTable)
+  id: Or(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Or(LuaTable)
+  nameWithType: XenonBoolClass.Or(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Or(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Or
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 10
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Or(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function [Or](args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Or*
+- uid: xenon.Core.XenonBoolClass.Not(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Not(Lua.LuaTable)
+  id: Not(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Not(LuaTable)
+  nameWithType: XenonBoolClass.Not(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Not(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Not
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 12
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Not(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function [Not](args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Not*
+- uid: xenon.Core.XenonBoolClass.Nand(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Nand(Lua.LuaTable)
+  id: Nand(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Nand(LuaTable)
+  nameWithType: XenonBoolClass.Nand(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Nand(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Nand
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 14
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Nand(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function Nand(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Nand*
+- uid: xenon.Core.XenonBoolClass.Nor(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Nor(Lua.LuaTable)
+  id: Nor(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Nor(LuaTable)
+  nameWithType: XenonBoolClass.Nor(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Nor(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Nor
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 16
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Nor(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function Nor(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Nor*
+- uid: xenon.Core.XenonBoolClass.Xor(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Xor(Lua.LuaTable)
+  id: Xor(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Xor(LuaTable)
+  nameWithType: XenonBoolClass.Xor(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Xor(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Xor
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 18
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Xor(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function [Xor](args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Xor*
+- uid: xenon.Core.XenonBoolClass.Xnor(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Xnor(Lua.LuaTable)
+  id: Xnor(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Xnor(LuaTable)
+  nameWithType: XenonBoolClass.Xnor(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Xnor(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Xnor
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 20
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Xnor(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function Xnor(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Xnor*
+- uid: xenon.Core.XenonBoolClass.Ternary(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Ternary(Lua.LuaTable)
+  id: Ternary(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Ternary(LuaTable)
+  nameWithType: XenonBoolClass.Ternary(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Ternary(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Ternary
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 23
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Ternary(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function Ternary(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Ternary*
+- uid: xenon.Core.XenonBoolClass.Whichever(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Whichever(Lua.LuaTable)
+  id: Whichever(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Whichever(LuaTable)
+  nameWithType: XenonBoolClass.Whichever(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Whichever(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Whichever
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 25
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Whichever(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function Whichever(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Whichever*
+- uid: xenon.Core.XenonBoolClass.FromNum(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.FromNum(Lua.LuaTable)
+  id: FromNum(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: FromNum(LuaTable)
+  nameWithType: XenonBoolClass.FromNum(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.FromNum(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: FromNum
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 37
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> FromNum(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function FromNum(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.FromNum*
+- uid: xenon.Core.XenonBoolClass.ToNum(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.ToNum(Lua.LuaTable)
+  id: ToNum(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: ToNum(LuaTable)
+  nameWithType: XenonBoolClass.ToNum(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.ToNum(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: ToNum
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 39
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> ToNum(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function ToNum(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.ToNum*
+- uid: xenon.Core.XenonBoolClass.Any(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.Any(Lua.LuaTable)
+  id: Any(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Any(LuaTable)
+  nameWithType: XenonBoolClass.Any(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.Any(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Any
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 42
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> Any(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function Any(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.Any*
+- uid: xenon.Core.XenonBoolClass.All(Lua.LuaTable)
+  commentId: M:xenon.Core.XenonBoolClass.All(Lua.LuaTable)
+  id: All(Lua.LuaTable)
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: All(LuaTable)
+  nameWithType: XenonBoolClass.All(LuaTable)
+  fullName: xenon.Core.XenonBoolClass.All(Lua.LuaTable)
+  type: Method
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: All
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 56
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  syntax:
+    content: public static ValueTask<LuaValue> All(LuaTable args)
+    parameters:
+    - id: args
+      type: Lua.LuaTable
+    return:
+      type: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+    content.vb: Public Shared Function All(args As LuaTable) As ValueTask(Of LuaValue)
+  overload: xenon.Core.XenonBoolClass.All*
+- uid: xenon.Core.XenonBoolClass.Methods
+  commentId: P:xenon.Core.XenonBoolClass.Methods
+  id: Methods
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Methods
+  nameWithType: XenonBoolClass.Methods
+  fullName: xenon.Core.XenonBoolClass.Methods
+  type: Property
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Methods
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 71
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  example: []
+  syntax:
+    content: public override Dictionary<string, XenonClass<XenonBoolClass>.XenonClassMethod> Methods { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,xenon.XenonClass{xenon.Core.XenonBoolClass}.XenonClassMethod}
+    content.vb: Public Overrides ReadOnly Property Methods As Dictionary(Of String, XenonClass(Of XenonBoolClass).XenonClassMethod)
+  overridden: xenon.XenonClass{xenon.Core.XenonBoolClass}.Methods
+  overload: xenon.Core.XenonBoolClass.Methods*
+- uid: xenon.Core.XenonBoolClass.Name
+  commentId: P:xenon.Core.XenonBoolClass.Name
+  id: Name
+  parent: xenon.Core.XenonBoolClass
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: XenonBoolClass.Name
+  fullName: xenon.Core.XenonBoolClass.Name
+  type: Property
+  source:
+    remote:
+      path: xenon/Core/XenonBoolClass.cs
+      branch: master
+      repo: https://github.com/Dismalitie/xenon.git
+    id: Name
+    path: ../xenon/xenon/Core/XenonBoolClass.cs
+    startLine: 179
+  assemblies:
+  - xenon
+  namespace: xenon.Core
+  example: []
+  syntax:
+    content: public override string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property Name As String
+  overridden: xenon.XenonClass{xenon.Core.XenonBoolClass}.Name
+  overload: xenon.Core.XenonBoolClass.Name*
+references:
+- uid: xenon.Core
+  commentId: N:xenon.Core
+  href: xenon.html
+  name: xenon.Core
+  nameWithType: xenon.Core
+  fullName: xenon.Core
+  spec.csharp:
+  - uid: xenon
+    name: xenon
+    href: xenon.html
+  - name: .
+  - uid: xenon.Core
+    name: Core
+    href: xenon.Core.html
+  spec.vb:
+  - uid: xenon
+    name: xenon
+    href: xenon.html
+  - name: .
+  - uid: xenon.Core
+    name: Core
+    href: xenon.Core.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: xenon.XenonClass{xenon.Core.XenonBoolClass}
+  commentId: T:xenon.XenonClass{xenon.Core.XenonBoolClass}
+  parent: xenon
+  definition: xenon.XenonClass`1
+  href: xenon.XenonClass-1.html
+  name: XenonClass<XenonBoolClass>
+  nameWithType: XenonClass<XenonBoolClass>
+  fullName: xenon.XenonClass<xenon.Core.XenonBoolClass>
+  nameWithType.vb: XenonClass(Of XenonBoolClass)
+  fullName.vb: xenon.XenonClass(Of xenon.Core.XenonBoolClass)
+  name.vb: XenonClass(Of XenonBoolClass)
+  spec.csharp:
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: <
+  - uid: xenon.Core.XenonBoolClass
+    name: XenonBoolClass
+    href: xenon.Core.XenonBoolClass.html
+  - name: '>'
+  spec.vb:
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: xenon.Core.XenonBoolClass
+    name: XenonBoolClass
+    href: xenon.Core.XenonBoolClass.html
+  - name: )
+- uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Keyword
+  commentId: P:xenon.XenonClass{xenon.Core.XenonBoolClass}.Keyword
+  parent: xenon.XenonClass{xenon.Core.XenonBoolClass}
+  definition: xenon.XenonClass`1.Keyword
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Keyword
+  name: Keyword
+  nameWithType: XenonClass<XenonBoolClass>.Keyword
+  fullName: xenon.XenonClass<xenon.Core.XenonBoolClass>.Keyword
+  nameWithType.vb: XenonClass(Of XenonBoolClass).Keyword
+  fullName.vb: xenon.XenonClass(Of xenon.Core.XenonBoolClass).Keyword
+- uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Static
+  commentId: M:xenon.XenonClass{xenon.Core.XenonBoolClass}.Static
+  parent: xenon.XenonClass{xenon.Core.XenonBoolClass}
+  definition: xenon.XenonClass`1.Static
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Static
+  name: Static()
+  nameWithType: XenonClass<XenonBoolClass>.Static()
+  fullName: xenon.XenonClass<xenon.Core.XenonBoolClass>.Static()
+  nameWithType.vb: XenonClass(Of XenonBoolClass).Static()
+  fullName.vb: xenon.XenonClass(Of xenon.Core.XenonBoolClass).Static()
+  spec.csharp:
+  - uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Static
+    name: Static
+    href: xenon.XenonClass-1.html#xenon_XenonClass_1_Static
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Static
+    name: Static
+    href: xenon.XenonClass-1.html#xenon_XenonClass_1_Static
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: xenon.XenonClass`1
+  commentId: T:xenon.XenonClass`1
+  href: xenon.XenonClass-1.html
+  name: XenonClass<T>
+  nameWithType: XenonClass<T>
+  fullName: xenon.XenonClass<T>
+  nameWithType.vb: XenonClass(Of T)
+  fullName.vb: xenon.XenonClass(Of T)
+  name.vb: XenonClass(Of T)
+  spec.csharp:
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: xenon
+  commentId: N:xenon
+  href: xenon.html
+  name: xenon
+  nameWithType: xenon
+  fullName: xenon
+- uid: xenon.XenonClass`1.Keyword
+  commentId: P:xenon.XenonClass`1.Keyword
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Keyword
+  name: Keyword
+  nameWithType: XenonClass<T>.Keyword
+  fullName: xenon.XenonClass<T>.Keyword
+  nameWithType.vb: XenonClass(Of T).Keyword
+  fullName.vb: xenon.XenonClass(Of T).Keyword
+- uid: xenon.XenonClass`1.Static
+  commentId: M:xenon.XenonClass`1.Static
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Static
+  name: Static()
+  nameWithType: XenonClass<T>.Static()
+  fullName: xenon.XenonClass<T>.Static()
+  nameWithType.vb: XenonClass(Of T).Static()
+  fullName.vb: xenon.XenonClass(Of T).Static()
+  spec.csharp:
+  - uid: xenon.XenonClass`1.Static
+    name: Static
+    href: xenon.XenonClass-1.html#xenon_XenonClass_1_Static
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: xenon.XenonClass`1.Static
+    name: Static
+    href: xenon.XenonClass-1.html#xenon_XenonClass_1_Static
+  - name: (
+  - name: )
+- uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Constructor(Lua.LuaTable)
+  commentId: M:xenon.XenonClass{xenon.Core.XenonBoolClass}.Constructor(Lua.LuaTable)
+  parent: xenon.XenonClass{xenon.Core.XenonBoolClass}
+  definition: xenon.XenonClass`1.Constructor(Lua.LuaTable)
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Constructor_Lua_LuaTable_
+  name: Constructor(LuaTable)
+  nameWithType: XenonClass<XenonBoolClass>.Constructor(LuaTable)
+  fullName: xenon.XenonClass<xenon.Core.XenonBoolClass>.Constructor(Lua.LuaTable)
+  nameWithType.vb: XenonClass(Of XenonBoolClass).Constructor(LuaTable)
+  fullName.vb: xenon.XenonClass(Of xenon.Core.XenonBoolClass).Constructor(Lua.LuaTable)
+  spec.csharp:
+  - uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Constructor(Lua.LuaTable)
+    name: Constructor
+    href: xenon.XenonClass-1.html#xenon_XenonClass_1_Constructor_Lua_LuaTable_
+  - name: (
+  - uid: Lua.LuaTable
+    name: LuaTable
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Constructor(Lua.LuaTable)
+    name: Constructor
+    href: xenon.XenonClass-1.html#xenon_XenonClass_1_Constructor_Lua_LuaTable_
+  - name: (
+  - uid: Lua.LuaTable
+    name: LuaTable
+    isExternal: true
+  - name: )
+- uid: xenon.Core.XenonBoolClass.Constructor*
+  commentId: Overload:xenon.Core.XenonBoolClass.Constructor
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Constructor_Lua_LuaTable_
+  name: Constructor
+  nameWithType: XenonBoolClass.Constructor
+  fullName: xenon.Core.XenonBoolClass.Constructor
+- uid: Lua.LuaTable
+  commentId: T:Lua.LuaTable
+  parent: Lua
+  isExternal: true
+  name: LuaTable
+  nameWithType: LuaTable
+  fullName: Lua.LuaTable
+- uid: System.Threading.Tasks.ValueTask{Lua.LuaValue}
+  commentId: T:System.Threading.Tasks.ValueTask{Lua.LuaValue}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.ValueTask`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1
+  name: ValueTask<LuaValue>
+  nameWithType: ValueTask<LuaValue>
+  fullName: System.Threading.Tasks.ValueTask<Lua.LuaValue>
+  nameWithType.vb: ValueTask(Of LuaValue)
+  fullName.vb: System.Threading.Tasks.ValueTask(Of Lua.LuaValue)
+  name.vb: ValueTask(Of LuaValue)
+  spec.csharp:
+  - uid: System.Threading.Tasks.ValueTask`1
+    name: ValueTask
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1
+  - name: <
+  - uid: Lua.LuaValue
+    name: LuaValue
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.ValueTask`1
+    name: ValueTask
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Lua.LuaValue
+    name: LuaValue
+    isExternal: true
+  - name: )
+- uid: xenon.XenonClass`1.Constructor(Lua.LuaTable)
+  commentId: M:xenon.XenonClass`1.Constructor(Lua.LuaTable)
+  isExternal: true
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Constructor_Lua_LuaTable_
+  name: Constructor(LuaTable)
+  nameWithType: XenonClass<T>.Constructor(LuaTable)
+  fullName: xenon.XenonClass<T>.Constructor(Lua.LuaTable)
+  nameWithType.vb: XenonClass(Of T).Constructor(LuaTable)
+  fullName.vb: xenon.XenonClass(Of T).Constructor(Lua.LuaTable)
+  spec.csharp:
+  - uid: xenon.XenonClass`1.Constructor(Lua.LuaTable)
+    name: Constructor
+    href: xenon.XenonClass-1.html#xenon_XenonClass_1_Constructor_Lua_LuaTable_
+  - name: (
+  - uid: Lua.LuaTable
+    name: LuaTable
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: xenon.XenonClass`1.Constructor(Lua.LuaTable)
+    name: Constructor
+    href: xenon.XenonClass-1.html#xenon_XenonClass_1_Constructor_Lua_LuaTable_
+  - name: (
+  - uid: Lua.LuaTable
+    name: LuaTable
+    isExternal: true
+  - name: )
+- uid: Lua
+  commentId: N:Lua
+  isExternal: true
+  name: Lua
+  nameWithType: Lua
+  fullName: Lua
+- uid: System.Threading.Tasks.ValueTask`1
+  commentId: T:System.Threading.Tasks.ValueTask`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1
+  name: ValueTask<TResult>
+  nameWithType: ValueTask<TResult>
+  fullName: System.Threading.Tasks.ValueTask<TResult>
+  nameWithType.vb: ValueTask(Of TResult)
+  fullName.vb: System.Threading.Tasks.ValueTask(Of TResult)
+  name.vb: ValueTask(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.ValueTask`1
+    name: ValueTask
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.ValueTask`1
+    name: ValueTask
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: xenon.Core.XenonBoolClass.And*
+  commentId: Overload:xenon.Core.XenonBoolClass.And
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_And_Lua_LuaTable_
+  name: And
+  nameWithType: XenonBoolClass.And
+  fullName: xenon.Core.XenonBoolClass.And
+- uid: xenon.Core.XenonBoolClass.Or*
+  commentId: Overload:xenon.Core.XenonBoolClass.Or
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Or_Lua_LuaTable_
+  name: Or
+  nameWithType: XenonBoolClass.Or
+  fullName: xenon.Core.XenonBoolClass.Or
+- uid: xenon.Core.XenonBoolClass.Not*
+  commentId: Overload:xenon.Core.XenonBoolClass.Not
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Not_Lua_LuaTable_
+  name: Not
+  nameWithType: XenonBoolClass.Not
+  fullName: xenon.Core.XenonBoolClass.Not
+- uid: xenon.Core.XenonBoolClass.Nand*
+  commentId: Overload:xenon.Core.XenonBoolClass.Nand
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Nand_Lua_LuaTable_
+  name: Nand
+  nameWithType: XenonBoolClass.Nand
+  fullName: xenon.Core.XenonBoolClass.Nand
+- uid: xenon.Core.XenonBoolClass.Nor*
+  commentId: Overload:xenon.Core.XenonBoolClass.Nor
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Nor_Lua_LuaTable_
+  name: Nor
+  nameWithType: XenonBoolClass.Nor
+  fullName: xenon.Core.XenonBoolClass.Nor
+- uid: xenon.Core.XenonBoolClass.Xor*
+  commentId: Overload:xenon.Core.XenonBoolClass.Xor
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Xor_Lua_LuaTable_
+  name: Xor
+  nameWithType: XenonBoolClass.Xor
+  fullName: xenon.Core.XenonBoolClass.Xor
+- uid: xenon.Core.XenonBoolClass.Xnor*
+  commentId: Overload:xenon.Core.XenonBoolClass.Xnor
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Xnor_Lua_LuaTable_
+  name: Xnor
+  nameWithType: XenonBoolClass.Xnor
+  fullName: xenon.Core.XenonBoolClass.Xnor
+- uid: xenon.Core.XenonBoolClass.Ternary*
+  commentId: Overload:xenon.Core.XenonBoolClass.Ternary
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Ternary_Lua_LuaTable_
+  name: Ternary
+  nameWithType: XenonBoolClass.Ternary
+  fullName: xenon.Core.XenonBoolClass.Ternary
+- uid: xenon.Core.XenonBoolClass.Whichever*
+  commentId: Overload:xenon.Core.XenonBoolClass.Whichever
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Whichever_Lua_LuaTable_
+  name: Whichever
+  nameWithType: XenonBoolClass.Whichever
+  fullName: xenon.Core.XenonBoolClass.Whichever
+- uid: xenon.Core.XenonBoolClass.FromNum*
+  commentId: Overload:xenon.Core.XenonBoolClass.FromNum
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_FromNum_Lua_LuaTable_
+  name: FromNum
+  nameWithType: XenonBoolClass.FromNum
+  fullName: xenon.Core.XenonBoolClass.FromNum
+- uid: xenon.Core.XenonBoolClass.ToNum*
+  commentId: Overload:xenon.Core.XenonBoolClass.ToNum
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_ToNum_Lua_LuaTable_
+  name: ToNum
+  nameWithType: XenonBoolClass.ToNum
+  fullName: xenon.Core.XenonBoolClass.ToNum
+- uid: xenon.Core.XenonBoolClass.Any*
+  commentId: Overload:xenon.Core.XenonBoolClass.Any
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Any_Lua_LuaTable_
+  name: Any
+  nameWithType: XenonBoolClass.Any
+  fullName: xenon.Core.XenonBoolClass.Any
+- uid: xenon.Core.XenonBoolClass.All*
+  commentId: Overload:xenon.Core.XenonBoolClass.All
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_All_Lua_LuaTable_
+  name: All
+  nameWithType: XenonBoolClass.All
+  fullName: xenon.Core.XenonBoolClass.All
+- uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Methods
+  commentId: P:xenon.XenonClass{xenon.Core.XenonBoolClass}.Methods
+  parent: xenon.XenonClass{xenon.Core.XenonBoolClass}
+  definition: xenon.XenonClass`1.Methods
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Methods
+  name: Methods
+  nameWithType: XenonClass<XenonBoolClass>.Methods
+  fullName: xenon.XenonClass<xenon.Core.XenonBoolClass>.Methods
+  nameWithType.vb: XenonClass(Of XenonBoolClass).Methods
+  fullName.vb: xenon.XenonClass(Of xenon.Core.XenonBoolClass).Methods
+- uid: xenon.Core.XenonBoolClass.Methods*
+  commentId: Overload:xenon.Core.XenonBoolClass.Methods
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Methods
+  name: Methods
+  nameWithType: XenonBoolClass.Methods
+  fullName: xenon.Core.XenonBoolClass.Methods
+- uid: System.Collections.Generic.Dictionary{System.String,xenon.XenonClass{xenon.Core.XenonBoolClass}.XenonClassMethod}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,xenon.XenonClass{xenon.Core.XenonBoolClass}.XenonClassMethod}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, XenonClass<XenonBoolClass>.XenonClassMethod>
+  nameWithType: Dictionary<string, XenonClass<XenonBoolClass>.XenonClassMethod>
+  fullName: System.Collections.Generic.Dictionary<string, xenon.XenonClass<xenon.Core.XenonBoolClass>.XenonClassMethod>
+  nameWithType.vb: Dictionary(Of String, XenonClass(Of XenonBoolClass).XenonClassMethod)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, xenon.XenonClass(Of xenon.Core.XenonBoolClass).XenonClassMethod)
+  name.vb: Dictionary(Of String, XenonClass(Of XenonBoolClass).XenonClassMethod)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: <
+  - uid: xenon.Core.XenonBoolClass
+    name: XenonBoolClass
+    href: xenon.Core.XenonBoolClass.html
+  - name: '>'
+  - name: .
+  - uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.XenonClassMethod
+    name: XenonClassMethod
+    href: xenon.XenonClass-1.XenonClassMethod.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: xenon.Core.XenonBoolClass
+    name: XenonBoolClass
+    href: xenon.Core.XenonBoolClass.html
+  - name: )
+  - name: .
+  - uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.XenonClassMethod
+    name: XenonClassMethod
+    href: xenon.XenonClass-1.XenonClassMethod.html
+  - name: )
+- uid: xenon.XenonClass`1.Methods
+  commentId: P:xenon.XenonClass`1.Methods
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Methods
+  name: Methods
+  nameWithType: XenonClass<T>.Methods
+  fullName: xenon.XenonClass<T>.Methods
+  nameWithType.vb: XenonClass(Of T).Methods
+  fullName.vb: xenon.XenonClass(Of T).Methods
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: xenon.XenonClass{xenon.Core.XenonBoolClass}.Name
+  commentId: P:xenon.XenonClass{xenon.Core.XenonBoolClass}.Name
+  parent: xenon.XenonClass{xenon.Core.XenonBoolClass}
+  definition: xenon.XenonClass`1.Name
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Name
+  name: Name
+  nameWithType: XenonClass<XenonBoolClass>.Name
+  fullName: xenon.XenonClass<xenon.Core.XenonBoolClass>.Name
+  nameWithType.vb: XenonClass(Of XenonBoolClass).Name
+  fullName.vb: xenon.XenonClass(Of xenon.Core.XenonBoolClass).Name
+- uid: xenon.Core.XenonBoolClass.Name*
+  commentId: Overload:xenon.Core.XenonBoolClass.Name
+  href: xenon.Core.XenonBoolClass.html#xenon_Core_XenonBoolClass_Name
+  name: Name
+  nameWithType: XenonBoolClass.Name
+  fullName: xenon.Core.XenonBoolClass.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: xenon.XenonClass`1.Name
+  commentId: P:xenon.XenonClass`1.Name
+  href: xenon.XenonClass-1.html#xenon_XenonClass_1_Name
+  name: Name
+  nameWithType: XenonClass<T>.Name
+  fullName: xenon.XenonClass<T>.Name
+  nameWithType.vb: XenonClass(Of T).Name
+  fullName.vb: xenon.XenonClass(Of T).Name

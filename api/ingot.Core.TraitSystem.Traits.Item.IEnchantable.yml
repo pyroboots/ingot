@@ -1,0 +1,214 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.IEnchantable
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IEnchantable
+  id: IEnchantable
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot
+  - ingot.Core.TraitSystem.Traits.Item.IEnchantable.Value
+  langs:
+  - csharp
+  - vb
+  name: IEnchantable
+  nameWithType: IEnchantable
+  fullName: ingot.Core.TraitSystem.Traits.Item.IEnchantable
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IEnchantable.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IEnchantable
+    path: ingot.Core/TraitSystem/Traits/Item/IEnchantable.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:enchantable", TraitSystem.TraitType.Item)]
+
+      public interface IEnchantable : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:enchantable", TraitSystem.TraitType.Item)>
+
+      Public Interface IEnchantable Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:enchantable
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot
+  id: Slot
+  parent: ingot.Core.TraitSystem.Traits.Item.IEnchantable
+  langs:
+  - csharp
+  - vb
+  name: Slot
+  nameWithType: IEnchantable.Slot
+  fullName: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IEnchantable.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Slot
+    path: ingot.Core/TraitSystem/Traits/Item/IEnchantable.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Specifies which types of enchantments can be applied.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      string Slot { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Slot As String
+  overload: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Value
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IEnchantable.Value
+  id: Value
+  parent: ingot.Core.TraitSystem.Traits.Item.IEnchantable
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: IEnchantable.Value
+  fullName: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Value
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IEnchantable.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Value
+    path: ingot.Core/TraitSystem/Traits/Item/IEnchantable.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Specifies the value of the enchantment (minimum of 0).
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      int Value { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Value As Integer
+  overload: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Value*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot
+  href: ingot.Core.TraitSystem.Traits.Item.IEnchantable.html#ingot_Core_TraitSystem_Traits_Item_IEnchantable_Slot
+  name: Slot
+  nameWithType: IEnchantable.Slot
+  fullName: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Value*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IEnchantable.Value
+  href: ingot.Core.TraitSystem.Traits.Item.IEnchantable.html#ingot_Core_TraitSystem_Traits_Item_IEnchantable_Value
+  name: Value
+  nameWithType: IEnchantable.Value
+  fullName: ingot.Core.TraitSystem.Traits.Item.IEnchantable.Value
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

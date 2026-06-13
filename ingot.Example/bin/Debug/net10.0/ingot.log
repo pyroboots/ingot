@@ -10,9 +10,9 @@
 (i) [pack/ingot example/bp/blocks] (1/1) compiled entity test:block_of_dense_lasagna
 (i) [pack/ingot example/bp] compiling blocks...
 (i) [pack/ingot example/bp/items/test:lasagna/components] compiling traits...
-(i) [pack/ingot example/bp/items/test:lasagna/components] (1/3) compiled trait IFood
-(i) [pack/ingot example/bp/items/test:lasagna/components] (2/3) compiled trait IBlockPlacer
-(i) [pack/ingot example/bp/items/test:lasagna/components] (3/3) compiled trait IDisplayName
+/!\ [pack/ingot example/bp/items/test:lasagna/components/minecraft:block_placer/UseOn] value is null or empty, entry omitted from compiled json
+(i) [pack/ingot example/bp/items/test:lasagna/components] (1/2) compiled trait IFood
+(i) [pack/ingot example/bp/items/test:lasagna/components] (2/2) compiled trait IBlockPlacer
 (i) [pack/ingot example/bp/items] (1/1) compiled entity test:lasagna
 (i) [pack/ingot example] compiled bp
 (i) [pack/ingot example] compiling rp...

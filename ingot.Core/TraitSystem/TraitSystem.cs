@@ -31,8 +31,6 @@ public static class TraitSystem
     /// <param name="constraint"><see cref="Type"/> of content class to reflect</param>
     public static List<Trait> GetTraits(Type t, TraitType constraint)
     {
-        CompileTimeLogging.Push("TraitSystem");
-        
         JsonTextWriter? dummyWriter = null;
         Type type = t;
         object instance = Activator.CreateInstance(t)!;
@@ -102,7 +100,6 @@ public static class TraitSystem
             
             CompileTimeLogging.Pop();
         }
-        CompileTimeLogging.Pop();
     
         return traits;
     }

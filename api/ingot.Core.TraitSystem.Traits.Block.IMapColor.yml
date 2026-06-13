@@ -1,0 +1,203 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Block.IMapColor
+  commentId: T:ingot.Core.TraitSystem.Traits.Block.IMapColor
+  id: IMapColor
+  parent: ingot.Core.TraitSystem.Traits.Block
+  children:
+  - ingot.Core.TraitSystem.Traits.Block.IMapColor.Color
+  - ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod
+  langs:
+  - csharp
+  - vb
+  name: IMapColor
+  nameWithType: IMapColor
+  fullName: ingot.Core.TraitSystem.Traits.Block.IMapColor
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IMapColor.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IMapColor
+    path: ingot.Core/TraitSystem/Traits/Block/IMapColor.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  syntax:
+    content: >-
+      [Trait("minecraft:map_color", TraitSystem.TraitType.Block)]
+
+      public interface IMapColor : IBlockTrait
+    content.vb: >-
+      <Trait("minecraft:map_color", TraitSystem.TraitType.Block)>
+
+      Public Interface IMapColor Inherits IBlockTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:map_color
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 0
+- uid: ingot.Core.TraitSystem.Traits.Block.IMapColor.Color
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IMapColor.Color
+  id: Color
+  parent: ingot.Core.TraitSystem.Traits.Block.IMapColor
+  langs:
+  - csharp
+  - vb
+  name: Color
+  nameWithType: IMapColor.Color
+  fullName: ingot.Core.TraitSystem.Traits.Block.IMapColor.Color
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IMapColor.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Color
+    path: ingot.Core/TraitSystem/Traits/Block/IMapColor.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: The color is represented as a hex value in the format "#RRGGBB". May also be expressed as an array of [R, G, B] from 0 to 255.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      string Color { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Color As String
+  overload: ingot.Core.TraitSystem.Traits.Block.IMapColor.Color*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod
+  id: TintMethod
+  parent: ingot.Core.TraitSystem.Traits.Block.IMapColor
+  langs:
+  - csharp
+  - vb
+  name: TintMethod
+  nameWithType: IMapColor.TintMethod
+  fullName: ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IMapColor.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: TintMethod
+    path: ingot.Core/TraitSystem/Traits/Block/IMapColor.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: Optional, tint multiplied to the color.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      string TintMethod { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property TintMethod As String
+  overload: ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Block
+  commentId: N:ingot.Core.TraitSystem.Traits.Block
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Block
+  nameWithType: ingot.Core.TraitSystem.Traits.Block
+  fullName: ingot.Core.TraitSystem.Traits.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Block
+    name: Block
+    href: ingot.Core.TraitSystem.Traits.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Block
+    name: Block
+    href: ingot.Core.TraitSystem.Traits.Block.html
+- uid: ingot.Core.TraitSystem.Traits.Block.IMapColor.Color*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IMapColor.Color
+  href: ingot.Core.TraitSystem.Traits.Block.IMapColor.html#ingot_Core_TraitSystem_Traits_Block_IMapColor_Color
+  name: Color
+  nameWithType: IMapColor.Color
+  fullName: ingot.Core.TraitSystem.Traits.Block.IMapColor.Color
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod
+  href: ingot.Core.TraitSystem.Traits.Block.IMapColor.html#ingot_Core_TraitSystem_Traits_Block_IMapColor_TintMethod
+  name: TintMethod
+  nameWithType: IMapColor.TintMethod
+  fullName: ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod

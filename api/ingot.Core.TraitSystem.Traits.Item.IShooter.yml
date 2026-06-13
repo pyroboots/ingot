@@ -1,0 +1,319 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IShooter
+  id: IShooter
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition
+  - ingot.Core.TraitSystem.Traits.Item.IShooter.ChargeOnDraw
+  - ingot.Core.TraitSystem.Traits.Item.IShooter.MaxDrawDuration
+  - ingot.Core.TraitSystem.Traits.Item.IShooter.ScalePowerByDrawDuration
+  langs:
+  - csharp
+  - vb
+  name: IShooter
+  nameWithType: IShooter
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IShooter
+    path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:shooter", TraitSystem.TraitType.Item)]
+
+      public interface IShooter : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:shooter", TraitSystem.TraitType.Item)>
+
+      Public Interface IShooter Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:shooter
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition
+  id: Ammunition
+  parent: ingot.Core.TraitSystem.Traits.Item.IShooter
+  langs:
+  - csharp
+  - vb
+  name: Ammunition
+  nameWithType: IShooter.Ammunition
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Ammunition
+    path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: A list of ammunition entries that define which items can be used as projectiles for this shooter.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? Ammunition { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Ammunition As Object
+  overload: ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter.ChargeOnDraw
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IShooter.ChargeOnDraw
+  id: ChargeOnDraw
+  parent: ingot.Core.TraitSystem.Traits.Item.IShooter
+  langs:
+  - csharp
+  - vb
+  name: ChargeOnDraw
+  nameWithType: IShooter.ChargeOnDraw
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter.ChargeOnDraw
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ChargeOnDraw
+    path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: When true, the shooter begins charging when the player starts drawing, similar to a crossbow. Default is false.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      bool ChargeOnDraw { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property ChargeOnDraw As Boolean
+  overload: ingot.Core.TraitSystem.Traits.Item.IShooter.ChargeOnDraw*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter.MaxDrawDuration
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IShooter.MaxDrawDuration
+  id: MaxDrawDuration
+  parent: ingot.Core.TraitSystem.Traits.Item.IShooter
+  langs:
+  - csharp
+  - vb
+  name: MaxDrawDuration
+  nameWithType: IShooter.MaxDrawDuration
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter.MaxDrawDuration
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: MaxDrawDuration
+    path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+    startLine: 25
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: The maximum time in seconds that a player can draw the shooter before it automatically fires or reaches maximum power. Default is 0.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      float MaxDrawDuration { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property MaxDrawDuration As Single
+  overload: ingot.Core.TraitSystem.Traits.Item.IShooter.MaxDrawDuration*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter.ScalePowerByDrawDuration
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IShooter.ScalePowerByDrawDuration
+  id: ScalePowerByDrawDuration
+  parent: ingot.Core.TraitSystem.Traits.Item.IShooter
+  langs:
+  - csharp
+  - vb
+  name: ScalePowerByDrawDuration
+  nameWithType: IShooter.ScalePowerByDrawDuration
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter.ScalePowerByDrawDuration
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ScalePowerByDrawDuration
+    path: ingot.Core/TraitSystem/Traits/Item/IShooter.cs
+    startLine: 31
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: When true, the projectile's launch power increases based on how long the player holds the use button before releasing. Default is false.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      bool ScalePowerByDrawDuration { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property ScalePowerByDrawDuration As Boolean
+  overload: ingot.Core.TraitSystem.Traits.Item.IShooter.ScalePowerByDrawDuration*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition
+  href: ingot.Core.TraitSystem.Traits.Item.IShooter.html#ingot_Core_TraitSystem_Traits_Item_IShooter_Ammunition
+  name: Ammunition
+  nameWithType: IShooter.Ammunition
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter.ChargeOnDraw*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IShooter.ChargeOnDraw
+  href: ingot.Core.TraitSystem.Traits.Item.IShooter.html#ingot_Core_TraitSystem_Traits_Item_IShooter_ChargeOnDraw
+  name: ChargeOnDraw
+  nameWithType: IShooter.ChargeOnDraw
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter.ChargeOnDraw
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter.MaxDrawDuration*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IShooter.MaxDrawDuration
+  href: ingot.Core.TraitSystem.Traits.Item.IShooter.html#ingot_Core_TraitSystem_Traits_Item_IShooter_MaxDrawDuration
+  name: MaxDrawDuration
+  nameWithType: IShooter.MaxDrawDuration
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter.MaxDrawDuration
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: ingot.Core.TraitSystem.Traits.Item.IShooter.ScalePowerByDrawDuration*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IShooter.ScalePowerByDrawDuration
+  href: ingot.Core.TraitSystem.Traits.Item.IShooter.html#ingot_Core_TraitSystem_Traits_Item_IShooter_ScalePowerByDrawDuration
+  name: ScalePowerByDrawDuration
+  nameWithType: IShooter.ScalePowerByDrawDuration
+  fullName: ingot.Core.TraitSystem.Traits.Item.IShooter.ScalePowerByDrawDuration

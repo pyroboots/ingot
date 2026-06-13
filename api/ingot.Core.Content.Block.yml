@@ -1,0 +1,132 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.Content.Block
+  commentId: N:ingot.Core.Content.Block
+  id: ingot.Core.Content.Block
+  children:
+  - ingot.Core.Content.Block.Block
+  - ingot.Core.Content.Block.BlockPermutation
+  - ingot.Core.Content.Block.MaterialInstance
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  - ingot.Core.Content.Block.MaterialInstance.TintMethods
+  - ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: ingot.Core.Content.Block
+  nameWithType: ingot.Core.Content.Block
+  fullName: ingot.Core.Content.Block
+  type: Namespace
+  assemblies:
+  - ingot.Core
+references:
+- uid: ingot.Core.Content.Block.Block
+  commentId: T:ingot.Core.Content.Block.Block
+  href: ingot.Core.Content.Block.Block.html
+  name: Block
+  nameWithType: Block
+  fullName: ingot.Core.Content.Block.Block
+- uid: ingot.Core.Content.Block.BlockPermutation
+  commentId: T:ingot.Core.Content.Block.BlockPermutation
+  href: ingot.Core.Content.Block.BlockPermutation.html
+  name: BlockPermutation
+  nameWithType: BlockPermutation
+  fullName: ingot.Core.Content.Block.BlockPermutation
+- uid: ingot.Core.Content.Block.MaterialInstance
+  commentId: T:ingot.Core.Content.Block.MaterialInstance
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.MaterialInstance.html
+  name: MaterialInstance
+  nameWithType: MaterialInstance
+  fullName: ingot.Core.Content.Block.MaterialInstance
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  commentId: T:ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.MaterialInstance.html
+  name: MaterialInstance.RenderMethods
+  nameWithType: MaterialInstance.RenderMethods
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  spec.csharp:
+  - uid: ingot.Core.Content.Block.MaterialInstance
+    name: MaterialInstance
+    href: ingot.Core.Content.Block.MaterialInstance.html
+  - name: .
+  - uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+    name: RenderMethods
+    href: ingot.Core.Content.Block.MaterialInstance.RenderMethods.html
+  spec.vb:
+  - uid: ingot.Core.Content.Block.MaterialInstance
+    name: MaterialInstance
+    href: ingot.Core.Content.Block.MaterialInstance.html
+  - name: .
+  - uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+    name: RenderMethods
+    href: ingot.Core.Content.Block.MaterialInstance.RenderMethods.html
+- uid: ingot.Core.Content.Block.MaterialInstance.TintMethods
+  commentId: T:ingot.Core.Content.Block.MaterialInstance.TintMethods
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.MaterialInstance.html
+  name: MaterialInstance.TintMethods
+  nameWithType: MaterialInstance.TintMethods
+  fullName: ingot.Core.Content.Block.MaterialInstance.TintMethods
+  spec.csharp:
+  - uid: ingot.Core.Content.Block.MaterialInstance
+    name: MaterialInstance
+    href: ingot.Core.Content.Block.MaterialInstance.html
+  - name: .
+  - uid: ingot.Core.Content.Block.MaterialInstance.TintMethods
+    name: TintMethods
+    href: ingot.Core.Content.Block.MaterialInstance.TintMethods.html
+  spec.vb:
+  - uid: ingot.Core.Content.Block.MaterialInstance
+    name: MaterialInstance
+    href: ingot.Core.Content.Block.MaterialInstance.html
+  - name: .
+  - uid: ingot.Core.Content.Block.MaterialInstance.TintMethods
+    name: TintMethods
+    href: ingot.Core.Content.Block.MaterialInstance.TintMethods.html
+- uid: ingot.Core.Content.Block.MaterialInstances
+  commentId: T:ingot.Core.Content.Block.MaterialInstances
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.MaterialInstances.html
+  name: MaterialInstances
+  nameWithType: MaterialInstances
+  fullName: ingot.Core.Content.Block.MaterialInstances
+- uid: ingot.Core.Content.Block
+  commentId: N:ingot.Core.Content.Block
+  href: ingot.html
+  name: ingot.Core.Content.Block
+  nameWithType: ingot.Core.Content.Block
+  fullName: ingot.Core.Content.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html

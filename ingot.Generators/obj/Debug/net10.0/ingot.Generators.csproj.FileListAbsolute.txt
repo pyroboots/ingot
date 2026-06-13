@@ -14,3 +14,4 @@
 /home/pyro/RiderProjects/ingot/ingot.Generators/bin/Debug/net10.0/ingot.Core.dll
 /home/pyro/RiderProjects/ingot/ingot.Generators/bin/Debug/net10.0/ingot.Core.pdb
 /home/pyro/RiderProjects/ingot/ingot.Generators/obj/Debug/net10.0/ingot.Ge.BD1C3EB7.Up2Date
+/home/pyro/RiderProjects/ingot/ingot.Generators/bin/Debug/net10.0/ingot.Core.xml

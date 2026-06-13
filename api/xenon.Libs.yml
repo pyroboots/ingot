@@ -1,0 +1,67 @@
+### YamlMime:ManagedReference
+items:
+- uid: xenon.Libs
+  commentId: N:xenon.Libs
+  id: xenon.Libs
+  children:
+  - xenon.Libs.ConsoleIO
+  - xenon.Libs.XenonBasicLibrary
+  - xenon.Libs.XenonMathLibrary
+  - xenon.Libs.XenonNumberLibrary
+  langs:
+  - csharp
+  - vb
+  name: xenon.Libs
+  nameWithType: xenon.Libs
+  fullName: xenon.Libs
+  type: Namespace
+  assemblies:
+  - xenon
+references:
+- uid: xenon.Libs.XenonBasicLibrary
+  commentId: T:xenon.Libs.XenonBasicLibrary
+  href: xenon.Libs.XenonBasicLibrary.html
+  name: XenonBasicLibrary
+  nameWithType: XenonBasicLibrary
+  fullName: xenon.Libs.XenonBasicLibrary
+- uid: xenon.Libs.ConsoleIO
+  commentId: T:xenon.Libs.ConsoleIO
+  parent: xenon.Libs
+  href: xenon.Libs.ConsoleIO.html
+  name: ConsoleIO
+  nameWithType: ConsoleIO
+  fullName: xenon.Libs.ConsoleIO
+- uid: xenon.Libs.XenonMathLibrary
+  commentId: T:xenon.Libs.XenonMathLibrary
+  href: xenon.Libs.XenonMathLibrary.html
+  name: XenonMathLibrary
+  nameWithType: XenonMathLibrary
+  fullName: xenon.Libs.XenonMathLibrary
+- uid: xenon.Libs.XenonNumberLibrary
+  commentId: T:xenon.Libs.XenonNumberLibrary
+  href: xenon.Libs.XenonNumberLibrary.html
+  name: XenonNumberLibrary
+  nameWithType: XenonNumberLibrary
+  fullName: xenon.Libs.XenonNumberLibrary
+- uid: xenon.Libs
+  commentId: N:xenon.Libs
+  href: xenon.html
+  name: xenon.Libs
+  nameWithType: xenon.Libs
+  fullName: xenon.Libs
+  spec.csharp:
+  - uid: xenon
+    name: xenon
+    href: xenon.html
+  - name: .
+  - uid: xenon.Libs
+    name: Libs
+    href: xenon.Libs.html
+  spec.vb:
+  - uid: xenon
+    name: xenon
+    href: xenon.html
+  - name: .
+  - uid: xenon.Libs
+    name: Libs
+    href: xenon.Libs.html

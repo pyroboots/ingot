@@ -1,0 +1,138 @@
+### YamlMime:ManagedReference
+items:
+- uid: xenon
+  commentId: N:xenon
+  id: xenon
+  children:
+  - xenon.ExceptionBuilder
+  - xenon.XenonClass`1
+  - xenon.XenonClass`1.XenonClassMethod
+  - xenon.XenonRT
+  - xenon.XenonRuntimeException
+  - xenon.XenonStaticClass`1
+  - xenon.XenonSyntaxException
+  langs:
+  - csharp
+  - vb
+  name: xenon
+  nameWithType: xenon
+  fullName: xenon
+  type: Namespace
+  assemblies:
+  - xenon
+references:
+- uid: xenon.XenonRuntimeException
+  commentId: T:xenon.XenonRuntimeException
+  parent: xenon
+  href: xenon.XenonRuntimeException.html
+  name: XenonRuntimeException
+  nameWithType: XenonRuntimeException
+  fullName: xenon.XenonRuntimeException
+- uid: xenon.XenonSyntaxException
+  commentId: T:xenon.XenonSyntaxException
+  parent: xenon
+  href: xenon.XenonSyntaxException.html
+  name: XenonSyntaxException
+  nameWithType: XenonSyntaxException
+  fullName: xenon.XenonSyntaxException
+- uid: xenon.ExceptionBuilder
+  commentId: T:xenon.ExceptionBuilder
+  href: xenon.ExceptionBuilder.html
+  name: ExceptionBuilder
+  nameWithType: ExceptionBuilder
+  fullName: xenon.ExceptionBuilder
+- uid: xenon.XenonClass`1
+  commentId: T:xenon.XenonClass`1
+  href: xenon.XenonClass-1.html
+  name: XenonClass<T>
+  nameWithType: XenonClass<T>
+  fullName: xenon.XenonClass<T>
+  nameWithType.vb: XenonClass(Of T)
+  fullName.vb: xenon.XenonClass(Of T)
+  name.vb: XenonClass(Of T)
+  spec.csharp:
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: xenon.XenonClass`1.XenonClassMethod
+  commentId: T:xenon.XenonClass`1.XenonClassMethod
+  href: xenon.XenonClass-1.html
+  name: XenonClass<T>.XenonClassMethod
+  nameWithType: XenonClass<T>.XenonClassMethod
+  fullName: xenon.XenonClass<T>.XenonClassMethod
+  nameWithType.vb: XenonClass(Of T).XenonClassMethod
+  fullName.vb: xenon.XenonClass(Of T).XenonClassMethod
+  name.vb: XenonClass(Of T).XenonClassMethod
+  spec.csharp:
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  - name: .
+  - uid: xenon.XenonClass`1.XenonClassMethod
+    name: XenonClassMethod
+    href: xenon.XenonClass-1.XenonClassMethod.html
+  spec.vb:
+  - uid: xenon.XenonClass`1
+    name: XenonClass
+    href: xenon.XenonClass-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: .
+  - uid: xenon.XenonClass`1.XenonClassMethod
+    name: XenonClassMethod
+    href: xenon.XenonClass-1.XenonClassMethod.html
+- uid: xenon.XenonRT
+  commentId: T:xenon.XenonRT
+  href: xenon.XenonRT.html
+  name: XenonRT
+  nameWithType: XenonRT
+  fullName: xenon.XenonRT
+- uid: xenon.XenonStaticClass`1
+  commentId: T:xenon.XenonStaticClass`1
+  href: xenon.XenonStaticClass-1.html
+  name: XenonStaticClass<T>
+  nameWithType: XenonStaticClass<T>
+  fullName: xenon.XenonStaticClass<T>
+  nameWithType.vb: XenonStaticClass(Of T)
+  fullName.vb: xenon.XenonStaticClass(Of T)
+  name.vb: XenonStaticClass(Of T)
+  spec.csharp:
+  - uid: xenon.XenonStaticClass`1
+    name: XenonStaticClass
+    href: xenon.XenonStaticClass-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: xenon.XenonStaticClass`1
+    name: XenonStaticClass
+    href: xenon.XenonStaticClass-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: xenon
+  commentId: N:xenon
+  href: xenon.html
+  name: xenon
+  nameWithType: xenon
+  fullName: xenon

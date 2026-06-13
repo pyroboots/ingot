@@ -1,0 +1,133 @@
+### YamlMime:ManagedReference
+items:
+- uid: pyroui.Controls.ControlAttributes
+  commentId: T:pyroui.Controls.ControlAttributes
+  id: Controls.ControlAttributes
+  parent: pyroui
+  children:
+  - pyroui.Controls.ControlAttributes.AutoSize
+  - pyroui.Controls.ControlAttributes.None
+  - pyroui.Controls.ControlAttributes.RoundedStyle
+  langs:
+  - csharp
+  - vb
+  name: Controls.ControlAttributes
+  nameWithType: Controls.ControlAttributes
+  fullName: pyroui.Controls.ControlAttributes
+  type: Enum
+  source:
+    id: ControlAttributes
+    path: /home/pyro/RiderProjects/pyroui/pyroui/Controls.cs
+    startLine: 29
+  assemblies:
+  - pyroui
+  namespace: pyroui
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum Controls.ControlAttributes
+    content.vb: >-
+      <Flags>
+
+      Public Enum Controls.ControlAttributes
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: pyroui.Controls.ControlAttributes.None
+  commentId: F:pyroui.Controls.ControlAttributes.None
+  id: None
+  parent: pyroui.Controls.ControlAttributes
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: Controls.ControlAttributes.None
+  fullName: pyroui.Controls.ControlAttributes.None
+  type: Field
+  source:
+    id: None
+    path: /home/pyro/RiderProjects/pyroui/pyroui/Controls.cs
+    startLine: 32
+  assemblies:
+  - pyroui
+  namespace: pyroui
+  syntax:
+    content: None = 1
+    return:
+      type: pyroui.Controls.ControlAttributes
+- uid: pyroui.Controls.ControlAttributes.AutoSize
+  commentId: F:pyroui.Controls.ControlAttributes.AutoSize
+  id: AutoSize
+  parent: pyroui.Controls.ControlAttributes
+  langs:
+  - csharp
+  - vb
+  name: AutoSize
+  nameWithType: Controls.ControlAttributes.AutoSize
+  fullName: pyroui.Controls.ControlAttributes.AutoSize
+  type: Field
+  source:
+    id: AutoSize
+    path: /home/pyro/RiderProjects/pyroui/pyroui/Controls.cs
+    startLine: 33
+  assemblies:
+  - pyroui
+  namespace: pyroui
+  syntax:
+    content: AutoSize = 2
+    return:
+      type: pyroui.Controls.ControlAttributes
+- uid: pyroui.Controls.ControlAttributes.RoundedStyle
+  commentId: F:pyroui.Controls.ControlAttributes.RoundedStyle
+  id: RoundedStyle
+  parent: pyroui.Controls.ControlAttributes
+  langs:
+  - csharp
+  - vb
+  name: RoundedStyle
+  nameWithType: Controls.ControlAttributes.RoundedStyle
+  fullName: pyroui.Controls.ControlAttributes.RoundedStyle
+  type: Field
+  source:
+    id: RoundedStyle
+    path: /home/pyro/RiderProjects/pyroui/pyroui/Controls.cs
+    startLine: 34
+  assemblies:
+  - pyroui
+  namespace: pyroui
+  syntax:
+    content: RoundedStyle = 4
+    return:
+      type: pyroui.Controls.ControlAttributes
+references:
+- uid: pyroui
+  commentId: N:pyroui
+  href: pyroui.html
+  name: pyroui
+  nameWithType: pyroui
+  fullName: pyroui
+- uid: pyroui.Controls.ControlAttributes
+  commentId: T:pyroui.Controls.ControlAttributes
+  parent: pyroui
+  href: pyroui.Controls.html
+  name: Controls.ControlAttributes
+  nameWithType: Controls.ControlAttributes
+  fullName: pyroui.Controls.ControlAttributes
+  spec.csharp:
+  - uid: pyroui.Controls
+    name: Controls
+    href: pyroui.Controls.html
+  - name: .
+  - uid: pyroui.Controls.ControlAttributes
+    name: ControlAttributes
+    href: pyroui.Controls.ControlAttributes.html
+  spec.vb:
+  - uid: pyroui.Controls
+    name: Controls
+    href: pyroui.Controls.html
+  - name: .
+  - uid: pyroui.Controls.ControlAttributes
+    name: ControlAttributes
+    href: pyroui.Controls.ControlAttributes.html

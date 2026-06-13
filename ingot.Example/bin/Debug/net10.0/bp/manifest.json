@@ -3,7 +3,7 @@
     "header": {
         "name": "ingot example",
         "description": "Example pack made with ingot",
-        "uuid": "80930fd9-be6e-4000-aefa-9a99cdd57c93",
+        "uuid": "bcebef36-d3dd-4fa0-ba45-161957ad4675",
         "version": [
             1,
             0,
@@ -19,7 +19,7 @@
         {
             "description": "ingot example Behaviour",
             "type": "data",
-            "uuid": "910c1234-82a9-4e39-a1b1-f9dbbdffd342",
+            "uuid": "4d090546-4cc9-4c66-8e75-2217e3b15ccc",
             "version": [
                 1,
                 0,
@@ -29,7 +29,7 @@
         {
             "type": "script",
             "language": "javascript",
-            "uuid": "a79712d6-dd39-4df4-abd7-cdba7041d8e6",
+            "uuid": "b7fc0fcf-afac-4d4d-a6e0-2b4e96eb3652",
             "entry": "scripts/main.js",
             "version": [
                 1,
@@ -40,7 +40,7 @@
     ],
     "dependencies": [
         {
-            "uuid": "2263a1f8-eeea-47f3-a787-1e5bfaf09757",
+            "uuid": "1c8227da-4041-4e77-8960-99f16b6b2ac7",
             "version": [
                 1,
                 0,

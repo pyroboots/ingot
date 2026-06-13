@@ -1,0 +1,435 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.TraitProperty
+  commentId: T:ingot.Core.TraitSystem.TraitProperty
+  id: TraitProperty
+  parent: ingot.Core.TraitSystem
+  children:
+  - ingot.Core.TraitSystem.TraitProperty.#ctor(System.String,System.String,System.Object)
+  - ingot.Core.TraitSystem.TraitProperty.Name
+  - ingot.Core.TraitSystem.TraitProperty.Path
+  - ingot.Core.TraitSystem.TraitProperty.Value
+  langs:
+  - csharp
+  - vb
+  name: TraitProperty
+  nameWithType: TraitProperty
+  fullName: ingot.Core.TraitSystem.TraitProperty
+  type: Struct
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Trait.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: TraitProperty
+    path: ingot.Core/TraitSystem/Trait.cs
+    startLine: 11
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem
+  summary: Contains reflected data of a member in a trait interface
+  example: []
+  syntax:
+    content: public struct TraitProperty
+    content.vb: Public Structure TraitProperty
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: ingot.Core.TraitSystem.TraitProperty.#ctor(System.String,System.String,System.Object)
+  commentId: M:ingot.Core.TraitSystem.TraitProperty.#ctor(System.String,System.String,System.Object)
+  id: '#ctor(System.String,System.String,System.Object)'
+  parent: ingot.Core.TraitSystem.TraitProperty
+  langs:
+  - csharp
+  - vb
+  name: TraitProperty(string, string, dynamic)
+  nameWithType: TraitProperty.TraitProperty(string, string, dynamic)
+  fullName: ingot.Core.TraitSystem.TraitProperty.TraitProperty(string, string, dynamic)
+  type: Constructor
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Trait.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: .ctor
+    path: ingot.Core/TraitSystem/Trait.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem
+  syntax:
+    content: public TraitProperty(string path, string name, dynamic value)
+    parameters:
+    - id: path
+      type: System.String
+    - id: name
+      type: System.String
+    - id: value
+      type: dynamic
+    content.vb: Public Sub New(path As String, name As String, value As Object)
+  overload: ingot.Core.TraitSystem.TraitProperty.#ctor*
+  nameWithType.vb: TraitProperty.New(String, String, Object)
+  fullName.vb: ingot.Core.TraitSystem.TraitProperty.New(String, String, Object)
+  name.vb: New(String, String, Object)
+- uid: ingot.Core.TraitSystem.TraitProperty.Path
+  commentId: F:ingot.Core.TraitSystem.TraitProperty.Path
+  id: Path
+  parent: ingot.Core.TraitSystem.TraitProperty
+  langs:
+  - csharp
+  - vb
+  name: Path
+  nameWithType: TraitProperty.Path
+  fullName: ingot.Core.TraitSystem.TraitProperty.Path
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Trait.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Path
+    path: ingot.Core/TraitSystem/Trait.cs
+    startLine: 20
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem
+  syntax:
+    content: public string Path
+    return:
+      type: System.String
+    content.vb: Public Path As String
+- uid: ingot.Core.TraitSystem.TraitProperty.Name
+  commentId: F:ingot.Core.TraitSystem.TraitProperty.Name
+  id: Name
+  parent: ingot.Core.TraitSystem.TraitProperty
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: TraitProperty.Name
+  fullName: ingot.Core.TraitSystem.TraitProperty.Name
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Trait.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Name
+    path: ingot.Core/TraitSystem/Trait.cs
+    startLine: 21
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem
+  syntax:
+    content: public string Name
+    return:
+      type: System.String
+    content.vb: Public Name As String
+- uid: ingot.Core.TraitSystem.TraitProperty.Value
+  commentId: F:ingot.Core.TraitSystem.TraitProperty.Value
+  id: Value
+  parent: ingot.Core.TraitSystem.TraitProperty
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: TraitProperty.Value
+  fullName: ingot.Core.TraitSystem.TraitProperty.Value
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Trait.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Value
+    path: ingot.Core/TraitSystem/Trait.cs
+    startLine: 22
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem
+  syntax:
+    content: public dynamic Value
+    return:
+      type: dynamic
+    content.vb: Public Value As Object
+references:
+- uid: ingot.Core.TraitSystem
+  commentId: N:ingot.Core.TraitSystem
+  href: ingot.html
+  name: ingot.Core.TraitSystem
+  nameWithType: ingot.Core.TraitSystem
+  fullName: ingot.Core.TraitSystem
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.TraitSystem.TraitProperty.#ctor*
+  commentId: Overload:ingot.Core.TraitSystem.TraitProperty.#ctor
+  href: ingot.Core.TraitSystem.TraitProperty.html#ingot_Core_TraitSystem_TraitProperty__ctor_System_String_System_String_System_Object_
+  name: TraitProperty
+  nameWithType: TraitProperty.TraitProperty
+  fullName: ingot.Core.TraitSystem.TraitProperty.TraitProperty
+  nameWithType.vb: TraitProperty.New
+  fullName.vb: ingot.Core.TraitSystem.TraitProperty.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object

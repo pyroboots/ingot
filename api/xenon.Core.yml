@@ -1,0 +1,58 @@
+### YamlMime:ManagedReference
+items:
+- uid: xenon.Core
+  commentId: N:xenon.Core
+  id: xenon.Core
+  children:
+  - xenon.Core.XenonArrayClass
+  - xenon.Core.XenonBoolClass
+  - xenon.Core.XenonDictionaryClass
+  - xenon.Core.XenonFunctionClass
+  - xenon.Core.XenonStringClass
+  - xenon.Core.XenonTypeClass
+  langs:
+  - csharp
+  - vb
+  name: xenon.Core
+  nameWithType: xenon.Core
+  fullName: xenon.Core
+  type: Namespace
+  assemblies:
+  - xenon
+references:
+- uid: xenon.Core.XenonArrayClass
+  commentId: T:xenon.Core.XenonArrayClass
+  href: xenon.Core.XenonArrayClass.html
+  name: XenonArrayClass
+  nameWithType: XenonArrayClass
+  fullName: xenon.Core.XenonArrayClass
+- uid: xenon.Core.XenonBoolClass
+  commentId: T:xenon.Core.XenonBoolClass
+  href: xenon.Core.XenonBoolClass.html
+  name: XenonBoolClass
+  nameWithType: XenonBoolClass
+  fullName: xenon.Core.XenonBoolClass
+- uid: xenon.Core.XenonDictionaryClass
+  commentId: T:xenon.Core.XenonDictionaryClass
+  href: xenon.Core.XenonDictionaryClass.html
+  name: XenonDictionaryClass
+  nameWithType: XenonDictionaryClass
+  fullName: xenon.Core.XenonDictionaryClass
+- uid: xenon.Core.XenonFunctionClass
+  commentId: T:xenon.Core.XenonFunctionClass
+  href: xenon.Core.XenonFunctionClass.html
+  name: XenonFunctionClass
+  nameWithType: XenonFunctionClass
+  fullName: xenon.Core.XenonFunctionClass
+- uid: xenon.Core.XenonStringClass
+  commentId: T:xenon.Core.XenonStringClass
+  href: xenon.Core.XenonStringClass.html
+  name: XenonStringClass
+  nameWithType: XenonStringClass
+  fullName: xenon.Core.XenonStringClass
+- uid: xenon.Core.XenonTypeClass
+  commentId: T:xenon.Core.XenonTypeClass
+  href: xenon.Core.XenonTypeClass.html
+  name: XenonTypeClass
+  nameWithType: XenonTypeClass
+  fullName: xenon.Core.XenonTypeClass

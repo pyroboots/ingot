@@ -1,0 +1,212 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor
+  id: IDurabilitySensor
+  parent: ingot.Core.TraitSystem.Traits.Item
+  children:
+  - ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds
+  - ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.SoundEvent
+  langs:
+  - csharp
+  - vb
+  name: IDurabilitySensor
+  nameWithType: IDurabilitySensor
+  fullName: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IDurabilitySensor.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IDurabilitySensor
+    path: ingot.Core/TraitSystem/Traits/Item/IDurabilitySensor.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  syntax:
+    content: >-
+      [Trait("minecraft:durability_sensor", TraitSystem.TraitType.Item)]
+
+      public interface IDurabilitySensor : IItemTrait
+    content.vb: >-
+      <Trait("minecraft:durability_sensor", TraitSystem.TraitType.Item)>
+
+      Public Interface IDurabilitySensor Inherits IItemTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:durability_sensor
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 2
+- uid: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds
+  id: DurabilityThresholds
+  parent: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor
+  langs:
+  - csharp
+  - vb
+  name: DurabilityThresholds
+  nameWithType: IDurabilitySensor.DurabilityThresholds
+  fullName: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IDurabilitySensor.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: DurabilityThresholds
+    path: ingot.Core/TraitSystem/Traits/Item/IDurabilitySensor.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: The list of both durability thresholds and effects emitted when each threshold is met.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? DurabilityThresholds { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property DurabilityThresholds As Object
+  overload: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.SoundEvent
+  commentId: P:ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.SoundEvent
+  id: SoundEvent
+  parent: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor
+  langs:
+  - csharp
+  - vb
+  name: SoundEvent
+  nameWithType: IDurabilitySensor.SoundEvent
+  fullName: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.SoundEvent
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Item/IDurabilitySensor.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: SoundEvent
+    path: ingot.Core/TraitSystem/Traits/Item/IDurabilitySensor.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Item
+  summary: Sound effect to emit when the threshold is met.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      string SoundEvent { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property SoundEvent As String
+  overload: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.SoundEvent*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds
+  href: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.html#ingot_Core_TraitSystem_Traits_Item_IDurabilitySensor_DurabilityThresholds
+  name: DurabilityThresholds
+  nameWithType: IDurabilitySensor.DurabilityThresholds
+  fullName: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.SoundEvent*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.SoundEvent
+  href: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.html#ingot_Core_TraitSystem_Traits_Item_IDurabilitySensor_SoundEvent
+  name: SoundEvent
+  nameWithType: IDurabilitySensor.SoundEvent
+  fullName: ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.SoundEvent
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

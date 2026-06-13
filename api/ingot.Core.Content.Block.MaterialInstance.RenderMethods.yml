@@ -1,0 +1,306 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  commentId: T:ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  id: MaterialInstance.RenderMethods
+  parent: ingot.Core.Content.Block
+  children:
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTest
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestSingleSided
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestSingleSidedToOpaque
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestToOpaque
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods.Blend
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods.BlendToOpaque
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods.DoubleSided
+  - ingot.Core.Content.Block.MaterialInstance.RenderMethods.Opaque
+  langs:
+  - csharp
+  - vb
+  name: MaterialInstance.RenderMethods
+  nameWithType: MaterialInstance.RenderMethods
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  type: Enum
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: RenderMethods
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public enum MaterialInstance.RenderMethods
+    content.vb: Public Enum MaterialInstance.RenderMethods
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods.Opaque
+  commentId: F:ingot.Core.Content.Block.MaterialInstance.RenderMethods.Opaque
+  id: Opaque
+  parent: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  langs:
+  - csharp
+  - vb
+  name: Opaque
+  nameWithType: MaterialInstance.RenderMethods.Opaque
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods.Opaque
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Opaque
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 21
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: Opaque = 0
+    return:
+      type: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods.DoubleSided
+  commentId: F:ingot.Core.Content.Block.MaterialInstance.RenderMethods.DoubleSided
+  id: DoubleSided
+  parent: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  langs:
+  - csharp
+  - vb
+  name: DoubleSided
+  nameWithType: MaterialInstance.RenderMethods.DoubleSided
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods.DoubleSided
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: DoubleSided
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 22
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: DoubleSided = 1
+    return:
+      type: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods.Blend
+  commentId: F:ingot.Core.Content.Block.MaterialInstance.RenderMethods.Blend
+  id: Blend
+  parent: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  langs:
+  - csharp
+  - vb
+  name: Blend
+  nameWithType: MaterialInstance.RenderMethods.Blend
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods.Blend
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Blend
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 23
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: Blend = 2
+    return:
+      type: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTest
+  commentId: F:ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTest
+  id: AlphaTest
+  parent: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  langs:
+  - csharp
+  - vb
+  name: AlphaTest
+  nameWithType: MaterialInstance.RenderMethods.AlphaTest
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTest
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AlphaTest
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 24
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: AlphaTest = 3
+    return:
+      type: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestSingleSided
+  commentId: F:ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestSingleSided
+  id: AlphaTestSingleSided
+  parent: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  langs:
+  - csharp
+  - vb
+  name: AlphaTestSingleSided
+  nameWithType: MaterialInstance.RenderMethods.AlphaTestSingleSided
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestSingleSided
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AlphaTestSingleSided
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 25
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: AlphaTestSingleSided = 4
+    return:
+      type: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods.BlendToOpaque
+  commentId: F:ingot.Core.Content.Block.MaterialInstance.RenderMethods.BlendToOpaque
+  id: BlendToOpaque
+  parent: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  langs:
+  - csharp
+  - vb
+  name: BlendToOpaque
+  nameWithType: MaterialInstance.RenderMethods.BlendToOpaque
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods.BlendToOpaque
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: BlendToOpaque
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 26
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: BlendToOpaque = 5
+    return:
+      type: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestToOpaque
+  commentId: F:ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestToOpaque
+  id: AlphaTestToOpaque
+  parent: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  langs:
+  - csharp
+  - vb
+  name: AlphaTestToOpaque
+  nameWithType: MaterialInstance.RenderMethods.AlphaTestToOpaque
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestToOpaque
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AlphaTestToOpaque
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 27
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: AlphaTestToOpaque = 6
+    return:
+      type: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestSingleSidedToOpaque
+  commentId: F:ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestSingleSidedToOpaque
+  id: AlphaTestSingleSidedToOpaque
+  parent: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  langs:
+  - csharp
+  - vb
+  name: AlphaTestSingleSidedToOpaque
+  nameWithType: MaterialInstance.RenderMethods.AlphaTestSingleSidedToOpaque
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods.AlphaTestSingleSidedToOpaque
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AlphaTestSingleSidedToOpaque
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 28
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: AlphaTestSingleSidedToOpaque = 7
+    return:
+      type: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+references:
+- uid: ingot.Core.Content.Block
+  commentId: N:ingot.Core.Content.Block
+  href: ingot.html
+  name: ingot.Core.Content.Block
+  nameWithType: ingot.Core.Content.Block
+  fullName: ingot.Core.Content.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+- uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  commentId: T:ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.MaterialInstance.html
+  name: MaterialInstance.RenderMethods
+  nameWithType: MaterialInstance.RenderMethods
+  fullName: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+  spec.csharp:
+  - uid: ingot.Core.Content.Block.MaterialInstance
+    name: MaterialInstance
+    href: ingot.Core.Content.Block.MaterialInstance.html
+  - name: .
+  - uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+    name: RenderMethods
+    href: ingot.Core.Content.Block.MaterialInstance.RenderMethods.html
+  spec.vb:
+  - uid: ingot.Core.Content.Block.MaterialInstance
+    name: MaterialInstance
+    href: ingot.Core.Content.Block.MaterialInstance.html
+  - name: .
+  - uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods
+    name: RenderMethods
+    href: ingot.Core.Content.Block.MaterialInstance.RenderMethods.html

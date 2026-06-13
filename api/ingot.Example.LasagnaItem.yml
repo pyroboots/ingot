@@ -1,0 +1,702 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Example.LasagnaItem
+  commentId: T:ingot.Example.LasagnaItem
+  id: LasagnaItem
+  parent: ingot.Example
+  children:
+  - ingot.Example.LasagnaItem.DisplayName
+  - ingot.Example.LasagnaItem.Identifier
+  - ingot.Example.LasagnaItem.Texture
+  langs:
+  - csharp
+  - vb
+  name: LasagnaItem
+  nameWithType: LasagnaItem
+  fullName: ingot.Example.LasagnaItem
+  type: Class
+  source:
+    remote:
+      path: ingot.Example/LasagnaItem.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: LasagnaItem
+    path: ingot.Example/LasagnaItem.cs
+    startLine: 6
+  assemblies:
+  - ingot.Example
+  namespace: ingot.Example
+  syntax:
+    content: 'public class LasagnaItem : Item, IFood, IBlockPlacer, IItemTrait'
+    content.vb: Public Class LasagnaItem Inherits Item Implements IFood, IBlockPlacer, IItemTrait
+  inheritance:
+  - System.Object
+  - ingot.Core.Content.Item
+  implements:
+  - ingot.Core.TraitSystem.Traits.Item.IFood
+  - ingot.Core.TraitSystem.Traits.Item.IBlockPlacer
+  - ingot.Core.TraitSystem.Traits.IItemTrait
+  inheritedMembers:
+  - ingot.Core.Content.Item.FormatVersion
+  - ingot.Core.Content.Item.Category
+  - ingot.Core.Content.Item.Group
+  - ingot.Core.Content.Item.HiddenInCommands
+  - ingot.Core.Content.Item.MaxStackSize
+  - ingot.Core.Content.Item.AllowOffhand
+  - ingot.Core.Content.Item.Compile``1
+  - ingot.Core.Content.Item.Compile(System.Type)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: ingot.Example.LasagnaItem.Identifier
+  commentId: P:ingot.Example.LasagnaItem.Identifier
+  id: Identifier
+  parent: ingot.Example.LasagnaItem
+  langs:
+  - csharp
+  - vb
+  name: Identifier
+  nameWithType: LasagnaItem.Identifier
+  fullName: ingot.Example.LasagnaItem.Identifier
+  type: Property
+  source:
+    remote:
+      path: ingot.Example/LasagnaItem.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Identifier
+    path: ingot.Example/LasagnaItem.cs
+    startLine: 8
+  assemblies:
+  - ingot.Example
+  namespace: ingot.Example
+  summary: Item identifier used in the game
+  example: []
+  syntax:
+    content: public override string Identifier { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property Identifier As String
+  overridden: ingot.Core.Content.Item.Identifier
+  overload: ingot.Example.LasagnaItem.Identifier*
+- uid: ingot.Example.LasagnaItem.Texture
+  commentId: P:ingot.Example.LasagnaItem.Texture
+  id: Texture
+  parent: ingot.Example.LasagnaItem
+  langs:
+  - csharp
+  - vb
+  name: Texture
+  nameWithType: LasagnaItem.Texture
+  fullName: ingot.Example.LasagnaItem.Texture
+  type: Property
+  source:
+    remote:
+      path: ingot.Example/LasagnaItem.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Texture
+    path: ingot.Example/LasagnaItem.cs
+    startLine: 9
+  assemblies:
+  - ingot.Example
+  namespace: ingot.Example
+  summary: Shortcut for the <code>minecraft:icon</code> component
+  example: []
+  syntax:
+    content: public override string Texture { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property Texture As String
+  overridden: ingot.Core.Content.Item.Texture
+  overload: ingot.Example.LasagnaItem.Texture*
+- uid: ingot.Example.LasagnaItem.DisplayName
+  commentId: P:ingot.Example.LasagnaItem.DisplayName
+  id: DisplayName
+  parent: ingot.Example.LasagnaItem
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: LasagnaItem.DisplayName
+  fullName: ingot.Example.LasagnaItem.DisplayName
+  type: Property
+  source:
+    remote:
+      path: ingot.Example/LasagnaItem.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: DisplayName
+    path: ingot.Example/LasagnaItem.cs
+    startLine: 10
+  assemblies:
+  - ingot.Example
+  namespace: ingot.Example
+  summary: Shortcut for the <code>minecraft:display_name</code> component
+  example: []
+  syntax:
+    content: public override string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property DisplayName As String
+  overridden: ingot.Core.Content.Item.DisplayName
+  overload: ingot.Example.LasagnaItem.DisplayName*
+references:
+- uid: ingot.Example
+  commentId: N:ingot.Example
+  href: ingot.html
+  name: ingot.Example
+  nameWithType: ingot.Example
+  fullName: ingot.Example
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Example
+    name: Example
+    href: ingot.Example.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Example
+    name: Example
+    href: ingot.Example.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: ingot.Core.Content.Item
+  commentId: T:ingot.Core.Content.Item
+  parent: ingot.Core.Content
+  href: ingot.Core.Content.Item.html
+  name: Item
+  nameWithType: Item
+  fullName: ingot.Core.Content.Item
+- uid: ingot.Core.TraitSystem.Traits.Item.IFood
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IFood
+  parent: ingot.Core.TraitSystem.Traits.Item
+  href: ingot.Core.TraitSystem.Traits.Item.IFood.html
+  name: IFood
+  nameWithType: IFood
+  fullName: ingot.Core.TraitSystem.Traits.Item.IFood
+- uid: ingot.Core.TraitSystem.Traits.Item.IBlockPlacer
+  commentId: T:ingot.Core.TraitSystem.Traits.Item.IBlockPlacer
+  parent: ingot.Core.TraitSystem.Traits.Item
+  href: ingot.Core.TraitSystem.Traits.Item.IBlockPlacer.html
+  name: IBlockPlacer
+  nameWithType: IBlockPlacer
+  fullName: ingot.Core.TraitSystem.Traits.Item.IBlockPlacer
+- uid: ingot.Core.TraitSystem.Traits.IItemTrait
+  commentId: T:ingot.Core.TraitSystem.Traits.IItemTrait
+  parent: ingot.Core.TraitSystem.Traits
+  href: ingot.Core.TraitSystem.Traits.IItemTrait.html
+  name: IItemTrait
+  nameWithType: IItemTrait
+  fullName: ingot.Core.TraitSystem.Traits.IItemTrait
+- uid: ingot.Core.Content.Item.FormatVersion
+  commentId: P:ingot.Core.Content.Item.FormatVersion
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_FormatVersion
+  name: FormatVersion
+  nameWithType: Item.FormatVersion
+  fullName: ingot.Core.Content.Item.FormatVersion
+- uid: ingot.Core.Content.Item.Category
+  commentId: P:ingot.Core.Content.Item.Category
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Category
+  name: Category
+  nameWithType: Item.Category
+  fullName: ingot.Core.Content.Item.Category
+- uid: ingot.Core.Content.Item.Group
+  commentId: P:ingot.Core.Content.Item.Group
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Group
+  name: Group
+  nameWithType: Item.Group
+  fullName: ingot.Core.Content.Item.Group
+- uid: ingot.Core.Content.Item.HiddenInCommands
+  commentId: P:ingot.Core.Content.Item.HiddenInCommands
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_HiddenInCommands
+  name: HiddenInCommands
+  nameWithType: Item.HiddenInCommands
+  fullName: ingot.Core.Content.Item.HiddenInCommands
+- uid: ingot.Core.Content.Item.MaxStackSize
+  commentId: P:ingot.Core.Content.Item.MaxStackSize
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_MaxStackSize
+  name: MaxStackSize
+  nameWithType: Item.MaxStackSize
+  fullName: ingot.Core.Content.Item.MaxStackSize
+- uid: ingot.Core.Content.Item.AllowOffhand
+  commentId: P:ingot.Core.Content.Item.AllowOffhand
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_AllowOffhand
+  name: AllowOffhand
+  nameWithType: Item.AllowOffhand
+  fullName: ingot.Core.Content.Item.AllowOffhand
+- uid: ingot.Core.Content.Item.Compile``1
+  commentId: M:ingot.Core.Content.Item.Compile``1
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile__1
+  name: Compile<TItem>()
+  nameWithType: Item.Compile<TItem>()
+  fullName: ingot.Core.Content.Item.Compile<TItem>()
+  nameWithType.vb: Item.Compile(Of TItem)()
+  fullName.vb: ingot.Core.Content.Item.Compile(Of TItem)()
+  name.vb: Compile(Of TItem)()
+  spec.csharp:
+  - uid: ingot.Core.Content.Item.Compile``1
+    name: Compile
+    href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile__1
+  - name: <
+  - name: TItem
+  - name: '>'
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: ingot.Core.Content.Item.Compile``1
+    name: Compile
+    href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile__1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TItem
+  - name: )
+  - name: (
+  - name: )
+- uid: ingot.Core.Content.Item.Compile(System.Type)
+  commentId: M:ingot.Core.Content.Item.Compile(System.Type)
+  parent: ingot.Core.Content.Item
+  isExternal: true
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile_System_Type_
+  name: Compile(Type)
+  nameWithType: Item.Compile(Type)
+  fullName: ingot.Core.Content.Item.Compile(System.Type)
+  spec.csharp:
+  - uid: ingot.Core.Content.Item.Compile(System.Type)
+    name: Compile
+    href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile_System_Type_
+  - name: (
+  - uid: System.Type
+    name: Type
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.type
+  - name: )
+  spec.vb:
+  - uid: ingot.Core.Content.Item.Compile(System.Type)
+    name: Compile
+    href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile_System_Type_
+  - name: (
+  - uid: System.Type
+    name: Type
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.type
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.Content
+  commentId: N:ingot.Core.Content
+  href: ingot.html
+  name: ingot.Core.Content
+  nameWithType: ingot.Core.Content
+  fullName: ingot.Core.Content
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+- uid: ingot.Core.TraitSystem.Traits.Item
+  commentId: N:ingot.Core.TraitSystem.Traits.Item
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Item
+  nameWithType: ingot.Core.TraitSystem.Traits.Item
+  fullName: ingot.Core.TraitSystem.Traits.Item
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Item
+    name: Item
+    href: ingot.Core.TraitSystem.Traits.Item.html
+- uid: ingot.Core.TraitSystem.Traits
+  commentId: N:ingot.Core.TraitSystem.Traits
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits
+  nameWithType: ingot.Core.TraitSystem.Traits
+  fullName: ingot.Core.TraitSystem.Traits
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+- uid: ingot.Core.Content.Item.Identifier
+  commentId: P:ingot.Core.Content.Item.Identifier
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Identifier
+  name: Identifier
+  nameWithType: Item.Identifier
+  fullName: ingot.Core.Content.Item.Identifier
+- uid: ingot.Example.LasagnaItem.Identifier*
+  commentId: Overload:ingot.Example.LasagnaItem.Identifier
+  href: ingot.Example.LasagnaItem.html#ingot_Example_LasagnaItem_Identifier
+  name: Identifier
+  nameWithType: LasagnaItem.Identifier
+  fullName: ingot.Example.LasagnaItem.Identifier
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: ingot.Core.Content.Item.Texture
+  commentId: P:ingot.Core.Content.Item.Texture
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Texture
+  name: Texture
+  nameWithType: Item.Texture
+  fullName: ingot.Core.Content.Item.Texture
+- uid: ingot.Example.LasagnaItem.Texture*
+  commentId: Overload:ingot.Example.LasagnaItem.Texture
+  href: ingot.Example.LasagnaItem.html#ingot_Example_LasagnaItem_Texture
+  name: Texture
+  nameWithType: LasagnaItem.Texture
+  fullName: ingot.Example.LasagnaItem.Texture
+- uid: ingot.Core.Content.Item.DisplayName
+  commentId: P:ingot.Core.Content.Item.DisplayName
+  parent: ingot.Core.Content.Item
+  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_DisplayName
+  name: DisplayName
+  nameWithType: Item.DisplayName
+  fullName: ingot.Core.Content.Item.DisplayName
+- uid: ingot.Example.LasagnaItem.DisplayName*
+  commentId: Overload:ingot.Example.LasagnaItem.DisplayName
+  href: ingot.Example.LasagnaItem.html#ingot_Example_LasagnaItem_DisplayName
+  name: DisplayName
+  nameWithType: LasagnaItem.DisplayName
+  fullName: ingot.Example.LasagnaItem.DisplayName

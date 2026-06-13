@@ -1,0 +1,319 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer
+  commentId: T:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer
+  id: IRedstoneProducer
+  parent: ingot.Core.TraitSystem.Traits.Block
+  children:
+  - ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces
+  - ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.Power
+  - ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.StronglyPoweredFace
+  - ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.TransformRelative
+  langs:
+  - csharp
+  - vb
+  name: IRedstoneProducer
+  nameWithType: IRedstoneProducer
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer
+  type: Interface
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: IRedstoneProducer
+    path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+    startLine: 7
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  syntax:
+    content: >-
+      [Trait("minecraft:redstone_producer", TraitSystem.TraitType.Block)]
+
+      public interface IRedstoneProducer : IBlockTrait
+    content.vb: >-
+      <Trait("minecraft:redstone_producer", TraitSystem.TraitType.Block)>
+
+      Public Interface IRedstoneProducer Inherits IBlockTrait
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitAttribute
+    ctor: ingot.Core.TraitSystem.TraitAttribute.#ctor(System.String,ingot.Core.TraitSystem.TraitSystem.TraitType)
+    arguments:
+    - type: System.String
+      value: minecraft:redstone_producer
+    - type: ingot.Core.TraitSystem.TraitSystem.TraitType
+      value: 0
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces
+  id: ConnectedFaces
+  parent: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer
+  langs:
+  - csharp
+  - vb
+  name: ConnectedFaces
+  nameWithType: IRedstoneProducer.ConnectedFaces
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: ConnectedFaces
+    path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+    startLine: 13
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: The list of faces that are considered connected to the circuit. If a face is not connected, it will not provide power to the block touching that face. By default, all faces are connected.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? ConnectedFaces { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property ConnectedFaces As Object
+  overload: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.Power
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.Power
+  id: Power
+  parent: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer
+  langs:
+  - csharp
+  - vb
+  name: Power
+  nameWithType: IRedstoneProducer.Power
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.Power
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Power
+    path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+    startLine: 19
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: The strength of the redstone signal produced by this block. Valid values are from 0 to 15, where 0 means no signal and 15 is the maximum signal strength. Value must be &lt;= 15.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      int Power { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property Power As Integer
+  overload: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.Power*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.StronglyPoweredFace
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.StronglyPoweredFace
+  id: StronglyPoweredFace
+  parent: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer
+  langs:
+  - csharp
+  - vb
+  name: StronglyPoweredFace
+  nameWithType: IRedstoneProducer.StronglyPoweredFace
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.StronglyPoweredFace
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: StronglyPoweredFace
+    path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+    startLine: 25
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: The block touching this face will become strongly powered with the signal level strength of 'power'.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      dynamic? StronglyPoweredFace { get; }
+    parameters: []
+    return:
+      type: dynamic
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property StronglyPoweredFace As Object
+  overload: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.StronglyPoweredFace*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.TransformRelative
+  commentId: P:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.TransformRelative
+  id: TransformRelative
+  parent: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer
+  langs:
+  - csharp
+  - vb
+  name: TransformRelative
+  nameWithType: IRedstoneProducer.TransformRelative
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.TransformRelative
+  type: Property
+  source:
+    remote:
+      path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: TransformRelative
+    path: ingot.Core/TraitSystem/Traits/Block/IRedstoneProducer.cs
+    startLine: 31
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.TraitSystem.Traits.Block
+  summary: If true, the strongly_powered_face and connected_faces properties will be rotated according to the 'minecraft:transformation' component.
+  example: []
+  syntax:
+    content: >-
+      [TraitProperty]
+
+      bool TransformRelative { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <TraitProperty>
+
+      ReadOnly Property TransformRelative As Boolean
+  overload: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.TransformRelative*
+  attributes:
+  - type: ingot.Core.TraitSystem.TraitPropertyAttribute
+    ctor: ingot.Core.TraitSystem.TraitPropertyAttribute.#ctor
+    arguments: []
+references:
+- uid: ingot.Core.TraitSystem.Traits.Block
+  commentId: N:ingot.Core.TraitSystem.Traits.Block
+  href: ingot.html
+  name: ingot.Core.TraitSystem.Traits.Block
+  nameWithType: ingot.Core.TraitSystem.Traits.Block
+  fullName: ingot.Core.TraitSystem.Traits.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Block
+    name: Block
+    href: ingot.Core.TraitSystem.Traits.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.TraitSystem
+    name: TraitSystem
+    href: ingot.Core.TraitSystem.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits
+    name: Traits
+    href: ingot.Core.TraitSystem.Traits.html
+  - name: .
+  - uid: ingot.Core.TraitSystem.Traits.Block
+    name: Block
+    href: ingot.Core.TraitSystem.Traits.Block.html
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces
+  href: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.html#ingot_Core_TraitSystem_Traits_Block_IRedstoneProducer_ConnectedFaces
+  name: ConnectedFaces
+  nameWithType: IRedstoneProducer.ConnectedFaces
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.Power*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.Power
+  href: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.html#ingot_Core_TraitSystem_Traits_Block_IRedstoneProducer_Power
+  name: Power
+  nameWithType: IRedstoneProducer.Power
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.Power
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.StronglyPoweredFace*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.StronglyPoweredFace
+  href: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.html#ingot_Core_TraitSystem_Traits_Block_IRedstoneProducer_StronglyPoweredFace
+  name: StronglyPoweredFace
+  nameWithType: IRedstoneProducer.StronglyPoweredFace
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.StronglyPoweredFace
+- uid: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.TransformRelative*
+  commentId: Overload:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.TransformRelative
+  href: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.html#ingot_Core_TraitSystem_Traits_Block_IRedstoneProducer_TransformRelative
+  name: TransformRelative
+  nameWithType: IRedstoneProducer.TransformRelative
+  fullName: ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.TransformRelative
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

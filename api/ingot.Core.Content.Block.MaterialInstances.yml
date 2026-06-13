@@ -1,0 +1,770 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.Content.Block.MaterialInstances
+  commentId: T:ingot.Core.Content.Block.MaterialInstances
+  id: MaterialInstances
+  parent: ingot.Core.Content.Block
+  children:
+  - ingot.Core.Content.Block.MaterialInstances.#ctor
+  - ingot.Core.Content.Block.MaterialInstances.#ctor(ingot.Core.Content.Block.MaterialInstance)
+  - ingot.Core.Content.Block.MaterialInstances.All
+  - ingot.Core.Content.Block.MaterialInstances.Compile(Newtonsoft.Json.JsonTextWriter@)
+  - ingot.Core.Content.Block.MaterialInstances.Down
+  - ingot.Core.Content.Block.MaterialInstances.East
+  - ingot.Core.Content.Block.MaterialInstances.North
+  - ingot.Core.Content.Block.MaterialInstances.South
+  - ingot.Core.Content.Block.MaterialInstances.Up
+  - ingot.Core.Content.Block.MaterialInstances.West
+  langs:
+  - csharp
+  - vb
+  name: MaterialInstances
+  nameWithType: MaterialInstances
+  fullName: ingot.Core.Content.Block.MaterialInstances
+  type: Struct
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: MaterialInstances
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 75
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Texture and material configuration for the faces of a <xref href="ingot.Core.Content.Block.Block" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public struct MaterialInstances : ICompileableFragment'
+    content.vb: Public Structure MaterialInstances Implements ICompileableFragment
+  implements:
+  - ingot.Core.Common.ICompileableFragment
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: ingot.Core.Content.Block.MaterialInstances.#ctor
+  commentId: M:ingot.Core.Content.Block.MaterialInstances.#ctor
+  id: '#ctor'
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: MaterialInstances()
+  nameWithType: MaterialInstances.MaterialInstances()
+  fullName: ingot.Core.Content.Block.MaterialInstances.MaterialInstances()
+  type: Constructor
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: .ctor
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 77
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstances()
+    content.vb: Public Sub New()
+  overload: ingot.Core.Content.Block.MaterialInstances.#ctor*
+  nameWithType.vb: MaterialInstances.New()
+  fullName.vb: ingot.Core.Content.Block.MaterialInstances.New()
+  name.vb: New()
+- uid: ingot.Core.Content.Block.MaterialInstances.#ctor(ingot.Core.Content.Block.MaterialInstance)
+  commentId: M:ingot.Core.Content.Block.MaterialInstances.#ctor(ingot.Core.Content.Block.MaterialInstance)
+  id: '#ctor(ingot.Core.Content.Block.MaterialInstance)'
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: MaterialInstances(MaterialInstance)
+  nameWithType: MaterialInstances.MaterialInstances(MaterialInstance)
+  fullName: ingot.Core.Content.Block.MaterialInstances.MaterialInstances(ingot.Core.Content.Block.MaterialInstance)
+  type: Constructor
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: .ctor
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 78
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstances(MaterialInstance all)
+    parameters:
+    - id: all
+      type: ingot.Core.Content.Block.MaterialInstance
+    content.vb: Public Sub New(all As MaterialInstance)
+  overload: ingot.Core.Content.Block.MaterialInstances.#ctor*
+  nameWithType.vb: MaterialInstances.New(MaterialInstance)
+  fullName.vb: ingot.Core.Content.Block.MaterialInstances.New(ingot.Core.Content.Block.MaterialInstance)
+  name.vb: New(MaterialInstance)
+- uid: ingot.Core.Content.Block.MaterialInstances.All
+  commentId: F:ingot.Core.Content.Block.MaterialInstances.All
+  id: All
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: All
+  nameWithType: MaterialInstances.All
+  fullName: ingot.Core.Content.Block.MaterialInstances.All
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: All
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 80
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstance? All
+    return:
+      type: System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+    content.vb: Public All As MaterialInstance?
+- uid: ingot.Core.Content.Block.MaterialInstances.Up
+  commentId: F:ingot.Core.Content.Block.MaterialInstances.Up
+  id: Up
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: Up
+  nameWithType: MaterialInstances.Up
+  fullName: ingot.Core.Content.Block.MaterialInstances.Up
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Up
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 81
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstance? Up
+    return:
+      type: System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+    content.vb: Public Up As MaterialInstance?
+- uid: ingot.Core.Content.Block.MaterialInstances.Down
+  commentId: F:ingot.Core.Content.Block.MaterialInstances.Down
+  id: Down
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: Down
+  nameWithType: MaterialInstances.Down
+  fullName: ingot.Core.Content.Block.MaterialInstances.Down
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Down
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 82
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstance? Down
+    return:
+      type: System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+    content.vb: Public Down As MaterialInstance?
+- uid: ingot.Core.Content.Block.MaterialInstances.East
+  commentId: F:ingot.Core.Content.Block.MaterialInstances.East
+  id: East
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: East
+  nameWithType: MaterialInstances.East
+  fullName: ingot.Core.Content.Block.MaterialInstances.East
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: East
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 83
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstance? East
+    return:
+      type: System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+    content.vb: Public East As MaterialInstance?
+- uid: ingot.Core.Content.Block.MaterialInstances.West
+  commentId: F:ingot.Core.Content.Block.MaterialInstances.West
+  id: West
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: West
+  nameWithType: MaterialInstances.West
+  fullName: ingot.Core.Content.Block.MaterialInstances.West
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: West
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 84
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstance? West
+    return:
+      type: System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+    content.vb: Public West As MaterialInstance?
+- uid: ingot.Core.Content.Block.MaterialInstances.North
+  commentId: F:ingot.Core.Content.Block.MaterialInstances.North
+  id: North
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: North
+  nameWithType: MaterialInstances.North
+  fullName: ingot.Core.Content.Block.MaterialInstances.North
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: North
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 85
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstance? North
+    return:
+      type: System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+    content.vb: Public North As MaterialInstance?
+- uid: ingot.Core.Content.Block.MaterialInstances.South
+  commentId: F:ingot.Core.Content.Block.MaterialInstances.South
+  id: South
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: South
+  nameWithType: MaterialInstances.South
+  fullName: ingot.Core.Content.Block.MaterialInstances.South
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: South
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 86
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  syntax:
+    content: public MaterialInstance? South
+    return:
+      type: System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+    content.vb: Public South As MaterialInstance?
+- uid: ingot.Core.Content.Block.MaterialInstances.Compile(Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Content.Block.MaterialInstances.Compile(Newtonsoft.Json.JsonTextWriter@)
+  id: Compile(Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Content.Block.MaterialInstances
+  langs:
+  - csharp
+  - vb
+  name: Compile(ref JsonTextWriter)
+  nameWithType: MaterialInstances.Compile(ref JsonTextWriter)
+  fullName: ingot.Core.Content.Block.MaterialInstances.Compile(ref Newtonsoft.Json.JsonTextWriter)
+  type: Method
+  source:
+    remote:
+      path: ingot.Core/Content/Block/MaterialInstances.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Compile
+    path: ingot.Core/Content/Block/MaterialInstances.cs
+    startLine: 92
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Content.Block
+  summary: Compiles <xref href="ingot.Core.Content.Block.MaterialInstances" data-throw-if-not-resolved="false"></xref> to JSON
+  example: []
+  syntax:
+    content: public void Compile(ref JsonTextWriter writer)
+    parameters:
+    - id: writer
+      type: Newtonsoft.Json.JsonTextWriter
+      description: JSON source stream to write to
+    content.vb: Public Sub Compile(writer As JsonTextWriter)
+  overload: ingot.Core.Content.Block.MaterialInstances.Compile*
+  implements:
+  - ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
+  nameWithType.vb: MaterialInstances.Compile(JsonTextWriter)
+  fullName.vb: ingot.Core.Content.Block.MaterialInstances.Compile(Newtonsoft.Json.JsonTextWriter)
+  name.vb: Compile(JsonTextWriter)
+references:
+- uid: ingot.Core.Content.Block.Block
+  commentId: T:ingot.Core.Content.Block.Block
+  href: ingot.Core.Content.Block.Block.html
+  name: Block
+  nameWithType: Block
+  fullName: ingot.Core.Content.Block.Block
+- uid: ingot.Core.Content.Block
+  commentId: N:ingot.Core.Content.Block
+  href: ingot.html
+  name: ingot.Core.Content.Block
+  nameWithType: ingot.Core.Content.Block
+  fullName: ingot.Core.Content.Block
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Content
+    name: Content
+    href: ingot.Core.Content.html
+  - name: .
+  - uid: ingot.Core.Content.Block
+    name: Block
+    href: ingot.Core.Content.Block.html
+- uid: ingot.Core.Common.ICompileableFragment
+  commentId: T:ingot.Core.Common.ICompileableFragment
+  parent: ingot.Core.Common
+  href: ingot.Core.Common.ICompileableFragment.html
+  name: ICompileableFragment
+  nameWithType: ICompileableFragment
+  fullName: ingot.Core.Common.ICompileableFragment
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: ingot.Core.Common
+  commentId: N:ingot.Core.Common
+  href: ingot.html
+  name: ingot.Core.Common
+  nameWithType: ingot.Core.Common
+  fullName: ingot.Core.Common
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Common
+    name: Common
+    href: ingot.Core.Common.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Common
+    name: Common
+    href: ingot.Core.Common.html
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ingot.Core.Content.Block.MaterialInstances.#ctor*
+  commentId: Overload:ingot.Core.Content.Block.MaterialInstances.#ctor
+  href: ingot.Core.Content.Block.MaterialInstances.html#ingot_Core_Content_Block_MaterialInstances__ctor
+  name: MaterialInstances
+  nameWithType: MaterialInstances.MaterialInstances
+  fullName: ingot.Core.Content.Block.MaterialInstances.MaterialInstances
+  nameWithType.vb: MaterialInstances.New
+  fullName.vb: ingot.Core.Content.Block.MaterialInstances.New
+  name.vb: New
+- uid: ingot.Core.Content.Block.MaterialInstance
+  commentId: T:ingot.Core.Content.Block.MaterialInstance
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.MaterialInstance.html
+  name: MaterialInstance
+  nameWithType: MaterialInstance
+  fullName: ingot.Core.Content.Block.MaterialInstance
+- uid: System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+  commentId: T:System.Nullable{ingot.Core.Content.Block.MaterialInstance}
+  parent: System
+  definition: System.Nullable`1
+  href: ingot.Core.Content.Block.MaterialInstance.html
+  name: MaterialInstance?
+  nameWithType: MaterialInstance?
+  fullName: ingot.Core.Content.Block.MaterialInstance?
+  spec.csharp:
+  - uid: ingot.Core.Content.Block.MaterialInstance
+    name: MaterialInstance
+    href: ingot.Core.Content.Block.MaterialInstance.html
+  - name: '?'
+  spec.vb:
+  - uid: ingot.Core.Content.Block.MaterialInstance
+    name: MaterialInstance
+    href: ingot.Core.Content.Block.MaterialInstance.html
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: ingot.Core.Content.Block.MaterialInstances
+  commentId: T:ingot.Core.Content.Block.MaterialInstances
+  parent: ingot.Core.Content.Block
+  href: ingot.Core.Content.Block.MaterialInstances.html
+  name: MaterialInstances
+  nameWithType: MaterialInstances
+  fullName: ingot.Core.Content.Block.MaterialInstances
+- uid: ingot.Core.Content.Block.MaterialInstances.Compile*
+  commentId: Overload:ingot.Core.Content.Block.MaterialInstances.Compile
+  href: ingot.Core.Content.Block.MaterialInstances.html#ingot_Core_Content_Block_MaterialInstances_Compile_Newtonsoft_Json_JsonTextWriter__
+  name: Compile
+  nameWithType: MaterialInstances.Compile
+  fullName: ingot.Core.Content.Block.MaterialInstances.Compile
+- uid: ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Common.ICompileableFragment
+  isExternal: true
+  href: ingot.Core.Common.ICompileableFragment.html#ingot_Core_Common_ICompileableFragment_Compile_Newtonsoft_Json_JsonTextWriter__
+  name: Compile(ref JsonTextWriter)
+  nameWithType: ICompileableFragment.Compile(ref JsonTextWriter)
+  fullName: ingot.Core.Common.ICompileableFragment.Compile(ref Newtonsoft.Json.JsonTextWriter)
+  nameWithType.vb: ICompileableFragment.Compile(JsonTextWriter)
+  fullName.vb: ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter)
+  name.vb: Compile(JsonTextWriter)
+  spec.csharp:
+  - uid: ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
+    name: Compile
+    href: ingot.Core.Common.ICompileableFragment.html#ingot_Core_Common_ICompileableFragment_Compile_Newtonsoft_Json_JsonTextWriter__
+  - name: (
+  - name: ref
+  - name: " "
+  - uid: Newtonsoft.Json.JsonTextWriter
+    name: JsonTextWriter
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
+    name: Compile
+    href: ingot.Core.Common.ICompileableFragment.html#ingot_Core_Common_ICompileableFragment_Compile_Newtonsoft_Json_JsonTextWriter__
+  - name: (
+  - uid: Newtonsoft.Json.JsonTextWriter
+    name: JsonTextWriter
+    isExternal: true
+  - name: )
+- uid: Newtonsoft.Json.JsonTextWriter
+  commentId: T:Newtonsoft.Json.JsonTextWriter
+  parent: Newtonsoft.Json
+  isExternal: true
+  name: JsonTextWriter
+  nameWithType: JsonTextWriter
+  fullName: Newtonsoft.Json.JsonTextWriter
+- uid: Newtonsoft.Json
+  commentId: N:Newtonsoft.Json
+  isExternal: true
+  name: Newtonsoft.Json
+  nameWithType: Newtonsoft.Json
+  fullName: Newtonsoft.Json
+  spec.csharp:
+  - uid: Newtonsoft
+    name: Newtonsoft
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json
+    name: Json
+    isExternal: true
+  spec.vb:
+  - uid: Newtonsoft
+    name: Newtonsoft
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json
+    name: Json
+    isExternal: true
