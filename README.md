@@ -14,4 +14,3 @@
 - **Behaviour + Resource Pack Support** - Full control over BP and RP with easy linking
 - **Script API Ready** - Built-in support for JavaScript scripting
 - **Compile-Time Logging** - Clear feedback during pack generation
-- **Extensible** - Easy to add your own generators and content types
