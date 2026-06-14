@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Resource\" />
       <Folder Include="TraitSystem\Traits\Block\" />
       <Folder Include="TraitSystem\Traits\Item\" />
     </ItemGroup>

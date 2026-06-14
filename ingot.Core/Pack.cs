@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using ingot.Core.Content;
-using ingot.Core.Content.Block;
 using Newtonsoft.Json;
 using static ingot.Core.Common.JsonHelper;
 using Version = ingot.Core.Common.Version;

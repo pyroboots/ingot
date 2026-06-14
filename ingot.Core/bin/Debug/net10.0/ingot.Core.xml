@@ -4,6 +4,203 @@
         <name>ingot.Core</name>
     </assembly>
     <members>
+        <member name="T:ingot.Core.Behaviour.Block.Block">
+            <summary>
+            Implements basic properties of a block
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.Identifier">
+            <summary>
+            Block identifier used in the game
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.FormatVersion">
+            <summary>
+            Minimum component version
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.States">
+            <summary>
+            Dictionary of possible block states. Valid state types are: <see cref="T:System.Int32"/>[], <see cref="T:System.Single"/>[], <see cref="T:System.Boolean"/>[], <see cref="T:System.String"/>[], 
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.Permutations">
+            <summary>
+            List of possible block permutations
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.Tags">
+            <summary>
+            Array of block tags that can enable / expand vanilla functionality
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.DisplayName">
+            <summary>
+            Shortcut for the <c>minecraft:display_name</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.Friction">
+            <summary>
+            Shortcut for the <c>minecraft:friction</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.LightDampening">
+            <summary>
+            Shortcut for the <c>minecraft:light_dampening</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.LightEmission">
+            <summary>
+            Shortcut for the <c>minecraft:light_emission</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.Replaceable">
+            <summary>
+            Shortcut for the <c>minecraft:replaceable</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.Loot">
+            <summary>
+            Shortcut for the <c>minecraft:loot</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.Block.MaterialInstances">
+            <summary>
+            Texture and materials for the <see cref="T:ingot.Core.Behaviour.Block.Block"/>. Shortcut for the <c>minecraft:material_instances</c> component
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Block.Block.Compile``1">
+            <summary>
+            Compiles the <typeparamref name="TBlock"/> to JSON
+            </summary>
+            <typeparam name="TBlock">The type class to compile</typeparam>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Block.BlockPermutation">
+            <summary>
+            C# representation of a block permutation
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.Condition">
+            <summary>
+            Molang condition that determines when this permutation is active
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.DisplayName">
+            <summary>
+            Shortcut for the <c>minecraft:display_name</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.Friction">
+            <summary>
+            Shortcut for the <c>minecraft:friction</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.LightDampening">
+            <summary>
+            Shortcut for the <c>minecraft:light_dampening</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.LightEmission">
+            <summary>
+            Shortcut for the <c>minecraft:light_emission</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.Replaceable">
+            <summary>
+            Shortcut for the <c>minecraft:replaceable</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.Loot">
+            <summary>
+            Shortcut for the <c>minecraft:loot</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.MaterialInstances">
+            <summary>
+            Texture and materials for the <see cref="T:ingot.Core.Behaviour.Block.BlockPermutation"/>. Shortcut for the <c>minecraft:material_instances</c> component
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)">
+            <summary>
+            Compiles the <typeparamref name="TBlockPermutation"/> to JSON
+            </summary>
+            <typeparam name="TBlockPermutation">The type class block permutation to compile</typeparam>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Block.MaterialInstance">
+            <summary>
+            Texture and material configuration for the face of a <see cref="T:ingot.Core.Behaviour.Block.Block"/>
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Block.MaterialInstance.Compile(Newtonsoft.Json.JsonTextWriter@)">
+            <inheritdoc/>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Block.MaterialInstances">
+            <summary>
+            Texture and material configuration for the faces of a <see cref="T:ingot.Core.Behaviour.Block.Block"/>
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Block.MaterialInstances.Compile(Newtonsoft.Json.JsonTextWriter@)">
+            <summary>
+            Compiles <see cref="T:ingot.Core.Behaviour.Block.MaterialInstances"/> to JSON
+            </summary>
+            <param name="writer">JSON source stream to write to</param>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Item">
+            <summary>
+            Implements basic properties of an item
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.Identifier">
+            <summary>
+            Item identifier used in the game
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.FormatVersion">
+            <summary>
+            Minimum component version
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.Category">
+            <summary>
+            Which section of the creative inventory the item appears in
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.Group">
+            <summary>
+            Which item group of <see cref="T:ingot.Core.Behaviour.Item.CatalogueCategory"/> the item appears in
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.HiddenInCommands">
+            <summary>
+            Whether the item is visible by command item arguments
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.Texture">
+            <summary>
+            Shortcut for the <c>minecraft:icon</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.MaxStackSize">
+            <summary>
+            Shortcut for the <c>minecraft:max_stack_size</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.DisplayName">
+            <summary>
+            Shortcut for the <c>minecraft:display_name</c> component
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Item.AllowOffhand">
+            <summary>
+            Shortcut for the <c>minecraft:allow_off_hand</c> component
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Item.Compile``1">
+            <summary>
+            Compiles the <typeparamref name="TItem"/> to JSON
+            </summary>
+            <typeparam name="TItem">The type class to compile</typeparam>
+        </member>
         <member name="T:ingot.Core.BehaviourPack">
             <summary>
             C# representation of a Minecraft behaviour pack
@@ -28,17 +225,17 @@
         </member>
         <member name="F:ingot.Core.BehaviourPack.Entities">
             <summary>
-            List of <see cref="T:ingot.Core.Content.Entity"/> types added to the pack
+            List of <see cref="T:ingot.Core.Behaviour.Entity"/> types added to the pack
             </summary>
         </member>
         <member name="F:ingot.Core.BehaviourPack.Blocks">
             <summary>
-            List of <see cref="T:ingot.Core.Content.Block.Block"/> types added to the pack
+            List of <see cref="T:ingot.Core.Behaviour.Block.Block"/> types added to the pack
             </summary>
         </member>
         <member name="F:ingot.Core.BehaviourPack.Items">
             <summary>
-            List of <see cref="T:ingot.Core.Content.Item"/> types added to the pack
+            List of <see cref="T:ingot.Core.Behaviour.Item"/> types added to the pack
             </summary>
         </member>
         <member name="M:ingot.Core.BehaviourPack.AddEntity``1">
@@ -156,201 +353,69 @@
             <param name="w">Used to write the warning in the JSON source</param>
             <param name="msg">Message to write</param>
         </member>
-        <member name="T:ingot.Core.Content.Block.Block">
-            <summary>
-            Implements basic properties of a block
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.Identifier">
-            <summary>
-            Block identifier used in the game
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.FormatVersion">
-            <summary>
-            Minimum component version
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.States">
-            <summary>
-            Dictionary of possible block states. Valid state types are: <see cref="T:System.Int32"/>[], <see cref="T:System.Single"/>[], <see cref="T:System.Boolean"/>[], <see cref="T:System.String"/>[], 
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.Permutations">
-            <summary>
-            List of possible block permutations
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.DisplayName">
-            <summary>
-            Shortcut for the <c>minecraft:display_name</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.Friction">
-            <summary>
-            Shortcut for the <c>minecraft:friction</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.LightDampening">
-            <summary>
-            Shortcut for the <c>minecraft:light_dampening</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.LightEmission">
-            <summary>
-            Shortcut for the <c>minecraft:light_emission</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.Replaceable">
-            <summary>
-            Shortcut for the <c>minecraft:replaceable</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.Loot">
-            <summary>
-            Shortcut for the <c>minecraft:loot</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.Block.MaterialInstances">
-            <summary>
-            Texture and materials for the <see cref="T:ingot.Core.Content.Block.Block"/>. Shortcut for the <c>minecraft:material_instances</c> component
-            </summary>
-        </member>
-        <member name="M:ingot.Core.Content.Block.Block.Compile``1">
-            <summary>
-            Compiles the <typeparamref name="TBlock"/> to JSON
-            </summary>
-            <typeparam name="TBlock">The type class to compile</typeparam>
-        </member>
-        <member name="T:ingot.Core.Content.Block.BlockPermutation">
-            <summary>
-            C# representation of a block permutation
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.BlockPermutation.Condition">
-            <summary>
-            Molang condition that determines when this permutation is active
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.BlockPermutation.DisplayName">
-            <summary>
-            Shortcut for the <c>minecraft:display_name</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.BlockPermutation.Friction">
-            <summary>
-            Shortcut for the <c>minecraft:friction</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.BlockPermutation.LightDampening">
-            <summary>
-            Shortcut for the <c>minecraft:light_dampening</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.BlockPermutation.LightEmission">
-            <summary>
-            Shortcut for the <c>minecraft:light_emission</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.BlockPermutation.Replaceable">
-            <summary>
-            Shortcut for the <c>minecraft:replaceable</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.BlockPermutation.Loot">
-            <summary>
-            Shortcut for the <c>minecraft:loot</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Block.BlockPermutation.MaterialInstances">
-            <summary>
-            Texture and materials for the <see cref="T:ingot.Core.Content.Block.BlockPermutation"/>. Shortcut for the <c>minecraft:material_instances</c> component
-            </summary>
-        </member>
-        <member name="M:ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)">
-            <summary>
-            Compiles the <typeparamref name="TBlockPermutation"/> to JSON
-            </summary>
-            <typeparam name="TBlockPermutation">The type class block permutation to compile</typeparam>
-        </member>
-        <member name="T:ingot.Core.Content.Block.MaterialInstance">
-            <summary>
-            Texture and material configuration for the face of a <see cref="T:ingot.Core.Content.Block.Block"/>
-            </summary>
-        </member>
-        <member name="M:ingot.Core.Content.Block.MaterialInstance.Compile(Newtonsoft.Json.JsonTextWriter@)">
-            <inheritdoc/>
-        </member>
-        <member name="T:ingot.Core.Content.Block.MaterialInstances">
-            <summary>
-            Texture and material configuration for the faces of a <see cref="T:ingot.Core.Content.Block.Block"/>
-            </summary>
-        </member>
-        <member name="M:ingot.Core.Content.Block.MaterialInstances.Compile(Newtonsoft.Json.JsonTextWriter@)">
-            <summary>
-            Compiles <see cref="T:ingot.Core.Content.Block.MaterialInstances"/> to JSON
-            </summary>
-            <param name="writer">JSON source stream to write to</param>
-        </member>
-        <member name="T:ingot.Core.Content.Item">
-            <summary>
-            Implements basic properties of an item
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.Identifier">
-            <summary>
-            Item identifier used in the game
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.FormatVersion">
-            <summary>
-            Minimum component version
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.Category">
-            <summary>
-            Which section of the creative inventory the item appears in
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.Group">
-            <summary>
-            Which item group of <see cref="T:ingot.Core.Content.Item.CatalogueCategory"/> the item appears in
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.HiddenInCommands">
-            <summary>
-            Whether the item is visible by command item arguments
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.Texture">
-            <summary>
-            Shortcut for the <c>minecraft:icon</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.MaxStackSize">
-            <summary>
-            Shortcut for the <c>minecraft:max_stack_size</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.DisplayName">
-            <summary>
-            Shortcut for the <c>minecraft:display_name</c> component
-            </summary>
-        </member>
-        <member name="P:ingot.Core.Content.Item.AllowOffhand">
-            <summary>
-            Shortcut for the <c>minecraft:allow_off_hand</c> component
-            </summary>
-        </member>
-        <member name="M:ingot.Core.Content.Item.Compile``1">
-            <summary>
-            Compiles the <typeparamref name="TItem"/> to JSON
-            </summary>
-            <typeparam name="TItem">The type class to compile</typeparam>
-        </member>
         <member name="T:ingot.Core.Pack">
             <summary>
             C# representation of a full pack with behaviour and resources
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.Name">
+            <summary>
+            Name of the pack that shows up in Minecraft
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.Description">
+            <summary>
+            Short description of the pack
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.PackIcon">
+            <summary>
+            Icon for the behaviour pack and resource pack in the game
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.PackVersion">
+            <summary>
+            Version of the pack. Recommended to increment with each pack build
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.MinEngineVersion">
+            <summary>
+            Minimum game version required to run this pack
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.Authors">
+            <summary>
+            List of authors who helped with the development of the pack
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.ScriptsEnabled">
+            <summary>
+            Whether to initialise the behaviour pack with Script API capabilities
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.ScriptEntry">
+            <summary>
+            The entry point of the Script API to be loaded when the world is
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.ScriptApiModules">
+            <summary>
+            Dictionary of Script API modules to import
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.BehaviourPack">
+            <summary>
+            <see cref="F:ingot.Core.Pack.BehaviourPack"/> to be compiled
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.ResourcePack">
+            <summary>
+            <see cref="F:ingot.Core.Pack.ResourcePack"/> to be compiled
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Pack.LinkPacks">
+            <summary>
+            Whether to make the <see cref="F:ingot.Core.Pack.BehaviourPack"/> and <see cref="F:ingot.Core.Pack.ResourcePack"/> depend on each other
             </summary>
         </member>
         <member name="M:ingot.Core.Pack.Compile(System.String,System.Boolean)">
@@ -380,7 +445,26 @@
             Helper factory method to initiate API-style syntax
             </summary>
             <param name="uuid">Minecraft UUID to be used at runtime</param>
-            <param name="version">Version of the <see cref="T:ingot.Core.BehaviourPack"/>. When <see cref="T:ingot.Core.ResourcePack"/> is linked, it will require at least this version.</param>
+            <param name="version">Version of the <see cref="T:ingot.Core.ResourcePack"/>. When <see cref="T:ingot.Core.BehaviourPack"/> is linked, it will require at least this version.</param>
+        </member>
+        <member name="M:ingot.Core.ResourcePack.AddBlockTexture(System.String,System.String)">
+            <summary>
+            Registers a texture (PNG on disk) that will be copied into the resource pack under
+            <c>textures/blocks/</c> and referenced from <c>terrain_texture.json</c>.
+            The <paramref name="key"/> must match the texture name(s) used in your block
+            <c>MaterialInstances</c> (or <c>IDestructionParticles</c>).
+            </summary>
+            <param name="key">The texture key (the value used in behaviour-side material instances).</param>
+            <param name="sourcePngPath">Path to the source .png file on disk (will be copied as-is).</param>
+        </member>
+        <member name="M:ingot.Core.ResourcePack.AddItemTexture(System.String,System.String)">
+            <summary>
+            Registers a texture (PNG on disk) that will be copied into the resource pack under
+            <c>textures/items/</c> and referenced from <c>item_texture.json</c>.
+            The <paramref name="key"/> must match the <c>Texture</c> property on your <c>Item</c> definitions.
+            </summary>
+            <param name="key">The texture key (the value used in behaviour-side <c>minecraft:icon</c>).</param>
+            <param name="sourcePngPath">Path to the source .png file on disk (will be copied as-is).</param>
         </member>
         <member name="M:ingot.Core.ResourcePack.Compile(System.String)">
             <summary>

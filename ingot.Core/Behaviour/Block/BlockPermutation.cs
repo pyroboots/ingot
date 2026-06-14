@@ -2,7 +2,7 @@ using ingot.Core.TraitSystem;
 using Newtonsoft.Json;
 using static ingot.Core.Common.JsonHelper;
 
-namespace ingot.Core.Content.Block;
+namespace ingot.Core.Behaviour.Block;
 
 /// <summary>
 /// C# representation of a block permutation

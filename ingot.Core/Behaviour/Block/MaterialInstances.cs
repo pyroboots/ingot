@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using static ingot.Core.Common.JsonHelper;
 using Formatting = ingot.Core.Common.Formatting;
 
-namespace ingot.Core.Content.Block;
+namespace ingot.Core.Behaviour.Block;
 
 /// <summary>
 /// Texture and material configuration for the face of a <see cref="Block"/>

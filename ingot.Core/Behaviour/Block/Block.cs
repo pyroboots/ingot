@@ -2,7 +2,7 @@ using ingot.Core.TraitSystem;
 using Newtonsoft.Json;
 using static ingot.Core.Common.JsonHelper;
 
-namespace ingot.Core.Content.Block;
+namespace ingot.Core.Behaviour.Block;
 
 /// <summary>
 /// Implements basic properties of a block
@@ -26,6 +26,10 @@ public abstract class Block
     /// List of possible block permutations
     /// </summary>
     public virtual List<BlockPermutation> Permutations => new();
+    /// <summary>
+    /// Array of block tags that can enable / expand vanilla functionality
+    /// </summary>
+    public virtual string[] Tags => [];
     
     /// <summary>
     /// Shortcut for the <c>minecraft:display_name</c> component

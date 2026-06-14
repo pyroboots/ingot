@@ -1,5 +1,5 @@
-using ingot.Core.Content;
-using ingot.Core.Content.Block;
+using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Block;
 using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core;

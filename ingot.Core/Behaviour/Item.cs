@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Version = ingot.Core.Common.Version;
 using static ingot.Core.Common.JsonHelper;
 
-namespace ingot.Core.Content;
+namespace ingot.Core.Behaviour;
 
 /// <summary>
 /// Implements basic properties of an item

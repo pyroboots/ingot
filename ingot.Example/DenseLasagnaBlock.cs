@@ -1,4 +1,4 @@
-using ingot.Core.Content.Block;
+using ingot.Core.Behaviour.Block;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 

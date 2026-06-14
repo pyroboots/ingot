@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ingot.Core\ingot.Core.csproj" />
-      <ProjectReference Include="..\ingot.Generators\ingot.Generators.csproj" />
     </ItemGroup>
 
 </Project>
