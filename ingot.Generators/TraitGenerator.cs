@@ -166,7 +166,10 @@ public class TraitGenerator
             sb.AppendLine("    [TraitProperty]");
 
             if (isAbstract)
+            {
+                if (pascalName.Contains("Identifier")) csharpType = "Identifier";
                 sb.AppendLine($"    public abstract {csharpType} {pascalName} {{ get; }}");
+            }
             else
                 sb.AppendLine($"    public virtual {csharpType} {pascalName} => {defaultExpr};");
 

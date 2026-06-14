@@ -9,7 +9,7 @@ namespace ingot.Core.TraitSystem;
 /// <summary>
 /// Contains reflected data of a member in a trait interface
 /// </summary>
-public struct TraitProperty
+public record TraitProperty
 {
     public TraitProperty(string path, string name, dynamic value)
     {
@@ -28,12 +28,18 @@ public struct TraitProperty
 /// </summary>
 public class Trait : Identifiable, ICompileableFragment
 {
-    public Trait(string identifier, Type root) : base(identifier) => RootTrait = root;
     public Trait(Identifier identifier, Type root) : base(identifier) => RootTrait = root;
 
+    /// <summary>
+    /// List of properties in a trait at runtime
+    /// </summary>
     public List<TraitProperty> Properties = new();
+    /// <summary>
+    /// The concrete type this trait is derived from
+    /// </summary>
     public Type RootTrait;
     
+    /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
     {
         Object(ref writer, Identifier.ToString(), w =>

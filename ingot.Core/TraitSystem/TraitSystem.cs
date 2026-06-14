@@ -44,7 +44,7 @@ public static class TraitSystem
             if (traitAttr == null)
                 continue;
             
-            CompileTimeLogging.Push(traitAttr.Identifier);
+            CompileTimeLogging.Push(traitAttr.Identifier.ToString());
             if (traitAttr.Constraint != constraint)
             {
                 CompileTimeLogging.Warn(ref dummyWriter, 

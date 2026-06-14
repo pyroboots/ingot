@@ -1,3 +1,5 @@
+using ingot.Core.Common;
+
 namespace ingot.Core.TraitSystem;
 
 /// <summary>
@@ -14,7 +16,7 @@ public class TraitAttribute : Attribute
     /// <summary>
     /// Identifier of the encapsulated component
     /// </summary>
-    public string Identifier;
+    public Identifier Identifier;
     
     /// <summary>
     /// Marks an interface as a valid trait
@@ -23,7 +25,7 @@ public class TraitAttribute : Attribute
     /// <param name="constraint">Content type on which this trait is valid on</param>
     public TraitAttribute(string identifier, TraitSystem.TraitType constraint)
     {
-        Identifier = identifier;
+        Identifier = new(identifier);
         Constraint = constraint;
     }
 }

@@ -1,7 +1,9 @@
+using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using Newtonsoft.Json;
 using Version = ingot.Core.Common.Version;
 using static ingot.Core.Common.JsonHelper;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace ingot.Core.Behaviour;
 
@@ -13,7 +15,7 @@ public abstract class Item
     /// <summary>
     /// Item identifier used in the game
     /// </summary>
-    public abstract string Identifier { get; }
+    public abstract Identifier Identifier { get; }
     /// <summary>
     /// Minimum component version
     /// </summary>
@@ -46,7 +48,7 @@ public abstract class Item
     /// <summary>
     /// Shortcut for the <c>minecraft:display_name</c> component
     /// </summary>
-    public virtual string DisplayName => Identifier;
+    public virtual string DisplayName => Identifier.ToString();
     /// <summary>
     /// Shortcut for the <c>minecraft:allow_off_hand</c> component
     /// </summary>
@@ -61,7 +63,7 @@ public abstract class Item
     {
         Item inst = (Activator.CreateInstance(tItem) as Item)!;
         
-        CompileTimeLogging.Push(inst.Identifier);
+        CompileTimeLogging.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
         JsonTextWriter w = new(sw);

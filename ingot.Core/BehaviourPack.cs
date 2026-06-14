@@ -93,7 +93,7 @@ public class BehaviourPack
         foreach (Entity entity in Entities)
         {
             c++;
-            string filename = entity.Identifier.Split(":")[1];
+            string filename = entity.Identifier.Name;
             
             string path = Path.Combine(dir, "entities", $"{filename}.json");
             string file = Entity.Compile(entity.GetType());
@@ -109,7 +109,7 @@ public class BehaviourPack
         foreach (Block block in Blocks)
         {
             c++;
-            string filename = block.Identifier.Split(":")[1];
+            string filename = block.Identifier.Name;
             
             string path = Path.Combine(dir, "blocks", $"{filename}.json");
             string file = Block.Compile(block.GetType());
@@ -125,7 +125,7 @@ public class BehaviourPack
         foreach (Item item in Items)
         {
             c++;
-            string filename = item.Identifier.Split(":")[1];
+            string filename = item.Identifier.Name;
             
             string path = Path.Combine(dir, "items", $"{filename}.json");
             string file = Item.Compile(item.GetType());

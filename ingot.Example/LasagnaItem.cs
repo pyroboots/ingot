@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour;
+using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
@@ -6,7 +7,7 @@ namespace ingot.Example;
 
 public class LasagnaItem : Item, IFood, IBlockPlacer
 {
-    public override string Identifier => "test:lasagna";
+    public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
     public override string DisplayName => "Lasagna";
     

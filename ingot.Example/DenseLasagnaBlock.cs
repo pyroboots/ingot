@@ -1,12 +1,11 @@
 using ingot.Core.Behaviour.Block;
-using ingot.Core.TraitSystem;
-using ingot.Core.TraitSystem.Traits;
+using ingot.Core.Common;
 
 namespace ingot.Example;
 
 public class DenseLasagnaBlock : Block
 {
-    public override string Identifier => "test:block_of_dense_lasagna";
+    public override Identifier Identifier => new("test:block_of_dense_lasagna");
     public override List<BlockPermutation> Permutations => new()
     {
         new DenseLasagnaGlowyPermutation()
