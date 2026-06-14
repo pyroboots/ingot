@@ -1,0 +1,65 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "ingot example",
+        "description": "Example pack made with ingot",
+        "uuid": "18bf423d-0a46-44b1-b07e-9c587c404adc",
+        "version": [
+            1,
+            0,
+            0
+        ],
+        "min_engine_version": [
+            1,
+            20,
+            0
+        ]
+    },
+    "modules": [
+        {
+            "description": "ingot example Behaviour",
+            "type": "data",
+            "uuid": "5d6f534b-006a-44e0-b102-b627055c33be",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        },
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "2d1a049e-3fd1-4896-8549-36b820a47adc",
+            "entry": "scripts/main.js",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "8f2067cb-1722-41ff-8e28-0fa64144f3f1",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        },
+        {
+            "module_name": "@minecraft/server",
+            "version": [
+                2,
+                8,
+                0
+            ]
+        }
+    ],
+    "metadata": {
+        "authors": [],
+        "generated_with": {
+            "ingot": "https://github.com/pyroboots/ingot"
+        }
+    }
+}

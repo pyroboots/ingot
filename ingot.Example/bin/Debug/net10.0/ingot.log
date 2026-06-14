@@ -1,0 +1,28 @@
+(i) [pack/ingot example] pack compilation started
+(i) [pack/ingot example] compiling bp...
+(i) [pack/ingot example/bp] created folder structure
+(i) [pack/ingot example/bp] compiling entities...
+(i) [pack/ingot example/bp] compiling blocks...
+(i) [pack/ingot example/bp/blocks/test:block_of_dense_lasagna/permutations] compiling block permutations...
+(i) [pack/ingot example/bp/blocks/test:block_of_dense_lasagna/permutations] (1/1) compiled block permutation DenseLasagnaGlowyPermutation
+(i) [pack/ingot example/bp/blocks/test:block_of_dense_lasagna/permutations] compiled block permutations
+(i) [pack/ingot example/bp/blocks/test:block_of_dense_lasagna/components] compiling traits...
+(i) [pack/ingot example/bp/blocks] (1/1) compiled entity test:block_of_dense_lasagna
+(i) [pack/ingot example/bp] compiling blocks...
+(i) [pack/ingot example/bp/items/test:lasagna/components] compiling traits...
+/!\ [pack/ingot example/bp/items/test:lasagna/components/minecraft:block_placer/UseOn] value is null or empty, entry omitted from compiled json
+(i) [pack/ingot example/bp/items/test:lasagna/components] (1/2) compiled trait IFood
+(i) [pack/ingot example/bp/items/test:lasagna/components] (2/2) compiled trait IBlockPlacer
+(i) [pack/ingot example/bp/items] (1/1) compiled entity test:lasagna
+(i) [pack/ingot example] compiled bp
+(i) [pack/ingot example] compiling rp...
+(i) [pack/ingot example/rp] created folder structure
+/!\ [pack/ingot example/rp/terrain_texture.json] source texture not found for key 'block_of_dense_lasagna': /home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/dense_lasagna.png
+(i) [pack/ingot example/rp/terrain_texture.json] (1/1) registered texture 'block_of_dense_lasagna' -> textures/blocks/block_of_dense_lasagna
+(i) [pack/ingot example/rp/terrain_texture.json] wrote terrain_texture.json with 1 entries
+/!\ [pack/ingot example/rp/item_texture.json] source texture not found for key 'lasagna': /home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/lasagna.png
+(i) [pack/ingot example/rp/item_texture.json] (1/1) registered texture 'lasagna' -> textures/items/lasagna
+(i) [pack/ingot example/rp/item_texture.json] wrote item_texture.json with 1 entries
+(i) [pack/ingot example] compiled rp
+(i) [pack/ingot example] compiled bp manifest
+(i) [pack/ingot example] compiled rp manifest

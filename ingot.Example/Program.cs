@@ -11,8 +11,8 @@ class Program
             .AddBlock<DenseLasagnaBlock>();
         
         ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-            .AddBlockTexture("block_of_dense_lasagna", "ingot.Example/assets/block_of_dense_lasagna.png")
-            .AddItemTexture("lasagna", "ingot.Example/assets/lasagna.png");
+            .AddBlockTexture("block_of_dense_lasagna", "./dense_lasagna.png")
+            .AddItemTexture("lasagna", "./lasagna.png");
 
         Pack pack = new()
         {

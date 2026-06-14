@@ -3,12 +3,9 @@
 /home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/ingot.Example.runtimeconfig.json
 /home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/ingot.Example.dll
 /home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/ingot.Example.pdb
-/home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/HtmlAgilityPack.dll
 /home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/Newtonsoft.Json.dll
 /home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/ingot.Core.dll
-/home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/ingot.Generators.dll
 /home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/ingot.Core.pdb
-/home/pyro/RiderProjects/ingot/ingot.Example/bin/Debug/net10.0/ingot.Generators.pdb
 /home/pyro/RiderProjects/ingot/ingot.Example/obj/Debug/net10.0/ingot.Example.csproj.AssemblyReference.cache
 /home/pyro/RiderProjects/ingot/ingot.Example/obj/Debug/net10.0/ingot.Example.GeneratedMSBuildEditorConfig.editorconfig
 /home/pyro/RiderProjects/ingot/ingot.Example/obj/Debug/net10.0/ingot.Example.AssemblyInfoInputs.cache
