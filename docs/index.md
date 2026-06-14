@@ -22,8 +22,6 @@ _layout: landing
 - **Extensible & Maintainable** - Designed for large or complex addons where manual JSON becomes painful
 - **Iterable & Reusable** - Because its code, you can define variable and easily change things project-wide
 
-Looking for the docs? API Reference [here](https://pyroboots.github.io/ingot/api/)!
-
 ## 📦 Installation
 
 **ingot** is currently distributed via source. The easiest way to get started is:
