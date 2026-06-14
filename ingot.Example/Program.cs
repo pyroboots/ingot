@@ -1,4 +1,5 @@
 ﻿using ingot.Core;
+using ingot.Generators;
 
 namespace ingot.Example;
 

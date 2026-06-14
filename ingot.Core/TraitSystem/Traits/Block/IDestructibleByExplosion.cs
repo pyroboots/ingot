@@ -4,6 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Block;
 using System.Numerics;
 using System.Collections.Generic;
+using ingot.Core.Common;
 
 [Trait("minecraft:destructible_by_explosion", TraitSystem.TraitType.Block)]
 public interface IDestructibleByExplosion : IBlockTrait

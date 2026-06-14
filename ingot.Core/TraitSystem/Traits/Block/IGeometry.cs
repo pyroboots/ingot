@@ -4,6 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Block;
 using System.Numerics;
 using System.Collections.Generic;
+using ingot.Core.Common;
 
 [Trait("minecraft:geometry", TraitSystem.TraitType.Block)]
 public interface IGeometry : IBlockTrait
@@ -36,7 +37,7 @@ public interface IGeometry : IBlockTrait
     /// Specifies the geometry description identifier to use to render this block. This identifier must match an existing geometry identifier in any of the currently loaded resource packs.
     /// </summary>
     [TraitProperty]
-    public abstract string Identifier { get; }
+    public abstract Identifier Identifier { get; }
 
     /// <summary>
     /// A Boolean locking UV orientation of all bones in the geometry, or an array of strings locking UV orientation of specific bones in the geometry.

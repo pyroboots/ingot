@@ -4,6 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Block;
 using System.Numerics;
 using System.Collections.Generic;
+using ingot.Core.Common;
 
 [Trait("minecraft:placement_filter", TraitSystem.TraitType.Block)]
 public interface IPlacementFilter : IBlockTrait

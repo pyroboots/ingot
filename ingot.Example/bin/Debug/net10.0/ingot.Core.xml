@@ -482,6 +482,19 @@
             Contains reflected data of a trait interface
             </summary>
         </member>
+        <member name="F:ingot.Core.TraitSystem.Trait.Properties">
+            <summary>
+            List of properties in a trait at runtime
+            </summary>
+        </member>
+        <member name="F:ingot.Core.TraitSystem.Trait.RootTrait">
+            <summary>
+            The concrete type this trait is derived from
+            </summary>
+        </member>
+        <member name="M:ingot.Core.TraitSystem.Trait.Compile(Newtonsoft.Json.JsonTextWriter@)">
+            <inheritdoc/>
+        </member>
         <member name="T:ingot.Core.TraitSystem.TraitAttribute">
             <summary>
             Marks an interface as a valid trait

@@ -4,6 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 using System.Numerics;
 using System.Collections.Generic;
+using ingot.Core.Common;
 
 [Trait("minecraft:stacked_by_data", TraitSystem.TraitType.Item)]
 public interface IStackedByData : IItemTrait

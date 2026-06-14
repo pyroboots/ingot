@@ -142,6 +142,7 @@ public class TraitGenerator
         sb.AppendLine(nspace);
         sb.AppendLine("using System.Numerics;");
         sb.AppendLine("using System.Collections.Generic;");
+        sb.AppendLine("using ingot.Core.Common;");
         sb.AppendLine();
         sb.AppendLine($"[Trait(\"{componentName}\", TraitSystem.TraitType.{constraint})]");
         sb.AppendLine($"public interface {interfaceName} : I{constraint}Trait");

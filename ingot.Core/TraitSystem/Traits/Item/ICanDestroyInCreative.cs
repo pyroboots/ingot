@@ -4,6 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 using System.Numerics;
 using System.Collections.Generic;
+using ingot.Core.Common;
 
 [Trait("minecraft:can_destroy_in_creative", TraitSystem.TraitType.Item)]
 public interface ICanDestroyInCreative : IItemTrait

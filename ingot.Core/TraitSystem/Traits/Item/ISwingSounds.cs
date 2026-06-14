@@ -4,6 +4,7 @@
 namespace ingot.Core.TraitSystem.Traits.Item;
 using System.Numerics;
 using System.Collections.Generic;
+using ingot.Core.Common;
 
 [Trait("minecraft:swing_sounds", TraitSystem.TraitType.Item)]
 public interface ISwingSounds : IItemTrait
