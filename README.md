@@ -18,7 +18,7 @@
 - **Extensible & Maintainable** - Designed for large or complex addons where manual JSON becomes painful
 - **Iterable & Reusable** - Because its code, you can define variable and easily change things project-wide
 
-Looking for the docs? API Reference [here](https://pyroboots.github.io/ingot/api/)!
+Looking for the docs? API Reference [here](https://pyroboots.github.io/ingot/api/ingot.Core.html)!
 
 ## 📦 Installation
 
