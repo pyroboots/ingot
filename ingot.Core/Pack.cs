@@ -12,23 +12,58 @@ namespace ingot.Core;
 /// </summary>
 public class Pack
 {
+    /// <summary>
+    /// Name of the pack that shows up in Minecraft
+    /// </summary>
     public required string Name;
+    /// <summary>
+    /// Short description of the pack
+    /// </summary>
     public required string Description;
+    /// <summary>
+    /// Icon for the behaviour pack and resource pack in the game
+    /// </summary>
     public string? PackIcon = null;
+    /// <summary>
+    /// Version of the pack. Recommended to increment with each pack build
+    /// </summary>
     public Version PackVersion = new(1, 0, 0);
+    /// <summary>
+    /// Minimum game version required to run this pack
+    /// </summary>
     public Version MinEngineVersion = new(1, 20, 0);
+    /// <summary>
+    /// List of authors who helped with the development of the pack
+    /// </summary>
     public string[] Authors = [];
     
+    /// <summary>
+    /// Whether to initialise the behaviour pack with Script API capabilities
+    /// </summary>
     public bool ScriptsEnabled = false;
+    /// <summary>
+    /// The entry point of the Script API to be loaded when the world is
+    /// </summary>
     public string ScriptEntry = "scripts/main.js";
+    /// <summary>
+    /// Dictionary of Script API modules to import
+    /// </summary>
     public Dictionary<string, Version> ScriptApiModules = new()
     {
         ["@minecraft/server"] = new(2, 8, 0),
     };
-    public Version ScriptApiVersion = new(2, 8, 0);
 
+    /// <summary>
+    /// <see cref="BehaviourPack"/> to be compiled
+    /// </summary>
     public required BehaviourPack BehaviourPack;
+    /// <summary>
+    /// <see cref="ResourcePack"/> to be compiled
+    /// </summary>
     public required ResourcePack ResourcePack;
+    /// <summary>
+    /// Whether to make the <see cref="BehaviourPack"/> and <see cref="ResourcePack"/> depend on each other
+    /// </summary>
     public bool LinkPacks = true;
 
     /// <summary>

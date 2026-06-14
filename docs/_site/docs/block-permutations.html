@@ -122,10 +122,10 @@
     };
 
     // IGeometry via trait
-    public bool BoneVisibility =&gt; true;
-    public string Culling =&gt; &quot;my_culling&quot;;
-    public string Identifier =&gt; &quot;geometry.my_glowy_block&quot;;
-    public string UvLock =&gt; &quot;true&quot;;
+    bool IGeometry.BoneVisibility =&gt; true;
+    string IGeometry.Culling =&gt; &quot;my_culling&quot;;
+    string IGeometry.Identifier =&gt; &quot;geometry.my_glowy_block&quot;;
+    string IGeometry.UvLock =&gt; &quot;true&quot;;
 }
 </code></pre>
 <h2 id="registering-permutations">Registering Permutations</h2>
