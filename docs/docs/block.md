@@ -1,11 +1,11 @@
 # Making a Block
 
-Blocks in ingot are created by deriving from the abstract `Block` class in `ingot.Core.Content.Block`. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the [trait system](trait-system.md).
+Blocks in ingot are created by deriving from the abstract `Block` class in `ingot.Core.Behaviour.Block`. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the [trait system](trait-system.md).
 
 ## Minimal Block
 
 ```csharp
-using ingot.Core.Content.Block;
+using ingot.Core.Behaviour.Block;
 
 public class MyBlock : Block
 {
@@ -32,7 +32,7 @@ Every block **must** implement:
 | `Permutations`      | `List<BlockPermutation>`    | No       | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
 | `DisplayName`       | `string?`                   | No       | Shortcut for `minecraft:display_name`. |
 | `Friction`          | `float?`                    | No       | Shortcut for `minecraft:friction`. |
-| `LightEmission`     | `int?`                      | No       | Shortcut for `minecraft:light_emission` (0–15). |
+| `LightEmission`     | `int?`                      | No       | Shortcut for `minecraft:light_emission` (0-15). |
 | `LightDampening`    | `int?`                      | No       | Shortcut for `minecraft:light_dampening`. |
 | `Replaceable`       | `bool?`                     | No       | Shortcut for `minecraft:replaceable`. |
 | `Loot`              | `string?`                   | No       | Loot table identifier for `minecraft:loot`. |
@@ -55,7 +55,7 @@ public override Dictionary<string, dynamic[]> States => new()
 > Although the state dictionary's value type is `dynamic`, Minecraft will only accept `int`, `float`, `bool` and `string`. Make sure your array is one of those types.
 
 **Important notes**:
-- Minecraft limits a state to have **16** possible states. **ingot** will throw a waring for you if a state exceeds that limit.
+- Minecraft limits a state to have **16** possible states. **ingot** will throw a warning for you if a state exceeds that limit.
 - State names should be fully qualified (`namespace:state_name`) for best compatibility.
 
 ## Adding Behavior with Traits
@@ -110,28 +110,36 @@ Permutations allow different components/traits to apply only when a Molang condi
 
 ## Compilation
 
-You rarely call `Block.Compile<T>()` directly. Instead you register blocks with a `BehaviourPack`:
+You rarely call `Block.Compile<T>()` directly. Instead you register blocks with a `BehaviourPack` and supply the visual assets via a `ResourcePack`:
 
 ```csharp
+using ingot.Core;
+
 BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
     .AddBlock<DenseLasagnaBlock>()
     .AddBlock<AnotherBlock>();
+
+ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
+    .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png");
 
 Pack pack = new()
 {
     Name = "My Addon",
     Description = "Blocks made with ingot",
     BehaviourPack = bp,
-    ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
+    ResourcePack = rp,
     LinkPacks = true
 };
 
 pack.Compile("./output");
 ```
 
-This writes `bp/blocks/my_block.json` (and the manifest) for you.
+This writes the full behaviour pack under `bp/` (including `bp/blocks/test:block_of_dense_lasagna.json`) and the resource pack under `rp/` (including copied textures and the generated `terrain_texture.json` that maps your texture keys).
 
-The generated JSON follows the standard `minecraft:block` schema with a `description`, `states`, `permutations` array, and `components` object containing all your shortcuts + trait components.
+See the [Resource Packs & Textures](resource-packs.md) guide for details on asset organization, the generated atlas files, and how texture keys bridge behaviour and resources.
+
+> [!NOTE]
+> Textures for blocks (and items) are provided on the resource pack side. The strings you return from `MaterialInstances` (and `Item.Texture`) are **keys** that must be registered with `ResourcePack.AddBlockTexture` / `AddItemTexture` so that `pack.Compile` can copy the PNGs and emit the correct `terrain_texture.json` / `item_texture.json`.
 
 ## Full Example
 

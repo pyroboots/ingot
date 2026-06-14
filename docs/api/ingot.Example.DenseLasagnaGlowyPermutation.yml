@@ -30,16 +30,16 @@ items:
     content.vb: Public Class DenseLasagnaGlowyPermutation Inherits BlockPermutation
   inheritance:
   - System.Object
-  - ingot.Core.Content.Block.BlockPermutation
+  - ingot.Core.Behaviour.Block.BlockPermutation
   inheritedMembers:
-  - ingot.Core.Content.Block.BlockPermutation.DisplayName
-  - ingot.Core.Content.Block.BlockPermutation.Friction
-  - ingot.Core.Content.Block.BlockPermutation.LightDampening
-  - ingot.Core.Content.Block.BlockPermutation.Replaceable
-  - ingot.Core.Content.Block.BlockPermutation.Loot
-  - ingot.Core.Content.Block.BlockPermutation.MaterialInstances
-  - ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
-  - ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  - ingot.Core.Behaviour.Block.BlockPermutation.DisplayName
+  - ingot.Core.Behaviour.Block.BlockPermutation.Friction
+  - ingot.Core.Behaviour.Block.BlockPermutation.LightDampening
+  - ingot.Core.Behaviour.Block.BlockPermutation.Replaceable
+  - ingot.Core.Behaviour.Block.BlockPermutation.Loot
+  - ingot.Core.Behaviour.Block.BlockPermutation.MaterialInstances
+  - ingot.Core.Behaviour.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  - ingot.Core.Behaviour.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
   - System.Object.Equals(System.Object)
   - System.Object.Equals(System.Object,System.Object)
   - System.Object.GetHashCode
@@ -77,7 +77,7 @@ items:
     return:
       type: System.String
     content.vb: Public Overrides ReadOnly Property Condition As String
-  overridden: ingot.Core.Content.Block.BlockPermutation.Condition
+  overridden: ingot.Core.Behaviour.Block.BlockPermutation.Condition
   overload: ingot.Example.DenseLasagnaGlowyPermutation.Condition*
 - uid: ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
   commentId: P:ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
@@ -109,7 +109,7 @@ items:
     return:
       type: System.Nullable{System.Int32}
     content.vb: Public Overrides ReadOnly Property LightEmission As Integer?
-  overridden: ingot.Core.Content.Block.BlockPermutation.LightEmission
+  overridden: ingot.Core.Behaviour.Block.BlockPermutation.LightEmission
   overload: ingot.Example.DenseLasagnaGlowyPermutation.LightEmission*
 references:
 - uid: ingot.Example
@@ -145,70 +145,70 @@ references:
   nameWithType.vb: Object
   fullName.vb: Object
   name.vb: Object
-- uid: ingot.Core.Content.Block.BlockPermutation
-  commentId: T:ingot.Core.Content.Block.BlockPermutation
-  parent: ingot.Core.Content.Block
-  href: ingot.Core.Content.Block.BlockPermutation.html
+- uid: ingot.Core.Behaviour.Block.BlockPermutation
+  commentId: T:ingot.Core.Behaviour.Block.BlockPermutation
+  parent: ingot.Core.Behaviour.Block
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html
   name: BlockPermutation
   nameWithType: BlockPermutation
-  fullName: ingot.Core.Content.Block.BlockPermutation
-- uid: ingot.Core.Content.Block.BlockPermutation.DisplayName
-  commentId: P:ingot.Core.Content.Block.BlockPermutation.DisplayName
-  parent: ingot.Core.Content.Block.BlockPermutation
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_DisplayName
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.DisplayName
+  commentId: P:ingot.Core.Behaviour.Block.BlockPermutation.DisplayName
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_DisplayName
   name: DisplayName
   nameWithType: BlockPermutation.DisplayName
-  fullName: ingot.Core.Content.Block.BlockPermutation.DisplayName
-- uid: ingot.Core.Content.Block.BlockPermutation.Friction
-  commentId: P:ingot.Core.Content.Block.BlockPermutation.Friction
-  parent: ingot.Core.Content.Block.BlockPermutation
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Friction
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.DisplayName
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.Friction
+  commentId: P:ingot.Core.Behaviour.Block.BlockPermutation.Friction
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Friction
   name: Friction
   nameWithType: BlockPermutation.Friction
-  fullName: ingot.Core.Content.Block.BlockPermutation.Friction
-- uid: ingot.Core.Content.Block.BlockPermutation.LightDampening
-  commentId: P:ingot.Core.Content.Block.BlockPermutation.LightDampening
-  parent: ingot.Core.Content.Block.BlockPermutation
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_LightDampening
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.Friction
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.LightDampening
+  commentId: P:ingot.Core.Behaviour.Block.BlockPermutation.LightDampening
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_LightDampening
   name: LightDampening
   nameWithType: BlockPermutation.LightDampening
-  fullName: ingot.Core.Content.Block.BlockPermutation.LightDampening
-- uid: ingot.Core.Content.Block.BlockPermutation.Replaceable
-  commentId: P:ingot.Core.Content.Block.BlockPermutation.Replaceable
-  parent: ingot.Core.Content.Block.BlockPermutation
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Replaceable
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.LightDampening
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.Replaceable
+  commentId: P:ingot.Core.Behaviour.Block.BlockPermutation.Replaceable
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Replaceable
   name: Replaceable
   nameWithType: BlockPermutation.Replaceable
-  fullName: ingot.Core.Content.Block.BlockPermutation.Replaceable
-- uid: ingot.Core.Content.Block.BlockPermutation.Loot
-  commentId: P:ingot.Core.Content.Block.BlockPermutation.Loot
-  parent: ingot.Core.Content.Block.BlockPermutation
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Loot
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.Replaceable
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.Loot
+  commentId: P:ingot.Core.Behaviour.Block.BlockPermutation.Loot
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Loot
   name: Loot
   nameWithType: BlockPermutation.Loot
-  fullName: ingot.Core.Content.Block.BlockPermutation.Loot
-- uid: ingot.Core.Content.Block.BlockPermutation.MaterialInstances
-  commentId: P:ingot.Core.Content.Block.BlockPermutation.MaterialInstances
-  parent: ingot.Core.Content.Block.BlockPermutation
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_MaterialInstances
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.Loot
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.MaterialInstances
+  commentId: P:ingot.Core.Behaviour.Block.BlockPermutation.MaterialInstances
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_MaterialInstances
   name: MaterialInstances
   nameWithType: BlockPermutation.MaterialInstances
-  fullName: ingot.Core.Content.Block.BlockPermutation.MaterialInstances
-- uid: ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
-  commentId: M:ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
-  parent: ingot.Core.Content.Block.BlockPermutation
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.MaterialInstances
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Behaviour.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
   isExternal: true
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
   name: Compile<TBlockPermutation>(ref JsonTextWriter)
   nameWithType: BlockPermutation.Compile<TBlockPermutation>(ref JsonTextWriter)
-  fullName: ingot.Core.Content.Block.BlockPermutation.Compile<TBlockPermutation>(ref Newtonsoft.Json.JsonTextWriter)
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.Compile<TBlockPermutation>(ref Newtonsoft.Json.JsonTextWriter)
   nameWithType.vb: BlockPermutation.Compile(Of TBlockPermutation)(JsonTextWriter)
-  fullName.vb: ingot.Core.Content.Block.BlockPermutation.Compile(Of TBlockPermutation)(Newtonsoft.Json.JsonTextWriter)
+  fullName.vb: ingot.Core.Behaviour.Block.BlockPermutation.Compile(Of TBlockPermutation)(Newtonsoft.Json.JsonTextWriter)
   name.vb: Compile(Of TBlockPermutation)(JsonTextWriter)
   spec.csharp:
-  - uid: ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  - uid: ingot.Core.Behaviour.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
     name: Compile
-    href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
+    href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
   - name: <
   - name: TBlockPermutation
   - name: '>'
@@ -220,9 +220,9 @@ references:
     isExternal: true
   - name: )
   spec.vb:
-  - uid: ingot.Core.Content.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
+  - uid: ingot.Core.Behaviour.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)
     name: Compile
-    href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
+    href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Compile__1_Newtonsoft_Json_JsonTextWriter__
   - name: (
   - name: Of
   - name: " "
@@ -233,21 +233,21 @@ references:
     name: JsonTextWriter
     isExternal: true
   - name: )
-- uid: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
-  commentId: M:ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
-  parent: ingot.Core.Content.Block.BlockPermutation
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  commentId: M:ingot.Core.Behaviour.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
   isExternal: true
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
   name: Compile(Type, ref JsonTextWriter)
   nameWithType: BlockPermutation.Compile(Type, ref JsonTextWriter)
-  fullName: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type, ref Newtonsoft.Json.JsonTextWriter)
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.Compile(System.Type, ref Newtonsoft.Json.JsonTextWriter)
   nameWithType.vb: BlockPermutation.Compile(Type, JsonTextWriter)
-  fullName.vb: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type, Newtonsoft.Json.JsonTextWriter)
+  fullName.vb: ingot.Core.Behaviour.Block.BlockPermutation.Compile(System.Type, Newtonsoft.Json.JsonTextWriter)
   name.vb: Compile(Type, JsonTextWriter)
   spec.csharp:
-  - uid: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  - uid: ingot.Core.Behaviour.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
     name: Compile
-    href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
+    href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
   - name: (
   - uid: System.Type
     name: Type
@@ -262,9 +262,9 @@ references:
     isExternal: true
   - name: )
   spec.vb:
-  - uid: ingot.Core.Content.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
+  - uid: ingot.Core.Behaviour.Block.BlockPermutation.Compile(System.Type,Newtonsoft.Json.JsonTextWriter@)
     name: Compile
-    href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
+    href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Compile_System_Type_Newtonsoft_Json_JsonTextWriter__
   - name: (
   - uid: System.Type
     name: Type
@@ -502,12 +502,12 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: ingot.Core.Content.Block
-  commentId: N:ingot.Core.Content.Block
+- uid: ingot.Core.Behaviour.Block
+  commentId: N:ingot.Core.Behaviour.Block
   href: ingot.html
-  name: ingot.Core.Content.Block
-  nameWithType: ingot.Core.Content.Block
-  fullName: ingot.Core.Content.Block
+  name: ingot.Core.Behaviour.Block
+  nameWithType: ingot.Core.Behaviour.Block
+  fullName: ingot.Core.Behaviour.Block
   spec.csharp:
   - uid: ingot
     name: ingot
@@ -517,13 +517,13 @@ references:
     name: Core
     href: ingot.Core.html
   - name: .
-  - uid: ingot.Core.Content
-    name: Content
-    href: ingot.Core.Content.html
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
   - name: .
-  - uid: ingot.Core.Content.Block
+  - uid: ingot.Core.Behaviour.Block
     name: Block
-    href: ingot.Core.Content.Block.html
+    href: ingot.Core.Behaviour.Block.html
   spec.vb:
   - uid: ingot
     name: ingot
@@ -533,20 +533,20 @@ references:
     name: Core
     href: ingot.Core.html
   - name: .
-  - uid: ingot.Core.Content
-    name: Content
-    href: ingot.Core.Content.html
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
   - name: .
-  - uid: ingot.Core.Content.Block
+  - uid: ingot.Core.Behaviour.Block
     name: Block
-    href: ingot.Core.Content.Block.html
-- uid: ingot.Core.Content.Block.BlockPermutation.Condition
-  commentId: P:ingot.Core.Content.Block.BlockPermutation.Condition
-  parent: ingot.Core.Content.Block.BlockPermutation
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_Condition
+    href: ingot.Core.Behaviour.Block.html
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.Condition
+  commentId: P:ingot.Core.Behaviour.Block.BlockPermutation.Condition
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_Condition
   name: Condition
   nameWithType: BlockPermutation.Condition
-  fullName: ingot.Core.Content.Block.BlockPermutation.Condition
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.Condition
 - uid: ingot.Example.DenseLasagnaGlowyPermutation.Condition*
   commentId: Overload:ingot.Example.DenseLasagnaGlowyPermutation.Condition
   href: ingot.Example.DenseLasagnaGlowyPermutation.html#ingot_Example_DenseLasagnaGlowyPermutation_Condition
@@ -564,13 +564,13 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: ingot.Core.Content.Block.BlockPermutation.LightEmission
-  commentId: P:ingot.Core.Content.Block.BlockPermutation.LightEmission
-  parent: ingot.Core.Content.Block.BlockPermutation
-  href: ingot.Core.Content.Block.BlockPermutation.html#ingot_Core_Content_Block_BlockPermutation_LightEmission
+- uid: ingot.Core.Behaviour.Block.BlockPermutation.LightEmission
+  commentId: P:ingot.Core.Behaviour.Block.BlockPermutation.LightEmission
+  parent: ingot.Core.Behaviour.Block.BlockPermutation
+  href: ingot.Core.Behaviour.Block.BlockPermutation.html#ingot_Core_Behaviour_Block_BlockPermutation_LightEmission
   name: LightEmission
   nameWithType: BlockPermutation.LightEmission
-  fullName: ingot.Core.Content.Block.BlockPermutation.LightEmission
+  fullName: ingot.Core.Behaviour.Block.BlockPermutation.LightEmission
 - uid: ingot.Example.DenseLasagnaGlowyPermutation.LightEmission*
   commentId: Overload:ingot.Example.DenseLasagnaGlowyPermutation.LightEmission
   href: ingot.Example.DenseLasagnaGlowyPermutation.html#ingot_Example_DenseLasagnaGlowyPermutation_LightEmission

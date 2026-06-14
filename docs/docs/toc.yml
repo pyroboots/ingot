@@ -1,5 +1,7 @@
 - name: Trait System
   href: trait-system.md
+- name: Resource Packs & Textures
+  href: resource-packs.md
 - name: 1. Blocks
   href: block.md
 - name: 1.1. Block Permutations

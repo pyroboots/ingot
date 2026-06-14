@@ -31,20 +31,20 @@ items:
     content.vb: Public Class LasagnaItem Inherits Item Implements IFood, IBlockPlacer, IItemTrait
   inheritance:
   - System.Object
-  - ingot.Core.Content.Item
+  - ingot.Core.Behaviour.Item
   implements:
   - ingot.Core.TraitSystem.Traits.Item.IFood
   - ingot.Core.TraitSystem.Traits.Item.IBlockPlacer
   - ingot.Core.TraitSystem.Traits.IItemTrait
   inheritedMembers:
-  - ingot.Core.Content.Item.FormatVersion
-  - ingot.Core.Content.Item.Category
-  - ingot.Core.Content.Item.Group
-  - ingot.Core.Content.Item.HiddenInCommands
-  - ingot.Core.Content.Item.MaxStackSize
-  - ingot.Core.Content.Item.AllowOffhand
-  - ingot.Core.Content.Item.Compile``1
-  - ingot.Core.Content.Item.Compile(System.Type)
+  - ingot.Core.Behaviour.Item.FormatVersion
+  - ingot.Core.Behaviour.Item.Category
+  - ingot.Core.Behaviour.Item.Group
+  - ingot.Core.Behaviour.Item.HiddenInCommands
+  - ingot.Core.Behaviour.Item.MaxStackSize
+  - ingot.Core.Behaviour.Item.AllowOffhand
+  - ingot.Core.Behaviour.Item.Compile``1
+  - ingot.Core.Behaviour.Item.Compile(System.Type)
   - System.Object.Equals(System.Object)
   - System.Object.Equals(System.Object,System.Object)
   - System.Object.GetHashCode
@@ -82,7 +82,7 @@ items:
     return:
       type: System.String
     content.vb: Public Overrides ReadOnly Property Identifier As String
-  overridden: ingot.Core.Content.Item.Identifier
+  overridden: ingot.Core.Behaviour.Item.Identifier
   overload: ingot.Example.LasagnaItem.Identifier*
 - uid: ingot.Example.LasagnaItem.Texture
   commentId: P:ingot.Example.LasagnaItem.Texture
@@ -114,7 +114,7 @@ items:
     return:
       type: System.String
     content.vb: Public Overrides ReadOnly Property Texture As String
-  overridden: ingot.Core.Content.Item.Texture
+  overridden: ingot.Core.Behaviour.Item.Texture
   overload: ingot.Example.LasagnaItem.Texture*
 - uid: ingot.Example.LasagnaItem.DisplayName
   commentId: P:ingot.Example.LasagnaItem.DisplayName
@@ -146,7 +146,7 @@ items:
     return:
       type: System.String
     content.vb: Public Overrides ReadOnly Property DisplayName As String
-  overridden: ingot.Core.Content.Item.DisplayName
+  overridden: ingot.Core.Behaviour.Item.DisplayName
   overload: ingot.Example.LasagnaItem.DisplayName*
 references:
 - uid: ingot.Example
@@ -182,13 +182,13 @@ references:
   nameWithType.vb: Object
   fullName.vb: Object
   name.vb: Object
-- uid: ingot.Core.Content.Item
-  commentId: T:ingot.Core.Content.Item
-  parent: ingot.Core.Content
-  href: ingot.Core.Content.Item.html
+- uid: ingot.Core.Behaviour.Item
+  commentId: T:ingot.Core.Behaviour.Item
+  parent: ingot.Core.Behaviour
+  href: ingot.Core.Behaviour.Item.html
   name: Item
   nameWithType: Item
-  fullName: ingot.Core.Content.Item
+  fullName: ingot.Core.Behaviour.Item
 - uid: ingot.Core.TraitSystem.Traits.Item.IFood
   commentId: T:ingot.Core.TraitSystem.Traits.Item.IFood
   parent: ingot.Core.TraitSystem.Traits.Item
@@ -210,71 +210,71 @@ references:
   name: IItemTrait
   nameWithType: IItemTrait
   fullName: ingot.Core.TraitSystem.Traits.IItemTrait
-- uid: ingot.Core.Content.Item.FormatVersion
-  commentId: P:ingot.Core.Content.Item.FormatVersion
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_FormatVersion
+- uid: ingot.Core.Behaviour.Item.FormatVersion
+  commentId: P:ingot.Core.Behaviour.Item.FormatVersion
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_FormatVersion
   name: FormatVersion
   nameWithType: Item.FormatVersion
-  fullName: ingot.Core.Content.Item.FormatVersion
-- uid: ingot.Core.Content.Item.Category
-  commentId: P:ingot.Core.Content.Item.Category
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Category
+  fullName: ingot.Core.Behaviour.Item.FormatVersion
+- uid: ingot.Core.Behaviour.Item.Category
+  commentId: P:ingot.Core.Behaviour.Item.Category
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Category
   name: Category
   nameWithType: Item.Category
-  fullName: ingot.Core.Content.Item.Category
-- uid: ingot.Core.Content.Item.Group
-  commentId: P:ingot.Core.Content.Item.Group
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Group
+  fullName: ingot.Core.Behaviour.Item.Category
+- uid: ingot.Core.Behaviour.Item.Group
+  commentId: P:ingot.Core.Behaviour.Item.Group
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Group
   name: Group
   nameWithType: Item.Group
-  fullName: ingot.Core.Content.Item.Group
-- uid: ingot.Core.Content.Item.HiddenInCommands
-  commentId: P:ingot.Core.Content.Item.HiddenInCommands
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_HiddenInCommands
+  fullName: ingot.Core.Behaviour.Item.Group
+- uid: ingot.Core.Behaviour.Item.HiddenInCommands
+  commentId: P:ingot.Core.Behaviour.Item.HiddenInCommands
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_HiddenInCommands
   name: HiddenInCommands
   nameWithType: Item.HiddenInCommands
-  fullName: ingot.Core.Content.Item.HiddenInCommands
-- uid: ingot.Core.Content.Item.MaxStackSize
-  commentId: P:ingot.Core.Content.Item.MaxStackSize
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_MaxStackSize
+  fullName: ingot.Core.Behaviour.Item.HiddenInCommands
+- uid: ingot.Core.Behaviour.Item.MaxStackSize
+  commentId: P:ingot.Core.Behaviour.Item.MaxStackSize
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_MaxStackSize
   name: MaxStackSize
   nameWithType: Item.MaxStackSize
-  fullName: ingot.Core.Content.Item.MaxStackSize
-- uid: ingot.Core.Content.Item.AllowOffhand
-  commentId: P:ingot.Core.Content.Item.AllowOffhand
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_AllowOffhand
+  fullName: ingot.Core.Behaviour.Item.MaxStackSize
+- uid: ingot.Core.Behaviour.Item.AllowOffhand
+  commentId: P:ingot.Core.Behaviour.Item.AllowOffhand
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_AllowOffhand
   name: AllowOffhand
   nameWithType: Item.AllowOffhand
-  fullName: ingot.Core.Content.Item.AllowOffhand
-- uid: ingot.Core.Content.Item.Compile``1
-  commentId: M:ingot.Core.Content.Item.Compile``1
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile__1
+  fullName: ingot.Core.Behaviour.Item.AllowOffhand
+- uid: ingot.Core.Behaviour.Item.Compile``1
+  commentId: M:ingot.Core.Behaviour.Item.Compile``1
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Compile__1
   name: Compile<TItem>()
   nameWithType: Item.Compile<TItem>()
-  fullName: ingot.Core.Content.Item.Compile<TItem>()
+  fullName: ingot.Core.Behaviour.Item.Compile<TItem>()
   nameWithType.vb: Item.Compile(Of TItem)()
-  fullName.vb: ingot.Core.Content.Item.Compile(Of TItem)()
+  fullName.vb: ingot.Core.Behaviour.Item.Compile(Of TItem)()
   name.vb: Compile(Of TItem)()
   spec.csharp:
-  - uid: ingot.Core.Content.Item.Compile``1
+  - uid: ingot.Core.Behaviour.Item.Compile``1
     name: Compile
-    href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile__1
+    href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Compile__1
   - name: <
   - name: TItem
   - name: '>'
   - name: (
   - name: )
   spec.vb:
-  - uid: ingot.Core.Content.Item.Compile``1
+  - uid: ingot.Core.Behaviour.Item.Compile``1
     name: Compile
-    href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile__1
+    href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Compile__1
   - name: (
   - name: Of
   - name: " "
@@ -282,18 +282,18 @@ references:
   - name: )
   - name: (
   - name: )
-- uid: ingot.Core.Content.Item.Compile(System.Type)
-  commentId: M:ingot.Core.Content.Item.Compile(System.Type)
-  parent: ingot.Core.Content.Item
+- uid: ingot.Core.Behaviour.Item.Compile(System.Type)
+  commentId: M:ingot.Core.Behaviour.Item.Compile(System.Type)
+  parent: ingot.Core.Behaviour.Item
   isExternal: true
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile_System_Type_
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Compile_System_Type_
   name: Compile(Type)
   nameWithType: Item.Compile(Type)
-  fullName: ingot.Core.Content.Item.Compile(System.Type)
+  fullName: ingot.Core.Behaviour.Item.Compile(System.Type)
   spec.csharp:
-  - uid: ingot.Core.Content.Item.Compile(System.Type)
+  - uid: ingot.Core.Behaviour.Item.Compile(System.Type)
     name: Compile
-    href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile_System_Type_
+    href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Compile_System_Type_
   - name: (
   - uid: System.Type
     name: Type
@@ -301,9 +301,9 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.type
   - name: )
   spec.vb:
-  - uid: ingot.Core.Content.Item.Compile(System.Type)
+  - uid: ingot.Core.Behaviour.Item.Compile(System.Type)
     name: Compile
-    href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Compile_System_Type_
+    href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Compile_System_Type_
   - name: (
   - uid: System.Type
     name: Type
@@ -536,12 +536,12 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: ingot.Core.Content
-  commentId: N:ingot.Core.Content
+- uid: ingot.Core.Behaviour
+  commentId: N:ingot.Core.Behaviour
   href: ingot.html
-  name: ingot.Core.Content
-  nameWithType: ingot.Core.Content
-  fullName: ingot.Core.Content
+  name: ingot.Core.Behaviour
+  nameWithType: ingot.Core.Behaviour
+  fullName: ingot.Core.Behaviour
   spec.csharp:
   - uid: ingot
     name: ingot
@@ -551,9 +551,9 @@ references:
     name: Core
     href: ingot.Core.html
   - name: .
-  - uid: ingot.Core.Content
-    name: Content
-    href: ingot.Core.Content.html
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
   spec.vb:
   - uid: ingot
     name: ingot
@@ -563,9 +563,9 @@ references:
     name: Core
     href: ingot.Core.html
   - name: .
-  - uid: ingot.Core.Content
-    name: Content
-    href: ingot.Core.Content.html
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
 - uid: ingot.Core.TraitSystem.Traits.Item
   commentId: N:ingot.Core.TraitSystem.Traits.Item
   href: ingot.html
@@ -650,13 +650,13 @@ references:
   - uid: ingot.Core.TraitSystem.Traits
     name: Traits
     href: ingot.Core.TraitSystem.Traits.html
-- uid: ingot.Core.Content.Item.Identifier
-  commentId: P:ingot.Core.Content.Item.Identifier
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Identifier
+- uid: ingot.Core.Behaviour.Item.Identifier
+  commentId: P:ingot.Core.Behaviour.Item.Identifier
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Identifier
   name: Identifier
   nameWithType: Item.Identifier
-  fullName: ingot.Core.Content.Item.Identifier
+  fullName: ingot.Core.Behaviour.Item.Identifier
 - uid: ingot.Example.LasagnaItem.Identifier*
   commentId: Overload:ingot.Example.LasagnaItem.Identifier
   href: ingot.Example.LasagnaItem.html#ingot_Example_LasagnaItem_Identifier
@@ -674,26 +674,26 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: ingot.Core.Content.Item.Texture
-  commentId: P:ingot.Core.Content.Item.Texture
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_Texture
+- uid: ingot.Core.Behaviour.Item.Texture
+  commentId: P:ingot.Core.Behaviour.Item.Texture
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_Texture
   name: Texture
   nameWithType: Item.Texture
-  fullName: ingot.Core.Content.Item.Texture
+  fullName: ingot.Core.Behaviour.Item.Texture
 - uid: ingot.Example.LasagnaItem.Texture*
   commentId: Overload:ingot.Example.LasagnaItem.Texture
   href: ingot.Example.LasagnaItem.html#ingot_Example_LasagnaItem_Texture
   name: Texture
   nameWithType: LasagnaItem.Texture
   fullName: ingot.Example.LasagnaItem.Texture
-- uid: ingot.Core.Content.Item.DisplayName
-  commentId: P:ingot.Core.Content.Item.DisplayName
-  parent: ingot.Core.Content.Item
-  href: ingot.Core.Content.Item.html#ingot_Core_Content_Item_DisplayName
+- uid: ingot.Core.Behaviour.Item.DisplayName
+  commentId: P:ingot.Core.Behaviour.Item.DisplayName
+  parent: ingot.Core.Behaviour.Item
+  href: ingot.Core.Behaviour.Item.html#ingot_Core_Behaviour_Item_DisplayName
   name: DisplayName
   nameWithType: Item.DisplayName
-  fullName: ingot.Core.Content.Item.DisplayName
+  fullName: ingot.Core.Behaviour.Item.DisplayName
 - uid: ingot.Example.LasagnaItem.DisplayName*
   commentId: Overload:ingot.Example.LasagnaItem.DisplayName
   href: ingot.Example.LasagnaItem.html#ingot_Example_LasagnaItem_DisplayName

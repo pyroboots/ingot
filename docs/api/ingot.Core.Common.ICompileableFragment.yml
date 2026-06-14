@@ -30,9 +30,9 @@ items:
     content: public interface ICompileableFragment
     content.vb: Public Interface ICompileableFragment
   derivedClasses:
+  - ingot.Core.Behaviour.Block.MaterialInstance
+  - ingot.Core.Behaviour.Block.MaterialInstances
   - ingot.Core.Common.Version
-  - ingot.Core.Content.Block.MaterialInstance
-  - ingot.Core.Content.Block.MaterialInstances
   - ingot.Core.TraitSystem.Trait
 - uid: ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)
   commentId: M:ingot.Core.Common.ICompileableFragment.Compile(Newtonsoft.Json.JsonTextWriter@)

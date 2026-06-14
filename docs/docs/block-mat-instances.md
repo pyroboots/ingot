@@ -140,12 +140,51 @@ The `MaterialInstances.Compile` method produces output like:
 
 Face names are lower-cased (`up`, `down`, `north`, `south`, `east`, `west`). The wildcard becomes `"*"`.
 
+## Connecting to the Resource Pack
+
+The `texture` value in a `MaterialInstance` (e.g. `"block_of_dense_lasagna"`) is just a **key**. It must be fulfilled by your resource pack so that Minecraft can find the actual image at runtime.
+
+Register the assets when building your pack:
+
+```csharp
+using ingot.Core;
+
+ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
+    .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png");
+
+Pack pack = new()
+{
+    ...
+    ResourcePack = rp,
+    ...
+};
+
+pack.Compile("./output");
+```
+
+When you compile, ingot will:
+- Copy `assets/block_of_dense_lasagna.png` → `rp/textures/blocks/block_of_dense_lasagna.png`
+- Generate (or update) `rp/textures/terrain_texture.json` containing the mapping:
+
+```json
+{
+  "texture_data": {
+    "block_of_dense_lasagna": {
+      "textures": "textures/blocks/block_of_dense_lasagna"
+    }
+  }
+}
+```
+
+The same key can be used from `BlockPermutation.MaterialInstances` - the permutation will simply point at a different texture key when its condition is true.
+
+See the dedicated [Resource Packs & Textures](resource-packs.md) guide for recommended project layout for your PNGs, how item textures work, limitations, and more.
+
 ## Tips
 
 - Always set at least `All` or all six faces. An empty `MaterialInstances` will still emit the component but with no textures (usually not what you want).
-- Texture names are resolved by the resource pack. Make sure your RP actually contains the referenced textures (typically under `textures/blocks/` or wherever your `terrain_texture.json` points).
 - Per-face materials are useful for things like logs (bark on sides, cut ends on top/bottom), furnaces, etc.
 - Changing material instances on a permutation is a very cheap way to have "lit" vs "unlit" appearances without duplicating the whole block.
 - `RenderMethod` names are converted to snake_case (`AlphaTest` → `alpha_test`).
 
-See also: [Making a Block](block.md) and the example `DenseLasagnaBlock`.
+See also: [Making a Block](block.md), [Resource Packs & Textures](resource-packs.md), and the example `DenseLasagnaBlock`.

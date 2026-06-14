@@ -5,7 +5,7 @@ Items are defined by deriving from the abstract `Item` class. Like blocks, items
 ## Minimal Item
 
 ```csharp
-using ingot.Core.Content;
+using ingot.Core.Behaviour;
 
 public class MyItem : Item
 {
@@ -86,18 +86,34 @@ Set `Category = CatalogueCategory.None` (and optionally `HiddenInCommands = true
 
 ## Compilation & Registration
 
-Register items exactly like blocks:
+Register items with a `BehaviourPack` and provide their icons via a `ResourcePack`:
 
 ```csharp
+using ingot.Core;
+
 BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
     .AddItem<LasagnaItem>()
     .AddItem<FancyTool>();
 
-// later...
+ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
+    .AddItemTexture("lasagna", "assets/lasagna.png")
+    .AddItemTexture("fancy_tool", "assets/fancy_tool.png");
+
+Pack pack = new()
+{
+    Name = "My Addon",
+    Description = "Items made with ingot",
+    BehaviourPack = bp,
+    ResourcePack = rp,
+    LinkPacks = true
+};
+
 pack.Compile("./output");
 ```
 
-This produces `bp/items/lasagna.json` (filename is the part after the `:` in the identifier).
+This produces `bp/items/lasagna.json` (filename is the part after the `:` in the identifier) and the corresponding resources under `rp/textures/items/` plus `rp/textures/item_texture.json`.
+
+See the [Resource Packs & Textures](resource-packs.md) guide for more on supplying assets and the texture key contract.
 
 > [!IMPORTANT]
 > `Guid.NewGuid().ToString()` is for demonstration purposes. You will want to have a static UUID at runtime for your pack otherwise Minecraft will see every new version of your pack as a completely different pack because the UUIDs change.

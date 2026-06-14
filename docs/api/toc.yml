@@ -16,6 +16,41 @@ items:
   - uid: ingot.Core.ResourcePack
     name: ResourcePack
     type: Class
+- uid: ingot.Core.Behaviour
+  name: ingot.Core.Behaviour
+  type: Namespace
+  items:
+  - uid: ingot.Core.Behaviour.Entity
+    name: Entity
+    type: Class
+  - uid: ingot.Core.Behaviour.Item
+    name: Item
+    type: Class
+  - uid: ingot.Core.Behaviour.Item.CatalogueCategory
+    name: Item.CatalogueCategory
+    type: Enum
+- uid: ingot.Core.Behaviour.Block
+  name: ingot.Core.Behaviour.Block
+  type: Namespace
+  items:
+  - uid: ingot.Core.Behaviour.Block.Block
+    name: Block
+    type: Class
+  - uid: ingot.Core.Behaviour.Block.BlockPermutation
+    name: BlockPermutation
+    type: Class
+  - uid: ingot.Core.Behaviour.Block.MaterialInstance
+    name: MaterialInstance
+    type: Struct
+  - uid: ingot.Core.Behaviour.Block.MaterialInstance.RenderMethods
+    name: MaterialInstance.RenderMethods
+    type: Enum
+  - uid: ingot.Core.Behaviour.Block.MaterialInstance.TintMethods
+    name: MaterialInstance.TintMethods
+    type: Enum
+  - uid: ingot.Core.Behaviour.Block.MaterialInstances
+    name: MaterialInstances
+    type: Struct
 - uid: ingot.Core.Common
   name: ingot.Core.Common
   type: Namespace
@@ -35,41 +70,6 @@ items:
   - uid: ingot.Core.Common.Version
     name: Version
     type: Class
-- uid: ingot.Core.Content
-  name: ingot.Core.Content
-  type: Namespace
-  items:
-  - uid: ingot.Core.Content.Entity
-    name: Entity
-    type: Class
-  - uid: ingot.Core.Content.Item
-    name: Item
-    type: Class
-  - uid: ingot.Core.Content.Item.CatalogueCategory
-    name: Item.CatalogueCategory
-    type: Enum
-- uid: ingot.Core.Content.Block
-  name: ingot.Core.Content.Block
-  type: Namespace
-  items:
-  - uid: ingot.Core.Content.Block.Block
-    name: Block
-    type: Class
-  - uid: ingot.Core.Content.Block.BlockPermutation
-    name: BlockPermutation
-    type: Class
-  - uid: ingot.Core.Content.Block.MaterialInstance
-    name: MaterialInstance
-    type: Struct
-  - uid: ingot.Core.Content.Block.MaterialInstance.RenderMethods
-    name: MaterialInstance.RenderMethods
-    type: Enum
-  - uid: ingot.Core.Content.Block.MaterialInstance.TintMethods
-    name: MaterialInstance.TintMethods
-    type: Enum
-  - uid: ingot.Core.Content.Block.MaterialInstances
-    name: MaterialInstances
-    type: Struct
 - uid: ingot.Core.TraitSystem
   name: ingot.Core.TraitSystem
   type: Namespace

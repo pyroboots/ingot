@@ -89,7 +89,6 @@
 <li><strong>Extensible &amp; Maintainable</strong> - Designed for large or complex addons where manual JSON becomes painful</li>
 <li><strong>Iterable &amp; Reusable</strong> - Because its code, you can define variable and easily change things project-wide</li>
 </ul>
-<p>Looking for the docs? API Reference <a href="https://pyroboots.github.io/ingot/api/">here</a>!</p>
 <h2 id="-installation">📦 Installation</h2>
 <p><strong>ingot</strong> is currently distributed via source. The easiest way to get started is:</p>
 <h3 id="option-1-add-as-a-project-reference-recommended-for-now">Option 1: Add as a Project Reference (Recommended for now)</h3>
@@ -130,22 +129,25 @@ class Program
         BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
             .AddItem&lt;LasagnaItem&gt;();
         
+        ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
+            .AddItemTexture(&quot;lasagna&quot;, &quot;assets/lasagna.png&quot;);
+        
         Pack pack = new()
         {
             Description = &quot;Example pack made with ingot&quot;,
             Name = &quot;ingot example&quot;,
             BehaviourPack = bp,
-            ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
+            ResourcePack = rp,
             LinkPacks = true,
             ScriptsEnabled = true,
         };
         
-        // and compile the whole pack!
+        // and compile the whole pack (bp/ + rp/ + manifests)!
         pack.Compile(&quot;./&quot;);
     }
 }
 </code></pre>
-<p>See the <a href="./ingot.Example"><code>ingot.Example</code></a> project for a more complete working example.</p>
+<p>See the <a href="./ingot.Example"><code>ingot.Example</code></a> project for a more complete working example that includes blocks, items, textures, and the full resource pack side. The new <a href="docs/resource-packs.html">Resource Packs &amp; Textures</a> guide explains how to supply assets and generate the atlas files.</p>
 <h2 id="-project-structure">🛠️ Project Structure</h2>
 <table>
 <thead>

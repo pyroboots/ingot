@@ -16,7 +16,6 @@ items:
   - ingot.Core.Pack.PackVersion
   - ingot.Core.Pack.ResourcePack
   - ingot.Core.Pack.ScriptApiModules
-  - ingot.Core.Pack.ScriptApiVersion
   - ingot.Core.Pack.ScriptEntry
   - ingot.Core.Pack.ScriptsEnabled
   langs:
@@ -33,7 +32,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Pack
     path: ../ingot.Core/Pack.cs
-    startLine: 12
+    startLine: 10
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -70,10 +69,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Name
     path: ../ingot.Core/Pack.cs
-    startLine: 14
+    startLine: 15
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: Name of the pack that shows up in Minecraft
+  example: []
   syntax:
     content: public required string Name
     return:
@@ -97,10 +98,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Description
     path: ../ingot.Core/Pack.cs
-    startLine: 15
+    startLine: 19
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: Short description of the pack
+  example: []
   syntax:
     content: public required string Description
     return:
@@ -124,10 +127,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: PackIcon
     path: ../ingot.Core/Pack.cs
-    startLine: 16
+    startLine: 23
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: Icon for the behaviour pack and resource pack in the game
+  example: []
   syntax:
     content: public string? PackIcon
     return:
@@ -151,10 +156,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: PackVersion
     path: ../ingot.Core/Pack.cs
-    startLine: 17
+    startLine: 27
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: Version of the pack. Recommended to increment with each pack build
+  example: []
   syntax:
     content: public Version PackVersion
     return:
@@ -178,10 +185,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: MinEngineVersion
     path: ../ingot.Core/Pack.cs
-    startLine: 18
+    startLine: 31
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: Minimum game version required to run this pack
+  example: []
   syntax:
     content: public Version MinEngineVersion
     return:
@@ -205,10 +214,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Authors
     path: ../ingot.Core/Pack.cs
-    startLine: 19
+    startLine: 35
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: List of authors who helped with the development of the pack
+  example: []
   syntax:
     content: public string[] Authors
     return:
@@ -232,10 +243,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: ScriptsEnabled
     path: ../ingot.Core/Pack.cs
-    startLine: 21
+    startLine: 40
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: Whether to initialise the behaviour pack with Script API capabilities
+  example: []
   syntax:
     content: public bool ScriptsEnabled
     return:
@@ -259,10 +272,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: ScriptEntry
     path: ../ingot.Core/Pack.cs
-    startLine: 22
+    startLine: 44
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: The entry point of the Script API to be loaded when the world is
+  example: []
   syntax:
     content: public string ScriptEntry
     return:
@@ -286,42 +301,17 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: ScriptApiModules
     path: ../ingot.Core/Pack.cs
-    startLine: 23
+    startLine: 48
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: Dictionary of Script API modules to import
+  example: []
   syntax:
     content: public Dictionary<string, Version> ScriptApiModules
     return:
       type: System.Collections.Generic.Dictionary{System.String,ingot.Core.Common.Version}
     content.vb: Public ScriptApiModules As Dictionary(Of String, Version)
-- uid: ingot.Core.Pack.ScriptApiVersion
-  commentId: F:ingot.Core.Pack.ScriptApiVersion
-  id: ScriptApiVersion
-  parent: ingot.Core.Pack
-  langs:
-  - csharp
-  - vb
-  name: ScriptApiVersion
-  nameWithType: Pack.ScriptApiVersion
-  fullName: ingot.Core.Pack.ScriptApiVersion
-  type: Field
-  source:
-    remote:
-      path: ingot.Core/Pack.cs
-      branch: master
-      repo: https://github.com/pyroboots/ingot.git
-    id: ScriptApiVersion
-    path: ../ingot.Core/Pack.cs
-    startLine: 27
-  assemblies:
-  - ingot.Core
-  namespace: ingot.Core
-  syntax:
-    content: public Version ScriptApiVersion
-    return:
-      type: ingot.Core.Common.Version
-    content.vb: Public ScriptApiVersion As Version
 - uid: ingot.Core.Pack.BehaviourPack
   commentId: F:ingot.Core.Pack.BehaviourPack
   id: BehaviourPack
@@ -340,10 +330,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: BehaviourPack
     path: ../ingot.Core/Pack.cs
-    startLine: 29
+    startLine: 56
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: <xref href="ingot.Core.Pack.BehaviourPack" data-throw-if-not-resolved="false"></xref> to be compiled
+  example: []
   syntax:
     content: public required BehaviourPack BehaviourPack
     return:
@@ -367,10 +359,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: ResourcePack
     path: ../ingot.Core/Pack.cs
-    startLine: 30
+    startLine: 60
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: <xref href="ingot.Core.Pack.ResourcePack" data-throw-if-not-resolved="false"></xref> to be compiled
+  example: []
   syntax:
     content: public required ResourcePack ResourcePack
     return:
@@ -394,10 +388,12 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: LinkPacks
     path: ../ingot.Core/Pack.cs
-    startLine: 31
+    startLine: 64
   assemblies:
   - ingot.Core
   namespace: ingot.Core
+  summary: Whether to make the <xref href="ingot.Core.Pack.BehaviourPack" data-throw-if-not-resolved="false"></xref> and <xref href="ingot.Core.Pack.ResourcePack" data-throw-if-not-resolved="false"></xref> depend on each other
+  example: []
   syntax:
     content: public bool LinkPacks
     return:
@@ -421,7 +417,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Compile
     path: ../ingot.Core/Pack.cs
-    startLine: 38
+    startLine: 71
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -899,6 +895,12 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: ingot.Core.Pack.BehaviourPack
+  commentId: F:ingot.Core.Pack.BehaviourPack
+  href: ingot.Core.Pack.html#ingot_Core_Pack_BehaviourPack
+  name: BehaviourPack
+  nameWithType: Pack.BehaviourPack
+  fullName: ingot.Core.Pack.BehaviourPack
 - uid: ingot.Core.BehaviourPack
   commentId: T:ingot.Core.BehaviourPack
   parent: ingot.Core
@@ -906,6 +908,12 @@ references:
   name: BehaviourPack
   nameWithType: BehaviourPack
   fullName: ingot.Core.BehaviourPack
+- uid: ingot.Core.Pack.ResourcePack
+  commentId: F:ingot.Core.Pack.ResourcePack
+  href: ingot.Core.Pack.html#ingot_Core_Pack_ResourcePack
+  name: ResourcePack
+  nameWithType: Pack.ResourcePack
+  fullName: ingot.Core.Pack.ResourcePack
 - uid: ingot.Core.ResourcePack
   commentId: T:ingot.Core.ResourcePack
   parent: ingot.Core
@@ -913,18 +921,6 @@ references:
   name: ResourcePack
   nameWithType: ResourcePack
   fullName: ingot.Core.ResourcePack
-- uid: ingot.Core.Pack.BehaviourPack
-  commentId: F:ingot.Core.Pack.BehaviourPack
-  href: ingot.Core.Pack.html#ingot_Core_Pack_BehaviourPack
-  name: BehaviourPack
-  nameWithType: Pack.BehaviourPack
-  fullName: ingot.Core.Pack.BehaviourPack
-- uid: ingot.Core.Pack.ResourcePack
-  commentId: F:ingot.Core.Pack.ResourcePack
-  href: ingot.Core.Pack.html#ingot_Core_Pack_ResourcePack
-  name: ResourcePack
-  nameWithType: Pack.ResourcePack
-  fullName: ingot.Core.Pack.ResourcePack
 - uid: ingot.Core.Pack.Compile*
   commentId: Overload:ingot.Core.Pack.Compile
   href: ingot.Core.Pack.html#ingot_Core_Pack_Compile_System_String_System_Boolean_

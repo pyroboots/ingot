@@ -235,15 +235,46 @@ public MaterialInstance(string texture, RenderMethods method);
 }
 </code></pre>
 <p>Face names are lower-cased (<code>up</code>, <code>down</code>, <code>north</code>, <code>south</code>, <code>east</code>, <code>west</code>). The wildcard becomes <code>&quot;*&quot;</code>.</p>
+<h2 id="connecting-to-the-resource-pack">Connecting to the Resource Pack</h2>
+<p>The <code>texture</code> value in a <code>MaterialInstance</code> (e.g. <code>&quot;block_of_dense_lasagna&quot;</code>) is just a <strong>key</strong>. It must be fulfilled by your resource pack so that Minecraft can find the actual image at runtime.</p>
+<p>Register the assets when building your pack:</p>
+<pre><code class="lang-csharp">using ingot.Core;
+
+ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
+    .AddBlockTexture(&quot;block_of_dense_lasagna&quot;, &quot;assets/block_of_dense_lasagna.png&quot;);
+
+Pack pack = new()
+{
+    ...
+    ResourcePack = rp,
+    ...
+};
+
+pack.Compile(&quot;./output&quot;);
+</code></pre>
+<p>When you compile, ingot will:</p>
+<ul>
+<li>Copy <code>assets/block_of_dense_lasagna.png</code> → <code>rp/textures/blocks/block_of_dense_lasagna.png</code></li>
+<li>Generate (or update) <code>rp/textures/terrain_texture.json</code> containing the mapping:</li>
+</ul>
+<pre><code class="lang-json">{
+  &quot;texture_data&quot;: {
+    &quot;block_of_dense_lasagna&quot;: {
+      &quot;textures&quot;: &quot;textures/blocks/block_of_dense_lasagna&quot;
+    }
+  }
+}
+</code></pre>
+<p>The same key can be used from <code>BlockPermutation.MaterialInstances</code> - the permutation will simply point at a different texture key when its condition is true.</p>
+<p>See the dedicated <a href="resource-packs.html">Resource Packs &amp; Textures</a> guide for recommended project layout for your PNGs, how item textures work, limitations, and more.</p>
 <h2 id="tips">Tips</h2>
 <ul>
 <li>Always set at least <code>All</code> or all six faces. An empty <code>MaterialInstances</code> will still emit the component but with no textures (usually not what you want).</li>
-<li>Texture names are resolved by the resource pack. Make sure your RP actually contains the referenced textures (typically under <code>textures/blocks/</code> or wherever your <code>terrain_texture.json</code> points).</li>
 <li>Per-face materials are useful for things like logs (bark on sides, cut ends on top/bottom), furnaces, etc.</li>
 <li>Changing material instances on a permutation is a very cheap way to have &quot;lit&quot; vs &quot;unlit&quot; appearances without duplicating the whole block.</li>
 <li><code>RenderMethod</code> names are converted to snake_case (<code>AlphaTest</code> → <code>alpha_test</code>).</li>
 </ul>
-<p>See also: <a href="block.html">Making a Block</a> and the example <code>DenseLasagnaBlock</code>.</p>
+<p>See also: <a href="block.html">Making a Block</a>, <a href="resource-packs.html">Resource Packs &amp; Textures</a>, and the example <code>DenseLasagnaBlock</code>.</p>
 
 </article>
 

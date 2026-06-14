@@ -1,0 +1,217 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.Behaviour.Item.CatalogueCategory
+  commentId: T:ingot.Core.Behaviour.Item.CatalogueCategory
+  id: Item.CatalogueCategory
+  parent: ingot.Core.Behaviour
+  children:
+  - ingot.Core.Behaviour.Item.CatalogueCategory.Construction
+  - ingot.Core.Behaviour.Item.CatalogueCategory.Equipment
+  - ingot.Core.Behaviour.Item.CatalogueCategory.Items
+  - ingot.Core.Behaviour.Item.CatalogueCategory.Nature
+  - ingot.Core.Behaviour.Item.CatalogueCategory.None
+  langs:
+  - csharp
+  - vb
+  name: Item.CatalogueCategory
+  nameWithType: Item.CatalogueCategory
+  fullName: ingot.Core.Behaviour.Item.CatalogueCategory
+  type: Enum
+  source:
+    remote:
+      path: ingot.Core/Behaviour/Item.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: CatalogueCategory
+    path: ../ingot.Core/Behaviour/Item.cs
+    startLine: 22
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Behaviour
+  syntax:
+    content: public enum Item.CatalogueCategory
+    content.vb: Public Enum Item.CatalogueCategory
+- uid: ingot.Core.Behaviour.Item.CatalogueCategory.Construction
+  commentId: F:ingot.Core.Behaviour.Item.CatalogueCategory.Construction
+  id: Construction
+  parent: ingot.Core.Behaviour.Item.CatalogueCategory
+  langs:
+  - csharp
+  - vb
+  name: Construction
+  nameWithType: Item.CatalogueCategory.Construction
+  fullName: ingot.Core.Behaviour.Item.CatalogueCategory.Construction
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Behaviour/Item.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Construction
+    path: ../ingot.Core/Behaviour/Item.cs
+    startLine: 23
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Behaviour
+  syntax:
+    content: Construction = 0
+    return:
+      type: ingot.Core.Behaviour.Item.CatalogueCategory
+- uid: ingot.Core.Behaviour.Item.CatalogueCategory.Nature
+  commentId: F:ingot.Core.Behaviour.Item.CatalogueCategory.Nature
+  id: Nature
+  parent: ingot.Core.Behaviour.Item.CatalogueCategory
+  langs:
+  - csharp
+  - vb
+  name: Nature
+  nameWithType: Item.CatalogueCategory.Nature
+  fullName: ingot.Core.Behaviour.Item.CatalogueCategory.Nature
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Behaviour/Item.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Nature
+    path: ../ingot.Core/Behaviour/Item.cs
+    startLine: 23
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Behaviour
+  syntax:
+    content: Nature = 1
+    return:
+      type: ingot.Core.Behaviour.Item.CatalogueCategory
+- uid: ingot.Core.Behaviour.Item.CatalogueCategory.Equipment
+  commentId: F:ingot.Core.Behaviour.Item.CatalogueCategory.Equipment
+  id: Equipment
+  parent: ingot.Core.Behaviour.Item.CatalogueCategory
+  langs:
+  - csharp
+  - vb
+  name: Equipment
+  nameWithType: Item.CatalogueCategory.Equipment
+  fullName: ingot.Core.Behaviour.Item.CatalogueCategory.Equipment
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Behaviour/Item.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Equipment
+    path: ../ingot.Core/Behaviour/Item.cs
+    startLine: 23
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Behaviour
+  syntax:
+    content: Equipment = 2
+    return:
+      type: ingot.Core.Behaviour.Item.CatalogueCategory
+- uid: ingot.Core.Behaviour.Item.CatalogueCategory.Items
+  commentId: F:ingot.Core.Behaviour.Item.CatalogueCategory.Items
+  id: Items
+  parent: ingot.Core.Behaviour.Item.CatalogueCategory
+  langs:
+  - csharp
+  - vb
+  name: Items
+  nameWithType: Item.CatalogueCategory.Items
+  fullName: ingot.Core.Behaviour.Item.CatalogueCategory.Items
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Behaviour/Item.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: Items
+    path: ../ingot.Core/Behaviour/Item.cs
+    startLine: 23
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Behaviour
+  syntax:
+    content: Items = 3
+    return:
+      type: ingot.Core.Behaviour.Item.CatalogueCategory
+- uid: ingot.Core.Behaviour.Item.CatalogueCategory.None
+  commentId: F:ingot.Core.Behaviour.Item.CatalogueCategory.None
+  id: None
+  parent: ingot.Core.Behaviour.Item.CatalogueCategory
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: Item.CatalogueCategory.None
+  fullName: ingot.Core.Behaviour.Item.CatalogueCategory.None
+  type: Field
+  source:
+    remote:
+      path: ingot.Core/Behaviour/Item.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: None
+    path: ../ingot.Core/Behaviour/Item.cs
+    startLine: 23
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core.Behaviour
+  syntax:
+    content: None = 4
+    return:
+      type: ingot.Core.Behaviour.Item.CatalogueCategory
+references:
+- uid: ingot.Core.Behaviour
+  commentId: N:ingot.Core.Behaviour
+  href: ingot.html
+  name: ingot.Core.Behaviour
+  nameWithType: ingot.Core.Behaviour
+  fullName: ingot.Core.Behaviour
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
+- uid: ingot.Core.Behaviour.Item.CatalogueCategory
+  commentId: T:ingot.Core.Behaviour.Item.CatalogueCategory
+  parent: ingot.Core.Behaviour
+  href: ingot.Core.Behaviour.Item.html
+  name: Item.CatalogueCategory
+  nameWithType: Item.CatalogueCategory
+  fullName: ingot.Core.Behaviour.Item.CatalogueCategory
+  spec.csharp:
+  - uid: ingot.Core.Behaviour.Item
+    name: Item
+    href: ingot.Core.Behaviour.Item.html
+  - name: .
+  - uid: ingot.Core.Behaviour.Item.CatalogueCategory
+    name: CatalogueCategory
+    href: ingot.Core.Behaviour.Item.CatalogueCategory.html
+  spec.vb:
+  - uid: ingot.Core.Behaviour.Item
+    name: Item
+    href: ingot.Core.Behaviour.Item.html
+  - name: .
+  - uid: ingot.Core.Behaviour.Item.CatalogueCategory
+    name: CatalogueCategory
+    href: ingot.Core.Behaviour.Item.CatalogueCategory.html

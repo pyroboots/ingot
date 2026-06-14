@@ -89,7 +89,7 @@
 
 
   <h1 id="ingot_Core_ResourcePack" data-uid="ingot.Core.ResourcePack" class="text-break">
-Class ResourcePack  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L7"><i class="bi bi-code-slash"></i></a>
+Class ResourcePack  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -157,7 +157,7 @@ Class ResourcePack  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="ingot_Core_ResourcePack__ctor_System_String_ingot_Core_Common_Version_" data-uid="ingot.Core.ResourcePack.#ctor(System.String,ingot.Core.Common.Version)">
   ResourcePack(string, Version?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -193,7 +193,7 @@ Class ResourcePack  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="ingot_Core_ResourcePack_ResourcePackVersion" data-uid="ingot.Core.ResourcePack.ResourcePackVersion">
   ResourcePackVersion
-  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L19"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Version of the <a class="xref" href="ingot.Core.ResourcePack.html">ResourcePack</a>. When <a class="xref" href="ingot.Core.BehaviourPack.html">BehaviourPack</a> is linked, it will require at least this version.</p>
@@ -224,7 +224,7 @@ Class ResourcePack  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="ingot_Core_ResourcePack_Uuid" data-uid="ingot.Core.ResourcePack.Uuid">
   Uuid
-  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Minecraft UUID to be used at runtime</p>
@@ -256,11 +256,98 @@ Class ResourcePack  <a class="header-action link-secondary" title="View source" 
 </h2>
 
 
+  <a id="ingot_Core_ResourcePack_AddBlockTexture_" data-uid="ingot.Core.ResourcePack.AddBlockTexture*"></a>
+
+  <h3 id="ingot_Core_ResourcePack_AddBlockTexture_System_String_System_String_" data-uid="ingot.Core.ResourcePack.AddBlockTexture(System.String,System.String)">
+  AddBlockTexture(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a texture (PNG on disk) that will be copied into the resource pack under
+<code>textures/blocks/</code> and referenced from <code>terrain_texture.json</code>.
+The <code class="paramref">key</code> must match the texture name(s) used in your block
+<code>MaterialInstances</code> (or <code>IDestructionParticles</code>).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ResourcePack AddBlockTexture(string key, string sourcePngPath)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The texture key (the value used in behaviour-side material instances).</p>
+</dd>
+    <dt><code>sourcePngPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Path to the source .png file on disk (will be copied as-is).</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ingot.Core.ResourcePack.html">ResourcePack</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ingot_Core_ResourcePack_AddItemTexture_" data-uid="ingot.Core.ResourcePack.AddItemTexture*"></a>
+
+  <h3 id="ingot_Core_ResourcePack_AddItemTexture_System_String_System_String_" data-uid="ingot.Core.ResourcePack.AddItemTexture(System.String,System.String)">
+  AddItemTexture(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a texture (PNG on disk) that will be copied into the resource pack under
+<code>textures/items/</code> and referenced from <code>item_texture.json</code>.
+The <code class="paramref">key</code> must match the <code>Texture</code> property on your <code>Item</code> definitions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ResourcePack AddItemTexture(string key, string sourcePngPath)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The texture key (the value used in behaviour-side <code>minecraft:icon</code>).</p>
+</dd>
+    <dt><code>sourcePngPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Path to the source .png file on disk (will be copied as-is).</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ingot.Core.ResourcePack.html">ResourcePack</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="ingot_Core_ResourcePack_Compile_" data-uid="ingot.Core.ResourcePack.Compile*"></a>
 
   <h3 id="ingot_Core_ResourcePack_Compile_System_String_" data-uid="ingot.Core.ResourcePack.Compile(System.String)">
   Compile(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L76"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Compiles the <a class="xref" href="ingot.Core.ResourcePack.html">ResourcePack</a> to output <code class="paramref">dir</code></p>
@@ -293,7 +380,7 @@ Class ResourcePack  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="ingot_Core_ResourcePack_Create_System_String_ingot_Core_Common_Version_" data-uid="ingot.Core.ResourcePack.Create(System.String,ingot.Core.Common.Version)">
   Create(string, Version?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Helper factory method to initiate API-style syntax</p>
@@ -310,7 +397,7 @@ Class ResourcePack  <a class="header-action link-secondary" title="View source" 
     <dd><p>Minecraft UUID to be used at runtime</p>
 </dd>
     <dt><code>version</code> <a class="xref" href="ingot.Core.Common.Version.html">Version</a></dt>
-    <dd><p>Version of the <a class="xref" href="ingot.Core.BehaviourPack.html">BehaviourPack</a>. When <a class="xref" href="ingot.Core.ResourcePack.html">ResourcePack</a> is linked, it will require at least this version.</p>
+    <dd><p>Version of the <a class="xref" href="ingot.Core.ResourcePack.html">ResourcePack</a>. When <a class="xref" href="ingot.Core.BehaviourPack.html">BehaviourPack</a> is linked, it will require at least this version.</p>
 </dd>
   </dl>
 
@@ -334,7 +421,7 @@ Class ResourcePack  <a class="header-action link-secondary" title="View source" 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L7" class="edit-link">Edit this page</a>
+          <a href="https://github.com/pyroboots/ingot/blob/master/ingot.Core/ResourcePack.cs/#L10" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -66,23 +66,26 @@ class Program
         BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
             .AddItem<LasagnaItem>();
         
+        ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
+            .AddItemTexture("lasagna", "assets/lasagna.png");
+        
         Pack pack = new()
         {
             Description = "Example pack made with ingot",
             Name = "ingot example",
             BehaviourPack = bp,
-            ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
+            ResourcePack = rp,
             LinkPacks = true,
             ScriptsEnabled = true,
         };
         
-        // and compile the whole pack!
+        // and compile the whole pack (bp/ + rp/ + manifests)!
         pack.Compile("./");
     }
 }
 ```
 
-See the [`ingot.Example`](./ingot.Example) project for a more complete working example.
+See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, textures, and the full resource pack side. The new [Resource Packs & Textures](docs/resource-packs.md) guide explains how to supply assets and generate the atlas files.
 
 ## 🛠️ Project Structure
 

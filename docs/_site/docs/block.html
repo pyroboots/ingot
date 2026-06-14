@@ -87,9 +87,9 @@
         <article data-uid="">
 <h1 id="making-a-block">Making a Block</h1>
 
-<p>Blocks in ingot are created by deriving from the abstract <code>Block</code> class in <code>ingot.Core.Content.Block</code>. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the <a href="trait-system.html">trait system</a>.</p>
+<p>Blocks in ingot are created by deriving from the abstract <code>Block</code> class in <code>ingot.Core.Behaviour.Block</code>. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the <a href="trait-system.html">trait system</a>.</p>
 <h2 id="minimal-block">Minimal Block</h2>
-<pre><code class="lang-csharp">using ingot.Core.Content.Block;
+<pre><code class="lang-csharp">using ingot.Core.Behaviour.Block;
 
 public class MyBlock : Block
 {
@@ -151,7 +151,7 @@ public class MyBlock : Block
 <td><code>LightEmission</code></td>
 <td><code>int?</code></td>
 <td>No</td>
-<td>Shortcut for <code>minecraft:light_emission</code> (0–15).</td>
+<td>Shortcut for <code>minecraft:light_emission</code> (0-15).</td>
 </tr>
 <tr>
 <td><code>LightDampening</code></td>
@@ -188,7 +188,7 @@ public class MyBlock : Block
 </div>
 <p><strong>Important notes</strong>:</p>
 <ul>
-<li>Minecraft limits a state to have <strong>16</strong> possible states. <strong>ingot</strong> will throw a waring for you if a state exceeds that limit.</li>
+<li>Minecraft limits a state to have <strong>16</strong> possible states. <strong>ingot</strong> will throw a warning for you if a state exceeds that limit.</li>
 <li>State names should be fully qualified (<code>namespace:state_name</code>) for best compatibility.</li>
 </ul>
 <h2 id="adding-behavior-with-traits">Adding Behavior with Traits</h2>
@@ -237,24 +237,33 @@ public class MyBlock : Block
 <h2 id="permutations">Permutations</h2>
 <p>Permutations allow different components/traits to apply only when a Molang condition is true. See the dedicated <a href="block-permutations.html">Block Permutations</a> page.</p>
 <h2 id="compilation">Compilation</h2>
-<p>You rarely call <code>Block.Compile&lt;T&gt;()</code> directly. Instead you register blocks with a <code>BehaviourPack</code>:</p>
-<pre><code class="lang-csharp">BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+<p>You rarely call <code>Block.Compile&lt;T&gt;()</code> directly. Instead you register blocks with a <code>BehaviourPack</code> and supply the visual assets via a <code>ResourcePack</code>:</p>
+<pre><code class="lang-csharp">using ingot.Core;
+
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
     .AddBlock&lt;DenseLasagnaBlock&gt;()
     .AddBlock&lt;AnotherBlock&gt;();
+
+ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
+    .AddBlockTexture(&quot;block_of_dense_lasagna&quot;, &quot;assets/block_of_dense_lasagna.png&quot;);
 
 Pack pack = new()
 {
     Name = &quot;My Addon&quot;,
     Description = &quot;Blocks made with ingot&quot;,
     BehaviourPack = bp,
-    ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
+    ResourcePack = rp,
     LinkPacks = true
 };
 
 pack.Compile(&quot;./output&quot;);
 </code></pre>
-<p>This writes <code>bp/blocks/my_block.json</code> (and the manifest) for you.</p>
-<p>The generated JSON follows the standard <code>minecraft:block</code> schema with a <code>description</code>, <code>states</code>, <code>permutations</code> array, and <code>components</code> object containing all your shortcuts + trait components.</p>
+<p>This writes the full behaviour pack under <code>bp/</code> (including <code>bp/blocks/test:block_of_dense_lasagna.json</code>) and the resource pack under <code>rp/</code> (including copied textures and the generated <code>terrain_texture.json</code> that maps your texture keys).</p>
+<p>See the <a href="resource-packs.html">Resource Packs &amp; Textures</a> guide for details on asset organization, the generated atlas files, and how texture keys bridge behaviour and resources.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Textures for blocks (and items) are provided on the resource pack side. The strings you return from <code>MaterialInstances</code> (and <code>Item.Texture</code>) are <strong>keys</strong> that must be registered with <code>ResourcePack.AddBlockTexture</code> / <code>AddItemTexture</code> so that <code>pack.Compile</code> can copy the PNGs and emit the correct <code>terrain_texture.json</code> / <code>item_texture.json</code>.</p>
+</div>
 <h2 id="full-example">Full Example</h2>
 <p>See <code>DenseLasagnaBlock.cs</code> in the <a href="../ingot.Example"><code>ingot.Example</code></a> project for a working block that combines states, permutations, material instances, and the trait system.</p>
 <h2 id="tips--gotchas">Tips &amp; Gotchas</h2>

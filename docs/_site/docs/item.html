@@ -89,7 +89,7 @@
 
 <p>Items are defined by deriving from the abstract <code>Item</code> class. Like blocks, items use a combination of simple virtual properties and the <a href="trait-system.html">trait system</a> to describe their behavior.</p>
 <h2 id="minimal-item">Minimal Item</h2>
-<pre><code class="lang-csharp">using ingot.Core.Content;
+<pre><code class="lang-csharp">using ingot.Core.Behaviour;
 
 public class MyItem : Item
 {
@@ -202,15 +202,30 @@ public class MyItem : Item
 </code></pre>
 <p>Set <code>Category = CatalogueCategory.None</code> (and optionally <code>HiddenInCommands = true</code>) for purely technical items that should not appear in the creative inventory or be summonable easily.</p>
 <h2 id="compilation--registration">Compilation &amp; Registration</h2>
-<p>Register items exactly like blocks:</p>
-<pre><code class="lang-csharp">BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+<p>Register items with a <code>BehaviourPack</code> and provide their icons via a <code>ResourcePack</code>:</p>
+<pre><code class="lang-csharp">using ingot.Core;
+
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
     .AddItem&lt;LasagnaItem&gt;()
     .AddItem&lt;FancyTool&gt;();
 
-// later...
+ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
+    .AddItemTexture(&quot;lasagna&quot;, &quot;assets/lasagna.png&quot;)
+    .AddItemTexture(&quot;fancy_tool&quot;, &quot;assets/fancy_tool.png&quot;);
+
+Pack pack = new()
+{
+    Name = &quot;My Addon&quot;,
+    Description = &quot;Items made with ingot&quot;,
+    BehaviourPack = bp,
+    ResourcePack = rp,
+    LinkPacks = true
+};
+
 pack.Compile(&quot;./output&quot;);
 </code></pre>
-<p>This produces <code>bp/items/lasagna.json</code> (filename is the part after the <code>:</code> in the identifier).</p>
+<p>This produces <code>bp/items/lasagna.json</code> (filename is the part after the <code>:</code> in the identifier) and the corresponding resources under <code>rp/textures/items/</code> plus <code>rp/textures/item_texture.json</code>.</p>
+<p>See the <a href="resource-packs.html">Resource Packs &amp; Textures</a> guide for more on supplying assets and the texture key contract.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p><code>Guid.NewGuid().ToString()</code> is for demonstration purposes. You will want to have a static UUID at runtime for your pack otherwise Minecraft will see every new version of your pack as a completely different pack because the UUIDs change.</p>

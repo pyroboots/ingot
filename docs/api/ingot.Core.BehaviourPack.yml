@@ -203,12 +203,12 @@ items:
   assemblies:
   - ingot.Core
   namespace: ingot.Core
-  summary: List of <xref href="ingot.Core.Content.Entity" data-throw-if-not-resolved="false"></xref> types added to the pack
+  summary: List of <xref href="ingot.Core.Behaviour.Entity" data-throw-if-not-resolved="false"></xref> types added to the pack
   example: []
   syntax:
     content: public List<Entity> Entities
     return:
-      type: System.Collections.Generic.List{ingot.Core.Content.Entity}
+      type: System.Collections.Generic.List{ingot.Core.Behaviour.Entity}
     content.vb: Public Entities As List(Of Entity)
 - uid: ingot.Core.BehaviourPack.Blocks
   commentId: F:ingot.Core.BehaviourPack.Blocks
@@ -232,12 +232,12 @@ items:
   assemblies:
   - ingot.Core
   namespace: ingot.Core
-  summary: List of <xref href="ingot.Core.Content.Block.Block" data-throw-if-not-resolved="false"></xref> types added to the pack
+  summary: List of <xref href="ingot.Core.Behaviour.Block.Block" data-throw-if-not-resolved="false"></xref> types added to the pack
   example: []
   syntax:
     content: public List<Block> Blocks
     return:
-      type: System.Collections.Generic.List{ingot.Core.Content.Block.Block}
+      type: System.Collections.Generic.List{ingot.Core.Behaviour.Block.Block}
     content.vb: Public Blocks As List(Of Block)
 - uid: ingot.Core.BehaviourPack.Items
   commentId: F:ingot.Core.BehaviourPack.Items
@@ -261,12 +261,12 @@ items:
   assemblies:
   - ingot.Core
   namespace: ingot.Core
-  summary: List of <xref href="ingot.Core.Content.Item" data-throw-if-not-resolved="false"></xref> types added to the pack
+  summary: List of <xref href="ingot.Core.Behaviour.Item" data-throw-if-not-resolved="false"></xref> types added to the pack
   example: []
   syntax:
     content: public List<Item> Items
     return:
-      type: System.Collections.Generic.List{ingot.Core.Content.Item}
+      type: System.Collections.Generic.List{ingot.Core.Behaviour.Item}
     content.vb: Public Items As List(Of Item)
 - uid: ingot.Core.BehaviourPack.AddEntity``1
   commentId: M:ingot.Core.BehaviourPack.AddEntity``1
@@ -748,22 +748,22 @@ references:
   name: Create
   nameWithType: BehaviourPack.Create
   fullName: ingot.Core.BehaviourPack.Create
-- uid: ingot.Core.Content.Entity
-  commentId: T:ingot.Core.Content.Entity
-  href: ingot.Core.Content.Entity.html
+- uid: ingot.Core.Behaviour.Entity
+  commentId: T:ingot.Core.Behaviour.Entity
+  href: ingot.Core.Behaviour.Entity.html
   name: Entity
   nameWithType: Entity
-  fullName: ingot.Core.Content.Entity
-- uid: System.Collections.Generic.List{ingot.Core.Content.Entity}
-  commentId: T:System.Collections.Generic.List{ingot.Core.Content.Entity}
+  fullName: ingot.Core.Behaviour.Entity
+- uid: System.Collections.Generic.List{ingot.Core.Behaviour.Entity}
+  commentId: T:System.Collections.Generic.List{ingot.Core.Behaviour.Entity}
   parent: System.Collections.Generic
   definition: System.Collections.Generic.List`1
   href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
   name: List<Entity>
   nameWithType: List<Entity>
-  fullName: System.Collections.Generic.List<ingot.Core.Content.Entity>
+  fullName: System.Collections.Generic.List<ingot.Core.Behaviour.Entity>
   nameWithType.vb: List(Of Entity)
-  fullName.vb: System.Collections.Generic.List(Of ingot.Core.Content.Entity)
+  fullName.vb: System.Collections.Generic.List(Of ingot.Core.Behaviour.Entity)
   name.vb: List(Of Entity)
   spec.csharp:
   - uid: System.Collections.Generic.List`1
@@ -771,9 +771,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
   - name: <
-  - uid: ingot.Core.Content.Entity
+  - uid: ingot.Core.Behaviour.Entity
     name: Entity
-    href: ingot.Core.Content.Entity.html
+    href: ingot.Core.Behaviour.Entity.html
   - name: '>'
   spec.vb:
   - uid: System.Collections.Generic.List`1
@@ -783,9 +783,9 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: ingot.Core.Content.Entity
+  - uid: ingot.Core.Behaviour.Entity
     name: Entity
-    href: ingot.Core.Content.Entity.html
+    href: ingot.Core.Behaviour.Entity.html
   - name: )
 - uid: System.Collections.Generic.List`1
   commentId: T:System.Collections.Generic.List`1
@@ -852,23 +852,23 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
-- uid: ingot.Core.Content.Block.Block
-  commentId: T:ingot.Core.Content.Block.Block
-  parent: ingot.Core.Content.Block
-  href: ingot.Core.Content.Block.Block.html
+- uid: ingot.Core.Behaviour.Block.Block
+  commentId: T:ingot.Core.Behaviour.Block.Block
+  parent: ingot.Core.Behaviour.Block
+  href: ingot.Core.Behaviour.Block.Block.html
   name: Block
   nameWithType: Block
-  fullName: ingot.Core.Content.Block.Block
-- uid: System.Collections.Generic.List{ingot.Core.Content.Block.Block}
-  commentId: T:System.Collections.Generic.List{ingot.Core.Content.Block.Block}
+  fullName: ingot.Core.Behaviour.Block.Block
+- uid: System.Collections.Generic.List{ingot.Core.Behaviour.Block.Block}
+  commentId: T:System.Collections.Generic.List{ingot.Core.Behaviour.Block.Block}
   parent: System.Collections.Generic
   definition: System.Collections.Generic.List`1
   href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
   name: List<Block>
   nameWithType: List<Block>
-  fullName: System.Collections.Generic.List<ingot.Core.Content.Block.Block>
+  fullName: System.Collections.Generic.List<ingot.Core.Behaviour.Block.Block>
   nameWithType.vb: List(Of Block)
-  fullName.vb: System.Collections.Generic.List(Of ingot.Core.Content.Block.Block)
+  fullName.vb: System.Collections.Generic.List(Of ingot.Core.Behaviour.Block.Block)
   name.vb: List(Of Block)
   spec.csharp:
   - uid: System.Collections.Generic.List`1
@@ -876,9 +876,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
   - name: <
-  - uid: ingot.Core.Content.Block.Block
+  - uid: ingot.Core.Behaviour.Block.Block
     name: Block
-    href: ingot.Core.Content.Block.Block.html
+    href: ingot.Core.Behaviour.Block.Block.html
   - name: '>'
   spec.vb:
   - uid: System.Collections.Generic.List`1
@@ -888,16 +888,16 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: ingot.Core.Content.Block.Block
+  - uid: ingot.Core.Behaviour.Block.Block
     name: Block
-    href: ingot.Core.Content.Block.Block.html
+    href: ingot.Core.Behaviour.Block.Block.html
   - name: )
-- uid: ingot.Core.Content.Block
-  commentId: N:ingot.Core.Content.Block
+- uid: ingot.Core.Behaviour.Block
+  commentId: N:ingot.Core.Behaviour.Block
   href: ingot.html
-  name: ingot.Core.Content.Block
-  nameWithType: ingot.Core.Content.Block
-  fullName: ingot.Core.Content.Block
+  name: ingot.Core.Behaviour.Block
+  nameWithType: ingot.Core.Behaviour.Block
+  fullName: ingot.Core.Behaviour.Block
   spec.csharp:
   - uid: ingot
     name: ingot
@@ -907,13 +907,13 @@ references:
     name: Core
     href: ingot.Core.html
   - name: .
-  - uid: ingot.Core.Content
-    name: Content
-    href: ingot.Core.Content.html
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
   - name: .
-  - uid: ingot.Core.Content.Block
+  - uid: ingot.Core.Behaviour.Block
     name: Block
-    href: ingot.Core.Content.Block.html
+    href: ingot.Core.Behaviour.Block.html
   spec.vb:
   - uid: ingot
     name: ingot
@@ -923,30 +923,30 @@ references:
     name: Core
     href: ingot.Core.html
   - name: .
-  - uid: ingot.Core.Content
-    name: Content
-    href: ingot.Core.Content.html
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
   - name: .
-  - uid: ingot.Core.Content.Block
+  - uid: ingot.Core.Behaviour.Block
     name: Block
-    href: ingot.Core.Content.Block.html
-- uid: ingot.Core.Content.Item
-  commentId: T:ingot.Core.Content.Item
-  parent: ingot.Core.Content
-  href: ingot.Core.Content.Item.html
+    href: ingot.Core.Behaviour.Block.html
+- uid: ingot.Core.Behaviour.Item
+  commentId: T:ingot.Core.Behaviour.Item
+  parent: ingot.Core.Behaviour
+  href: ingot.Core.Behaviour.Item.html
   name: Item
   nameWithType: Item
-  fullName: ingot.Core.Content.Item
-- uid: System.Collections.Generic.List{ingot.Core.Content.Item}
-  commentId: T:System.Collections.Generic.List{ingot.Core.Content.Item}
+  fullName: ingot.Core.Behaviour.Item
+- uid: System.Collections.Generic.List{ingot.Core.Behaviour.Item}
+  commentId: T:System.Collections.Generic.List{ingot.Core.Behaviour.Item}
   parent: System.Collections.Generic
   definition: System.Collections.Generic.List`1
   href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
   name: List<Item>
   nameWithType: List<Item>
-  fullName: System.Collections.Generic.List<ingot.Core.Content.Item>
+  fullName: System.Collections.Generic.List<ingot.Core.Behaviour.Item>
   nameWithType.vb: List(Of Item)
-  fullName.vb: System.Collections.Generic.List(Of ingot.Core.Content.Item)
+  fullName.vb: System.Collections.Generic.List(Of ingot.Core.Behaviour.Item)
   name.vb: List(Of Item)
   spec.csharp:
   - uid: System.Collections.Generic.List`1
@@ -954,9 +954,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
   - name: <
-  - uid: ingot.Core.Content.Item
+  - uid: ingot.Core.Behaviour.Item
     name: Item
-    href: ingot.Core.Content.Item.html
+    href: ingot.Core.Behaviour.Item.html
   - name: '>'
   spec.vb:
   - uid: System.Collections.Generic.List`1
@@ -966,16 +966,16 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: ingot.Core.Content.Item
+  - uid: ingot.Core.Behaviour.Item
     name: Item
-    href: ingot.Core.Content.Item.html
+    href: ingot.Core.Behaviour.Item.html
   - name: )
-- uid: ingot.Core.Content
-  commentId: N:ingot.Core.Content
+- uid: ingot.Core.Behaviour
+  commentId: N:ingot.Core.Behaviour
   href: ingot.html
-  name: ingot.Core.Content
-  nameWithType: ingot.Core.Content
-  fullName: ingot.Core.Content
+  name: ingot.Core.Behaviour
+  nameWithType: ingot.Core.Behaviour
+  fullName: ingot.Core.Behaviour
   spec.csharp:
   - uid: ingot
     name: ingot
@@ -985,9 +985,9 @@ references:
     name: Core
     href: ingot.Core.html
   - name: .
-  - uid: ingot.Core.Content
-    name: Content
-    href: ingot.Core.Content.html
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
   spec.vb:
   - uid: ingot
     name: ingot
@@ -997,9 +997,9 @@ references:
     name: Core
     href: ingot.Core.html
   - name: .
-  - uid: ingot.Core.Content
-    name: Content
-    href: ingot.Core.Content.html
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
 - uid: ingot.Core.BehaviourPack.AddEntity*
   commentId: Overload:ingot.Core.BehaviourPack.AddEntity
   href: ingot.Core.BehaviourPack.html#ingot_Core_BehaviourPack_AddEntity__1

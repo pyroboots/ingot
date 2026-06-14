@@ -12,6 +12,160 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Block.Block.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Block.Block.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Block.Block",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Behaviour.Block.Block.yml\" sourcestartlinenumber=\"1\">Implements basic properties of a block</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Block.BlockPermutation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Block.BlockPermutation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Block.BlockPermutation",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Behaviour.Block.BlockPermutation.yml\" sourcestartlinenumber=\"1\">C# representation of a block permutation</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Block.MaterialInstance.RenderMethods.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Block.MaterialInstance.RenderMethods.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Block.MaterialInstance.RenderMethods",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Block.MaterialInstance.TintMethods.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Block.MaterialInstance.TintMethods.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Block.MaterialInstance.TintMethods",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Block.MaterialInstance.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Block.MaterialInstance.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Block.MaterialInstance",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Behaviour.Block.MaterialInstance.yml\" sourcestartlinenumber=\"1\">Texture and material configuration for the face of a <xref href=\"ingot.Core.Behaviour.Block.Block\" data-throw-if-not-resolved=\"false\"></xref></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Block.MaterialInstances.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Block.MaterialInstances.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Block.MaterialInstances",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Behaviour.Block.MaterialInstances.yml\" sourcestartlinenumber=\"1\">Texture and material configuration for the faces of a <xref href=\"ingot.Core.Behaviour.Block.Block\" data-throw-if-not-resolved=\"false\"></xref></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Block.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Block.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Block",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Entity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Entity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Entity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Item.CatalogueCategory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Item.CatalogueCategory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Item.CatalogueCategory",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.Item.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.Item.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour.Item",
+      "Summary": "<p sourcefile=\"api/ingot.Core.Behaviour.Item.yml\" sourcestartlinenumber=\"1\">Implements basic properties of an item</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ingot.Core.Behaviour.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ingot.Core.Behaviour.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ingot.Core.Behaviour",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/ingot.Core.BehaviourPack.yml",
       "output": {
         ".html": {
@@ -1525,6 +1679,16 @@
       "output": {
         ".html": {
           "relative_path": "docs/item.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/resource-packs.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/resource-packs.html"
         }
       },
       "version": ""

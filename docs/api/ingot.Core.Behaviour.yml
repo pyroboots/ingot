@@ -1,0 +1,85 @@
+### YamlMime:ManagedReference
+items:
+- uid: ingot.Core.Behaviour
+  commentId: N:ingot.Core.Behaviour
+  id: ingot.Core.Behaviour
+  children:
+  - ingot.Core.Behaviour.Entity
+  - ingot.Core.Behaviour.Item
+  - ingot.Core.Behaviour.Item.CatalogueCategory
+  langs:
+  - csharp
+  - vb
+  name: ingot.Core.Behaviour
+  nameWithType: ingot.Core.Behaviour
+  fullName: ingot.Core.Behaviour
+  type: Namespace
+  assemblies:
+  - ingot.Core
+references:
+- uid: ingot.Core.Behaviour.Entity
+  commentId: T:ingot.Core.Behaviour.Entity
+  href: ingot.Core.Behaviour.Entity.html
+  name: Entity
+  nameWithType: Entity
+  fullName: ingot.Core.Behaviour.Entity
+- uid: ingot.Core.Behaviour.Item
+  commentId: T:ingot.Core.Behaviour.Item
+  parent: ingot.Core.Behaviour
+  href: ingot.Core.Behaviour.Item.html
+  name: Item
+  nameWithType: Item
+  fullName: ingot.Core.Behaviour.Item
+- uid: ingot.Core.Behaviour.Item.CatalogueCategory
+  commentId: T:ingot.Core.Behaviour.Item.CatalogueCategory
+  parent: ingot.Core.Behaviour
+  href: ingot.Core.Behaviour.Item.html
+  name: Item.CatalogueCategory
+  nameWithType: Item.CatalogueCategory
+  fullName: ingot.Core.Behaviour.Item.CatalogueCategory
+  spec.csharp:
+  - uid: ingot.Core.Behaviour.Item
+    name: Item
+    href: ingot.Core.Behaviour.Item.html
+  - name: .
+  - uid: ingot.Core.Behaviour.Item.CatalogueCategory
+    name: CatalogueCategory
+    href: ingot.Core.Behaviour.Item.CatalogueCategory.html
+  spec.vb:
+  - uid: ingot.Core.Behaviour.Item
+    name: Item
+    href: ingot.Core.Behaviour.Item.html
+  - name: .
+  - uid: ingot.Core.Behaviour.Item.CatalogueCategory
+    name: CatalogueCategory
+    href: ingot.Core.Behaviour.Item.CatalogueCategory.html
+- uid: ingot.Core.Behaviour
+  commentId: N:ingot.Core.Behaviour
+  href: ingot.html
+  name: ingot.Core.Behaviour
+  nameWithType: ingot.Core.Behaviour
+  fullName: ingot.Core.Behaviour
+  spec.csharp:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html
+  spec.vb:
+  - uid: ingot
+    name: ingot
+    href: ingot.html
+  - name: .
+  - uid: ingot.Core
+    name: Core
+    href: ingot.Core.html
+  - name: .
+  - uid: ingot.Core.Behaviour
+    name: Behaviour
+    href: ingot.Core.Behaviour.html

@@ -6,6 +6,8 @@ items:
   parent: ingot.Core
   children:
   - ingot.Core.ResourcePack.#ctor(System.String,ingot.Core.Common.Version)
+  - ingot.Core.ResourcePack.AddBlockTexture(System.String,System.String)
+  - ingot.Core.ResourcePack.AddItemTexture(System.String,System.String)
   - ingot.Core.ResourcePack.Compile(System.String)
   - ingot.Core.ResourcePack.Create(System.String,ingot.Core.Common.Version)
   - ingot.Core.ResourcePack.ResourcePackVersion
@@ -24,7 +26,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: ResourcePack
     path: ../ingot.Core/ResourcePack.cs
-    startLine: 6
+    startLine: 9
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -61,7 +63,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Uuid
     path: ../ingot.Core/ResourcePack.cs
-    startLine: 11
+    startLine: 14
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -90,7 +92,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: ResourcePackVersion
     path: ../ingot.Core/ResourcePack.cs
-    startLine: 15
+    startLine: 18
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -119,7 +121,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Create
     path: ../ingot.Core/ResourcePack.cs
-    startLine: 21
+    startLine: 24
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -133,7 +135,7 @@ items:
       description: Minecraft UUID to be used at runtime
     - id: version
       type: ingot.Core.Common.Version
-      description: Version of the <xref href="ingot.Core.BehaviourPack" data-throw-if-not-resolved="false"></xref>. When <xref href="ingot.Core.ResourcePack" data-throw-if-not-resolved="false"></xref> is linked, it will require at least this version.
+      description: Version of the <xref href="ingot.Core.ResourcePack" data-throw-if-not-resolved="false"></xref>. When <xref href="ingot.Core.BehaviourPack" data-throw-if-not-resolved="false"></xref> is linked, it will require at least this version.
     return:
       type: ingot.Core.ResourcePack
     content.vb: Public Shared Function Create(uuid As String, version As Version = Nothing) As ResourcePack
@@ -159,7 +161,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: .ctor
     path: ../ingot.Core/ResourcePack.cs
-    startLine: 22
+    startLine: 25
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -175,6 +177,98 @@ items:
   nameWithType.vb: ResourcePack.New(String, Version)
   fullName.vb: ingot.Core.ResourcePack.New(String, ingot.Core.Common.Version)
   name.vb: New(String, Version)
+- uid: ingot.Core.ResourcePack.AddBlockTexture(System.String,System.String)
+  commentId: M:ingot.Core.ResourcePack.AddBlockTexture(System.String,System.String)
+  id: AddBlockTexture(System.String,System.String)
+  parent: ingot.Core.ResourcePack
+  langs:
+  - csharp
+  - vb
+  name: AddBlockTexture(string, string)
+  nameWithType: ResourcePack.AddBlockTexture(string, string)
+  fullName: ingot.Core.ResourcePack.AddBlockTexture(string, string)
+  type: Method
+  source:
+    remote:
+      path: ingot.Core/ResourcePack.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AddBlockTexture
+    path: ../ingot.Core/ResourcePack.cs
+    startLine: 42
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core
+  summary: >-
+    Registers a texture (PNG on disk) that will be copied into the resource pack under
+
+    <code>textures/blocks/</code> and referenced from <code>terrain_texture.json</code>.
+
+    The <code class="paramref">key</code> must match the texture name(s) used in your block
+
+    <code>MaterialInstances</code> (or <code>IDestructionParticles</code>).
+  example: []
+  syntax:
+    content: public ResourcePack AddBlockTexture(string key, string sourcePngPath)
+    parameters:
+    - id: key
+      type: System.String
+      description: The texture key (the value used in behaviour-side material instances).
+    - id: sourcePngPath
+      type: System.String
+      description: Path to the source .png file on disk (will be copied as-is).
+    return:
+      type: ingot.Core.ResourcePack
+    content.vb: Public Function AddBlockTexture(key As String, sourcePngPath As String) As ResourcePack
+  overload: ingot.Core.ResourcePack.AddBlockTexture*
+  nameWithType.vb: ResourcePack.AddBlockTexture(String, String)
+  fullName.vb: ingot.Core.ResourcePack.AddBlockTexture(String, String)
+  name.vb: AddBlockTexture(String, String)
+- uid: ingot.Core.ResourcePack.AddItemTexture(System.String,System.String)
+  commentId: M:ingot.Core.ResourcePack.AddItemTexture(System.String,System.String)
+  id: AddItemTexture(System.String,System.String)
+  parent: ingot.Core.ResourcePack
+  langs:
+  - csharp
+  - vb
+  name: AddItemTexture(string, string)
+  nameWithType: ResourcePack.AddItemTexture(string, string)
+  fullName: ingot.Core.ResourcePack.AddItemTexture(string, string)
+  type: Method
+  source:
+    remote:
+      path: ingot.Core/ResourcePack.cs
+      branch: master
+      repo: https://github.com/pyroboots/ingot.git
+    id: AddItemTexture
+    path: ../ingot.Core/ResourcePack.cs
+    startLine: 60
+  assemblies:
+  - ingot.Core
+  namespace: ingot.Core
+  summary: >-
+    Registers a texture (PNG on disk) that will be copied into the resource pack under
+
+    <code>textures/items/</code> and referenced from <code>item_texture.json</code>.
+
+    The <code class="paramref">key</code> must match the <code>Texture</code> property on your <code>Item</code> definitions.
+  example: []
+  syntax:
+    content: public ResourcePack AddItemTexture(string key, string sourcePngPath)
+    parameters:
+    - id: key
+      type: System.String
+      description: The texture key (the value used in behaviour-side <code>minecraft:icon</code>).
+    - id: sourcePngPath
+      type: System.String
+      description: Path to the source .png file on disk (will be copied as-is).
+    return:
+      type: ingot.Core.ResourcePack
+    content.vb: Public Function AddItemTexture(key As String, sourcePngPath As String) As ResourcePack
+  overload: ingot.Core.ResourcePack.AddItemTexture*
+  nameWithType.vb: ResourcePack.AddItemTexture(String, String)
+  fullName.vb: ingot.Core.ResourcePack.AddItemTexture(String, String)
+  name.vb: AddItemTexture(String, String)
 - uid: ingot.Core.ResourcePack.Compile(System.String)
   commentId: M:ingot.Core.ResourcePack.Compile(System.String)
   id: Compile(System.String)
@@ -193,7 +287,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Compile
     path: ../ingot.Core/ResourcePack.cs
-    startLine: 32
+    startLine: 75
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -547,6 +641,18 @@ references:
   nameWithType.vb: ResourcePack.New
   fullName.vb: ingot.Core.ResourcePack.New
   name.vb: New
+- uid: ingot.Core.ResourcePack.AddBlockTexture*
+  commentId: Overload:ingot.Core.ResourcePack.AddBlockTexture
+  href: ingot.Core.ResourcePack.html#ingot_Core_ResourcePack_AddBlockTexture_System_String_System_String_
+  name: AddBlockTexture
+  nameWithType: ResourcePack.AddBlockTexture
+  fullName: ingot.Core.ResourcePack.AddBlockTexture
+- uid: ingot.Core.ResourcePack.AddItemTexture*
+  commentId: Overload:ingot.Core.ResourcePack.AddItemTexture
+  href: ingot.Core.ResourcePack.html#ingot_Core_ResourcePack_AddItemTexture_System_String_System_String_
+  name: AddItemTexture
+  nameWithType: ResourcePack.AddItemTexture
+  fullName: ingot.Core.ResourcePack.AddItemTexture
 - uid: ingot.Core.ResourcePack.Compile*
   commentId: Overload:ingot.Core.ResourcePack.Compile
   href: ingot.Core.ResourcePack.html#ingot_Core_ResourcePack_Compile_System_String_
