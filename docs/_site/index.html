@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>This is the HOMEPAGE. | ingot documentation </title>
+      <title>ingot | ingot documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="This is the HOMEPAGE. | ingot documentation ">
+      <meta name="title" content="ingot | ingot documentation ">
       
       
       <link rel="icon" href="favicon.ico">
@@ -71,13 +71,105 @@
         </div>
 
         <article data-uid="">
-<h1 id="this-is-the-homepage">This is the <strong>HOMEPAGE</strong>.</h1>
 
-<p>Refer to <a href="http://daringfireball.net/projects/markdown/">Markdown</a> for how to write markdown files.</p>
-<h2 id="quick-start-notes">Quick Start Notes:</h2>
+
+<p><img src="https://raw.githubusercontent.com/pyroboots/ingot/master/ingot.png" alt="ingot Logo"></p>
+<h1 id="ingot">ingot</h1>
+<p><a href="https://learn.microsoft.com/dotnet/csharp/"><img src="https://img.shields.io/badge/C%23-239120?logo=csharp&amp;logoColor=white" alt="C#"></a>
+<a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/.NET-512BD4?logo=dotnet&amp;logoColor=white" alt=".NET"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a></p>
+<p><strong>A C# framework to programmatically create Minecraft Bedrock Edition packs</strong> - because writing mountains of JSON sucks.</p>
+<h2 id="-features">✨ Features</h2>
+<ul>
+<li><strong>Inheritance-Based, Type-Safe API</strong> - Define items, blocks, entities, and more using clean, strongly-typed C# instead of hand-writing JSON</li>
+<li><strong>Automatic Manifest Generation</strong> - <code>manifest.json</code> files for both behavior packs and resource packs are created automatically</li>
+<li><strong>Full BP + RP Support</strong> - Create behavior packs, resource packs, and linked packs with ease</li>
+<li><strong>Script API Ready</strong> - Built-in support for enabling the Script API in your pack</li>
+<li><strong>Compile-Time Logging</strong> - Get clear, helpful feedback at compile time to avoid debugging in the Minecraft content log</li>
+<li><strong>Extensible &amp; Maintainable</strong> - Designed for large or complex addons where manual JSON becomes painful</li>
+<li><strong>Iterable &amp; Reusable</strong> - Because its code, you can define variable and easily change things project-wide</li>
+</ul>
+<p>Looking for the docs? API Reference <a href="https://pyroboots.github.io/ingot/api/">here</a>!</p>
+<h2 id="-installation">📦 Installation</h2>
+<p><strong>ingot</strong> is currently distributed via source. The easiest way to get started is:</p>
+<h3 id="option-1-add-as-a-project-reference-recommended-for-now">Option 1: Add as a Project Reference (Recommended for now)</h3>
 <ol>
-<li>Add images to the <em>images</em> folder if the file is referencing an image.</li>
+<li>Clone the repository:
+<pre><code class="lang-bash">git clone https://github.com/pyroboots/ingot.git
+</code></pre>
+</li>
+<li>Add a reference to <code>ingot.Core</code> in your .NET project.</li>
 </ol>
+<h3 id="option-2-build-from-source">Option 2: Build from Source</h3>
+<pre><code class="lang-bash">dotnet build ingot.sln
+</code></pre>
+<blockquote>
+<p><strong>Future</strong>: <strong>ingot</strong> will be published to NuGet once it reaches a stable API.</p>
+</blockquote>
+<h2 id="-quick-start">🚀 Quick Start</h2>
+<pre><code class="lang-csharp">// inherit traits to add behaviour
+public class LasagnaItem : Item, IFood, IBlockPlacer
+{
+    public override string Identifier =&gt; &quot;test:lasagna&quot;;
+    public override string Texture =&gt; &quot;lasagna&quot;;
+    public override string DisplayName =&gt; &quot;Lasagna&quot;;
+    
+    // override these behaviours
+    int IFood.Nutrition =&gt; 5;
+    float IFood.SaturationModifier =&gt; 0.9f;
+    string IFood.UsingConvertsTo =&gt; &quot;minecraft:bowl&quot;;
+    
+    dynamic IBlockPlacer.Block =&gt; &quot;test:block_of_dense_lasagna&quot;;
+    bool IBlockPlacer.ReplaceBlockItem =&gt; true;
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+            .AddItem&lt;LasagnaItem&gt;();
+        
+        Pack pack = new()
+        {
+            Description = &quot;Example pack made with ingot&quot;,
+            Name = &quot;ingot example&quot;,
+            BehaviourPack = bp,
+            ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
+            LinkPacks = true,
+            ScriptsEnabled = true,
+        };
+        
+        // and compile the whole pack!
+        pack.Compile(&quot;./&quot;);
+    }
+}
+</code></pre>
+<p>See the <a href="./ingot.Example"><code>ingot.Example</code></a> project for a more complete working example.</p>
+<h2 id="-project-structure">🛠️ Project Structure</h2>
+<table>
+<thead>
+<tr>
+<th>Folder</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ingot.Core</code></td>
+<td>Core API</td>
+</tr>
+<tr>
+<td><code>ingot.Example</code></td>
+<td>Working example of using the library</td>
+</tr>
+<tr>
+<td><code>ingot.Generators</code></td>
+<td>Automatic trait generation from MS Docs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Made with ❤️ for the Minecraft Bedrock addon community.</strong></p>
 
 </article>
 

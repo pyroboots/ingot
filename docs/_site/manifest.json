@@ -1481,20 +1481,50 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "docs/getting-started.md",
+      "source_relative_path": "docs/block-mat-instances.md",
       "output": {
         ".html": {
-          "relative_path": "docs/getting-started.html"
+          "relative_path": "docs/block-mat-instances.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "docs/introduction.md",
+      "source_relative_path": "docs/block-permutations.md",
       "output": {
         ".html": {
-          "relative_path": "docs/introduction.html"
+          "relative_path": "docs/block-permutations.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/block.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/block.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/entity.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/entity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/item.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/item.html"
         }
       },
       "version": ""
@@ -1508,6 +1538,16 @@
         },
         ".html": {
           "relative_path": "docs/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/trait-system.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/trait-system.html"
         }
       },
       "version": ""

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Items | ingot documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Items | ingot documentation ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pyroboots/ingot/blob/master/docs/docs/item.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="ingot documentation">
+            ingot documentation
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="items">Items</h1>
+
+<p>Items are defined by deriving from the abstract <code>Item</code> class. Like blocks, items use a combination of simple virtual properties and the <a href="trait-system.html">trait system</a> to describe their behavior.</p>
+<h2 id="minimal-item">Minimal Item</h2>
+<pre><code class="lang-csharp">using ingot.Core.Content;
+
+public class MyItem : Item
+{
+    public override string Identifier =&gt; &quot;mynamespace:my_item&quot;;
+    public override string Texture =&gt; &quot;my_item_icon&quot;;
+}
+</code></pre>
+<p>Every item <strong>must</strong> implement:</p>
+<ul>
+<li><code>Identifier</code> - full <code>namespace:name</code>.</li>
+<li><code>Texture</code> - the icon texture reference (used inside <code>minecraft:icon</code>).</li>
+</ul>
+<h2 id="key-properties">Key Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FormatVersion</code></td>
+<td><code>Version</code></td>
+<td><code>&quot;1.20.10&quot;</code></td>
+<td>Target format version.</td>
+</tr>
+<tr>
+<td><code>Category</code></td>
+<td><code>CatalogueCategory</code></td>
+<td><code>Items</code></td>
+<td>Which creative inventory tab the item appears in (<code>Construction</code>, <code>Nature</code>, <code>Equipment</code>, <code>Items</code>, or <code>None</code>).</td>
+</tr>
+<tr>
+<td><code>Group</code></td>
+<td><code>string?</code></td>
+<td><code>null</code></td>
+<td>Sub-group inside the chosen category (max 256 characters).</td>
+</tr>
+<tr>
+<td><code>HiddenInCommands</code></td>
+<td><code>bool</code></td>
+<td><code>false</code></td>
+<td>If true, the item cannot be used in commands that take item arguments.</td>
+</tr>
+<tr>
+<td><code>MaxStackSize</code></td>
+<td><code>int</code></td>
+<td><code>64</code></td>
+<td>Shortcut for <code>minecraft:max_stack_size</code>.</td>
+</tr>
+<tr>
+<td><code>DisplayName</code></td>
+<td><code>string</code></td>
+<td><code>Identifier</code></td>
+<td>Shortcut for <code>minecraft:display_name</code>.</td>
+</tr>
+<tr>
+<td><code>AllowOffhand</code></td>
+<td><code>bool</code></td>
+<td><code>false</code></td>
+<td>Shortcut for <code>minecraft:allow_off_hand</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>These are written into the <code>description.menu_category</code> and <code>components</code> sections of the generated item JSON.</p>
+<h2 id="adding-behavior-with-traits">Adding Behavior with Traits</h2>
+<p>The vast majority of interesting item features come from implementing <code>IItemTrait</code> interfaces:</p>
+<pre><code class="lang-csharp">public class LasagnaItem : Item, IFood, IBlockPlacer
+{
+    public override string Identifier =&gt; &quot;test:lasagna&quot;;
+    public override string Texture =&gt; &quot;lasagna&quot;;
+    public override string DisplayName =&gt; &quot;Lasagna&quot;;
+
+    // IFood
+    int IFood.Nutrition =&gt; 5;
+    float IFood.SaturationModifier =&gt; 0.9f;
+    string IFood.UsingConvertsTo =&gt; &quot;minecraft:bowl&quot;;
+
+    // IBlockPlacer
+    dynamic IBlockPlacer.Block =&gt; &quot;test:block_of_dense_lasagna&quot;;
+    bool IBlockPlacer.ReplaceBlockItem =&gt; true;
+}
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Because some traits will have common property names, its recommended to implement the properties explicitly to be more readable, less ambiguous and it also looks prettier.</p>
+</div>
+<p>Common item traits include:</p>
+<ul>
+<li><code>IFood</code> - makes the item edible</li>
+<li><code>IBlockPlacer</code> - places a block when used</li>
+<li><code>IDurability</code> + <code>IDamage</code> - tools/weapons</li>
+<li><code>IDigger</code> - mining speed on different blocks</li>
+<li><code>IThrowable</code>, <code>IProjectile</code>, <code>IShooter</code> - ranged items</li>
+<li><code>IWearable</code>, <code>IEnchantable</code>, <code>IRarity</code>, etc.</li>
+</ul>
+<p>See the <a href="https://pyroboots.github.io/ingot/api/ingot.Core.TraitSystem.Traits.Item.html">Item Traits API reference</a> for the complete list.</p>
+<h2 id="creative-menu-placement">Creative Menu Placement</h2>
+<pre><code class="lang-csharp">public class FancyTool : Item
+{
+    public override string Identifier =&gt; &quot;mynamespace:fancy_tool&quot;;
+    public override string Texture =&gt; &quot;fancy_tool&quot;;
+
+    public override CatalogueCategory Category =&gt; CatalogueCategory.Equipment;
+    public override string? Group =&gt; &quot;itemGroup.name.tools&quot;;   // or your own group
+}
+</code></pre>
+<p>Set <code>Category = CatalogueCategory.None</code> (and optionally <code>HiddenInCommands = true</code>) for purely technical items that should not appear in the creative inventory or be summonable easily.</p>
+<h2 id="compilation--registration">Compilation &amp; Registration</h2>
+<p>Register items exactly like blocks:</p>
+<pre><code class="lang-csharp">BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+    .AddItem&lt;LasagnaItem&gt;()
+    .AddItem&lt;FancyTool&gt;();
+
+// later...
+pack.Compile(&quot;./output&quot;);
+</code></pre>
+<p>This produces <code>bp/items/lasagna.json</code> (filename is the part after the <code>:</code> in the identifier).</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><code>Guid.NewGuid().ToString()</code> is for demonstration purposes. You will want to have a static UUID at runtime for your pack otherwise Minecraft will see every new version of your pack as a completely different pack because the UUIDs change.</p>
+</div>
+<h2 id="full-example">Full Example</h2>
+<p>The example project contains a complete item that uses both food and block placer traits:</p>
+<pre><code class="lang-csharp">public class LasagnaItem : Item, IFood, IBlockPlacer { ... }
+</code></pre>
+<p>See <code>LasagnaItem.cs</code> in the <a href="../ingot.Example"><code>ingot.Example</code></a> project.</p>
+<h2 id="tips--gotchas">Tips &amp; Gotchas</h2>
+<ul>
+<li><code>Texture</code> is required and is the only abstract member besides <code>Identifier</code>.</li>
+<li><code>DisplayName</code> defaults to the raw identifier - always override it for player-facing items.</li>
+<li>Many traits have required (<code>abstract</code>) properties. Leaving them unimplemented will result in <code>null</code> or empty values and compile-time warnings.</li>
+<li>Block placer items (<code>IBlockPlacer</code>) are a very common pattern when you also have a custom block.</li>
+<li>For durability items, you usually combine <code>IDurability</code>, <code>IDamage</code> (or weapon traits), and optionally <code>IDigger</code>.</li>
+<li>Item traits are only discovered on the exact type passed to <code>AddItem&lt;T&gt;</code>. You can use a base item class and have derived classes add more traits.</li>
+<li>The generated item JSON always includes <code>minecraft:icon</code>, <code>minecraft:display_name</code>, <code>minecraft:max_stack_size</code>, and <code>minecraft:allow_off_hand</code> even if you left the defaults.</li>
+</ul>
+<p>For blocks that these items place, see the <a href="block.html">Blocks documentation</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pyroboots/ingot/blob/master/docs/docs/item.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

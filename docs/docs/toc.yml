@@ -1,4 +1,12 @@
-- name: Introduction
-  href: introduction.md
-- name: Getting Started
-  href: getting-started.md
+- name: Trait System
+  href: trait-system.md
+- name: 1. Blocks
+  href: block.md
+- name: 1.1. Block Permutations
+  href: block-permutations.md
+- name: 1.2. Block Material Instances
+  href: block-mat-instances.md
+- name: 2. Items
+  href: item.md
+- name: 3. Entities
+  href: entity.md

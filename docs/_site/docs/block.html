@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Making a Block | ingot documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Making a Block | ingot documentation ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pyroboots/ingot/blob/master/docs/docs/block.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="ingot documentation">
+            ingot documentation
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="making-a-block">Making a Block</h1>
+
+<p>Blocks in ingot are created by deriving from the abstract <code>Block</code> class in <code>ingot.Core.Content.Block</code>. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the <a href="trait-system.html">trait system</a>.</p>
+<h2 id="minimal-block">Minimal Block</h2>
+<pre><code class="lang-csharp">using ingot.Core.Content.Block;
+
+public class MyBlock : Block
+{
+    public override string Identifier =&gt; &quot;mynamespace:my_block&quot;;
+
+    public override MaterialInstances MaterialInstances =&gt; new()
+    {
+        All = new MaterialInstance(&quot;my_block_texture&quot;)
+    };
+}
+</code></pre>
+<p>Every block <strong>must</strong> implement:</p>
+<ul>
+<li><code>Identifier</code> - the full <code>namespace:name</code> string used in Minecraft.</li>
+<li><code>MaterialInstances</code> - defines the textures/rendering for each face of the block (see <a href="block-mat-instances.html">Block Material Instances</a>).</li>
+</ul>
+<h2 id="other-important-members">Other Important Members</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FormatVersion</code></td>
+<td><code>Version</code></td>
+<td>No</td>
+<td>Defaults to <code>&quot;1.20.10&quot;</code>. Controls the minimum format the block JSON targets.</td>
+</tr>
+<tr>
+<td><code>States</code></td>
+<td><code>Dictionary&lt;string, dynamic[]&gt;</code></td>
+<td>No</td>
+<td>Custom block states (see below).</td>
+</tr>
+<tr>
+<td><code>Permutations</code></td>
+<td><code>List&lt;BlockPermutation&gt;</code></td>
+<td>No</td>
+<td>Conditional variants of the block (see <a href="block-permutations.html">Block Permutations</a>).</td>
+</tr>
+<tr>
+<td><code>DisplayName</code></td>
+<td><code>string?</code></td>
+<td>No</td>
+<td>Shortcut for <code>minecraft:display_name</code>.</td>
+</tr>
+<tr>
+<td><code>Friction</code></td>
+<td><code>float?</code></td>
+<td>No</td>
+<td>Shortcut for <code>minecraft:friction</code>.</td>
+</tr>
+<tr>
+<td><code>LightEmission</code></td>
+<td><code>int?</code></td>
+<td>No</td>
+<td>Shortcut for <code>minecraft:light_emission</code> (0–15).</td>
+</tr>
+<tr>
+<td><code>LightDampening</code></td>
+<td><code>int?</code></td>
+<td>No</td>
+<td>Shortcut for <code>minecraft:light_dampening</code>.</td>
+</tr>
+<tr>
+<td><code>Replaceable</code></td>
+<td><code>bool?</code></td>
+<td>No</td>
+<td>Shortcut for <code>minecraft:replaceable</code>.</td>
+</tr>
+<tr>
+<td><code>Loot</code></td>
+<td><code>string?</code></td>
+<td>No</td>
+<td>Loot table identifier for <code>minecraft:loot</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>All of the shortcut properties are written directly into the <code>components</code> object of the generated <code>minecraft:block</code> JSON.</p>
+<h2 id="block-states">Block States</h2>
+<p>Custom states let you drive permutations and Molang queries. Declare them by overriding <code>States</code>:</p>
+<pre><code class="lang-csharp">public override Dictionary&lt;string, dynamic[]&gt; States =&gt; new()
+{
+    { &quot;mynamespace:power_level&quot;, [0, 1, 2, 3, 4] },
+    { &quot;mynamespace:is_active&quot;, [true, false] }
+};
+</code></pre>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>Although the state dictionary's value type is <code>dynamic</code>, Minecraft will only accept <code>int</code>, <code>float</code>, <code>bool</code> and <code>string</code>. Make sure your array is one of those types.</p>
+</div>
+<p><strong>Important notes</strong>:</p>
+<ul>
+<li>Minecraft limits a state to have <strong>16</strong> possible states. <strong>ingot</strong> will throw a waring for you if a state exceeds that limit.</li>
+<li>State names should be fully qualified (<code>namespace:state_name</code>) for best compatibility.</li>
+</ul>
+<h2 id="adding-behavior-with-traits">Adding Behavior with Traits</h2>
+<p>Most block functionality comes from implementing <a href="trait-system.html">traits</a>:</p>
+<pre><code class="lang-csharp">public class DenseLasagnaBlock : Block, 
+    IDestructibleByMining, 
+    IFlammable, 
+    ITick,
+    IGeometry
+{
+    public override string Identifier =&gt; &quot;test:block_of_dense_lasagna&quot;;
+
+    public override MaterialInstances MaterialInstances =&gt; new()
+    {
+        All = new MaterialInstance(&quot;block_of_dense_lasagna&quot;, MaterialInstance.RenderMethods.AlphaTest)
+    };
+
+    public override Dictionary&lt;string, dynamic[]&gt; States =&gt; new()
+    {
+        { &quot;test:radioactive&quot;, [true, false] }
+    };
+
+    // IDestructibleByMining (abstract property requires implementation)
+    dynamic? IDestructibleByMining.ItemSpecificSpeeds =&gt; null;
+    float IDestructibleByMining.SecondsToDestroy =&gt; 1.5f;
+
+    // IFlammable (all virtual, only override what you need)
+    int IFlammable.CatchChanceModifier =&gt; 15;
+    int IFlammable.DestroyChanceModifier =&gt; 30;
+
+    // ITick
+    int[] ITick.IntervalRange =&gt; [20, 40];
+    bool ITick.Looping =&gt; true;
+
+    // IGeometry (some abstract)
+    bool IGeometry.BoneVisibility =&gt; false;
+    string IGeometry.Culling =&gt; &quot;&quot;;
+    string IGeometry.Identifier =&gt; &quot;geometry.lasagna_block&quot;;  // careful with name clashes!
+    string IGeometry.UvLock =&gt; &quot;&quot;;
+}
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Because some traits will have common property names, its recommended to implement the properties explicitly to be more readable, less ambiguous and it also looks prettier.</p>
+</div>
+<h2 id="permutations">Permutations</h2>
+<p>Permutations allow different components/traits to apply only when a Molang condition is true. See the dedicated <a href="block-permutations.html">Block Permutations</a> page.</p>
+<h2 id="compilation">Compilation</h2>
+<p>You rarely call <code>Block.Compile&lt;T&gt;()</code> directly. Instead you register blocks with a <code>BehaviourPack</code>:</p>
+<pre><code class="lang-csharp">BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+    .AddBlock&lt;DenseLasagnaBlock&gt;()
+    .AddBlock&lt;AnotherBlock&gt;();
+
+Pack pack = new()
+{
+    Name = &quot;My Addon&quot;,
+    Description = &quot;Blocks made with ingot&quot;,
+    BehaviourPack = bp,
+    ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
+    LinkPacks = true
+};
+
+pack.Compile(&quot;./output&quot;);
+</code></pre>
+<p>This writes <code>bp/blocks/my_block.json</code> (and the manifest) for you.</p>
+<p>The generated JSON follows the standard <code>minecraft:block</code> schema with a <code>description</code>, <code>states</code>, <code>permutations</code> array, and <code>components</code> object containing all your shortcuts + trait components.</p>
+<h2 id="full-example">Full Example</h2>
+<p>See <code>DenseLasagnaBlock.cs</code> in the <a href="../ingot.Example"><code>ingot.Example</code></a> project for a working block that combines states, permutations, material instances, and the trait system.</p>
+<h2 id="tips--gotchas">Tips &amp; Gotchas</h2>
+<ul>
+<li>Always provide a <code>MaterialInstances</code> - it is abstract.</li>
+<li>Block state values are serialized verbatim; make sure your Molang conditions in permutations match the exact values and state names.</li>
+<li>Many traits have a mixture of required (<code>abstract</code>) and optional (<code>virtual</code>) members - the compiler will happily emit null/empty values for missing abstracts, but you will get warnings.</li>
+<li>Traits are discovered only on the concrete type you pass to <code>AddBlock&lt;T&gt;</code>. Inheritance of your own block base classes works as long as the interfaces are implemented somewhere in the hierarchy.</li>
+<li>For complex blocks, prefer many small focused traits over one giant class.</li>
+</ul>
+<p>Next: learn about <a href="block-permutations.html">block permutations</a> and <a href="block-mat-instances.html">material instances</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pyroboots/ingot/blob/master/docs/docs/block.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

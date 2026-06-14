@@ -1,0 +1,125 @@
+# Items
+
+Items are defined by deriving from the abstract `Item` class. Like blocks, items use a combination of simple virtual properties and the [trait system](trait-system.md) to describe their behavior.
+
+## Minimal Item
+
+```csharp
+using ingot.Core.Content;
+
+public class MyItem : Item
+{
+    public override string Identifier => "mynamespace:my_item";
+    public override string Texture => "my_item_icon";
+}
+```
+
+Every item **must** implement:
+
+- `Identifier` - full `namespace:name`.
+- `Texture` - the icon texture reference (used inside `minecraft:icon`).
+
+## Key Properties
+
+| Property            | Type               | Default          | Description |
+|---------------------|--------------------|------------------|-----------|
+| `FormatVersion`     | `Version`          | `"1.20.10"`      | Target format version. |
+| `Category`          | `CatalogueCategory`| `Items`          | Which creative inventory tab the item appears in (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
+| `Group`             | `string?`          | `null`           | Sub-group inside the chosen category (max 256 characters). |
+| `HiddenInCommands`  | `bool`             | `false`          | If true, the item cannot be used in commands that take item arguments. |
+| `MaxStackSize`      | `int`              | `64`             | Shortcut for `minecraft:max_stack_size`. |
+| `DisplayName`       | `string`           | `Identifier`     | Shortcut for `minecraft:display_name`. |
+| `AllowOffhand`      | `bool`             | `false`          | Shortcut for `minecraft:allow_off_hand`. |
+
+These are written into the `description.menu_category` and `components` sections of the generated item JSON.
+
+## Adding Behavior with Traits
+
+The vast majority of interesting item features come from implementing `IItemTrait` interfaces:
+
+```csharp
+public class LasagnaItem : Item, IFood, IBlockPlacer
+{
+    public override string Identifier => "test:lasagna";
+    public override string Texture => "lasagna";
+    public override string DisplayName => "Lasagna";
+
+    // IFood
+    int IFood.Nutrition => 5;
+    float IFood.SaturationModifier => 0.9f;
+    string IFood.UsingConvertsTo => "minecraft:bowl";
+
+    // IBlockPlacer
+    dynamic IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    bool IBlockPlacer.ReplaceBlockItem => true;
+}
+```
+
+> [!TIP]
+> Because some traits will have common property names, its recommended to implement the properties explicitly to be more readable, less ambiguous and it also looks prettier.
+
+Common item traits include:
+
+- `IFood` - makes the item edible
+- `IBlockPlacer` - places a block when used
+- `IDurability` + `IDamage` - tools/weapons
+- `IDigger` - mining speed on different blocks
+- `IThrowable`, `IProjectile`, `IShooter` - ranged items
+- `IWearable`, `IEnchantable`, `IRarity`, etc.
+
+See the [Item Traits API reference](https://pyroboots.github.io/ingot/api/ingot.Core.TraitSystem.Traits.Item.html) for the complete list.
+
+## Creative Menu Placement
+
+```csharp
+public class FancyTool : Item
+{
+    public override string Identifier => "mynamespace:fancy_tool";
+    public override string Texture => "fancy_tool";
+
+    public override CatalogueCategory Category => CatalogueCategory.Equipment;
+    public override string? Group => "itemGroup.name.tools";   // or your own group
+}
+```
+
+Set `Category = CatalogueCategory.None` (and optionally `HiddenInCommands = true`) for purely technical items that should not appear in the creative inventory or be summonable easily.
+
+## Compilation & Registration
+
+Register items exactly like blocks:
+
+```csharp
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+    .AddItem<LasagnaItem>()
+    .AddItem<FancyTool>();
+
+// later...
+pack.Compile("./output");
+```
+
+This produces `bp/items/lasagna.json` (filename is the part after the `:` in the identifier).
+
+> [!IMPORTANT]
+> `Guid.NewGuid().ToString()` is for demonstration purposes. You will want to have a static UUID at runtime for your pack otherwise Minecraft will see every new version of your pack as a completely different pack because the UUIDs change.
+
+## Full Example
+
+The example project contains a complete item that uses both food and block placer traits:
+
+```csharp
+public class LasagnaItem : Item, IFood, IBlockPlacer { ... }
+```
+
+See `LasagnaItem.cs` in the [`ingot.Example`](../ingot.Example) project.
+
+## Tips & Gotchas
+
+- `Texture` is required and is the only abstract member besides `Identifier`.
+- `DisplayName` defaults to the raw identifier - always override it for player-facing items.
+- Many traits have required (`abstract`) properties. Leaving them unimplemented will result in `null` or empty values and compile-time warnings.
+- Block placer items (`IBlockPlacer`) are a very common pattern when you also have a custom block.
+- For durability items, you usually combine `IDurability`, `IDamage` (or weapon traits), and optionally `IDigger`.
+- Item traits are only discovered on the exact type passed to `AddItem<T>`. You can use a base item class and have derived classes add more traits.
+- The generated item JSON always includes `minecraft:icon`, `minecraft:display_name`, `minecraft:max_stack_size`, and `minecraft:allow_off_hand` even if you left the defaults.
+
+For blocks that these items place, see the [Blocks documentation](block.md).

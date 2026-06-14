@@ -30,7 +30,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: BehaviourPack
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 13
+    startLine: 9
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -67,7 +67,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Uuid
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 18
+    startLine: 14
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -96,7 +96,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: BehaviourPackVersion
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 22
+    startLine: 18
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -125,7 +125,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: .ctor
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 23
+    startLine: 19
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -159,7 +159,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Create
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 33
+    startLine: 29
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -199,7 +199,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Entities
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 38
+    startLine: 34
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -228,7 +228,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Blocks
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 42
+    startLine: 38
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -257,7 +257,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Items
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 46
+    startLine: 42
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -286,7 +286,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: AddEntity
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 52
+    startLine: 48
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -322,7 +322,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: AddBlock
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 62
+    startLine: 58
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -358,7 +358,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: AddItem
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 72
+    startLine: 68
   assemblies:
   - ingot.Core
   namespace: ingot.Core
@@ -394,7 +394,7 @@ items:
       repo: https://github.com/pyroboots/ingot.git
     id: Compile
     path: ../ingot.Core/BehaviourPack.cs
-    startLine: 82
+    startLine: 78
   assemblies:
   - ingot.Core
   namespace: ingot.Core

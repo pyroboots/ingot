@@ -1,2 +1,2 @@
 
-{"items":[{"name":"Introduction","href":"introduction.html","topicHref":"introduction.html"},{"name":"Getting Started","href":"getting-started.html","topicHref":"getting-started.html"}],"pdf":false}
+{"items":[{"name":"Trait System","href":"trait-system.html","topicHref":"trait-system.html"},{"name":"1. Blocks","href":"block.html","topicHref":"block.html"},{"name":"1.1. Block Permutations","href":"block-permutations.html","topicHref":"block-permutations.html"},{"name":"1.2. Block Material Instances","href":"block-mat-instances.html","topicHref":"block-mat-instances.html"},{"name":"2. Items","href":"item.html","topicHref":"item.html"},{"name":"3. Entities","href":"entity.html","topicHref":"entity.html"}],"pdf":false}
