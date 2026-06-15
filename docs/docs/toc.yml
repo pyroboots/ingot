@@ -10,5 +10,7 @@
   href: block-mat-instances.md
 - name: 2. Items
   href: item.md
+- name: 2.1. Recipes
+  href: recipe.md
 - name: 3. Entities
   href: entity.md

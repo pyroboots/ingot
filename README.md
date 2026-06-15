@@ -41,7 +41,10 @@ dotnet build ingot.sln
 ## 🚀 Quick Start
 
 ```csharp
+using ingot.Core;
+using ingot.Core.Behaviour;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Item;
 
 // inherit traits to add behaviour
 public class LasagnaItem : Item, IFood, IBlockPlacer
@@ -63,11 +66,13 @@ class Program
 {
     static void Main(string[] args)
     {
-        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
-            .AddItem<LasagnaItem>();
+        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
+        Identifier lasagna = bp.AddItem<LasagnaItem>();
+        bp.AddBlock<DenseLasagnaBlock>();
         
         ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-            .AddItemTexture("lasagna", "assets/lasagna.png");
+            .AddItemTexture("lasagna", "assets/lasagna.png")
+            .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png");
         
         Pack pack = new()
         {
@@ -85,7 +90,7 @@ class Program
 }
 ```
 
-See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, textures, and the full resource pack side. The new [Resource Packs & Textures](docs/resource-packs.md) guide explains how to supply assets and generate the atlas files.
+See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, recipes, textures, and the full resource pack side. See the [Resource Packs & Textures](docs/docs/resource-packs.md) and [Recipes](docs/docs/recipe.md) guides for more detail.
 
 ## 🛠️ Project Structure
 

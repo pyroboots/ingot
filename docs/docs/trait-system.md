@@ -9,6 +9,9 @@ Most traits are automatically generated from the official Minecraft Bedrock docu
 To add behavior to a block or item, simply have your class implement the desired trait interfaces:
 
 ```csharp
+using ingot.Core.Behaviour.Block;
+using ingot.Core.TraitSystem.Traits.Block;
+
 public class MyBlock : Block, IDestructibleByMining, IGeometry, ITick
 {
     // ... required members
@@ -16,6 +19,9 @@ public class MyBlock : Block, IDestructibleByMining, IGeometry, ITick
 ```
 
 ```csharp
+using ingot.Core.Behaviour;
+using ingot.Core.TraitSystem.Traits.Item;
+
 public class MyItem : Item, IFood, IDurability
 {
     // ...
@@ -29,7 +35,9 @@ Traits can also be applied to [block permutations](block-permutations.md) so tha
 Trait interfaces expose properties. Because a class may implement many traits, and to avoid name clashes with properties on base classes, **explicit interface implementation** is the recommended and most common pattern:
 
 ```csharp
+using ingot.Core.Behaviour;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Item;
 
 public class LasagnaItem : Item, IFood, IBlockPlacer
 {
@@ -58,7 +66,7 @@ public float SaturationModifier => 0.9f;
 
 ## How the Trait System Works
 
-1. When `Block.Compile<T>()`, `Item.Compile<T>()`, or `BehaviourPack` compilation runs, `TraitSystem.GetTraits(...)` is called on the concrete type.
+1. When `Block.Compile(Type)`, `Item.Compile(Type)`, or `BehaviourPack` compilation runs, `TraitSystem.GetTraits(...)` is called on the concrete type.
 2. It enumerates all interfaces implemented by the type.
 3. For each interface that carries a `[Trait("minecraft:xxx", TraitType.Block/Item)]` attribute, a `Trait` entry is created.
 4. Every property on that interface decorated with `[TraitProperty]` (or `[TraitProperty("path")]`) is inspected.

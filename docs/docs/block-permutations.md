@@ -28,17 +28,22 @@ A permutation can provide its own versions of the same shortcuts available on `B
 - `Replaceable`
 - `Loot`
 - `MaterialInstances` (completely replace the block's materials under this condition)
+- `Tags` (block tags applied only when this condition is true)
 
 In addition, any [block trait](trait-system.md) can be implemented directly on the permutation class. The trait components will only be written when the condition matches.
 
 ```csharp
+using ingot.Core.Behaviour.Block;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Block;
 
 public class GlowyPermutation : BlockPermutation, IGeometry
 {
     public override string Condition => "q.get_block_state('mynamespace:mode') == 2";
 
     public override int? LightEmission => 15;
+
+    public override string[] Tags => ["glow_stone"];
 
     public override MaterialInstances? MaterialInstances => new()
     {
@@ -52,6 +57,8 @@ public class GlowyPermutation : BlockPermutation, IGeometry
     string IGeometry.UvLock => "true";
 }
 ```
+
+Tags on a permutation compile the same way as on a base block - each entry becomes an empty `tag:<name>` component inside the permutation's `components` object.
 
 ## Registering Permutations
 
@@ -82,7 +89,7 @@ public class MyBlock : Block
 - Permutations are evaluated in the order they appear in the JSON.
 - The first permutation whose condition is true "wins" for the properties it defines.
 - Properties not mentioned in a matching permutation fall back to the base block definition.
-- You can have as many permutations as you like; the compiler will warn you if state combinations exceed 16.
+- You can have as many permutations as you like. The compiler warns when any single block state declares more than 16 possible values.
 
 ## Condition Examples
 
@@ -115,12 +122,13 @@ public class DenseLasagnaGlowyPermutation : BlockPermutation
 }
 ```
 
-See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../ingot.Example) project.
+See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project (`DenseLasagnaGlowyPermutation` is defined in the same file).
 
 ## Tips
 
 - Keep permutations focused. A permutation should only contain the deltas (light level, different geometry, extra destruction particles, etc.).
 - You can implement traits on permutations that the base block does **not** implement.
 - Material instances defined on a permutation completely replace the base block's `minecraft:material_instances` for that condition.
+- Tags on a permutation only apply while the condition is true - useful for state-dependent tool requirements or mining behaviour.
 - If you need different loot tables or different destructible values only under certain states, put those on the permutation via shortcuts or traits.
 - Remember that the base block's components are still present; permutations are additive/override, not a full replacement of the block definition.

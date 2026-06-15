@@ -13,9 +13,10 @@ Create a `ResourcePack` the same way you create a `BehaviourPack`:
 
 ```csharp
 using ingot.Core;
+using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
-    .AddBlock<MyBlock>();
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
+Identifier myBlock = bp.AddBlock<MyBlock>();
 
 ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
     .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png")
@@ -40,7 +41,10 @@ Key members:
 - `AddItemTexture(string key, string sourcePngPath)` - registers an icon that will be copied to `textures/items/` and referenced from `item_texture.json`.
 - `Compile(string dir)` - normally called for you by `Pack.Compile`.
 
-Both `Add*` methods are fluent and return the `ResourcePack` so you can chain calls. The `key` must exactly match the texture string you use on the behaviour side.
+`AddBlockTexture` and `AddItemTexture` return the `ResourcePack` so you can chain texture registrations. The `key` must exactly match the texture string you use on the behaviour side.
+
+> [!NOTE]
+> `BehaviourPack` registration works differently: `AddEntity`, `AddBlock`, `AddItem`, and `AddRecipe` each return an `Identifier` (not the pack itself), so you can reuse registered content IDs without duplicating strings.
 
 ## Texture Keys - the Bridge Between Behaviour and Resources
 
@@ -110,10 +114,11 @@ Here is a minimal complete example (the `ingot.Example` project contains a riche
 
 ```csharp
 using ingot.Core;
+using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
-    .AddBlock<MyBlock>()
-    .AddItem<MyItem>();
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
+Identifier myBlock = bp.AddBlock<MyBlock>();
+Identifier myItem = bp.AddItem<MyItem>();
 
 ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
     .AddBlockTexture("my_block", "assets/my_block.png")
@@ -133,7 +138,7 @@ pack.Compile("./output");
 
 After compilation you will have a ready-to-use `bp/` folder and `rp/` folder (plus `manifest.json` files that cross-link them when `LinkPacks` is true).
 
-See the [`ingot.Example`](../ingot.Example) project for a working end-to-end sample that includes states, permutations, traits, and both block and item textures.
+See the [`ingot.Example`](../../ingot.Example) project for a working end-to-end sample that includes blocks, items, recipes, states, permutations, and both block and item textures.
 
 ## Current Scope and Limitations
 

@@ -1,6 +1,6 @@
 # Entities
 
-Entities in ingot are defined by deriving from the abstract `Entity` class in `ingot.Core.Behaviour`. Entity support is still early — compilation produces a minimal `minecraft:entity` JSON shell with no components or traits yet.
+Entities in ingot are defined by deriving from the abstract `Entity` class in `ingot.Core.Behaviour`. Entity support is still early - compilation produces a minimal `minecraft:entity` JSON shell with no components or traits yet.
 
 ## Minimal Entity
 
@@ -30,9 +30,10 @@ Register entities with a `BehaviourPack`:
 
 ```csharp
 using ingot.Core;
+using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
-    .AddEntity<MyEntity>();
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
+Identifier myEntity = bp.AddEntity<MyEntity>();
 
 Pack pack = new()
 {
@@ -45,6 +46,8 @@ Pack pack = new()
 
 pack.Compile("./output");
 ```
+
+`AddEntity<T>()` returns the registered entity's `Identifier` for reuse elsewhere in your project.
 
 This writes `bp/entities/my_entity.json` (filename is the part after the `:` in the identifier).
 

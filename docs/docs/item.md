@@ -25,7 +25,7 @@ Every item **must** implement:
 | Property            | Type               | Default          | Description |
 |---------------------|--------------------|------------------|-----------|
 | `FormatVersion`     | `Version`          | `"1.20.10"`      | Target format version. |
-| `Category`          | `CatalogueCategory`| `Items`          | Which creative inventory tab the item appears in (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
+| `Category`          | `Item.CatalogueCategory`| `Items`     | Which creative inventory tab the item appears in (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
 | `Group`             | `string?`          | `null`           | Sub-group inside the chosen category (max 256 characters). |
 | `HiddenInCommands`  | `bool`             | `false`          | If true, the item cannot be used in commands that take item arguments. |
 | `MaxStackSize`      | `int`              | `64`             | Shortcut for `minecraft:max_stack_size`. |
@@ -78,12 +78,12 @@ public class FancyTool : Item
     public override Identifier Identifier => new("mynamespace:fancy_tool");
     public override string Texture => "fancy_tool";
 
-    public override CatalogueCategory Category => CatalogueCategory.Equipment;
+    public override Item.CatalogueCategory Category => Item.CatalogueCategory.Equipment;
     public override string? Group => "itemGroup.name.tools";   // or your own group
 }
 ```
 
-Set `Category = CatalogueCategory.None` (and optionally `HiddenInCommands = true`) for purely technical items that should not appear in the creative inventory or be summonable easily.
+Set `Category = Item.CatalogueCategory.None` (and optionally `HiddenInCommands = true`) for purely technical items that should not appear in the creative inventory or be summonable easily.
 
 ## Compilation & Registration
 
@@ -91,10 +91,11 @@ Register items with a `BehaviourPack` and provide their icons via a `ResourcePac
 
 ```csharp
 using ingot.Core;
+using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
-    .AddItem<LasagnaItem>()
-    .AddItem<FancyTool>();
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
+Identifier lasagna = bp.AddItem<LasagnaItem>();
+Identifier fancyTool = bp.AddItem<FancyTool>();
 
 ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
     .AddItemTexture("lasagna", "assets/lasagna.png")
@@ -112,6 +113,8 @@ Pack pack = new()
 pack.Compile("./output");
 ```
 
+Each `AddItem<T>()` call returns the registered item's `Identifier`, so you can capture it for cross-references (recipes, loot tables, scripts, etc.) without repeating string literals.
+
 This produces `bp/items/lasagna.json` (filename is the part after the `:` in the identifier) and the corresponding resources under `rp/textures/items/` plus `rp/textures/item_texture.json`.
 
 See the [Resource Packs & Textures](resource-packs.md) guide for more on supplying assets and the texture key contract.
@@ -127,7 +130,7 @@ The example project contains a complete item that uses both food and block place
 public class LasagnaItem : Item, IFood, IBlockPlacer { ... }
 ```
 
-See `LasagnaItem.cs` in the [`ingot.Example`](../ingot.Example) project.
+See `LasagnaItem.cs` in the [`ingot.Example`](../../ingot.Example) project.
 
 ## Tips & Gotchas
 
@@ -139,4 +142,4 @@ See `LasagnaItem.cs` in the [`ingot.Example`](../ingot.Example) project.
 - Item traits are only discovered on the exact type passed to `AddItem<T>`. You can use a base item class and have derived classes add more traits.
 - The generated item JSON always includes `minecraft:icon`, `minecraft:display_name`, `minecraft:max_stack_size`, and `minecraft:allow_off_hand` even if you left the defaults.
 
-For blocks that these items place, see the [Blocks documentation](block.md).
+For blocks that these items place, see the [Blocks documentation](block.md). To craft items in a crafting table, see [Recipes](recipe.md).

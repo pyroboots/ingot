@@ -43,6 +43,11 @@ public abstract class BlockPermutation
     /// Texture and materials for the <see cref="BlockPermutation"/>. Shortcut for the <c>minecraft:material_instances</c> component
     /// </summary>
     public virtual MaterialInstances? MaterialInstances => null;
+    
+    /// <summary>
+    /// Array of block tags that can enable / expand vanilla functionality
+    /// </summary>
+    public virtual string[] Tags => [];
 
     /// <summary>
     /// Compiles the <typeparamref name="TBlockPermutation"/> to JSON
@@ -61,12 +66,18 @@ public abstract class BlockPermutation
         json.Property("condition", permutation.Condition);
         json.Object("components", () =>
         {
+            foreach (string t in permutation.Tags) 
+                json.Object($"tag:{t}", () => {});
+            
             json.Property("minecraft:display_name", permutation.DisplayName);
             json.Property("minecraft:friction", permutation.Friction);
             json.Property("minecraft:light_emission", permutation.LightEmission);
             json.Property("minecraft:light_dampening", permutation.LightDampening);
             json.Property("minecraft:replaceable", permutation.Replaceable);
             json.Property("minecraft:loot", permutation.Loot);
+            
+            if (permutation.MaterialInstances is not null)
+                permutation.MaterialInstances.Value.Compile(ref json.Writer);
             
             foreach (Trait trait in traits)
                 trait.Compile(ref json.Writer);

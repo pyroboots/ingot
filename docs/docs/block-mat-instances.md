@@ -176,7 +176,7 @@ When you compile, ingot will:
 }
 ```
 
-The same key can be used from `BlockPermutation.MaterialInstances` - the permutation will simply point at a different texture key when its condition is true.
+The same key workflow applies to permutations - register any alternate texture keys with `ResourcePack.AddBlockTexture`, then reference them from the permutation's `MaterialInstances`.
 
 See the dedicated [Resource Packs & Textures](resource-packs.md) guide for recommended project layout for your PNGs, how item textures work, limitations, and more.
 
@@ -184,7 +184,7 @@ See the dedicated [Resource Packs & Textures](resource-packs.md) guide for recom
 
 - Always set at least `All` or all six faces. An empty `MaterialInstances` will still emit the component but with no textures (usually not what you want).
 - Per-face materials are useful for things like logs (bark on sides, cut ends on top/bottom), furnaces, etc.
-- Changing material instances on a permutation is a very cheap way to have "lit" vs "unlit" appearances without duplicating the whole block.
+- Changing material instances on a permutation is a cheap way to have "lit" vs "unlit" appearances without duplicating the whole block.
 - `RenderMethod` names are converted to snake_case (`AlphaTest` → `alpha_test`).
 
 See also: [Making a Block](block.md), [Resource Packs & Textures](resource-packs.md), and the example `DenseLasagnaBlock`.

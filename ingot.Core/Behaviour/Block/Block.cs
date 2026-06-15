@@ -120,6 +120,9 @@ public abstract class Block : IConcreteCompilable<Block>
             CompilerState.Push("components");
             json.Object("components", () =>
             {
+                foreach (string t in inst.Tags) 
+                    json.Object($"tag:{t}", () => {});
+                
                 json.Property("minecraft:display_name", inst.DisplayName);
                 json.Property("minecraft:friction", inst.Friction);
                 json.Property("minecraft:light_emission", inst.LightEmission);

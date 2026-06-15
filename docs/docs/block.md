@@ -31,6 +31,7 @@ Every block **must** implement:
 | `FormatVersion`     | `Version`                   | No       | Defaults to `"1.20.10"`. Controls the minimum format the block JSON targets. |
 | `States`            | `Dictionary<string, dynamic[]>` | No   | Custom block states (see below). |
 | `Permutations`      | `List<BlockPermutation>`    | No       | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
+| `Tags`              | `string[]`                  | No       | Block tags written as empty `tag:<name>` components. Defaults to an empty array. |
 | `DisplayName`       | `string?`                   | No       | Shortcut for `minecraft:display_name`. |
 | `Friction`          | `float?`                    | No       | Shortcut for `minecraft:friction`. |
 | `LightEmission`     | `int?`                      | No       | Shortcut for `minecraft:light_emission` (0-15). |
@@ -39,6 +40,27 @@ Every block **must** implement:
 | `Loot`              | `string?`                   | No       | Loot table identifier for `minecraft:loot`. |
 
 All of the shortcut properties are written directly into the `components` object of the generated `minecraft:block` JSON.
+
+## Block Tags
+
+Override `Tags` to opt into vanilla block tag behaviour (mining speed, tool requirements, etc.):
+
+```csharp
+public override string[] Tags =>
+[
+    "stone",
+    "diamond_pick_diggable"
+];
+```
+
+Each entry is compiled as an empty component keyed `tag:<name>`:
+
+```json
+"tag:stone": {},
+"tag:diamond_pick_diggable": {}
+```
+
+Permutations can also declare their own `Tags` - see [Block Permutations](block-permutations.md).
 
 ## Block States
 
@@ -64,24 +86,17 @@ public override Dictionary<string, dynamic[]> States => new()
 Most block functionality comes from implementing [traits](trait-system.md):
 
 ```csharp
+using ingot.Core.Behaviour.Block;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Block;
 
-public class DenseLasagnaBlock : Block, 
-    IDestructibleByMining, 
-    IFlammable, 
-    ITick,
-    IGeometry
+public class TickableOreBlock : Block, IDestructibleByMining, IFlammable, ITick
 {
-    public override Identifier Identifier => new("test:block_of_dense_lasagna");
+    public override Identifier Identifier => new("mynamespace:tickable_ore");
 
     public override MaterialInstances MaterialInstances => new()
     {
-        All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest)
-    };
-
-    public override Dictionary<string, dynamic[]> States => new()
-    {
-        { "test:radioactive", [true, false] }
+        All = new MaterialInstance("tickable_ore", MaterialInstance.RenderMethods.Opaque)
     };
 
     // IDestructibleByMining (abstract property requires implementation)
@@ -95,12 +110,6 @@ public class DenseLasagnaBlock : Block,
     // ITick
     int[] ITick.IntervalRange => [20, 40];
     bool ITick.Looping => true;
-
-    // IGeometry (some abstract)
-    bool IGeometry.BoneVisibility => false;
-    string IGeometry.Culling => "";
-    Identifier IGeometry.Identifier => new("geometry.lasagna_block");  // careful with name clashes!
-    string IGeometry.UvLock => "";
 }
 ```
 
@@ -113,14 +122,15 @@ Permutations allow different components/traits to apply only when a Molang condi
 
 ## Compilation
 
-You rarely call `Block.Compile<T>()` directly. Instead you register blocks with a `BehaviourPack` and supply the visual assets via a `ResourcePack`:
+You rarely call `Block.Compile(Type)` directly. Instead you register blocks with a `BehaviourPack` and supply the visual assets via a `ResourcePack`:
 
 ```csharp
 using ingot.Core;
+using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
-    .AddBlock<DenseLasagnaBlock>()
-    .AddBlock<AnotherBlock>();
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
+Identifier denseLasagna = bp.AddBlock<DenseLasagnaBlock>();
+bp.AddBlock<AnotherBlock>();
 
 ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
     .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png");
@@ -137,7 +147,9 @@ Pack pack = new()
 pack.Compile("./output");
 ```
 
-This writes the full behaviour pack under `bp/` (including `bp/blocks/test:block_of_dense_lasagna.json`) and the resource pack under `rp/` (including copied textures and the generated `terrain_texture.json` that maps your texture keys).
+Each `AddBlock<T>()` call returns the registered block's `Identifier` for reuse elsewhere in your project.
+
+This writes the full behaviour pack under `bp/` (including `bp/blocks/block_of_dense_lasagna.json` - the filename is the part after the `:` in the identifier) and the resource pack under `rp/` (including copied textures and the generated `terrain_texture.json` that maps your texture keys).
 
 See the [Resource Packs & Textures](resource-packs.md) guide for details on asset organization, the generated atlas files, and how texture keys bridge behaviour and resources.
 
@@ -146,7 +158,7 @@ See the [Resource Packs & Textures](resource-packs.md) guide for details on asse
 
 ## Full Example
 
-See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../ingot.Example) project for a working block that combines states, permutations, and material instances.
+See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project for a working block that combines states, permutations, and material instances.
 
 ## Tips & Gotchas
 
