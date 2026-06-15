@@ -115,7 +115,7 @@ BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
     .AddBlock<MyBlock>()
     .AddItem<MyItem>();
 
-ResourcePack rp = Resource–Pack.Create(Guid.NewGuid().ToString())
+ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
     .AddBlockTexture("my_block", "assets/my_block.png")
     .AddItemTexture("my_item", "assets/my_item.png");
 

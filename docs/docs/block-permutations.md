@@ -32,6 +32,8 @@ A permutation can provide its own versions of the same shortcuts available on `B
 In addition, any [block trait](trait-system.md) can be implemented directly on the permutation class. The trait components will only be written when the condition matches.
 
 ```csharp
+using ingot.Core.Common;
+
 public class GlowyPermutation : BlockPermutation, IGeometry
 {
     public override string Condition => "q.get_block_state('mynamespace:mode') == 2";
@@ -46,7 +48,7 @@ public class GlowyPermutation : BlockPermutation, IGeometry
     // IGeometry via trait
     bool IGeometry.BoneVisibility => true;
     string IGeometry.Culling => "my_culling";
-    string IGeometry.Identifier => "geometry.my_glowy_block";
+    Identifier IGeometry.Identifier => new("geometry.my_glowy_block");
     string IGeometry.UvLock => "true";
 }
 ```
@@ -56,9 +58,11 @@ public class GlowyPermutation : BlockPermutation, IGeometry
 Return them from the `Permutations` property on your block:
 
 ```csharp
+using ingot.Core.Common;
+
 public class MyBlock : Block
 {
-    public override string Identifier => "mynamespace:my_block";
+    public override Identifier Identifier => new("mynamespace:my_block");
 
     public override MaterialInstances MaterialInstances => new()
     {

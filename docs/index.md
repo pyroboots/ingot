@@ -18,7 +18,7 @@ _layout: landing
 - **Automatic Manifest Generation** - `manifest.json` files for both behavior packs and resource packs are created automatically
 - **Full BP + RP Support** - Create behavior packs, resource packs, and linked packs with ease
 - **Script API Ready** - Built-in support for enabling the Script API in your pack
-- **Compile-Time Logging** - Get clear, helpful feedback at compile time to avoid debugging in the Minecraft content log
+- **CompilerState** - Get clear, helpful compile-time feedback to avoid debugging in the Minecraft content log
 - **Extensible & Maintainable** - Designed for large or complex addons where manual JSON becomes painful
 - **Iterable & Reusable** - Because its code, you can define variable and easily change things project-wide
 
@@ -43,10 +43,12 @@ dotnet build ingot.sln
 ## 🚀 Quick Start
 
 ```csharp
+using ingot.Core.Common;
+
 // inherit traits to add behaviour
 public class LasagnaItem : Item, IFood, IBlockPlacer
 {
-    public override string Identifier => "test:lasagna";
+    public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
     public override string DisplayName => "Lasagna";
     

@@ -6,10 +6,11 @@ Blocks in ingot are created by deriving from the abstract `Block` class in `ingo
 
 ```csharp
 using ingot.Core.Behaviour.Block;
+using ingot.Core.Common;
 
 public class MyBlock : Block
 {
-    public override string Identifier => "mynamespace:my_block";
+    public override Identifier Identifier => new("mynamespace:my_block");
 
     public override MaterialInstances MaterialInstances => new()
     {
@@ -63,13 +64,15 @@ public override Dictionary<string, dynamic[]> States => new()
 Most block functionality comes from implementing [traits](trait-system.md):
 
 ```csharp
+using ingot.Core.Common;
+
 public class DenseLasagnaBlock : Block, 
     IDestructibleByMining, 
     IFlammable, 
     ITick,
     IGeometry
 {
-    public override string Identifier => "test:block_of_dense_lasagna";
+    public override Identifier Identifier => new("test:block_of_dense_lasagna");
 
     public override MaterialInstances MaterialInstances => new()
     {
@@ -96,7 +99,7 @@ public class DenseLasagnaBlock : Block,
     // IGeometry (some abstract)
     bool IGeometry.BoneVisibility => false;
     string IGeometry.Culling => "";
-    string IGeometry.Identifier => "geometry.lasagna_block";  // careful with name clashes!
+    Identifier IGeometry.Identifier => new("geometry.lasagna_block");  // careful with name clashes!
     string IGeometry.UvLock => "";
 }
 ```
@@ -143,7 +146,7 @@ See the [Resource Packs & Textures](resource-packs.md) guide for details on asse
 
 ## Full Example
 
-See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../ingot.Example) project for a working block that combines states, permutations, material instances, and the trait system.
+See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../ingot.Example) project for a working block that combines states, permutations, and material instances.
 
 ## Tips & Gotchas
 

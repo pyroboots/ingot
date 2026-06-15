@@ -29,9 +29,11 @@ Traits can also be applied to [block permutations](block-permutations.md) so tha
 Trait interfaces expose properties. Because a class may implement many traits, and to avoid name clashes with properties on base classes, **explicit interface implementation** is the recommended and most common pattern:
 
 ```csharp
+using ingot.Core.Common;
+
 public class LasagnaItem : Item, IFood, IBlockPlacer
 {
-    public override string Identifier => "test:lasagna";
+    public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
 
     // Explicit implementations for the trait properties
@@ -74,7 +76,7 @@ Example output for a destructible block trait:
 ```
 
 **Compile-time safety and feedback**:
-- The `CompileTimeLogging` system emits warnings when values are null/empty, when block states exceed 16 permutations, when a trait is used on the wrong content type, etc.
+- The `CompilerState` system emits warnings when values are null/empty, when block states exceed 16 permutations, when a trait is used on the wrong content type, etc.
 - A full log is written to `ingot.log` next to your compiled pack when using `Pack.Compile(..., verbose: true)` (the default).
 
 ## Trait Attributes (Advanced)

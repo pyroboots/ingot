@@ -6,10 +6,11 @@ Items are defined by deriving from the abstract `Item` class. Like blocks, items
 
 ```csharp
 using ingot.Core.Behaviour;
+using ingot.Core.Common;
 
 public class MyItem : Item
 {
-    public override string Identifier => "mynamespace:my_item";
+    public override Identifier Identifier => new("mynamespace:my_item");
     public override string Texture => "my_item_icon";
 }
 ```
@@ -40,7 +41,7 @@ The vast majority of interesting item features come from implementing `IItemTrai
 ```csharp
 public class LasagnaItem : Item, IFood, IBlockPlacer
 {
-    public override string Identifier => "test:lasagna";
+    public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
     public override string DisplayName => "Lasagna";
 
@@ -74,7 +75,7 @@ See the [Item Traits API reference](https://pyroboots.github.io/ingot/api/ingot.
 ```csharp
 public class FancyTool : Item
 {
-    public override string Identifier => "mynamespace:fancy_tool";
+    public override Identifier Identifier => new("mynamespace:fancy_tool");
     public override string Texture => "fancy_tool";
 
     public override CatalogueCategory Category => CatalogueCategory.Equipment;
