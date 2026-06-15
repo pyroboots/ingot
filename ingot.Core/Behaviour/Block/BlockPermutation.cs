@@ -1,3 +1,4 @@
+using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using Newtonsoft.Json;
 using static ingot.Core.Common.JsonHelper;
@@ -53,20 +54,22 @@ public abstract class BlockPermutation
         BlockPermutation permutation = (Activator.CreateInstance(tBlockPermutation) as BlockPermutation)!;
         List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tBlockPermutation, TraitSystem.TraitSystem.TraitType.Block);
         
+        JsonHelper json = new(ref writer);
+        
         writer.WriteStartObject();
         
-        Property(ref writer, "condition", permutation.Condition);
-        Object(ref writer, "components", w =>
+        json.Property("condition", permutation.Condition);
+        json.Object("components", () =>
         {
-            Property(ref w, "minecraft:display_name", permutation.DisplayName);
-            Property(ref w, "minecraft:friction", permutation.Friction);
-            Property(ref w, "minecraft:light_emission", permutation.LightEmission);
-            Property(ref w, "minecraft:light_dampening", permutation.LightDampening);
-            Property(ref w, "minecraft:replaceable", permutation.Replaceable);
-            Property(ref w, "minecraft:loot", permutation.Loot);
+            json.Property("minecraft:display_name", permutation.DisplayName);
+            json.Property("minecraft:friction", permutation.Friction);
+            json.Property("minecraft:light_emission", permutation.LightEmission);
+            json.Property("minecraft:light_dampening", permutation.LightDampening);
+            json.Property("minecraft:replaceable", permutation.Replaceable);
+            json.Property("minecraft:loot", permutation.Loot);
             
             foreach (Trait trait in traits)
-                trait.Compile(ref w);
+                trait.Compile(ref json.Writer);
         });
         
         writer.WriteEndObject();

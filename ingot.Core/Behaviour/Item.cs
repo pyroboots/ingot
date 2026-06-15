@@ -93,35 +93,37 @@ public abstract class Item : IConcreteCompilable<Item>
         w.Formatting = Formatting.Indented;
         w.Indentation = 4;
 
+        JsonHelper json = new(ref w);
+        
         w.WriteStartObject();
 
-        Property(ref w, "format_version", inst.FormatVersion.ToString());
-        Object(ref w, "minecraft:item", w =>
+        json.Property("format_version", inst.FormatVersion.ToString());
+        json.Object("minecraft:item", () =>
         {
             CompilerState.Push("description");
-            Object(ref w, "description", w =>
+            json.Object("description", () =>
             {
-                Property(ref w, "identifier", inst.Identifier);
-                Object(ref w, "menu_category", w =>
+                json.Property("identifier", inst.Identifier);
+                json.Object("menu_category", () =>
                 {
                     if (inst.Group?.Length > 256)
                         CompilerState.Warn(ref w, "item catalogue group exceeds 256 char limit");
 
-                    Property(ref w, "group", inst.Group);
+                    json.Property("group", inst.Group);
                     string categoryName = Enum.GetName(typeof(CatalogueCategory), inst.Category)!.ToLower();
-                    Property(ref w, "category", categoryName);
-                    Property(ref w, "hidden_in_commands", inst.HiddenInCommands);
+                    json.Property("category", categoryName);
+                    json.Property("hidden_in_commands", inst.HiddenInCommands);
                 });
             });
             CompilerState.Pop();
 
             CompilerState.Push("components");
-            Object(ref w, "components", w =>
+            json.Object("components", () =>
             {
-                Object(ref w, "minecraft:icon", w => Property(ref w, "texture", inst.Texture));
-                Object(ref w, "minecraft:display_name", w => Property(ref w, "value", inst.DisplayName));
-                Object(ref w, "minecraft:max_stack_size", w => Property(ref w, "value", inst.MaxStackSize));
-                Object(ref w, "minecraft:allow_off_hand", w => Property(ref w, "value", inst.AllowOffhand));
+                json.Object("minecraft:icon", () => json.Property("texture", inst.Texture));
+                json.Object("minecraft:display_name", () => json.Property("value", inst.DisplayName));
+                json.Object("minecraft:max_stack_size", () => json.Property("value", inst.MaxStackSize));
+                json.Object("minecraft:allow_off_hand", () => json.Property("value", inst.AllowOffhand));
 
                 CompilerState.Info("compiling traits...");
                 List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tType, TraitSystem.TraitSystem.TraitType.Item);

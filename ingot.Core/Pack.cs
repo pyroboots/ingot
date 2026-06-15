@@ -1,6 +1,8 @@
 using System.Diagnostics;
+using ingot.Core.Common;
 using Newtonsoft.Json;
 using static ingot.Core.Common.JsonHelper;
+using Formatting = Newtonsoft.Json.Formatting;
 using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core;
@@ -75,6 +77,7 @@ public class Pack
         
         CompilerState.Push(Name);
         CompilerState.ShowInfoLogs = verbose;
+        CompilerState.CurrentPack = this;
         CompilerState.Info("pack compilation started");
         
         CompilerState.Info("compiling bp...");
@@ -90,61 +93,63 @@ public class Pack
             JsonTextWriter w = new(sw);
             w.Formatting = Formatting.Indented;
             w.Indentation = 4;
-    
+
+            JsonHelper json = new(ref w);
+            
             w.WriteStartObject();
             
-            Property(ref w, "format_version", 2);
-            Object(ref w, "header", w =>
+            json.Property("format_version", 2);
+            json.Object( "header", () =>
             {
-                Property(ref w, "name", Name);
-                Property(ref w, "description", Description);
-                Property(ref w, "uuid", BehaviourPack.Uuid);
-                Property(ref w, "version", PackVersion.AsArray());
-                Property(ref w, "min_engine_version", MinEngineVersion.AsArray());
+                json.Property("name", Name);
+                json.Property("description", Description);
+                json.Property("uuid", BehaviourPack.Uuid);
+                json.Property("version", PackVersion.AsArray());
+                json.Property("min_engine_version", MinEngineVersion.AsArray());
             });
             
-            Array(ref w, "modules", w =>
+            json.Array("modules", () =>
             {
-                Object(ref w, "", w =>
+                json.Object("", () =>
                 {
-                    Property(ref w, "description", $"{Name} Behaviour");
-                    Property(ref w, "type", "data");
-                    Property(ref w, "uuid", Guid.NewGuid().ToString());
-                    Property(ref w, "version", new Version(1, 0, 0).AsArray());
+                    json.Property("description", $"{Name} Behaviour");
+                    json.Property("type", "data");
+                    json.Property("uuid", Guid.NewGuid().ToString());
+                    json.Property("version", new Version(1, 0, 0).AsArray());
                 });
-                if (ScriptsEnabled) Object(ref w, "", w =>
+                if (ScriptsEnabled) json.Object("", () =>
                 {
-                    Property(ref w, "type", "script");
-                    Property(ref w, "language", "javascript");
-                    Property(ref w, "uuid", Guid.NewGuid().ToString());
-                    Property(ref w, "entry", ScriptEntry);
-                    Property(ref w, "version", new Version(1, 0, 0).AsArray());
+                    json.Property("type", "script");
+                    json.Property("language", "javascript");
+                    json.Property("uuid", Guid.NewGuid().ToString());
+                    json.Property("entry", ScriptEntry);
+                    json.Property("version", new Version(1, 0, 0).AsArray());
                 });
             });
             
-            Array(ref w, "dependencies", w =>
+            json.Array("dependencies", () =>
             {
-                if (LinkPacks) Object(ref w, "", w =>
+                if (LinkPacks) json.Object("", () =>
                 {
-                    Property(ref w, "uuid", ResourcePack.Uuid);
-                    Property(ref w, "version", ResourcePack.ResourcePackVersion.AsArray());
+                    json.Property("uuid", ResourcePack.Uuid);
+                    json.Property("version", ResourcePack.ResourcePackVersion.AsArray());
                 });
                 if (ScriptsEnabled) foreach (var kvp in ScriptApiModules)
                 {
-                    Object(ref w, "", w =>
+                    json.Object("", () =>
                     {
-                        Property(ref w, "module_name", kvp.Key);
-                        Property(ref w, "version", kvp.Value.AsArray());
+                        json.Property("module_name", kvp.Key);
+                        json.Property("version", kvp.Value.AsArray());
                     });
                 }
             });
             
-            Object(ref w, "metadata", w =>
+            json.Object("metadata", () =>
             {
-                Property(ref w, "authors", Authors);
-                Object(ref w, "generated_with", w =>
+                json.Property("authors", Authors);
+                json.Object("generated_with", () =>
                 {
-                    Property(ref w, "ingot", "https://github.com/pyroboots/ingot");
+                    json.Property("ingot", "https://github.com/pyroboots/ingot");
                 });
             });
             
@@ -160,44 +165,46 @@ public class Pack
             w.Formatting = Formatting.Indented;
             w.Indentation = 4;
     
+            JsonHelper json = new(ref w);
+            
             w.WriteStartObject();
             
-            Property(ref w, "format_version", 2);
-            Object(ref w, "header", w =>
+            json.Property("format_version", 2);
+            json.Object("header", () =>
             {
-                Property(ref w, "name", Name);
-                Property(ref w, "description", Description);
-                Property(ref w, "uuid", ResourcePack.Uuid);
-                Property(ref w, "version", PackVersion.AsArray());
-                Property(ref w, "min_engine_version", MinEngineVersion.AsArray());
+                json.Property("name", Name);
+                json.Property("description", Description);
+                json.Property("uuid", ResourcePack.Uuid);
+                json.Property("version", PackVersion.AsArray());
+                json.Property("min_engine_version", MinEngineVersion.AsArray());
             });
             
-            Array(ref w, "modules", w =>
+            json.Array("modules", () =>
             {
-                Object(ref w, "", w =>
+                json.Object("", () =>
                 {
-                    Property(ref w, "description", $"{Name} Resources");
-                    Property(ref w, "type", "resources");
-                    Property(ref w, "uuid", Guid.NewGuid().ToString());
-                    Property(ref w, "version", new Version(1, 0, 0).AsArray());
+                    json.Property("description", $"{Name} Resources");
+                    json.Property("type", "resources");
+                    json.Property("uuid", Guid.NewGuid().ToString());
+                    json.Property("version", new Version(1, 0, 0).AsArray());
                 });
             });
             
-            Array(ref w, "dependencies", w =>
+            json.Array("dependencies", () =>
             {
-                if (LinkPacks) Object(ref w, "", w =>
+                if (LinkPacks) json.Object("", () =>
                 {
-                    Property(ref w, "uuid", BehaviourPack.Uuid);
-                    Property(ref w, "version", BehaviourPack.BehaviourPackVersion.AsArray());
+                    json.Property("uuid", BehaviourPack.Uuid);
+                    json.Property("version", BehaviourPack.BehaviourPackVersion.AsArray());
                 });
             });
             
-            Object(ref w, "metadata", w =>
+            json.Object("metadata", () =>
             {
-                Property(ref w, "authors", Authors);
-                Object(ref w, "generated_with", w =>
+                json.Property("authors", Authors);
+                json.Object("generated_with", () =>
                 {
-                    Property(ref w, "ingot", "https://github.com/pyroboots/ingot");
+                    json.Property("ingot", "https://github.com/pyroboots/ingot");
                 });
             });
             
@@ -224,6 +231,7 @@ public class Pack
         }
         
         CompilerState.ShowInfoLogs = false;
+        CompilerState.CurrentPack = null;
         CompilerState.Pop();
     }
 }

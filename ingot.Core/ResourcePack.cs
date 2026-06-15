@@ -1,3 +1,5 @@
+using ingot.Core.Common;
+
 namespace ingot.Core;
 
 using Newtonsoft.Json;
@@ -142,12 +144,14 @@ public class ResourcePack
             w.Formatting = Formatting.Indented;
             w.Indentation = 4;
 
+            JsonHelper json = new(ref w);
+            
             w.WriteStartObject();
-            Object(ref w, "texture_data", ww =>
+            json.Object("texture_data", () =>
             {
                 foreach (var kvp in textureDataEntries)
                 {
-                    Property(ref ww, kvp.Key, kvp.Value);
+                    json.Property(kvp.Key, kvp.Value);
                 }
             });
             w.WriteEndObject();

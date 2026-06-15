@@ -30,10 +30,12 @@ public abstract class Entity : IConcreteCompilable<Entity>
         w.Formatting = Formatting.Indented;
         w.Indentation = 4;
 
+        JsonHelper json = new(ref w);
+        
         w.WriteStartObject();
 
-        Property(ref w, "format_version", inst.FormatVersion.ToString());
-        Object(ref w, "minecraft:entity", w =>
+        json.Property("format_version", inst.FormatVersion.ToString());
+        json.Object("minecraft:entity", () =>
         {
             
         });

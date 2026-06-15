@@ -2,9 +2,6 @@ using Newtonsoft.Json;
 
 namespace ingot.Core.Common;
 
-/// <summary>
-/// Internal use class to abstract JSON writing
-/// </summary>
 internal class JsonHelper
 {
     public static void Object(ref JsonTextWriter w, string key, Action<JsonTextWriter> content)
@@ -36,4 +33,10 @@ internal class JsonHelper
         items(w);
         w.WriteEndArray();
     }
+
+    public JsonTextWriter Writer; 
+    public JsonHelper(ref JsonTextWriter w) => Writer = w;
+    public void Property(string key, object? value) => Property(ref Writer, key, value);
+    public void Object(string key, Action content) => Object(ref Writer, key, (_writer) => content());
+    public void Array(string key, Action content) => Array(ref Writer, key, (_writer) => content());
 }

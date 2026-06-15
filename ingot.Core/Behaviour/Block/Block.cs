@@ -78,31 +78,32 @@ public abstract class Block : IConcreteCompilable<Block>
         JsonTextWriter w = new(sw);
         w.Formatting = Formatting.Indented;
         w.Indentation = 4;
+        JsonHelper json = new(ref w);
 
         w.WriteStartObject();
 
-        Property(ref w, "format_version", inst.FormatVersion.ToString());
-        Object(ref w, "minecraft:block", w =>
+        json.Property("format_version", inst.FormatVersion.ToString());
+        json.Object("minecraft:block", () =>
         {
             CompilerState.Push("description");
-            Object(ref w, "description", w =>
+            json.Object("description", () =>
             {
-                Property(ref w, "identifier", inst.Identifier);
-                Object(ref w, "states", w =>
+                json.Property("identifier", inst.Identifier);
+                json.Object("states", () =>
                 {
                     foreach (var kvp in inst.States)
                     {
                         int length = kvp.Value.Length;
                         if (length > 16)
                             CompilerState.Warn(ref w, $"block state {kvp.Key} has more than 16 possible permutations");
-                        Property(ref w, kvp.Key, kvp.Value);
+                        json.Property(kvp.Key, kvp.Value);
                     }
                 });
             });
             CompilerState.Pop();
             
             CompilerState.Push("permutations");
-            Array(ref w, "permutations", w =>
+            json.Array("permutations", () =>
             {
                 CompilerState.Info("compiling block permutations...");
                 int c = 0;
@@ -117,14 +118,14 @@ public abstract class Block : IConcreteCompilable<Block>
             CompilerState.Pop();
             
             CompilerState.Push("components");
-            Object(ref w, "components", w =>
+            json.Object("components", () =>
             {
-                Property(ref w, "minecraft:display_name", inst.DisplayName);
-                Property(ref w, "minecraft:friction", inst.Friction);
-                Property(ref w, "minecraft:light_emission", inst.LightEmission);
-                Property(ref w, "minecraft:light_dampening", inst.LightDampening);
-                Property(ref w, "minecraft:replaceable", inst.Replaceable);
-                Property(ref w, "minecraft:loot", inst.Loot);
+                json.Property("minecraft:display_name", inst.DisplayName);
+                json.Property("minecraft:friction", inst.Friction);
+                json.Property("minecraft:light_emission", inst.LightEmission);
+                json.Property("minecraft:light_dampening", inst.LightDampening);
+                json.Property("minecraft:replaceable", inst.Replaceable);
+                json.Property("minecraft:loot", inst.Loot);
                 
                 inst.MaterialInstances.Compile(ref w);
 

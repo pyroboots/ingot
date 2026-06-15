@@ -58,14 +58,16 @@ public struct MaterialInstance : ICompileableFragment
         var tex = Texture;
         var tm = Formatting.PascalToSnakeCase(Enum.GetName(TintMethod)!);
         
-        Object(ref writer, "", w =>
+        JsonHelper json = new(ref writer);
+        
+        json.Object("", () =>
         {
-            Property(ref w, "ambient_occlusion", ao);
-            Property(ref w, "face_dimming", fd);
-            Property(ref w, "isotropic", iso);
-            Property(ref w, "render_method", rm);
-            Property(ref w, "texture", tex);
-            if (tm != "none") Property(ref w, "tint_method", tm);
+            json.Property("ambient_occlusion", ao);
+            json.Property("face_dimming", fd);
+            json.Property("isotropic", iso);
+            json.Property("render_method", rm);
+            json.Property("texture", tex);
+            if (tm != "none") json.Property("tint_method", tm);
         });
     }
 }
@@ -101,42 +103,44 @@ public struct MaterialInstances : ICompileableFragment
         var n = North;
         var s = South;
         
-        Object(ref writer, "minecraft:material_instances", w =>
+        JsonHelper json = new(ref writer);
+        
+        json.Object("minecraft:material_instances", () =>
         {
             if (a is not null)
             {
-                w.WritePropertyName("*");
-                a.Value.Compile(ref w);
+                json.Writer.WritePropertyName("*");
+                a.Value.Compile(ref json.Writer);
             }
             if (u is not null)
             {
-                w.WritePropertyName("up");
-                u.Value.Compile(ref w);
+                json.Writer.WritePropertyName("up");
+                u.Value.Compile(ref json.Writer);
             }
             if (d is not null)
             {
-                w.WritePropertyName("down");
-                d.Value.Compile(ref w);
+                json.Writer.WritePropertyName("down");
+                d.Value.Compile(ref json.Writer);
             }
             if (e is not null)
             {
-                w.WritePropertyName("east");
-                e.Value.Compile(ref w);
+                json.Writer.WritePropertyName("east");
+                e.Value.Compile(ref json.Writer);
             }
             if (west is not null)
             {
-                w.WritePropertyName("west");
-                west.Value.Compile(ref w);
+                json.Writer.WritePropertyName("west");
+                west.Value.Compile(ref json.Writer);
             }
             if (n is not null)
             {
-                w.WritePropertyName("north");
-                n.Value.Compile(ref w);
+                json.Writer.WritePropertyName("north");
+                n.Value.Compile(ref json.Writer);
             }
             if (s is not null)
             {
-                w.WritePropertyName("south");
-                s.Value.Compile(ref w);
+                json.Writer.WritePropertyName("south");
+                s.Value.Compile(ref json.Writer);
             }
         });
     }

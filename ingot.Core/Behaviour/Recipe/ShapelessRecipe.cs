@@ -33,7 +33,6 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>
     /// </summary>
     /// <param name="tType">Concrete type of <see cref="ShapelessRecipe"/></param>
     /// <returns>Compiled JSON</returns>
-
     public static string Compile(Type tType)
     {
         ShapelessRecipe inst = (Activator.CreateInstance(tType) as ShapelessRecipe)!;
@@ -45,20 +44,22 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>
         w.Formatting = Formatting.Indented;
         w.Indentation = 4;
 
+        JsonHelper json = new(ref w);
+        
         w.WriteStartObject();
         
-        Property(ref w, "format_version", "1.12");
-        Object(ref w, "minecraft:recipe_shapeless", w =>
+        json.Property("format_version", "1.12");
+        json.Object("minecraft:recipe_shapeless", () =>
         {
-            Object(ref w, "description", w =>
+            json.Object("description", () =>
             {
-                Property(ref w, "identifier", inst.Identifier);
+                json.Property("identifier", inst.Identifier);
             });
-            Property(ref w, "tags", inst.Tags);
+            json.Property("tags", inst.Tags);
             
             CompilerState.Push("ingredients");
             CompilerState.Info("compiling ingredients...");
-            Array(ref w, "ingredients", w =>
+            json.Array("ingredients", () =>
             {
                 int c = 0;
                 foreach (RecipeItem i in inst.Ingredients)
@@ -71,10 +72,41 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>
             CompilerState.Pop();
             CompilerState.Info("compiled ingredients");
             
-            Property(ref w, "result", inst.Result);
+            json.Property("result", inst.Result);
         });
         
         CompilerState.Pop();
         return sw.ToString();
+    }
+}
+
+/// <summary>
+/// Represents an ingredient or output item in a crafting recipe
+/// </summary>
+public record RecipeItem : ICompileableFragment
+{
+    /// <summary>
+    /// Identifier of the item
+    /// </summary>
+    public required Identifier Item;
+    /// <summary>
+    /// Amount of <see cref="Item"/> required
+    /// </summary>
+    public int Count = 1;
+    /// <summary>
+    /// An item tag that matches multiple items
+    /// </summary>
+    public string? Tag = null;
+
+    /// <inheritdoc/>
+    public void Compile(ref JsonTextWriter writer)
+    {
+        JsonHelper json = new(ref writer);
+        
+        writer.WriteStartObject();
+        json.Property("item", Item.ToString());
+        json.Property("count", Count);
+        json.Property("tag", Tag);
+        writer.WriteEndObject();
     }
 }

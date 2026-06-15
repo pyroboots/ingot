@@ -42,12 +42,14 @@ public class Trait : Identifiable, ICompileableFragment
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
     {
-        Object(ref writer, Identifier.ToString(), w =>
+        JsonHelper json = new(ref writer);
+        
+        json.Object(Identifier.ToString(), () =>
         {
             foreach (TraitProperty property in Properties)
             {
                 string id = Formatting.PascalToSnakeCase(property.Name);
-                Property(ref w, id, property.Value);
+                json.Property(id, property.Value);
             }
         });
     }
