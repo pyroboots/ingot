@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Specifies the base rarity and subsequently color of the item name when the player hovers the cursor over the item.
+/// </summary>
 [Trait("minecraft:rarity", TraitSystem.TraitType.Item)]
 public interface IRarity : IItemTrait
 {

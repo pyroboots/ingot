@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// The description identifier of the geometry to use to render this block. This identifier must either match an existing geometry identifier in any of the loaded resource packs or be one of the currently supported Vanilla identifiers: "minecraft:geometry.full_block" or "minecraft:geometry.cross".
+/// </summary>
 [Trait("minecraft:geometry", TraitSystem.TraitType.Block)]
 public interface IGeometry : IBlockTrait
 {

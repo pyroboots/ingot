@@ -69,11 +69,12 @@
             Texture and materials for the <see cref="T:ingot.Core.Behaviour.Block.Block"/>. Shortcut for the <c>minecraft:material_instances</c> component
             </summary>
         </member>
-        <member name="M:ingot.Core.Behaviour.Block.Block.Compile``1">
+        <member name="M:ingot.Core.Behaviour.Block.Block.Compile(System.Type)">
             <summary>
-            Compiles the <typeparamref name="TBlock"/> to JSON
+            Compiles the <see cref="T:ingot.Core.Behaviour.Block.Block"/> (as <paramref name="tType"/>) to JSON
             </summary>
-            <typeparam name="TBlock">The type class to compile</typeparam>
+            <param name="tType">Concrete type of <see cref="T:ingot.Core.Behaviour.Block.Block"/></param>
+            <returns>Compiled JSON</returns>
         </member>
         <member name="T:ingot.Core.Behaviour.Block.BlockPermutation">
             <summary>
@@ -145,19 +146,62 @@
             </summary>
             <param name="writer">JSON source stream to write to</param>
         </member>
+        <member name="T:ingot.Core.Behaviour.Entity">
+            <summary>
+            Implements basic properties of an item
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Entity.Identifier">
+            <inheritdoc/>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Entity.Compile(System.Type)">
+            <summary>
+            Compiles the <see cref="T:ingot.Core.Behaviour.Entity"/> (as <paramref name="tType"/>) to JSON
+            </summary>
+            <param name="tType">Concrete type of <see cref="T:ingot.Core.Behaviour.Entity"/></param>
+            <returns>Compiled JSON</returns>
+        </member>
         <member name="T:ingot.Core.Behaviour.Item">
             <summary>
             Implements basic properties of an item
             </summary>
         </member>
         <member name="P:ingot.Core.Behaviour.Item.Identifier">
-            <summary>
-            Item identifier used in the game
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:ingot.Core.Behaviour.Item.FormatVersion">
             <summary>
             Minimum component version
+            </summary>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Item.CatalogueCategory">
+            <summary>
+            Creative inventory tabs
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Behaviour.Item.CatalogueCategory.Construction">
+            <summary>
+            Construction tab
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Behaviour.Item.CatalogueCategory.Nature">
+            <summary>
+            Nature tabs
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Behaviour.Item.CatalogueCategory.Equipment">
+            <summary>
+            Equipment tab
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Behaviour.Item.CatalogueCategory.Items">
+            <summary>
+            Items tab
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Behaviour.Item.CatalogueCategory.None">
+            <summary>
+            Will not appear in the creative inventory
             </summary>
         </member>
         <member name="P:ingot.Core.Behaviour.Item.Category">
@@ -195,11 +239,105 @@
             Shortcut for the <c>minecraft:allow_off_hand</c> component
             </summary>
         </member>
-        <member name="M:ingot.Core.Behaviour.Item.Compile``1">
+        <member name="M:ingot.Core.Behaviour.Item.Compile(System.Type)">
             <summary>
-            Compiles the <typeparamref name="TItem"/> to JSON
+            Compiles the <see cref="T:ingot.Core.Behaviour.Item"/> (as <paramref name="tType"/>) to JSON
             </summary>
-            <typeparam name="TItem">The type class to compile</typeparam>
+            <param name="tType">Concrete type of <see cref="T:ingot.Core.Behaviour.Item"/></param>
+            <returns>Compiled JSON</returns>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Recipe.IRecipe">
+            <summary>
+            Tag interface for recipes
+            </summary>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Recipe.ShapedRecipe">
+            <summary>
+            Represents a crafting recipe with a specific pattern
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapedRecipe.Identifier">
+            <inheritdoc/>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapedRecipe.Tags">
+            <summary>
+            Array of valid crafting interfaces this recipe can be used on
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapedRecipe.Pattern">
+            <summary>
+            Array of ingredients used to create the <see cref="P:ingot.Core.Behaviour.Recipe.ShapedRecipe.Result"/>
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapedRecipe.Result">
+            <summary>
+            Resulting item from the <see cref="P:ingot.Core.Behaviour.Recipe.ShapedRecipe.Pattern"/>
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapedRecipe.ResultAmount">
+            <summary>
+            Amount of <see cref="P:ingot.Core.Behaviour.Recipe.ShapedRecipe.Result"/> to get upon crafting
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Recipe.ShapedRecipe.Compile(System.Type)">
+            <summary>
+            Compiles the <see cref="T:ingot.Core.Behaviour.Recipe.ShapedRecipe"/> (as <paramref name="tType"/>) to JSON
+            </summary>
+            <param name="tType">Concrete type of <see cref="T:ingot.Core.Behaviour.Recipe.ShapedRecipe"/></param>
+            <returns>Compiled JSON</returns>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Recipe.ShapelessRecipe">
+            <summary>
+            Represents a crafting recipe with no pattern
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapelessRecipe.Identifier">
+            <inheritdoc/>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapelessRecipe.Tags">
+            <summary>
+            Array of valid crafting interfaces this recipe can be used on
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapelessRecipe.Ingredients">
+            <summary>
+            Array of ingredients used to create the <see cref="P:ingot.Core.Behaviour.Recipe.ShapelessRecipe.Result"/>
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.ShapelessRecipe.Result">
+            <summary>
+            Resulting item from the <see cref="P:ingot.Core.Behaviour.Recipe.ShapelessRecipe.Ingredients"/>
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Recipe.ShapelessRecipe.Compile(System.Type)">
+            <summary>
+            Compiles the <see cref="T:ingot.Core.Behaviour.Recipe.ShapelessRecipe"/> (as <paramref name="tType"/>) to JSON
+            </summary>
+            <param name="tType">Concrete type of <see cref="T:ingot.Core.Behaviour.Recipe.ShapelessRecipe"/></param>
+            <returns>Compiled JSON</returns>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Recipe.RecipeItem">
+            <summary>
+            Represents an ingredient or output item in a crafting recipe
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Behaviour.Recipe.RecipeItem.Item">
+            <summary>
+            Identifier of the item
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Behaviour.Recipe.RecipeItem.Count">
+            <summary>
+            Amount of <see cref="F:ingot.Core.Behaviour.Recipe.RecipeItem.Item"/> required
+            </summary>
+        </member>
+        <member name="F:ingot.Core.Behaviour.Recipe.RecipeItem.Tag">
+            <summary>
+            An item tag that matches multiple items
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Recipe.RecipeItem.Compile(Newtonsoft.Json.JsonTextWriter@)">
+            <inheritdoc/>
         </member>
         <member name="T:ingot.Core.BehaviourPack">
             <summary>
@@ -238,6 +376,11 @@
             List of <see cref="T:ingot.Core.Behaviour.Item"/> types added to the pack
             </summary>
         </member>
+        <member name="F:ingot.Core.BehaviourPack.Recipes">
+            <summary>
+            List of <see cref="T:ingot.Core.Behaviour.Item"/> types added to the pack
+            </summary>
+        </member>
         <member name="M:ingot.Core.BehaviourPack.AddEntity``1">
             <summary>
             Adds an entity to the pack
@@ -255,6 +398,12 @@
             Adds an item to the pack
             </summary>
             <typeparam name="TItem">Item class to add</typeparam>
+        </member>
+        <member name="M:ingot.Core.BehaviourPack.AddRecipe``1">
+            <summary>
+            Adds an item to the pack
+            </summary>
+            <typeparam name="TRecipe">Recipe class to add</typeparam>
         </member>
         <member name="M:ingot.Core.BehaviourPack.Compile(System.String)">
             <summary>
@@ -290,15 +439,25 @@
             </summary>
             <param name="writer">JSON source stream to write to</param>
         </member>
-        <member name="T:ingot.Core.Common.Identifiable">
+        <member name="T:ingot.Core.Common.IConcreteCompilable`1">
             <summary>
-            Internal use class to implement a Minecraft identifier
+            Internal use interface to implement concrete type compiling 
             </summary>
+            <typeparam name="TType">Type reference to the inheriting class</typeparam>
         </member>
-        <member name="P:ingot.Core.Common.Identifiable.Identifier">
+        <member name="M:ingot.Core.Common.IConcreteCompilable`1.Compile(System.Type)">
             <summary>
-            Minecraft identifier
+            Compiles the <paramref name="tType"/> to JSON as <see cref="!:TType"/>
             </summary>
+            <param name="tType"></param>
+            <returns>Compiled JSON</returns>
+        </member>
+        <member name="M:ingot.Core.Common.IConcreteCompilable`1.Compile``1">
+            <summary>
+            Compiles the <see cref="!:TConcreteType"/> to JSON as <see cref="!:TType"/>
+            </summary>
+            <typeparam name="TConcreteType"></typeparam>
+            <returns></returns>
         </member>
         <member name="T:ingot.Core.Common.Identifier">
             <summary>
@@ -315,9 +474,14 @@
             The <c>dirt</c> part in <c>minecraft:dirt</c>
             </summary>
         </member>
-        <member name="T:ingot.Core.Common.JsonHelper">
+        <member name="T:ingot.Core.Common.IIdentifiable">
             <summary>
-            Internal use class to abstract JSON writing
+            Internal use interface to implement a Minecraft identifier
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Common.IIdentifiable.Identifier">
+            <summary>
+            Minecraft identifier
             </summary>
         </member>
         <member name="T:ingot.Core.Common.Version">
@@ -325,33 +489,49 @@
             Internal use implementation of a semantic version
             </summary>
         </member>
-        <member name="T:ingot.Core.CompileTimeLogging">
+        <member name="T:ingot.Core.CompilerState">
             <summary>
             Internal use class for emitting compile time logs
             </summary>
         </member>
-        <member name="M:ingot.Core.CompileTimeLogging.Push(System.String)">
+        <member name="M:ingot.Core.CompilerState.Push(System.String)">
             <summary>
             Push a new section onto the trace stack
             </summary>
             <param name="trace">Name of the section to show up in any produced logs or warnings</param>
         </member>
-        <member name="M:ingot.Core.CompileTimeLogging.Pop">
+        <member name="M:ingot.Core.CompilerState.Pop">
             <summary>
             Ends the previous section
             </summary>
         </member>
-        <member name="F:ingot.Core.CompileTimeLogging.ShowInfoLogs">
+        <member name="F:ingot.Core.CompilerState.ShowInfoLogs">
             <summary>
-            Whether logs produced by <see cref="M:ingot.Core.CompileTimeLogging.Info(System.String)"/> appear in the console
+            Whether logs produced by <see cref="M:ingot.Core.CompilerState.Info(System.String)"/> appear in the console
             </summary>
         </member>
-        <member name="M:ingot.Core.CompileTimeLogging.Warn(Newtonsoft.Json.JsonTextWriter@,System.String)">
+        <member name="F:ingot.Core.CompilerState.CurrentPack">
+            <summary>
+            Current pack being compiled. Useful for <see cref="T:ingot.Core.BehaviourPack"/> to generate content for <see cref="T:ingot.Core.ResourcePack"/> and vice versa
+            </summary>
+        </member>
+        <member name="M:ingot.Core.CompilerState.Warn(Newtonsoft.Json.JsonTextWriter@,System.String)">
             <summary>
             Writes a warning to the console and in the JSON output
             </summary>
             <param name="w">Used to write the warning in the JSON source</param>
             <param name="msg">Message to write</param>
+        </member>
+        <member name="M:ingot.Core.CompilerState.Info(System.String)">
+            <summary>
+            Logs information in the compilation process
+            </summary>
+            <param name="msg">Info</param>
+        </member>
+        <member name="M:ingot.Core.CompilerState.GetLogs">
+            <summary>
+            Returns logs as a list
+            </summary>
         </member>
         <member name="T:ingot.Core.Pack">
             <summary>
@@ -482,6 +662,9 @@
             Contains reflected data of a trait interface
             </summary>
         </member>
+        <member name="P:ingot.Core.TraitSystem.Trait.Identifier">
+            <inheritdoc/>
+        </member>
         <member name="F:ingot.Core.TraitSystem.Trait.Properties">
             <summary>
             List of properties in a trait at runtime
@@ -522,9 +705,19 @@
             Marks a property in a trait interface as a property to be serialized in reflection
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IChestObstruction">
+            <summary>
+            This defines how a block reacts to a chest being opened underneath it.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IChestObstruction.ObstructionRule">
             <summary>
             [optional] How the block should be evaluated by a chest during chest opening.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.ICollisionBox">
+            <summary>
+            Defines the area of the block that collides with entities. If set to true, default values are used (a full 16x16x16 block). If set to false, the block's collision with entities is disabled, allowing entities to pass through. If this component is omitted, default values are used.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.ICollisionBox.Origin">
@@ -537,6 +730,11 @@
             Size of each side of the collision box. Size is specified as [x, y, z]. "origin" + "size" must be in the range (-8, 0, -8) to (8, 24, 8), inclusive.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IConnectionRule">
+            <summary>
+            Defines whether other blocks such as fences, walls, bars, and glass panes are allowed to connect to this block.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IConnectionRule.AcceptsConnectionsFrom">
             <summary>
             The type of block allowed to connect to this block. Note that the "only_fences" option allows connections from all Vanilla fences excluding NetherBrick.
@@ -545,6 +743,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IConnectionRule.EnabledDirections">
             <summary>
             The cardinal directions that connection is enabled for. Note that if "none" is specified for "accepts_connections_from", this field will not be used.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.ICraftingTable">
+            <summary>
+            Makes your block into a custom crafting table which enables the crafting table UI and the ability to craft recipes.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.ICraftingTable.CraftingTags">
@@ -557,9 +760,19 @@
             Specifies the language file key that maps to what text will be displayed in the UI of this table.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IDestructibleByExplosion">
+            <summary>
+            Describes the destructible by explosion properties for this block. If set to true, the block will have the default explosion resistance. If set to false, this block is indestructible by explosion. If the component is omitted, the block will have the default explosion resistance.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IDestructibleByExplosion.ExplosionResistance">
             <summary>
             Sets the explosion resistance for the block.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IDestructibleByMining">
+            <summary>
+            Describes the destructible by mining properties for this block. If set to true, the block will take the default number of seconds to destroy. If set to false, this block is indestructible by mining. If the component is omitted, the block will take the default number of seconds to destroy.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IDestructibleByMining.ItemSpecificSpeeds">
@@ -570,6 +783,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IDestructibleByMining.SecondsToDestroy">
             <summary>
             Sets the number of seconds it takes to destroy the block with base equipment. Greater numbers result in greater mining times.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles">
+            <summary>
+            [Note: This component is currently experimental]. Sets the particles that will be used when block is destroyed.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IDestructionParticles.ParticleCount">
@@ -587,6 +805,11 @@
             Tint multiplied to the color. Tint method logic varies, but often refers to the "rain" and "temperature" of the biome the block is placed in to compute the tint.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IEntityFallOn">
+            <summary>
+            Configures what distance an entity must fall onto this block to cause the onEntityFallOn block custom component event to be sent to script. Custom components subscribed to the onEntityFallOn event on a block without the minecraft:entity_fall_on component use the default fall distance of 1 block.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IEntityFallOn.MinFallDistance">
             <summary>
             The minimum distance in blocks that an actor needs to fall before events are triggered.
@@ -597,6 +820,11 @@
             The minimum distance in blocks that an entity needs to fall before events are raised.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IFlammable">
+            <summary>
+            Describes the flammable properties for this block. If set to true, default values are used (catch: 5, destroy: 20). Note that the default value of lava_flammable is false for backwards compatibility. If set to false, or if this component is omitted, the block will not be able to catch on fire naturally from neighbors, but it can still be directly ignited.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IFlammable.CatchChanceModifier">
             <summary>
             A modifier affecting the chance that this block will catch flame when next to a fire.
@@ -605,6 +833,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IFlammable.DestroyChanceModifier">
             <summary>
             A modifier affecting the chance that this block will be destroyed by flames when on fire.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IGeometry">
+            <summary>
+            The description identifier of the geometry to use to render this block. This identifier must either match an existing geometry identifier in any of the loaded resource packs or be one of the currently supported Vanilla identifiers: "minecraft:geometry.full_block" or "minecraft:geometry.cross".
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IGeometry.BoneVisibility">
@@ -637,6 +870,11 @@
             A Boolean locking UV orientation of all bones in the geometry, or an array of strings locking UV orientation of specific bones in the geometry.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IInstrumentSound">
+            <summary>
+            [Note: This component is currently experimental]. This defines what sound will play based on above or below relative position to a note block. An instrument can be assigned to the "up" and "down" block faces. If either face is undefined, or the component is omitted, it will use its default value ("up" = "note.harp" and "down" = "note.none"). While both faces do not need to be defined, at least one face needs to be defined for the component to be valid. "note.none" can be used to specify no sound for a face.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IInstrumentSound.Down">
             <summary>
             The instrument sound that plays when the note block is above this block (the block's down face is exposed to the note block). Use "note.none" to specify no sound for this face.
@@ -645,6 +883,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IInstrumentSound.Up">
             <summary>
             The instrument sound that plays when the note block is below this block (the block's up face is exposed to the note block). Use "note.none" to specify no sound for this face.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.ILiquidDetection">
+            <summary>
+            The definitions for how a block behaves when detecting liquid. Only one rule definition is allowed per liquid type - if multiple are specified, the first will be used and the rest will be ignored.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.ILiquidDetection.CanContainLiquid">
@@ -672,6 +915,11 @@
             Whether this block uses the encompassing collider to visually clip the liquid.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IMapColor">
+            <summary>
+            Sets the color of the block when rendered to a map. If this component is omitted, the block will not show up on the map.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IMapColor.Color">
             <summary>
             The color is represented as a hex value in the format "#RRGGBB". May also be expressed as an array of [R, G, B] from 0 to 255.
@@ -680,6 +928,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IMapColor.TintMethod">
             <summary>
             Optional, tint multiplied to the color.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IMovable">
+            <summary>
+            This defines how a block reacts to being moved by another block like a piston.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IMovable.MovementType">
@@ -692,14 +945,29 @@
             How the block should handle adjacent blocks around it when being pushed by another block like a piston.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IPlacementFilter">
+            <summary>
+            Sets rules for under what conditions the block can be placed and survive. If the placement conditions are not met, the block cannot be placed. If the block is already placed and the conditions become invalid (e.g., the supporting block is removed), the block will pop off and drop as an item. If the blocks in the filter are liquid blocks, ensure that an item block is created with a 'liquid_clipped' component set to 'true' and a 'block_placer' component with 'replace_block_item' set to 'true'.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IPlacementFilter.Conditions">
             <summary>
             List of conditions where the block can be placed/survive Value must have at most 64 items.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IPrecipitationInteractions">
+            <summary>
+            Determines interactions the block will have with different precipitations. Three possible values: obrain, obstruct_rain_accumulate_snow and none.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IPrecipitationInteractions.PrecipitationBehavior">
             <summary>
             What behavior should the block have. Possible values: obrain, obstruct_rain_accumulate_snow, snowlogging, and none
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IRandomOffset">
+            <summary>
+            This component defines a random offset for the block, seeded based on the block's position and the specified range and steps. It affects the block's rendered position, outline, and collision. If the random offset causes the collision box to extend beyond the bounds of a cube, the offset range will automatically adjust to keep the collision box within the cube. Culling for this block is performed without considering the random offset.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IRandomOffset.X">
@@ -717,6 +985,11 @@
             Z coordinate
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IRedstoneConductivity">
+            <summary>
+            The basic redstone properties of a block. If the component is not provided the default values are used.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IRedstoneConductivity.AllowsWireToStepDown">
             <summary>
             Specifies if redstone wire can stair-step downward on the block.
@@ -727,6 +1000,11 @@
             Specifies if the block can be powered by redstone.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IRedstoneConsumer">
+            <summary>
+            A component describing how a block can consume and potentially propagate a redstone signal. This component is not available for block permutations.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IRedstoneConsumer.MinPower">
             <summary>
             Optional minimum value for incoming signal strength.
@@ -735,6 +1013,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IRedstoneConsumer.PropagatesPower">
             <summary>
             Optional Boolean to control whether a signal can pass through this block or not, defaults to false.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer">
+            <summary>
+            If added to a block, indicates that it produces a redstone signal.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.IRedstoneProducer.ConnectedFaces">
@@ -757,6 +1040,11 @@
             If true, the strongly_powered_face and connected_faces properties will be rotated according to the 'minecraft:transformation' component.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.ISelectionBox">
+            <summary>
+            Defines the area of the block that is selected by the player's cursor (the outline shown when looking at the block). If set to true, default values are used (a full 16x16x16 block). If set to false, this block is not selectable by the player's cursor. If this component is omitted, default values are used.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.ISelectionBox.Origin">
             <summary>
             Minimal position of the bounds of the selection box. "origin" is specified as [x, y, z] and must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
@@ -767,9 +1055,19 @@
             Size of each side of the selection box. Size is specified as [x, y, z]. "origin" + "size" must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.ISupport">
+            <summary>
+            Defines the support shape of the block. Currently only allows for blocks to have the same shape as a Vanilla fence and Vanilla stair. To work with custom stairs, requires the use of "minecraft:vertical_half" and "minecraft:cardinal_direction" or "minecraft:facing_direction" which can be set through the "minecraft:placement_direction" block trait. Custom blocks without this component will default to unit cube support. The type of support shape for this block. Currently, the options are: "fence" and "stair".
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.ISupport.Shape">
             <summary>
             Required field. The type of support shape for this block.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Block.ITick">
+            <summary>
+            Causes the block to tick based on a regular interval equal to a number of ticks randomly chosen from the internal_range parameter. This ticking will send the onTick event to blocks with custom components subscribed for the event. Custom components listening to the onTick event that are added to a block that does not have the minecraft:tick component will cause a content error.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Block.ITick.IntervalRange">
@@ -797,6 +1095,11 @@
             Tag interface for item traits
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IBlockPlacer">
+            <summary>
+            Sets the item as a placer item component for blocks. Items with this component will place a block when used.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IBlockPlacer.AlignedPlacement">
             <summary>
             If true, block placement through this item will be aligned while holding the interaction button down. Defaults to false.
@@ -817,9 +1120,19 @@
             List of block descriptors of the blocks that this item can be used on. If left empty, all blocks will be allowed. Value must have at most 256 items.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IBundleInteraction">
+            <summary>
+            Enables the bundle-specific interaction scheme and tooltip for an item.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IBundleInteraction.NumViewableSlots">
             <summary>
             The maximum number of slots in the bundle viewable by the plater. Can be from 1 to 64. Default is 12. Value must be &gt;= 1. Value must be &lt;= 64.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.ICanDestroyInCreative">
+            <summary>
+            The can_destroy_in_creative component determines if the item can be used by a player to break blocks when in creative mode.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ICanDestroyInCreative.Value">
@@ -827,9 +1140,19 @@
             Determines whether the item can be used to destroy blocks while in creative mode.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.ICompostable">
+            <summary>
+            Specifies that an item is compostable and provides the chance of creating a composting layer in the composter.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ICompostable.CompostingChance">
             <summary>
             The chance of this item to create a layer upon composting with the composter. Valid value range is 1 - 100 inclusive Value must be &gt;= 1. Value must be &lt;= 100.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.ICooldown">
+            <summary>
+            Adds a cooldown to an item, preventing it from being used again for a specified duration. Items sharing the same category will enter cooldown together when any one of them is used.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ICooldown.Category">
@@ -847,14 +1170,29 @@
             The type of action that triggers the cooldown. Use 'use' for items consumed on use, or 'attack' for weapons. Default is 'use'.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IDamage">
+            <summary>
+            The damage component determines how much extra damage the item does on attack.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IDamage.Value">
             <summary>
             The amount of extra damage this item deals when attacking. This value is added to the base attack damage. Must be a positive integer.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption">
+            <summary>
+            It allows an item to absorb damage that would otherwise be dealt to its wearer. For this to happen, the item needs to be equipped in an armor slot. The absorbed damage reduces the item's durability, with any excess damage being ignored. Because of this, the item also needs a minecraft:durability component.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IDamageAbsorption.AbsorbableCauses">
             <summary>
             List of damage causes that can be absorbed by the item. By default, no damage cause is absorbed. Value must have at least 1 items.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IDigger">
+            <summary>
+            Configures an item as a digging tool, allowing it to break specific blocks faster than normal. Define which blocks are affected and the speed multiplier for each.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IDigger.DestroySpeeds">
@@ -867,6 +1205,11 @@
             When true, the Efficiency enchantment will increase the dig speed of this item. Default is false.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IDurability">
+            <summary>
+            Sets how much damage the item can take before breaking, and allows the item to be combined at an anvil, grindstone, or crafting table.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IDurability.DamageChance">
             <summary>
             Specifies the percentage chance of this item losing durability.
@@ -875,6 +1218,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IDurability.MaxDurability">
             <summary>
             Max durability is the amount of damage that this item can take before breaking. This is a required parameter and has a minimum of 0.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor">
+            <summary>
+            Enables an item to emit effects when it receives damage. Because of this, the item also needs a minecraft:durability component.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IDurabilitySensor.DurabilityThresholds">
@@ -887,6 +1235,16 @@
             Sound effect to emit when the threshold is met.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IDyeable">
+            <summary>
+            Enables players to dye this item using dyes in a crafting grid, like leather armor. Configure the default color when undyed. The item stores its color in NBT data and renders with the player-chosen tint, enabling customizable cosmetic appearances for armor and equipment.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IEnchantable">
+            <summary>
+            Determines what enchantments can be applied to the item. Not all enchantments will have an effect on all item components.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IEnchantable.Slot">
             <summary>
             Specifies which types of enchantments can be applied.
@@ -897,9 +1255,19 @@
             Specifies the value of the enchantment (minimum of 0).
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IFireResistant">
+            <summary>
+            Determines whether the item is immune to burning when dropped in fire or lava.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IFireResistant.Value">
             <summary>
             Determines whether the item is immune to burning when dropped in fire or lava.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IFood">
+            <summary>
+            Sets the item as a food component, allowing it to be edible to the player.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IFood.CanAlwaysEat">
@@ -922,9 +1290,19 @@
             When used, converts to the item specified by the string in this field. Default does not convert item.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IFuel">
+            <summary>
+            Allows this item to be used as fuel in a furnace to 'cook' other items.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IFuel.Duration">
             <summary>
             How long in seconds will this fuel cook items for. Value must be &gt;= 0.05.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IGlint">
+            <summary>
+            Determines whether the item has the enchanted glint render effect on it.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IGlint.Value">
@@ -932,14 +1310,34 @@
             Whether the item has the enchanted glint render effect.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IHandEquipped">
+            <summary>
+            The hand_equipped component determines if an item is rendered like a tool while it is in a player's hand.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IHandEquipped.Value">
             <summary>
             Determines whether the item is rendered like a tool while in the player's hand.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IHoverTextColor">
+            <summary>
+            Determines the color of the item name when hovering over it.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IHoverTextColor.Value">
             <summary>
             The color of the item hover text.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IInteractButton">
+            <summary>
+            A boolean or string that determines if the interact button is shown in touch controls, and what text is displayed on the button. When set to 'true', the default 'Use Item' text will be used.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IKineticWeapon">
+            <summary>
+            Allows an item to deal kinetic damage and its effects. This happens every tick while in use, in a straight line along the user's view vector, with damage computed based on both the user's and the target's velocity projected onto the view vector (via a dot product). The more the user and target move toward each other, and the more this movement is aligned with the user's view vector, the higher the damage. After "damage_multiplier" and "damage_modifier" are applied, the resulting damage is floored to the nearest lower integer.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IKineticWeapon.CreativeReach">
@@ -987,9 +1385,19 @@
             Defines the range (in blocks) along the user's view vector where entities can be hit.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.ILiquidClipped">
+            <summary>
+            The liquid_clipped component determines whether the item interacts with liquid blocks on use. To allow placement of blocks on liquids, see the 'placement_filter' block component.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ILiquidClipped.Value">
             <summary>
             Deterines whether the item interacts with liquid blocks on use.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IPiercingWeapon">
+            <summary>
+            Allows an item to deal damage to all entities detected in a straight line along the user's view vector. Items with this component cannot destroy blocks, as the attack action always takes priority, regardless of what the user is looking at.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IPiercingWeapon.CreativeReach">
@@ -1007,6 +1415,11 @@
             Defines the range (in blocks) along the user's view vector where entities can be hit.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IProjectile">
+            <summary>
+            Defines an item as a projectile that can be shot from dispensers or used as ammunition with minecraft:shooter. When combined with minecraft:throwable, this component specifies which entity is spawned when the item is thrown.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IProjectile.MinimumCriticalPower">
             <summary>
             Specifies how long a player must charge a projectile for it to critically hit.
@@ -1017,9 +1430,19 @@
             Which entity is to be fired as a projectile. Value must match a regular expression pattern of "^(?:\w+(?:.\w+):(?=\w))?(?:\w+(?:.\w+))(?:&lt;((?:\w+(?:.\w+):(?=\w))?\w+(?:.\w+))*&gt;)?$".
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IRarity">
+            <summary>
+            Specifies the base rarity and subsequently color of the item name when the player hovers the cursor over the item.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IRarity.Value">
             <summary>
             Sets the base rarity of the item. The rarity of an item automatically increases when enchanted, either to Rare when the base rarity is Common or Uncommon, or Epic when the base rarity is Rare.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IRecord">
+            <summary>
+            Used by record items to play music.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IRecord.ComparatorSignal">
@@ -1037,6 +1460,11 @@
             Sound event type: 13, cat, blocks, chirp, far, mall, mellohi, stal, strad, ward, 11, wait, pigstep, otherside, 5, relic.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.ISeed">
+            <summary>
+            Sets the item as a seed that can be planted to grow crops. When used on valid ground, the seed will place the specified crop block.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ISeed.CropResult">
             <summary>
             The block identifier that will be placed when the seed is planted (e.g., 'wheat', 'beetroot', 'cave_vines').
@@ -1045,6 +1473,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ISeed.PlantAt">
             <summary>
             Array of block identifiers that this seed can be planted on or attached to. If not specified, standard farmland rules apply.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IShooter">
+            <summary>
+            Compels an item to shoot projectiles, similarly to a bow or crossbow. Must have the minecraft:use_modifiers component in order to function properly.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IShooter.Ammunition">
@@ -1067,14 +1500,29 @@
             When true, the projectile's launch power increases based on how long the player holds the use button before releasing. Default is false.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IShouldDespawn">
+            <summary>
+            Should_despawn component determines if the item should eventually despawn while floating in the world.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IShouldDespawn.Value">
             <summary>
             Determines whether the item should eventually despawn while floating in the world.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IStackedByData">
+            <summary>
+            The stacked_by_data component determines whether the same items with different aux values can stack. Also defines whether the item entities can merge while floating in the world.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IStackedByData.Value">
             <summary>
             Determines whether the same item with different aux values can stack. Also defines whether the item entities can merge while floating in the world.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IStorageItem">
+            <summary>
+            Enables an item to store data of the dynamic container associated with it. A dynamic container is a container for storing items that is linked to an item instead of a block or an entity.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IStorageItem.AllowNestedStorageItems">
@@ -1097,9 +1545,19 @@
             The maximum allowed weight of the sum of all contained items. Maximum is 64. Default is 64. Value must be &lt;= 64.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit">
+            <summary>
+            Specifies the maximum weight limit that a storage item can hold.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IStorageWeightLimit.MaxWeightLimit">
             <summary>
             The maximum allowed weight of the sum of all contained items. Maximum is 64. Default is 64. Value must be &lt;= 64.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IStorageWeightModifier">
+            <summary>
+            Specifies the maximum weight limit that a storage item can hold.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IStorageWeightModifier.WeightInStorageItem">
@@ -1107,9 +1565,19 @@
             The weight of this item when inside another Storage Item. Default is 4. 0 means item is not allowed in another Storage Item.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.ISwingDuration">
+            <summary>
+            Duration, in seconds, of the item's swing animation played when mining or attacking. Affects visuals only and does not impact attack frequency or other gameplay mechanics.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ISwingDuration.Value">
             <summary>
             Duration, in seconds, of the item's swing animation played when mining or attacking. Affects visuals only and does not impact attack frequency or other gameplay mechanics.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.ISwingSounds">
+            <summary>
+            Overrides the swing sounds emitted by the user.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ISwingSounds.AttackCriticalHit">
@@ -1127,9 +1595,19 @@
             Sound played when an attack misses or deals no damage due to invulnerability.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.ITags">
+            <summary>
+            Determines which tags are included on a given item.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.ITags.Tags">
             <summary>
             An array that can contain multiple item tags.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IThrowable">
+            <summary>
+            Makes an item throwable by the player, similar to a snowball or ender pearl. Use with minecraft:projectile to specify which entity is spawned when thrown.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IThrowable.DoSwingAnimation">
@@ -1162,9 +1640,19 @@
             Whether or not the power of the throw increases with duration charged. Default is set to false.
             </summary>
         </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IUseAnimation">
+            <summary>
+            Use_animation specifies which animation is played when the player uses the item.
+            </summary>
+        </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IUseAnimation.Value">
             <summary>
             Specifies which animation to play when the item is used.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IUseModifiers">
+            <summary>
+            Determines how long an item takes to use in combination with components such as Shooter, Throwable, or Food.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IUseModifiers.EmitVibrations">
@@ -1190,6 +1678,11 @@
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IUseModifiers.UseDuration">
             <summary>
             Time, in seconds, that the item takes to use.
+            </summary>
+        </member>
+        <member name="T:ingot.Core.TraitSystem.Traits.Item.IWearable">
+            <summary>
+            Sets the wearable item component, which allows an item to be worn by a player in a specified equipment slot.
             </summary>
         </member>
         <member name="P:ingot.Core.TraitSystem.Traits.Item.IWearable.HidesPlayerLocation">

@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Should_despawn component determines if the item should eventually despawn while floating in the world.
+/// </summary>
 [Trait("minecraft:should_despawn", TraitSystem.TraitType.Item)]
 public interface IShouldDespawn : IItemTrait
 {

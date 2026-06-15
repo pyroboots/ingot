@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Describes the destructible by explosion properties for this block. If set to true, the block will have the default explosion resistance. If set to false, this block is indestructible by explosion. If the component is omitted, the block will have the default explosion resistance.
+/// </summary>
 [Trait("minecraft:destructible_by_explosion", TraitSystem.TraitType.Block)]
 public interface IDestructibleByExplosion : IBlockTrait
 {

@@ -70,8 +70,25 @@ public class TraitGenerator
 
     public static string GenerateTraitInterfaceFromMsDoc(string html, string interfaceName, string componentName, string constraint, string? @namespace = null)
     {
+        string description = ParseComponentDescription(html);
         List<TraitProperty> properties = ParseHtmlToProperties(html);
-        return GenerateInterfaceCode(interfaceName, componentName, constraint, properties, @namespace);
+        return GenerateInterfaceCode(interfaceName, componentName, constraint, description, properties, @namespace);
+    }
+
+    private static string ParseComponentDescription(string html)
+    {
+        HtmlDocument doc = new HtmlDocument();
+        doc.LoadHtml(html);
+
+        HtmlNode? paragraph = doc.DocumentNode.SelectSingleNode("//div[@class='content']/p");
+        if (paragraph == null)
+            return "";
+
+        string description = paragraph.InnerText.Trim();
+        if (description.Equals("Note", StringComparison.OrdinalIgnoreCase))
+            return "";
+
+        return Regex.Replace(description, @"\s+", " ").Trim();
     }
 
     private static List<TraitProperty> ParseHtmlToProperties(string html)
@@ -132,7 +149,7 @@ public class TraitGenerator
         return name;
     }
 
-    private static string GenerateInterfaceCode(string interfaceName, string componentName, string constraint, List<TraitProperty> properties, string? nspace)
+    private static string GenerateInterfaceCode(string interfaceName, string componentName, string constraint, string description, List<TraitProperty> properties, string? nspace)
     {
         nspace ??= $"namespace ingot.Core.TraitSystem.Traits.{constraint};";
 
@@ -144,6 +161,14 @@ public class TraitGenerator
         sb.AppendLine("using System.Collections.Generic;");
         sb.AppendLine("using ingot.Core.Common;");
         sb.AppendLine();
+
+        if (!string.IsNullOrEmpty(description))
+        {
+            sb.AppendLine("/// <summary>");
+            sb.AppendLine($"/// {description}");
+            sb.AppendLine("/// </summary>");
+        }
+
         sb.AppendLine($"[Trait(\"{componentName}\", TraitSystem.TraitType.{constraint})]");
         sb.AppendLine($"public interface {interfaceName} : I{constraint}Trait");
         sb.AppendLine("{");

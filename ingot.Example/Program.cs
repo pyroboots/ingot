@@ -1,4 +1,5 @@
 ﻿using ingot.Core;
+using ingot.Core.TraitSystem;
 using ingot.Generators;
 
 namespace ingot.Example;
@@ -7,9 +8,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
-            .AddItem<LasagnaItem>()
-            .AddBlock<DenseLasagnaBlock>();
+        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
+        bp.AddItem<LasagnaItem>();
+        bp.AddBlock<DenseLasagnaBlock>();
+        bp.AddRecipe<LasagnaRecipe>();
         
         ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
             .AddBlockTexture("block_of_dense_lasagna", "./dense_lasagna.png")

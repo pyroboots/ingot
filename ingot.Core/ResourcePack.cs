@@ -45,9 +45,9 @@ public class ResourcePack
     public ResourcePack AddBlockTexture(string key, string sourcePngPath)
     {
         if (string.IsNullOrWhiteSpace(key))
-            throw new ArgumentException("Texture key cannot be empty", nameof(key));
+            throw new ArgumentException("texture key cannot be empty", nameof(key));
         if (string.IsNullOrWhiteSpace(sourcePngPath))
-            throw new ArgumentException("Source PNG path cannot be empty", nameof(sourcePngPath));
+            throw new ArgumentException("source png path cannot be empty", nameof(sourcePngPath));
 
         _blockTextureSources[key] = Path.GetFullPath(sourcePngPath);
         return this;
@@ -63,9 +63,9 @@ public class ResourcePack
     public ResourcePack AddItemTexture(string key, string sourcePngPath)
     {
         if (string.IsNullOrWhiteSpace(key))
-            throw new ArgumentException("Texture key cannot be empty", nameof(key));
+            throw new ArgumentException("texture key cannot be empty", nameof(key));
         if (string.IsNullOrWhiteSpace(sourcePngPath))
-            throw new ArgumentException("Source PNG path cannot be empty", nameof(sourcePngPath));
+            throw new ArgumentException("source PNG path cannot be empty", nameof(sourcePngPath));
 
         _itemTextureSources[key] = Path.GetFullPath(sourcePngPath);
         return this;

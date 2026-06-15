@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Determines what enchantments can be applied to the item. Not all enchantments will have an effect on all item components.
+/// </summary>
 [Trait("minecraft:enchantable", TraitSystem.TraitType.Item)]
 public interface IEnchantable : IItemTrait
 {

@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Configures what distance an entity must fall onto this block to cause the onEntityFallOn block custom component event to be sent to script. Custom components subscribed to the onEntityFallOn event on a block without the minecraft:entity_fall_on component use the default fall distance of 1 block.
+/// </summary>
 [Trait("minecraft:entity_fall_on", TraitSystem.TraitType.Block)]
 public interface IEntityFallOn : IBlockTrait
 {

@@ -2,7 +2,10 @@
     "format_version": "1.20.10",
     "minecraft:item": {
         "description": {
-            "identifier": "test:lasagna",
+            "identifier": {
+                "Namespace": "test",
+                "Name": "lasagna"
+            },
             "menu_category": {
                 "category": "items",
                 "hidden_in_commands": false

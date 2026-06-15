@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// [Note: This component is currently experimental]. Sets the particles that will be used when block is destroyed.
+/// </summary>
 [Trait("minecraft:destruction_particles", TraitSystem.TraitType.Block)]
 public interface IDestructionParticles : IBlockTrait
 {

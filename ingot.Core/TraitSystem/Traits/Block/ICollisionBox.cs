@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Defines the area of the block that collides with entities. If set to true, default values are used (a full 16x16x16 block). If set to false, the block's collision with entities is disabled, allowing entities to pass through. If this component is omitted, default values are used.
+/// </summary>
 [Trait("minecraft:collision_box", TraitSystem.TraitType.Block)]
 public interface ICollisionBox : IBlockTrait
 {

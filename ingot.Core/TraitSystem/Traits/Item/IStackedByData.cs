@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// The stacked_by_data component determines whether the same items with different aux values can stack. Also defines whether the item entities can merge while floating in the world.
+/// </summary>
 [Trait("minecraft:stacked_by_data", TraitSystem.TraitType.Item)]
 public interface IStackedByData : IItemTrait
 {

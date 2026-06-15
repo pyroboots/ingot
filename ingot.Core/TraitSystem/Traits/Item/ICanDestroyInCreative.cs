@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// The can_destroy_in_creative component determines if the item can be used by a player to break blocks when in creative mode.
+/// </summary>
 [Trait("minecraft:can_destroy_in_creative", TraitSystem.TraitType.Item)]
 public interface ICanDestroyInCreative : IItemTrait
 {

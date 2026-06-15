@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Describes the destructible by mining properties for this block. If set to true, the block will take the default number of seconds to destroy. If set to false, this block is indestructible by mining. If the component is omitted, the block will take the default number of seconds to destroy.
+/// </summary>
 [Trait("minecraft:destructible_by_mining", TraitSystem.TraitType.Block)]
 public interface IDestructibleByMining : IBlockTrait
 {

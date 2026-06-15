@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Compels an item to shoot projectiles, similarly to a bow or crossbow. Must have the minecraft:use_modifiers component in order to function properly.
+/// </summary>
 [Trait("minecraft:shooter", TraitSystem.TraitType.Item)]
 public interface IShooter : IItemTrait
 {

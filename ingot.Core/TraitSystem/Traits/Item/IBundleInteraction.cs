@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Enables the bundle-specific interaction scheme and tooltip for an item.
+/// </summary>
 [Trait("minecraft:bundle_interaction", TraitSystem.TraitType.Item)]
 public interface IBundleInteraction : IItemTrait
 {

@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Sets the wearable item component, which allows an item to be worn by a player in a specified equipment slot.
+/// </summary>
 [Trait("minecraft:wearable", TraitSystem.TraitType.Item)]
 public interface IWearable : IItemTrait
 {

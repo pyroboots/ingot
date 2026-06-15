@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Used by record items to play music.
+/// </summary>
 [Trait("minecraft:record", TraitSystem.TraitType.Item)]
 public interface IRecord : IItemTrait
 {

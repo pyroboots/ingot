@@ -2,7 +2,10 @@
     "format_version": "1.20.10",
     "minecraft:block": {
         "description": {
-            "identifier": "test:block_of_dense_lasagna",
+            "identifier": {
+                "Namespace": "test",
+                "Name": "block_of_dense_lasagna"
+            },
             "states": {
                 "test:radioactive": [
                     true,

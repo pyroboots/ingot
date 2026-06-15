@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Overrides the swing sounds emitted by the user.
+/// </summary>
 [Trait("minecraft:swing_sounds", TraitSystem.TraitType.Item)]
 public interface ISwingSounds : IItemTrait
 {

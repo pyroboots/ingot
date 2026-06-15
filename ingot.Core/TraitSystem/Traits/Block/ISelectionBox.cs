@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Defines the area of the block that is selected by the player's cursor (the outline shown when looking at the block). If set to true, default values are used (a full 16x16x16 block). If set to false, this block is not selectable by the player's cursor. If this component is omitted, default values are used.
+/// </summary>
 [Trait("minecraft:selection_box", TraitSystem.TraitType.Block)]
 public interface ISelectionBox : IBlockTrait
 {

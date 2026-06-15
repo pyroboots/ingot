@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Determines whether the item is immune to burning when dropped in fire or lava.
+/// </summary>
 [Trait("minecraft:fire_resistant", TraitSystem.TraitType.Item)]
 public interface IFireResistant : IItemTrait
 {

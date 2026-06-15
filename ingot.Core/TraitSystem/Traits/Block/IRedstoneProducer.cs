@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// If added to a block, indicates that it produces a redstone signal.
+/// </summary>
 [Trait("minecraft:redstone_producer", TraitSystem.TraitType.Block)]
 public interface IRedstoneProducer : IBlockTrait
 {

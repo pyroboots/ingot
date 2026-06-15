@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// The liquid_clipped component determines whether the item interacts with liquid blocks on use. To allow placement of blocks on liquids, see the 'placement_filter' block component.
+/// </summary>
 [Trait("minecraft:liquid_clipped", TraitSystem.TraitType.Item)]
 public interface ILiquidClipped : IItemTrait
 {

@@ -9,8 +9,9 @@ namespace ingot.Core.Behaviour;
 /// <summary>
 /// Implements basic properties of an item
 /// </summary>
-public abstract class Entity : IConcreteCompilable<Entity>
+public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
 {
+    /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
     public virtual Version FormatVersion => new("1.20.10");
     

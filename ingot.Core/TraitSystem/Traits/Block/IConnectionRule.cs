@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Defines whether other blocks such as fences, walls, bars, and glass panes are allowed to connect to this block.
+/// </summary>
 [Trait("minecraft:connection_rule", TraitSystem.TraitType.Block)]
 public interface IConnectionRule : IBlockTrait
 {

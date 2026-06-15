@@ -8,11 +8,9 @@ namespace ingot.Core.Behaviour.Recipe;
 /// <summary>
 /// Represents a crafting recipe with a specific pattern
 /// </summary>
-public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>
+public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
 {
-    /// <summary>
-    /// Identifier of the <see cref="ShapedRecipe"/>
-    /// </summary>
+    /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
     
     /// <summary>
@@ -57,7 +55,7 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>
         {
             json.Object("description", () =>
             {
-                json.Property("identifier", inst.Identifier);
+                json.Property("identifier", inst.Identifier.ToString());
             });
             json.Property("tags", inst.Tags);
 
@@ -76,7 +74,22 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>
                 foreach (string[] row in symbols.symbolized)
                     w.WriteValue(string.Join("", row));
             });
+            
+            json.Object("key", () =>
+            {
+                foreach (var kvp in symbols.mapping)
+                    json.Object(kvp.Key.ToString(), () => 
+                        json.Property("item", kvp.Value.ToString()));
+            });
+            
+            json.Object("result", () =>
+            {
+                json.Property("item", inst.Result.ToString());
+                json.Property("count", inst.ResultAmount);
+            });
         });
+        
+        w.WriteEndObject();
         
         CompilerState.Pop();
         return sw.ToString();

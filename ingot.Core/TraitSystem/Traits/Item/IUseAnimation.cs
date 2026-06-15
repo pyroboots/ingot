@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Use_animation specifies which animation is played when the player uses the item.
+/// </summary>
 [Trait("minecraft:use_animation", TraitSystem.TraitType.Item)]
 public interface IUseAnimation : IItemTrait
 {

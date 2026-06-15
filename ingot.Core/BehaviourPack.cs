@@ -1,5 +1,7 @@
 using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Block;
+using ingot.Core.Behaviour.Recipe;
+using ingot.Core.Common;
 using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core;
@@ -41,35 +43,49 @@ public class BehaviourPack
     /// List of <see cref="Item"/> types added to the pack
     /// </summary>
     public List<Item> Items = new();
+    /// <summary>
+    /// List of <see cref="Item"/> types added to the pack
+    /// </summary>
+    public List<IRecipe> Recipes = new();
 
     /// <summary>
     /// Adds an entity to the pack
     /// </summary>
     /// <typeparam name="TEntity">Entity class to add</typeparam>
-    public BehaviourPack AddEntity<TEntity>() where TEntity : Entity, new()
+    public Identifier AddEntity<TEntity>() where TEntity : Entity, new()
     {
         Entities.Add(new TEntity());
-        return this;
+        return new TEntity().Identifier;
     }
 
     /// <summary>
     /// Adds a block to the pack
     /// </summary>
     /// <typeparam name="TBlock">Block class to add</typeparam>
-    public BehaviourPack AddBlock<TBlock>() where TBlock : Block, new()
+    public Identifier AddBlock<TBlock>() where TBlock : Block, new()
     {
         Blocks.Add(new TBlock());
-        return this;
+        return new TBlock().Identifier;
     }
 
     /// <summary>
     /// Adds an item to the pack
     /// </summary>
     /// <typeparam name="TItem">Item class to add</typeparam>
-    public BehaviourPack AddItem<TItem>() where TItem : Item, new()
+    public Identifier AddItem<TItem>() where TItem : Item, new()
     {
         Items.Add(new TItem());
-        return this;
+        return new TItem().Identifier;
+    }
+
+    /// <summary>
+    /// Adds an item to the pack
+    /// </summary>
+    /// <typeparam name="TRecipe">Recipe class to add</typeparam>
+    public Identifier AddRecipe<TRecipe>() where TRecipe : IRecipe, new()
+    {
+        Recipes.Add(new TRecipe());
+        return new TRecipe().Identifier;
     }
 
     /// <summary>
@@ -85,6 +101,7 @@ public class BehaviourPack
         Directory.CreateDirectory(Path.Combine(dir, "blocks"));
         Directory.CreateDirectory(Path.Combine(dir, "items"));
         Directory.CreateDirectory(Path.Combine(dir, "scripts"));
+        Directory.CreateDirectory(Path.Combine(dir, "recipes"));
         CompilerState.Info("created folder structure");
         
         CompilerState.Info("compiling entities...");
@@ -115,11 +132,11 @@ public class BehaviourPack
             string file = Block.Compile(block.GetType());
             File.WriteAllText(path, file);
             
-            CompilerState.Info($"({c}/{Blocks.Count}) compiled entity {block.Identifier}");
+            CompilerState.Info($"({c}/{Blocks.Count}) compiled block {block.Identifier}");
         }
         CompilerState.Pop();
         
-        CompilerState.Info("compiling blocks...");
+        CompilerState.Info("compiling items...");
         CompilerState.Push("items");
         c = 0;
         foreach (Item item in Items)
@@ -131,9 +148,33 @@ public class BehaviourPack
             string file = Item.Compile(item.GetType());
             File.WriteAllText(path, file);
             
-            CompilerState.Info($"({c}/{Items.Count}) compiled entity {item.Identifier}");
+            CompilerState.Info($"({c}/{Items.Count}) compiled item {item.Identifier}");
         }
         CompilerState.Pop();
+        
+        CompilerState.Info("compiling recipes...");
+        CompilerState.Push("recipes");
+        c = 0;
+        foreach (IRecipe recipe in Recipes)
+        {
+            c++;
+            string filename = recipe.Identifier.Name;
+            
+            string path = Path.Combine(dir, "recipes", $"{filename}.json");
+            string file;
+            
+            if (recipe is ShapedRecipe)
+                file = ShapedRecipe.Compile(recipe.GetType());
+            else if (recipe is ShapelessRecipe)
+                file = ShapelessRecipe.Compile(recipe.GetType());
+            else throw new InvalidCastException("expected a recipe type");
+            
+            File.WriteAllText(path, file);
+            
+            CompilerState.Info($"({c}/{Recipes.Count}) compiled recipe {recipe.Identifier}");
+        }
+        CompilerState.Pop();
+        
         CompilerState.Pop();
     }
 }

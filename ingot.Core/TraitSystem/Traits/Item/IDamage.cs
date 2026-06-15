@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// The damage component determines how much extra damage the item does on attack.
+/// </summary>
 [Trait("minecraft:damage", TraitSystem.TraitType.Item)]
 public interface IDamage : IItemTrait
 {

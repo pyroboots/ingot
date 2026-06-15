@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Configures an item as a digging tool, allowing it to break specific blocks faster than normal. Define which blocks are affected and the speed multiplier for each.
+/// </summary>
 [Trait("minecraft:digger", TraitSystem.TraitType.Item)]
 public interface IDigger : IItemTrait
 {

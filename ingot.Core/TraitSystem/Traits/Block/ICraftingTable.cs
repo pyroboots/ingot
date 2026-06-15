@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Makes your block into a custom crafting table which enables the crafting table UI and the ability to craft recipes.
+/// </summary>
 [Trait("minecraft:crafting_table", TraitSystem.TraitType.Block)]
 public interface ICraftingTable : IBlockTrait
 {

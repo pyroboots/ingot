@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// A component describing how a block can consume and potentially propagate a redstone signal. This component is not available for block permutations.
+/// </summary>
 [Trait("minecraft:redstone_consumer", TraitSystem.TraitType.Block)]
 public interface IRedstoneConsumer : IBlockTrait
 {

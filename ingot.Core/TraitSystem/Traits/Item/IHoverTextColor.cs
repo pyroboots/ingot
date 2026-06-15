@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Determines the color of the item name when hovering over it.
+/// </summary>
 [Trait("minecraft:hover_text_color", TraitSystem.TraitType.Item)]
 public interface IHoverTextColor : IItemTrait
 {

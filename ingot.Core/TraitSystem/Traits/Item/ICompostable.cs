@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Specifies that an item is compostable and provides the chance of creating a composting layer in the composter.
+/// </summary>
 [Trait("minecraft:compostable", TraitSystem.TraitType.Item)]
 public interface ICompostable : IItemTrait
 {

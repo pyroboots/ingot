@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Makes an item throwable by the player, similar to a snowball or ender pearl. Use with minecraft:projectile to specify which entity is spawned when thrown.
+/// </summary>
 [Trait("minecraft:throwable", TraitSystem.TraitType.Item)]
 public interface IThrowable : IItemTrait
 {

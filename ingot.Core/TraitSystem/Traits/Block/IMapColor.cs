@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Sets the color of the block when rendered to a map. If this component is omitted, the block will not show up on the map.
+/// </summary>
 [Trait("minecraft:map_color", TraitSystem.TraitType.Block)]
 public interface IMapColor : IBlockTrait
 {

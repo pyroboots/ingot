@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Determines whether the item has the enchanted glint render effect on it.
+/// </summary>
 [Trait("minecraft:glint", TraitSystem.TraitType.Item)]
 public interface IGlint : IItemTrait
 {

@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Enables an item to emit effects when it receives damage. Because of this, the item also needs a minecraft:durability component.
+/// </summary>
 [Trait("minecraft:durability_sensor", TraitSystem.TraitType.Item)]
 public interface IDurabilitySensor : IItemTrait
 {

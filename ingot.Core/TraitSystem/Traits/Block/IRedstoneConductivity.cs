@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// The basic redstone properties of a block. If the component is not provided the default values are used.
+/// </summary>
 [Trait("minecraft:redstone_conductivity", TraitSystem.TraitType.Block)]
 public interface IRedstoneConductivity : IBlockTrait
 {

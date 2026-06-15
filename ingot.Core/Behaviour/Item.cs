@@ -10,11 +10,9 @@ namespace ingot.Core.Behaviour;
 /// <summary>
 /// Implements basic properties of an item
 /// </summary>
-public abstract class Item : IConcreteCompilable<Item>
+public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
 {
-    /// <summary>
-    /// Item identifier used in the game
-    /// </summary>
+    /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
     /// <summary>
     /// Minimum component version

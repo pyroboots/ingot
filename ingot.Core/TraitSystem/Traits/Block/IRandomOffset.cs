@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// This component defines a random offset for the block, seeded based on the block's position and the specified range and steps. It affects the block's rendered position, outline, and collision. If the random offset causes the collision box to extend beyond the bounds of a cube, the offset range will automatically adjust to keep the collision box within the cube. Culling for this block is performed without considering the random offset.
+/// </summary>
 [Trait("minecraft:random_offset", TraitSystem.TraitType.Block)]
 public interface IRandomOffset : IBlockTrait
 {

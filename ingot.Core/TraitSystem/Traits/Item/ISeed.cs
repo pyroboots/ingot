@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Sets the item as a seed that can be planted to grow crops. When used on valid ground, the seed will place the specified crop block.
+/// </summary>
 [Trait("minecraft:seed", TraitSystem.TraitType.Item)]
 public interface ISeed : IItemTrait
 {

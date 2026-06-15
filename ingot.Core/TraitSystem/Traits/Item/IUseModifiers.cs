@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Determines how long an item takes to use in combination with components such as Shooter, Throwable, or Food.
+/// </summary>
 [Trait("minecraft:use_modifiers", TraitSystem.TraitType.Item)]
 public interface IUseModifiers : IItemTrait
 {

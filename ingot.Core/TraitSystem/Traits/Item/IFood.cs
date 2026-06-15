@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Sets the item as a food component, allowing it to be edible to the player.
+/// </summary>
 [Trait("minecraft:food", TraitSystem.TraitType.Item)]
 public interface IFood : IItemTrait
 {

@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Adds a cooldown to an item, preventing it from being used again for a specified duration. Items sharing the same category will enter cooldown together when any one of them is used.
+/// </summary>
 [Trait("minecraft:cooldown", TraitSystem.TraitType.Item)]
 public interface ICooldown : IItemTrait
 {

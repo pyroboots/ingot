@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Determines which tags are included on a given item.
+/// </summary>
 [Trait("minecraft:tags", TraitSystem.TraitType.Item)]
 public interface ITags : IItemTrait
 {

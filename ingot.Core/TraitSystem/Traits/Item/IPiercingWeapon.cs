@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Allows an item to deal damage to all entities detected in a straight line along the user's view vector. Items with this component cannot destroy blocks, as the attack action always takes priority, regardless of what the user is looking at.
+/// </summary>
 [Trait("minecraft:piercing_weapon", TraitSystem.TraitType.Item)]
 public interface IPiercingWeapon : IItemTrait
 {

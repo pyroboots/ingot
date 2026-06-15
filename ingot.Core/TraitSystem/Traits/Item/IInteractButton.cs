@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// A boolean or string that determines if the interact button is shown in touch controls, and what text is displayed on the button. When set to 'true', the default 'Use Item' text will be used.
+/// </summary>
 [Trait("minecraft:interact_button", TraitSystem.TraitType.Item)]
 public interface IInteractButton : IItemTrait
 {

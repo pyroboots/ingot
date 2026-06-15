@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Duration, in seconds, of the item's swing animation played when mining or attacking. Affects visuals only and does not impact attack frequency or other gameplay mechanics.
+/// </summary>
 [Trait("minecraft:swing_duration", TraitSystem.TraitType.Item)]
 public interface ISwingDuration : IItemTrait
 {

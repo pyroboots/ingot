@@ -1,9 +1,9 @@
+using System.Text.Json.Serialization;
 using ingot.Core;
 using Newtonsoft.Json;
 
 namespace ingot.Core.Common;
 
-using System;
 using System.Text.RegularExpressions;
 
 /// <summary>

@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Allows this item to be used as fuel in a furnace to 'cook' other items.
+/// </summary>
 [Trait("minecraft:fuel", TraitSystem.TraitType.Item)]
 public interface IFuel : IItemTrait
 {

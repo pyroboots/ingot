@@ -18,5 +18,5 @@ public interface IConcreteCompilable<TType> where TType : IConcreteCompilable<TT
     /// </summary>
     /// <typeparam name="TConcreteType"></typeparam>
     /// <returns></returns>
-    static virtual string Compile<TConcreteType>() where TConcreteType : TType, new() => TType.Compile(typeof(TConcreteType));
+    static string Compile<TConcreteType>() where TConcreteType : TType, new() => TType.Compile(typeof(TConcreteType));
 }

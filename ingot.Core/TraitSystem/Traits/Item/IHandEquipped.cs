@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// The hand_equipped component determines if an item is rendered like a tool while it is in a player's hand.
+/// </summary>
 [Trait("minecraft:hand_equipped", TraitSystem.TraitType.Item)]
 public interface IHandEquipped : IItemTrait
 {

@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Sets how much damage the item can take before breaking, and allows the item to be combined at an anvil, grindstone, or crafting table.
+/// </summary>
 [Trait("minecraft:durability", TraitSystem.TraitType.Item)]
 public interface IDurability : IItemTrait
 {

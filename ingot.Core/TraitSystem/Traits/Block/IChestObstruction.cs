@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// This defines how a block reacts to a chest being opened underneath it.
+/// </summary>
 [Trait("minecraft:chest_obstruction", TraitSystem.TraitType.Block)]
 public interface IChestObstruction : IBlockTrait
 {

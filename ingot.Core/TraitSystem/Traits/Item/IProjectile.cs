@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Defines an item as a projectile that can be shot from dispensers or used as ammunition with minecraft:shooter. When combined with minecraft:throwable, this component specifies which entity is spawned when the item is thrown.
+/// </summary>
 [Trait("minecraft:projectile", TraitSystem.TraitType.Item)]
 public interface IProjectile : IItemTrait
 {

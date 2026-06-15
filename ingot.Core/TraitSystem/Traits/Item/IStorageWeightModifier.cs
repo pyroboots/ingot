@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Specifies the maximum weight limit that a storage item can hold.
+/// </summary>
 [Trait("minecraft:storage_weight_modifier", TraitSystem.TraitType.Item)]
 public interface IStorageWeightModifier : IItemTrait
 {

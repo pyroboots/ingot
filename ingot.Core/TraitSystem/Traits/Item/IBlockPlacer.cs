@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Sets the item as a placer item component for blocks. Items with this component will place a block when used.
+/// </summary>
 [Trait("minecraft:block_placer", TraitSystem.TraitType.Item)]
 public interface IBlockPlacer : IItemTrait
 {

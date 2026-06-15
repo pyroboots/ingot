@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// This defines how a block reacts to being moved by another block like a piston.
+/// </summary>
 [Trait("minecraft:movable", TraitSystem.TraitType.Block)]
 public interface IMovable : IBlockTrait
 {

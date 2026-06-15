@@ -8,11 +8,9 @@ namespace ingot.Core.Behaviour.Recipe;
 /// <summary>
 /// Represents a crafting recipe with no pattern
 /// </summary>
-public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>
+public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IRecipe
 {
-    /// <summary>
-    /// Identifier of the <see cref="ShapelessRecipe"/>
-    /// </summary>
+    /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
     
     /// <summary>
@@ -53,7 +51,7 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>
         {
             json.Object("description", () =>
             {
-                json.Property("identifier", inst.Identifier);
+                json.Property("identifier", inst.Identifier.ToString());
             });
             json.Property("tags", inst.Tags);
             
@@ -74,6 +72,8 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>
             
             json.Property("result", inst.Result);
         });
+        
+        w.WriteEndObject();
         
         CompilerState.Pop();
         return sw.ToString();

@@ -3,7 +3,7 @@
     "header": {
         "name": "ingot example",
         "description": "Example pack made with ingot",
-        "uuid": "8f2067cb-1722-41ff-8e28-0fa64144f3f1",
+        "uuid": "bc9da51d-a787-4d94-bed5-3fda5789b50a",
         "version": [
             1,
             0,
@@ -19,7 +19,7 @@
         {
             "description": "ingot example Resources",
             "type": "resources",
-            "uuid": "a954a135-58e8-4930-acce-1c85af93a316",
+            "uuid": "e66e2539-37d1-4960-a652-20b6db8065b1",
             "version": [
                 1,
                 0,
@@ -29,7 +29,7 @@
     ],
     "dependencies": [
         {
-            "uuid": "18bf423d-0a46-44b1-b07e-9c587c404adc",
+            "uuid": "329593bf-76ad-4f75-8082-f4489eaa7238",
             "version": [
                 1,
                 0,

@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Determines interactions the block will have with different precipitations. Three possible values: obrain, obstruct_rain_accumulate_snow and none.
+/// </summary>
 [Trait("minecraft:precipitation_interactions", TraitSystem.TraitType.Block)]
 public interface IPrecipitationInteractions : IBlockTrait
 {

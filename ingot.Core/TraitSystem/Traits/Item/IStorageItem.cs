@@ -6,6 +6,9 @@ using System.Numerics;
 using System.Collections.Generic;
 using ingot.Core.Common;
 
+/// <summary>
+/// Enables an item to store data of the dynamic container associated with it. A dynamic container is a container for storing items that is linked to an item instead of a block or an entity.
+/// </summary>
 [Trait("minecraft:storage_item", TraitSystem.TraitType.Item)]
 public interface IStorageItem : IItemTrait
 {

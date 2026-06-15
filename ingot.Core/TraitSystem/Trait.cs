@@ -26,9 +26,15 @@ public record TraitProperty
 /// <summary>
 /// Contains reflected data of a trait interface
 /// </summary>
-public class Trait : Identifiable, ICompileableFragment
+public class Trait : IIdentifiable, ICompileableFragment
 {
-    public Trait(Identifier identifier, Type root) : base(identifier) => RootTrait = root;
+    /// <inheritdoc/>
+    public Identifier Identifier { get; }
+    public Trait(Identifier identifier, Type root)
+    {
+        Identifier = identifier;
+        RootTrait = root;
+    }
 
     /// <summary>
     /// List of properties in a trait at runtime
