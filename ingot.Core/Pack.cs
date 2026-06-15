@@ -73,17 +73,17 @@ public class Pack
     {
         Stopwatch timer = Stopwatch.StartNew();
         
-        CompileTimeLogging.Push(Name);
-        CompileTimeLogging.ShowInfoLogs = verbose;
-        CompileTimeLogging.Info("pack compilation started");
+        CompilerState.Push(Name);
+        CompilerState.ShowInfoLogs = verbose;
+        CompilerState.Info("pack compilation started");
         
-        CompileTimeLogging.Info("compiling bp...");
+        CompilerState.Info("compiling bp...");
         BehaviourPack.Compile(Path.Combine(outputDir, "bp"));
-        CompileTimeLogging.Info($"compiled bp");
+        CompilerState.Info($"compiled bp");
         
-        CompileTimeLogging.Info("compiling rp...");
+        CompilerState.Info("compiling rp...");
         ResourcePack.Compile(Path.Combine(outputDir, "rp"));
-        CompileTimeLogging.Info($"compiled rp");
+        CompilerState.Info($"compiled rp");
         
         using (StringWriter sw = new())
         {
@@ -152,7 +152,7 @@ public class Pack
             
             File.WriteAllText(Path.Combine(outputDir, "bp", "manifest.json"), sw.ToString());
         }
-        CompileTimeLogging.Info("compiled bp manifest");
+        CompilerState.Info("compiled bp manifest");
         
         using (StringWriter sw = new())
         {
@@ -205,7 +205,7 @@ public class Pack
             
             File.WriteAllText(Path.Combine(outputDir, "rp", "manifest.json"), sw.ToString());
         }
-        CompileTimeLogging.Info("compiled rp manifest");
+        CompilerState.Info("compiled rp manifest");
         
         if (PackIcon is not null)
         {
@@ -217,13 +217,13 @@ public class Pack
 
         if (verbose)
         {
-            File.WriteAllText(Path.Combine(outputDir, "ingot.log"), string.Join('\n', CompileTimeLogging.GetLogs()));
+            File.WriteAllText(Path.Combine(outputDir, "ingot.log"), string.Join('\n', CompilerState.GetLogs()));
             Console.WriteLine();
-            CompileTimeLogging.Info($"pack compiled in {timer.ElapsedMilliseconds}ms");
-            CompileTimeLogging.Info($"ingot compilation log available at {Path.Combine(outputDir, "ingot.log")}");
+            CompilerState.Info($"pack compiled in {timer.ElapsedMilliseconds}ms");
+            CompilerState.Info($"ingot compilation log available at {Path.Combine(outputDir, "ingot.log")}");
         }
         
-        CompileTimeLogging.ShowInfoLogs = false;
-        CompileTimeLogging.Pop();
+        CompilerState.ShowInfoLogs = false;
+        CompilerState.Pop();
     }
 }

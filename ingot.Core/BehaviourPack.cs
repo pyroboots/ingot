@@ -78,17 +78,17 @@ public class BehaviourPack
     /// <param name="dir">Output directory</param>
     public void Compile(string dir)
     {
-        CompileTimeLogging.Push("bp");
+        CompilerState.Push("bp");
         
         Directory.CreateDirectory(dir);
         Directory.CreateDirectory(Path.Combine(dir, "entities"));
         Directory.CreateDirectory(Path.Combine(dir, "blocks"));
         Directory.CreateDirectory(Path.Combine(dir, "items"));
         Directory.CreateDirectory(Path.Combine(dir, "scripts"));
-        CompileTimeLogging.Info("created folder structure");
+        CompilerState.Info("created folder structure");
         
-        CompileTimeLogging.Info("compiling entities...");
-        CompileTimeLogging.Push("entities");
+        CompilerState.Info("compiling entities...");
+        CompilerState.Push("entities");
         int c = 0;
         foreach (Entity entity in Entities)
         {
@@ -99,12 +99,12 @@ public class BehaviourPack
             string file = Entity.Compile(entity.GetType());
             File.WriteAllText(path, file);
             
-            CompileTimeLogging.Info($"({c}/{Entities.Count}) compiled entity {entity.Identifier}");
+            CompilerState.Info($"({c}/{Entities.Count}) compiled entity {entity.Identifier}");
         }
-        CompileTimeLogging.Pop();
+        CompilerState.Pop();
 
-        CompileTimeLogging.Info("compiling blocks...");
-        CompileTimeLogging.Push("blocks");
+        CompilerState.Info("compiling blocks...");
+        CompilerState.Push("blocks");
         c = 0;
         foreach (Block block in Blocks)
         {
@@ -115,12 +115,12 @@ public class BehaviourPack
             string file = Block.Compile(block.GetType());
             File.WriteAllText(path, file);
             
-            CompileTimeLogging.Info($"({c}/{Blocks.Count}) compiled entity {block.Identifier}");
+            CompilerState.Info($"({c}/{Blocks.Count}) compiled entity {block.Identifier}");
         }
-        CompileTimeLogging.Pop();
+        CompilerState.Pop();
         
-        CompileTimeLogging.Info("compiling blocks...");
-        CompileTimeLogging.Push("items");
+        CompilerState.Info("compiling blocks...");
+        CompilerState.Push("items");
         c = 0;
         foreach (Item item in Items)
         {
@@ -131,9 +131,9 @@ public class BehaviourPack
             string file = Item.Compile(item.GetType());
             File.WriteAllText(path, file);
             
-            CompileTimeLogging.Info($"({c}/{Items.Count}) compiled entity {item.Identifier}");
+            CompilerState.Info($"({c}/{Items.Count}) compiled entity {item.Identifier}");
         }
-        CompileTimeLogging.Pop();
-        CompileTimeLogging.Pop();
+        CompilerState.Pop();
+        CompilerState.Pop();
     }
 }

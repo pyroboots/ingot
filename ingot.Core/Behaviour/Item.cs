@@ -10,7 +10,7 @@ namespace ingot.Core.Behaviour;
 /// <summary>
 /// Implements basic properties of an item
 /// </summary>
-public abstract class Item
+public abstract class Item : IConcreteCompilable<Item>
 {
     /// <summary>
     /// Item identifier used in the game
@@ -21,9 +21,32 @@ public abstract class Item
     /// </summary>
     public virtual Version FormatVersion => new("1.20.10");
 
-    // header props
+    /// <summary>
+    /// Creative inventory tabs
+    /// </summary>
     public enum CatalogueCategory 
-    { Construction, Nature, Equipment, Items, None }
+    { 
+        /// <summary>
+        /// Construction tab
+        /// </summary>
+        Construction, 
+        /// <summary>
+        /// Nature tabs
+        /// </summary>
+        Nature, 
+        /// <summary>
+        /// Equipment tab
+        /// </summary>
+        Equipment, 
+        /// <summary>
+        /// Items tab
+        /// </summary>
+        Items, 
+        /// <summary>
+        /// Will not appear in the creative inventory
+        /// </summary>
+        None 
+    }
     /// <summary>
     /// Which section of the creative inventory the item appears in
     /// </summary>
@@ -53,17 +76,17 @@ public abstract class Item
     /// Shortcut for the <c>minecraft:allow_off_hand</c> component
     /// </summary>
     public virtual bool AllowOffhand => false;
-
+    
     /// <summary>
-    /// Compiles the <typeparamref name="TItem"/> to JSON
+    /// Compiles the <see cref="Item"/> (as <paramref name="tType"/>) to JSON
     /// </summary>
-    /// <typeparam name="TItem">The type class to compile</typeparam>
-    public static string Compile<TItem>() where TItem : Item, new() => Compile(typeof(TItem));
-    public static string Compile(Type tItem)
+    /// <param name="tType">Concrete type of <see cref="Item"/></param>
+    /// <returns>Compiled JSON</returns>
+    public static string Compile(Type tType)
     {
-        Item inst = (Activator.CreateInstance(tItem) as Item)!;
+        Item inst = (Activator.CreateInstance(tType) as Item)!;
         
-        CompileTimeLogging.Push(inst.Identifier.ToString());
+        CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
         JsonTextWriter w = new(sw);
@@ -75,14 +98,14 @@ public abstract class Item
         Property(ref w, "format_version", inst.FormatVersion.ToString());
         Object(ref w, "minecraft:item", w =>
         {
-            CompileTimeLogging.Push("description");
+            CompilerState.Push("description");
             Object(ref w, "description", w =>
             {
                 Property(ref w, "identifier", inst.Identifier);
                 Object(ref w, "menu_category", w =>
                 {
                     if (inst.Group?.Length > 256)
-                        CompileTimeLogging.Warn(ref w, "item catalogue group exceeds 256 char limit");
+                        CompilerState.Warn(ref w, "item catalogue group exceeds 256 char limit");
 
                     Property(ref w, "group", inst.Group);
                     string categoryName = Enum.GetName(typeof(CatalogueCategory), inst.Category)!.ToLower();
@@ -90,9 +113,9 @@ public abstract class Item
                     Property(ref w, "hidden_in_commands", inst.HiddenInCommands);
                 });
             });
-            CompileTimeLogging.Pop();
+            CompilerState.Pop();
 
-            CompileTimeLogging.Push("components");
+            CompilerState.Push("components");
             Object(ref w, "components", w =>
             {
                 Object(ref w, "minecraft:icon", w => Property(ref w, "texture", inst.Texture));
@@ -100,20 +123,20 @@ public abstract class Item
                 Object(ref w, "minecraft:max_stack_size", w => Property(ref w, "value", inst.MaxStackSize));
                 Object(ref w, "minecraft:allow_off_hand", w => Property(ref w, "value", inst.AllowOffhand));
 
-                CompileTimeLogging.Info("compiling traits...");
-                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tItem, TraitSystem.TraitSystem.TraitType.Item);
+                CompilerState.Info("compiling traits...");
+                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tType, TraitSystem.TraitSystem.TraitType.Item);
                 int c = 0;
                 foreach (Trait t in traits)
                 {
                     c++;
                     t.Compile(ref w);
-                    CompileTimeLogging.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
+                    CompilerState.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
                 }
             });
-            CompileTimeLogging.Pop();
+            CompilerState.Pop();
         });
 
-        CompileTimeLogging.Pop();
+        CompilerState.Pop();
 
         return sw.ToString();
     }

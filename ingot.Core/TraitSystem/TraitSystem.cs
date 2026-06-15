@@ -44,10 +44,10 @@ public static class TraitSystem
             if (traitAttr == null)
                 continue;
             
-            CompileTimeLogging.Push(traitAttr.Identifier.ToString());
+            CompilerState.Push(traitAttr.Identifier.ToString());
             if (traitAttr.Constraint != constraint)
             {
-                CompileTimeLogging.Warn(ref dummyWriter, 
+                CompilerState.Warn(ref dummyWriter, 
                     $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint}), omitting from compiled json");
                 continue;
             }
@@ -58,7 +58,7 @@ public static class TraitSystem
             // get all properties on the interface including inherited
             foreach (PropertyInfo property in iface.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                CompileTimeLogging.Push(property.Name);
+                CompilerState.Push(property.Name);
                 
                 TraitPropertyAttribute? propertyAttr = property.GetCustomAttribute<TraitPropertyAttribute>();
                 if (propertyAttr == null)
@@ -69,7 +69,7 @@ public static class TraitSystem
                 MethodInfo? getter = property.GetGetMethod();
                 if (getter == null)
                 {
-                    CompileTimeLogging.Warn(ref dummyWriter, $"property {property.Name} has no getter, omitting");
+                    CompilerState.Warn(ref dummyWriter, $"property {property.Name} has no getter, omitting");
                     continue;
                 }
     
@@ -81,13 +81,13 @@ public static class TraitSystem
                 }
                 catch (Exception ex)
                 {
-                    CompileTimeLogging.Warn(ref dummyWriter, $"failed to get value for property {property.Name}: {ex.Message}");
+                    CompilerState.Warn(ref dummyWriter, $"failed to get value for property {property.Name}: {ex.Message}");
                 }
     
                 if (value == null || (value is string str && string.IsNullOrEmpty(str)))
-                    CompileTimeLogging.Warn(ref dummyWriter, "value is null or empty, entry omitted from compiled json");
+                    CompilerState.Warn(ref dummyWriter, "value is null or empty, entry omitted from compiled json");
     
-                CompileTimeLogging.Pop();
+                CompilerState.Pop();
     
                 TraitProperty traitProperty = new TraitProperty(
                     path: propertyAttr.Path,
@@ -98,7 +98,7 @@ public static class TraitSystem
                 trait.Properties.Add(traitProperty);
             }
             
-            CompileTimeLogging.Pop();
+            CompilerState.Pop();
         }
     
         return traits;
@@ -112,7 +112,7 @@ public static class TraitSystem
     /// <typeparam name="TTrait">Trait interface to reflect in <typeparamref name="TObject"/></typeparam>
     public static Trait GetTrait<TObject, TTrait>(TraitType constraint) where TTrait : class
     {
-        CompileTimeLogging.Push("TraitSystem");
+        CompilerState.Push("TraitSystem");
         
         JsonTextWriter? dummyWriter = null;
         Type objectType = typeof(TObject);
@@ -126,7 +126,7 @@ public static class TraitSystem
         if (traitAttr == null)
         {
             string err = $"type {interfaceType.Name} is not a trait";
-            CompileTimeLogging.Warn(ref dummyWriter, err);
+            CompilerState.Warn(ref dummyWriter, err);
             throw new ArgumentException(err);
         }
     
@@ -134,7 +134,7 @@ public static class TraitSystem
         {
             string err =
                 $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint})";
-            CompileTimeLogging.Warn(ref dummyWriter, err);
+            CompilerState.Warn(ref dummyWriter, err);
             throw new ArgumentException(err);
         }
         
@@ -142,7 +142,7 @@ public static class TraitSystem
         if (!interfaceType.IsAssignableFrom(objectType))
         {
             string err = $"{objectType.Name} does not implement trait interface {interfaceType.Name}";
-            CompileTimeLogging.Warn(ref dummyWriter, err);
+            CompilerState.Warn(ref dummyWriter, err);
             throw new ArgumentException(err);
         }
     
@@ -151,20 +151,20 @@ public static class TraitSystem
         // get props
         foreach (PropertyInfo property in interfaceType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
-            CompileTimeLogging.Push(property.Name);
+            CompilerState.Push(property.Name);
             
             TraitPropertyAttribute? propertyAttr = property.GetCustomAttribute<TraitPropertyAttribute>();
             if (propertyAttr == null)
             {
-                CompileTimeLogging.Pop();
+                CompilerState.Pop();
                 continue;
             }
     
             MethodInfo? getter = property.GetGetMethod();
             if (getter == null)
             {
-                CompileTimeLogging.Warn(ref dummyWriter, $"property {property.Name} has no getter, omitting");
-                CompileTimeLogging.Pop();
+                CompilerState.Warn(ref dummyWriter, $"property {property.Name} has no getter, omitting");
+                CompilerState.Pop();
                 continue;
             }
     
@@ -175,14 +175,14 @@ public static class TraitSystem
             }
             catch (Exception ex)
             {
-                CompileTimeLogging.Warn(ref dummyWriter, 
+                CompilerState.Warn(ref dummyWriter, 
                     $"failed to get value for property {property.Name}: {ex.Message}");
             }
     
             if (value == null || (value is string str && string.IsNullOrEmpty(str)))
-                CompileTimeLogging.Warn(ref dummyWriter, $"value for {property.Name} is null or empty");
+                CompilerState.Warn(ref dummyWriter, $"value for {property.Name} is null or empty");
     
-            CompileTimeLogging.Pop();
+            CompilerState.Pop();
     
             TraitProperty traitProperty = new TraitProperty(
                 path: propertyAttr.Path,
@@ -193,7 +193,7 @@ public static class TraitSystem
             trait.Properties.Add(traitProperty);
         }
     
-        CompileTimeLogging.Pop();
+        CompilerState.Pop();
         return trait;
     }
 }

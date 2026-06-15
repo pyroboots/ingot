@@ -37,7 +37,7 @@ public class Identifier : IEquatable<Identifier>
     {
         if (string.IsNullOrWhiteSpace(fullIdentifier))
         {
-            CompileTimeLogging.Warn(ref _dummyWriter, $"identifier cannot be empty or whitespace");
+            CompilerState.Warn(ref _dummyWriter, $"identifier cannot be empty or whitespace");
             Namespace = "minecraft";
             Name = "unknown";
             return;
@@ -64,13 +64,13 @@ public class Identifier : IEquatable<Identifier>
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            CompileTimeLogging.Warn(ref _dummyWriter, $"identifier {partName} cannot be empty");
+            CompilerState.Warn(ref _dummyWriter, $"identifier {partName} cannot be empty");
             return;
         }
 
         if (!ValidPartRegex.IsMatch(value))
         {
-            CompileTimeLogging.Warn(ref _dummyWriter,
+            CompilerState.Warn(ref _dummyWriter,
                 $"invalid identifier {partName} ({value}) " +
                 "only lowercase letters, numbers, underscores are allowed");
         }

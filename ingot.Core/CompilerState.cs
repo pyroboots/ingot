@@ -5,7 +5,7 @@ namespace ingot.Core;
 /// <summary>
 /// Internal use class for emitting compile time logs
 /// </summary>
-public static class CompileTimeLogging
+public static class CompilerState
 {
     private static Stack<string> _traceStack = new(["pack"]);
     private static List<string> _logs = new();
@@ -22,6 +22,11 @@ public static class CompileTimeLogging
     /// Whether logs produced by <see cref="Info"/> appear in the console
     /// </summary>
     public static bool ShowInfoLogs = false;
+
+    /// <summary>
+    /// Current pack being compiled. Useful for <see cref="BehaviourPack"/> to generate content for <see cref="ResourcePack"/> and vice versa
+    /// </summary>
+    public static Pack? CurrentPack = null; 
 
     private static string _getTrace() => string.Join('/', _traceStack.ToArray().Reverse());
 
@@ -46,6 +51,10 @@ public static class CompileTimeLogging
         }
     }
 
+    /// <summary>
+    /// Logs information in the compilation process
+    /// </summary>
+    /// <param name="msg">Info</param>
     public static void Info(string msg)
     {
         string log = $"(i) [{_getTrace()}] {msg}";
@@ -54,5 +63,8 @@ public static class CompileTimeLogging
         if (ShowInfoLogs) Console.WriteLine(log);
     }
     
+    /// <summary>
+    /// Returns logs as a list
+    /// </summary>
     public static List<string> GetLogs() => _logs;
 }

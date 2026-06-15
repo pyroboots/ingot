@@ -6,17 +6,24 @@ using Version = System.Version;
 
 namespace ingot.Core.Behaviour;
 
-public abstract class Entity
+/// <summary>
+/// Implements basic properties of an item
+/// </summary>
+public abstract class Entity : IConcreteCompilable<Entity>
 {
     public abstract Identifier Identifier { get; }
     public virtual Version FormatVersion => new("1.20.10");
     
-    public static string Compile<TEntity>() where TEntity : Entity, new() => Compile(typeof(TEntity));
-    public static string Compile(Type tEntity)
+    /// <summary>
+    /// Compiles the <see cref="Entity"/> (as <paramref name="tType"/>) to JSON
+    /// </summary>
+    /// <param name="tType">Concrete type of <see cref="Entity"/></param>
+    /// <returns>Compiled JSON</returns>
+    public static string Compile(Type tType)
     {
-        Entity inst = (Activator.CreateInstance(tEntity) as Entity)!;
+        Entity inst = (Activator.CreateInstance(tType) as Entity)!;
         
-        CompileTimeLogging.Push(inst.Identifier.ToString());
+        CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
         JsonTextWriter w = new(sw);
@@ -33,7 +40,7 @@ public abstract class Entity
         
         w.WriteEndObject();
 
-        CompileTimeLogging.Pop();
+        CompilerState.Pop();
 
         return sw.ToString();
     }

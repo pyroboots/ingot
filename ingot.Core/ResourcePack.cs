@@ -75,7 +75,7 @@ public class ResourcePack
     /// <param name="dir">Output directory</param>
     public void Compile(string dir)
     {
-        CompileTimeLogging.Push("rp");
+        CompilerState.Push("rp");
         
         Directory.CreateDirectory(dir);
         Directory.CreateDirectory(Path.Combine(dir, "entity"));
@@ -85,23 +85,23 @@ public class ResourcePack
             Directory.CreateDirectory(Path.Combine(dir, "textures", "entity"));
             Directory.CreateDirectory(Path.Combine(dir, "textures", "items"));
             Directory.CreateDirectory(Path.Combine(dir, "textures", "particle"));
-        CompileTimeLogging.Info("created folder structure");
+        CompilerState.Info("created folder structure");
 
         EmitTextureAtlas("terrain_texture.json", _blockTextureSources, "blocks", dir);
         EmitTextureAtlas("item_texture.json", _itemTextureSources, "items", dir);
 
         // TODO: models, particles, sounds, entity resources, flipbooks, etc.
-        CompileTimeLogging.Pop();
+        CompilerState.Pop();
     }
 
     private static void EmitTextureAtlas(string atlasFileName, Dictionary<string, string> sources, string subdir, string outputDir)
     {
-        CompileTimeLogging.Push(atlasFileName);
+        CompilerState.Push(atlasFileName);
 
         if (sources.Count == 0)
         {
-            CompileTimeLogging.Info("no textures to compile");
-            CompileTimeLogging.Pop();
+            CompilerState.Info("no textures to compile");
+            CompilerState.Pop();
             return;
         }
 
@@ -122,16 +122,16 @@ public class ResourcePack
             try
             {
                 if (!File.Exists(srcPath))
-                    CompileTimeLogging.Warn(ref dummyWriter, $"source texture not found for key '{key}': {srcPath}");
+                    CompilerState.Warn(ref dummyWriter, $"source texture not found for key '{key}': {srcPath}");
                 else
                     File.Copy(srcPath, targetFull, overwrite: true);
 
                 textureDataEntries[key] = new { textures = rpPath };
-                CompileTimeLogging.Info($"({c}/{sources.Count}) registered texture '{key}' -> {rpPath}");
+                CompilerState.Info($"({c}/{sources.Count}) registered texture '{key}' -> {rpPath}");
             }
             catch (Exception ex)
             {
-                CompileTimeLogging.Warn(ref dummyWriter, $"failed to process texture key '{key}': {ex.Message}");
+                CompilerState.Warn(ref dummyWriter, $"failed to process texture key '{key}': {ex.Message}");
             }
         }
 
@@ -156,7 +156,7 @@ public class ResourcePack
             File.WriteAllText(outPath, sw.ToString());
         }
 
-        CompileTimeLogging.Info($"wrote {atlasFileName} with {textureDataEntries.Count} entries");
-        CompileTimeLogging.Pop();
+        CompilerState.Info($"wrote {atlasFileName} with {textureDataEntries.Count} entries");
+        CompilerState.Pop();
     }
 }
