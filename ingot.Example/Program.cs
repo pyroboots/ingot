@@ -8,10 +8,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
-        bp.AddItem<LasagnaItem>();
-        bp.AddBlock<DenseLasagnaBlock>();
-        bp.AddRecipe<LasagnaRecipe>();
+        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+            .AddItem<LasagnaItem>()
+            // not needed as DenseLasagnaBlock will auto register it for us! :sparkle:
+            //.AddLootTable<DenseLasagnaLoot>()
+            .AddBlock<DenseLasagnaBlock>()
+            .AddRecipe<LasagnaRecipe>();
         
         ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
             .AddBlockTexture("block_of_dense_lasagna", "./dense_lasagna.png")

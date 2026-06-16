@@ -94,7 +94,7 @@ class Program
 }
 ```
 
-See the [`ingot.Example`](../ingot.Example) project for a more complete working example that includes blocks, items, recipes, textures, and the full resource pack side. See the [Resource Packs & Textures](docs/resource-packs.md) and [Recipes](docs/recipe.md) guides for more detail.
+See the [`ingot.Example`](../ingot.Example) project for a more complete working example that includes blocks, items, recipes, loot tables, textures, and the full resource pack side. See the [Resource Packs & Textures](docs/resource-packs.md), [Recipes](docs/recipe.md), and [Loot Tables](docs/loot-table.md) guides for more detail.
 
 ## 🛠️ Project Structure
 

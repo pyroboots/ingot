@@ -1,3 +1,4 @@
+using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using Newtonsoft.Json;
@@ -14,6 +15,10 @@ public abstract class BlockPermutation
     /// Molang condition that determines when this permutation is active
     /// </summary>
     public abstract string Condition { get; }
+    /// <summary>
+    /// Parent <see cref="Block"/> of this <see cref="BlockPermutation"/>
+    /// </summary>
+    public abstract Block Parent { get; }
     
     /// <summary>
     /// Shortcut for the <c>minecraft:display_name</c> component
@@ -38,7 +43,7 @@ public abstract class BlockPermutation
     /// <summary>
     /// Shortcut for the <c>minecraft:loot</c> component
     /// </summary>
-    public virtual string? Loot => null;
+    public virtual LootTable? Loot => null;
     /// <summary>
     /// Texture and materials for the <see cref="BlockPermutation"/>. Shortcut for the <c>minecraft:material_instances</c> component
     /// </summary>
@@ -74,7 +79,17 @@ public abstract class BlockPermutation
             json.Property("minecraft:light_emission", permutation.LightEmission);
             json.Property("minecraft:light_dampening", permutation.LightDampening);
             json.Property("minecraft:replaceable", permutation.Replaceable);
-            json.Property("minecraft:loot", permutation.Loot);
+            
+            if (permutation.Loot is not null)
+            {
+                if (CompilerState.CurrentPack is not null
+                    && CompilerState.CurrentPack.BehaviourPack.LootTables.All(t => t.GetType() != permutation.Loot.GetType()))
+                    // with loot because its not a component, and instead a reference to a compiled file, we
+                    // just add it to the compilation list if its not already there
+                    CompilerState.CurrentPack.BehaviourPack.AddLootTable(permutation.Loot.GetType());
+
+                json.Property("minecraft:loot", permutation.Loot.RelativePath);
+            }
             
             if (permutation.MaterialInstances is not null)
                 permutation.MaterialInstances.Value.Compile(ref json.Writer);

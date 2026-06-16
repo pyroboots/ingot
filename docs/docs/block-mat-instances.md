@@ -95,6 +95,7 @@ Use these for leaves, grass, vines, waterlogged blocks, etc.
 public class GlowingPermutation : BlockPermutation
 {
     public override string Condition => "q.get_block_state('mynamespace:lit') == true";
+    public override Block Parent => new MyBlock();
 
     public override MaterialInstances? MaterialInstances => new()
     {

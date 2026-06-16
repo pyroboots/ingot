@@ -1,5 +1,6 @@
 using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Block;
+using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
 using Version = ingot.Core.Common.Version;
@@ -44,48 +45,105 @@ public class BehaviourPack
     /// </summary>
     public List<Item> Items = new();
     /// <summary>
-    /// List of <see cref="Item"/> types added to the pack
+    /// List of <see cref="IRecipe"/> types added to the pack
     /// </summary>
     public List<IRecipe> Recipes = new();
+    /// <summary>
+    /// List of <see cref="LootTable"/> types added to the pack
+    /// </summary>
+    public List<LootTable> LootTables = new();
 
     /// <summary>
     /// Adds an entity to the pack
     /// </summary>
     /// <typeparam name="TEntity">Entity class to add</typeparam>
-    public Identifier AddEntity<TEntity>() where TEntity : Entity, new()
+    public BehaviourPack AddEntity<TEntity>() where TEntity : Entity, new() =>
+        AddEntity(typeof(TEntity));
+    /// <summary>
+    /// Adds an entity to the pack
+    /// </summary>
+    /// <param name="tEntity">Entity class to add</param>
+    public BehaviourPack AddEntity(Type tEntity)
     {
-        Entities.Add(new TEntity());
-        return new TEntity().Identifier;
+        Entity inst = (Activator.CreateInstance(tEntity) as Entity)!;
+        
+        Entities.Add(inst);
+        return this;
     }
 
     /// <summary>
     /// Adds a block to the pack
     /// </summary>
     /// <typeparam name="TBlock">Block class to add</typeparam>
-    public Identifier AddBlock<TBlock>() where TBlock : Block, new()
+    public BehaviourPack AddBlock<TBlock>() where TBlock : Block, new() =>
+        AddBlock(typeof(TBlock));
+    /// <summary>
+    /// Adds a block to the pack
+    /// </summary>
+    /// <param name="tBlock">Block class to add</param>
+    public BehaviourPack AddBlock(Type tBlock)
     {
-        Blocks.Add(new TBlock());
-        return new TBlock().Identifier;
+        Block inst = (Activator.CreateInstance(tBlock) as Block)!;
+        
+        Blocks.Add(inst);
+        return this;
     }
 
     /// <summary>
     /// Adds an item to the pack
     /// </summary>
     /// <typeparam name="TItem">Item class to add</typeparam>
-    public Identifier AddItem<TItem>() where TItem : Item, new()
-    {
-        Items.Add(new TItem());
-        return new TItem().Identifier;
-    }
-
+    public BehaviourPack AddItem<TItem>() where TItem : Item, new() =>
+        AddItem(typeof(TItem));
     /// <summary>
     /// Adds an item to the pack
     /// </summary>
-    /// <typeparam name="TRecipe">Recipe class to add</typeparam>
-    public Identifier AddRecipe<TRecipe>() where TRecipe : IRecipe, new()
+    /// <param name="tItem">Item class to add</param>
+    public BehaviourPack AddItem(Type tItem)
     {
-        Recipes.Add(new TRecipe());
-        return new TRecipe().Identifier;
+        Item inst = (Activator.CreateInstance(tItem) as Item)!;
+        
+        Items.Add(inst);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a recipe to the pack
+    /// </summary>
+    /// <typeparam name="TRecipe">Recipe class to add</typeparam>
+    public BehaviourPack AddRecipe<TRecipe>() where TRecipe : IRecipe, new() =>
+        AddRecipe(typeof(TRecipe));
+    /// <summary>
+    /// Adds a recipe to the pack
+    /// </summary>
+    /// <param name="tRecipe">Recipe class to add</param>
+    public BehaviourPack AddRecipe(Type tRecipe)
+    {
+        IRecipe inst = (Activator.CreateInstance(tRecipe) as IRecipe)!;
+        
+        Recipes.Add(inst);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a loot table to the pack
+    /// </summary>
+    /// <typeparam name="TLootTable">Loot table class to add</typeparam>
+    public BehaviourPack AddLootTable<TLootTable>() where TLootTable : LootTable, new() =>
+        AddLootTable(typeof(TLootTable));
+    /// <summary>
+    /// Adds a loot table to the pack
+    /// </summary>
+    /// <param name="tLootTable">Loot table class to add</param>
+    public BehaviourPack AddLootTable(Type tLootTable)
+    {
+        if (LootTables.Any(t => t.GetType() == tLootTable))
+            return this;
+
+        LootTable inst = (Activator.CreateInstance(tLootTable) as LootTable)!;
+        
+        LootTables.Add(inst);
+        return this;
     }
 
     /// <summary>
@@ -102,6 +160,7 @@ public class BehaviourPack
         Directory.CreateDirectory(Path.Combine(dir, "items"));
         Directory.CreateDirectory(Path.Combine(dir, "scripts"));
         Directory.CreateDirectory(Path.Combine(dir, "recipes"));
+        Directory.CreateDirectory(Path.Combine(dir, "loot_tables"));
         CompilerState.Info("created folder structure");
         
         CompilerState.Info("compiling entities...");
@@ -172,6 +231,22 @@ public class BehaviourPack
             File.WriteAllText(path, file);
             
             CompilerState.Info($"({c}/{Recipes.Count}) compiled recipe {recipe.Identifier}");
+        }
+        CompilerState.Pop();
+
+        CompilerState.Info("compiling loot tables...");
+        CompilerState.Push("loot_tables");
+        c = 0;
+        foreach (LootTable lootTable in LootTables)
+        {
+            c++;
+            string path = Path.Combine(dir, lootTable.Reference);
+            Directory.CreateDirectory(path);
+            
+            string file = LootTable.Compile(lootTable.GetType());
+            File.WriteAllText(Path.Combine(path, $"{lootTable.Identifier.Name}.json"), file);
+
+            CompilerState.Info($"({c}/{LootTables.Count}) compiled loot table {lootTable.Identifier} -> {Path.Combine(path, $"{lootTable.Identifier.Name}.json")}");
         }
         CompilerState.Pop();
         

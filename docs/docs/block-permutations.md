@@ -10,12 +10,16 @@ Derive from `BlockPermutation`:
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
     public override string Condition => "q.get_block_state('test:radioactive') == true";
+    public override Block Parent => new DenseLasagnaBlock();
 
     public override int? LightEmission => 7;
 }
 ```
 
-The only **required** member is `Condition` - a Molang expression that must evaluate to true for the permutation's components to be applied.
+Every permutation **must** implement:
+
+- `Condition` - a Molang expression that must evaluate to true for the permutation's components to be applied.
+- `Parent` - the owning `Block` instance.
 
 ## What You Can Override
 
@@ -26,7 +30,7 @@ A permutation can provide its own versions of the same shortcuts available on `B
 - `LightEmission`
 - `LightDampening`
 - `Replaceable`
-- `Loot`
+- `Loot` (`LootTable?` — see [Loot Tables](loot-table.md))
 - `MaterialInstances` (completely replace the block's materials under this condition)
 - `Tags` (block tags applied only when this condition is true)
 
@@ -40,6 +44,7 @@ using ingot.Core.TraitSystem.Traits.Block;
 public class GlowyPermutation : BlockPermutation, IGeometry
 {
     public override string Condition => "q.get_block_state('mynamespace:mode') == 2";
+    public override Block Parent => new MyBlock();
 
     public override int? LightEmission => 15;
 
@@ -117,6 +122,7 @@ The example project contains a complete permutation:
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
     public override string Condition => "q.get_block_state('test:radioactive') == true";
+    public override Block Parent => new DenseLasagnaBlock();
     
     public override int? LightEmission => 7;
 }
@@ -130,5 +136,5 @@ See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project
 - You can implement traits on permutations that the base block does **not** implement.
 - Material instances defined on a permutation completely replace the base block's `minecraft:material_instances` for that condition.
 - Tags on a permutation only apply while the condition is true - useful for state-dependent tool requirements or mining behaviour.
-- If you need different loot tables or different destructible values only under certain states, put those on the permutation via shortcuts or traits.
+- If you need different loot tables only under certain states, override `Loot` on the permutation with a different `LootTable` instance. The `Parent` property must return the owning block.
 - Remember that the base block's components are still present; permutations are additive/override, not a full replacement of the block definition.

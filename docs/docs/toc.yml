@@ -12,5 +12,7 @@
   href: item.md
 - name: 2.1. Recipes
   href: recipe.md
+- name: 2.2. Loot Tables
+  href: loot-table.md
 - name: 3. Entities
   href: entity.md

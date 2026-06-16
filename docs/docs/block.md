@@ -37,7 +37,7 @@ Every block **must** implement:
 | `LightEmission`     | `int?`                      | No       | Shortcut for `minecraft:light_emission` (0-15). |
 | `LightDampening`    | `int?`                      | No       | Shortcut for `minecraft:light_dampening`. |
 | `Replaceable`       | `bool?`                     | No       | Shortcut for `minecraft:replaceable`. |
-| `Loot`              | `string?`                   | No       | Loot table identifier for `minecraft:loot`. |
+| `Loot`              | `LootTable?`                | No       | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](loot-table.md). |
 
 All of the shortcut properties are written directly into the `components` object of the generated `minecraft:block` JSON.
 
@@ -128,9 +128,9 @@ You rarely call `Block.Compile(Type)` directly. Instead you register blocks with
 using ingot.Core;
 using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
-Identifier denseLasagna = bp.AddBlock<DenseLasagnaBlock>();
-bp.AddBlock<AnotherBlock>();
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+    .AddBlock<DenseLasagnaBlock>()
+    .AddBlock<AnotherBlock>();
 
 ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
     .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png");
@@ -147,7 +147,7 @@ Pack pack = new()
 pack.Compile("./output");
 ```
 
-Each `AddBlock<T>()` call returns the registered block's `Identifier` for reuse elsewhere in your project.
+`AddBlock<T>()` returns the `BehaviourPack` for fluent chaining. Capture identifiers from your block class when you need them for cross-references.
 
 This writes the full behaviour pack under `bp/` (including `bp/blocks/block_of_dense_lasagna.json` - the filename is the part after the `:` in the identifier) and the resource pack under `rp/` (including copied textures and the generated `terrain_texture.json` that maps your texture keys).
 
@@ -158,7 +158,7 @@ See the [Resource Packs & Textures](resource-packs.md) guide for details on asse
 
 ## Full Example
 
-See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project for a working block that combines states, permutations, and material instances.
+See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project for a working block that combines states, permutations, material instances, and a [loot table](loot-table.md).
 
 ## Tips & Gotchas
 

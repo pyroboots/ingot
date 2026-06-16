@@ -1,3 +1,4 @@
+using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using Newtonsoft.Json;
@@ -57,7 +58,7 @@ public abstract class Block : IConcreteCompilable<Block>
     /// <summary>
     /// Shortcut for the <c>minecraft:loot</c> component
     /// </summary>
-    public virtual string? Loot => null;
+    public virtual LootTable? Loot => null;
     /// <summary>
     /// Texture and materials for the <see cref="Block"/>. Shortcut for the <c>minecraft:material_instances</c> component
     /// </summary>
@@ -128,8 +129,18 @@ public abstract class Block : IConcreteCompilable<Block>
                 json.Property("minecraft:light_emission", inst.LightEmission);
                 json.Property("minecraft:light_dampening", inst.LightDampening);
                 json.Property("minecraft:replaceable", inst.Replaceable);
-                json.Property("minecraft:loot", inst.Loot);
-                
+
+                if (inst.Loot is not null)
+                {
+                    if (CompilerState.CurrentPack is not null
+                        && CompilerState.CurrentPack.BehaviourPack.LootTables.All(t => t.GetType() != inst.Loot.GetType()))
+                        // with loot because its not a component, and instead a reference to a compiled file, we
+                        // just add it to the compilation list if its not already there
+                        CompilerState.CurrentPack.BehaviourPack.AddLootTable(inst.Loot.GetType());
+
+                    json.Property("minecraft:loot", inst.Loot.RelativePath);
+                }
+
                 inst.MaterialInstances.Compile(ref w);
 
                 CompilerState.Info("compiling traits...");

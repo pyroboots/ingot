@@ -81,9 +81,9 @@ public class MushroomStewRecipe : ShapelessRecipe
 using ingot.Core;
 using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
-Identifier lasagna = bp.AddItem<LasagnaItem>();
-Identifier lasagnaRecipe = bp.AddRecipe<LasagnaRecipe>();
+BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+    .AddItem<LasagnaItem>()
+    .AddRecipe<LasagnaRecipe>();
 
 Pack pack = new()
 {
@@ -97,7 +97,7 @@ Pack pack = new()
 pack.Compile("./output");
 ```
 
-`AddRecipe<T>()` returns the registered recipe's `Identifier`, the same as `AddItem<T>()` and `AddBlock<T>()`. Capture these at registration time when you need a single source of truth for cross-references.
+`AddRecipe<T>()` returns the `BehaviourPack` for fluent chaining, the same as `AddItem<T>()`, `AddBlock<T>()`, and `AddLootTable<T>()`. Capture identifiers from your recipe class when you need a single source of truth for cross-references.
 
 This writes `bp/recipes/lasagna.json` (filename is the part after the `:` in the identifier). Shaped recipes use `format_version` `"1.12"` and compile to `minecraft:recipe_shaped`; shapeless recipes compile to `minecraft:recipe_shapeless`.
 

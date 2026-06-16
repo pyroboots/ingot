@@ -113,7 +113,7 @@ Pack pack = new()
 pack.Compile("./output");
 ```
 
-Each `AddItem<T>()` call returns the registered item's `Identifier`, so you can capture it for cross-references (recipes, loot tables, scripts, etc.) without repeating string literals.
+Each `AddItem<T>()` call returns the `BehaviourPack` for fluent chaining. Capture identifiers from your item class for cross-references (recipes, loot tables, scripts, etc.) without repeating string literals.
 
 This produces `bp/items/lasagna.json` (filename is the part after the `:` in the identifier) and the corresponding resources under `rp/textures/items/` plus `rp/textures/item_texture.json`.
 

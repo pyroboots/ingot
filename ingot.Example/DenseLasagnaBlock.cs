@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour.Block;
+using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 
 namespace ingot.Example;
@@ -6,6 +7,7 @@ namespace ingot.Example;
 public class DenseLasagnaBlock : Block
 {
     public override Identifier Identifier => new("test:block_of_dense_lasagna");
+    public override LootTable? Loot => new DenseLasagnaLoot();
     public override List<BlockPermutation> Permutations => new()
     {
         new DenseLasagnaGlowyPermutation()
@@ -25,6 +27,7 @@ public class DenseLasagnaBlock : Block
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
     public override string Condition => "q.get_block_state('test:radioactive') == true";
-    
+    public override Block Parent => new DenseLasagnaBlock();
+
     public override int? LightEmission => 7;
 }
