@@ -1,17 +1,49 @@
 # .NET / C# build artifacts
+[Bb]in/
+[Oo]bj/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
 x64/
 x86/
+[Ww][Ii][Nn]32/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
-[Bb]in/
-[Oo]bj/
 [Ll]og/
 [Ll]ogs/
+
+# Build results
+*.dll
+*.exe
+*.pdb
+*.cache
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
 
 # Visual Studio
 .vs/
@@ -25,30 +57,30 @@ bld/
 .idea/
 *.DotSettings.user
 *.iml
+*.sln.iml
 
-# DocFX generated output (source docs/*.md and docs/docfx.json + toc remain)
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# DocFX generated output (source docs/*.md and docs/docfx.json remain)
 docs/_site/
 docs/api/
 
-# ingot-specific generated content
+# ingot compile output
 ingot.log
-
-# Packs emitted by ingot.Example or user programs (can appear next to exe or in CWD)
 **/bp/
 **/rp/
 
-# NuGet packages
-*.nupkg
-*.snupkg
-**/.nuget/
-
-# Misc
-*.tmp
-*.temp
+# OS
 Thumbs.db
-.DS_Store
-*.log
-
-# OS generated
 ehthumbs.db
 Desktop.ini
+.DS_Store
