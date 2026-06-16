@@ -226,6 +226,10 @@ public class BehaviourPack
                 file = ShapedRecipe.Compile(recipe.GetType());
             else if (recipe is ShapelessRecipe)
                 file = ShapelessRecipe.Compile(recipe.GetType());
+            else if (recipe is FurnaceRecipe)
+                file = FurnaceRecipe.Compile(recipe.GetType());
+            else if (recipe is BrewingMixRecipe)
+                file = BrewingMixRecipe.Compile(recipe.GetType());
             else throw new InvalidCastException("expected a recipe type");
             
             File.WriteAllText(path, file);

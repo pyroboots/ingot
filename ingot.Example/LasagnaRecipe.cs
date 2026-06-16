@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
 

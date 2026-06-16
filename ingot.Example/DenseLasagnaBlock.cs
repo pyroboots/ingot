@@ -1,13 +1,19 @@
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Block;
 
 namespace ingot.Example;
 
-public class DenseLasagnaBlock : Block
+public class DenseLasagnaBlock : Block, IDestructibleByMining
 {
     public override Identifier Identifier => new("test:block_of_dense_lasagna");
+    public override string DisplayName => "Dense Lasagna";
     public override LootTable? Loot => new DenseLasagnaLoot();
+    public override string[] Tags => ["stone"];
+
+    dynamic? IDestructibleByMining.ItemSpecificSpeeds => null;
+    float IDestructibleByMining.SecondsToDestroy => 2f;
     public override List<BlockPermutation> Permutations => new()
     {
         new DenseLasagnaGlowyPermutation()
