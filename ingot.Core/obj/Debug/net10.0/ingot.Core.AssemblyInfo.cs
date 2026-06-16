@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ingot.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dde4fd989b97dc1b00a16d05307017d30aa9f666")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+893ce84cf5c3b48db67eab4f70d7616251cd973a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ingot.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ingot.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

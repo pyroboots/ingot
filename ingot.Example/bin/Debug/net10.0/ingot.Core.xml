@@ -121,6 +121,11 @@
             Texture and materials for the <see cref="T:ingot.Core.Behaviour.Block.BlockPermutation"/>. Shortcut for the <c>minecraft:material_instances</c> component
             </summary>
         </member>
+        <member name="P:ingot.Core.Behaviour.Block.BlockPermutation.Tags">
+            <summary>
+            Array of block tags that can enable / expand vanilla functionality
+            </summary>
+        </member>
         <member name="M:ingot.Core.Behaviour.Block.BlockPermutation.Compile``1(Newtonsoft.Json.JsonTextWriter@)">
             <summary>
             Compiles the <typeparamref name="TBlockPermutation"/> to JSON
@@ -244,6 +249,56 @@
             Compiles the <see cref="T:ingot.Core.Behaviour.Item"/> (as <paramref name="tType"/>) to JSON
             </summary>
             <param name="tType">Concrete type of <see cref="T:ingot.Core.Behaviour.Item"/></param>
+            <returns>Compiled JSON</returns>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Recipe.BrewingMixRecipe">
+            <summary>
+            Represents a crafting recipe with a specific pattern
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.BrewingMixRecipe.Identifier">
+            <inheritdoc/>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.BrewingMixRecipe.Tags">
+            <summary>
+            Array of valid crafting brewing this recipe can be used on
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Recipe.BrewingMixRecipe.Compile(System.Type)">
+            <summary>
+            Compiles the <see cref="T:ingot.Core.Behaviour.Recipe.BrewingMixRecipe"/> (as <paramref name="tType"/>) to JSON
+            </summary>
+            <param name="tType">Concrete type of <see cref="T:ingot.Core.Behaviour.Recipe.BrewingMixRecipe"/></param>
+            <returns>Compiled JSON</returns>
+        </member>
+        <member name="T:ingot.Core.Behaviour.Recipe.FurnaceRecipe">
+            <summary>
+            Represents a smelting recipe
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.FurnaceRecipe.Identifier">
+            <inheritdoc/>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.FurnaceRecipe.Tags">
+            <summary>
+            Array of valid smelting interfaces this recipe can be used on
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.FurnaceRecipe.Input">
+            <summary>
+            The item to be smelted
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Behaviour.Recipe.FurnaceRecipe.Output">
+            <summary>
+            The result item after smelting <see cref="P:ingot.Core.Behaviour.Recipe.FurnaceRecipe.Input"/>
+            </summary>
+        </member>
+        <member name="M:ingot.Core.Behaviour.Recipe.FurnaceRecipe.Compile(System.Type)">
+            <summary>
+            Compiles the <see cref="T:ingot.Core.Behaviour.Recipe.FurnaceRecipe"/> (as <paramref name="tType"/>) to JSON
+            </summary>
+            <param name="tType">Concrete type of <see cref="T:ingot.Core.Behaviour.Recipe.FurnaceRecipe"/></param>
             <returns>Compiled JSON</returns>
         </member>
         <member name="T:ingot.Core.Behaviour.Recipe.IRecipe">
@@ -471,7 +526,17 @@
         </member>
         <member name="P:ingot.Core.Common.Identifier.Name">
             <summary>
-            The <c>dirt</c> part in <c>minecraft:dirt</c>
+            The <c>dirt</c> part in <c>minecraft:dirt</c>, or the <c>potion_type</c> part in <c>minecraft:potion_type:awkward</c>
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Common.Identifier.Auxiliary">
+            <summary>
+            The <c>awkward</c> part in <c>minecraft:potion_type:awkward</c>
+            </summary>
+        </member>
+        <member name="P:ingot.Core.Common.Identifier.HasAuxiliary">
+            <summary>
+            Whether this identifier has an auxiliary value (e.g. potion types in brewing recipes)
             </summary>
         </member>
         <member name="T:ingot.Core.Common.IIdentifiable">
