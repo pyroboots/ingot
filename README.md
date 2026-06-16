@@ -8,6 +8,8 @@
 
 **A C# framework to programmatically create Minecraft Bedrock Edition packs** - because writing mountains of JSON sucks.
 
+[API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html) | [Project Todo List](https://github.com/users/pyroboots/projects/4)
+
 ## ✨ Features
 
 - **Inheritance-Based, Type-Safe API** - Define items, blocks, entities, and more using clean, strongly-typed C# instead of hand-writing JSON
@@ -17,8 +19,6 @@
 - **CompilerState** - Get clear, helpful compile-time feedback to avoid debugging in the Minecraft content log
 - **Extensible & Maintainable** - Designed for large or complex addons where manual JSON becomes painful
 - **Iterable & Reusable** - Because its code, you can define variable and easily change things project-wide
-
-Looking for the docs? API Reference [here](https://pyroboots.github.io/ingot/api/ingot.Core.html)!
 
 ## 📦 Installation
 
