@@ -7,16 +7,16 @@ namespace ingot.Core.Common;
 public interface IConcreteCompilable<TType> where TType : IConcreteCompilable<TType>
 {
     /// <summary>
-    /// Compiles the <paramref name="tType"/> to JSON as <see cref="TType"/>
+    /// Compiles the concrete type <paramref name="tType"/> to JSON.
     /// </summary>
-    /// <param name="tType"></param>
+    /// <param name="tType">Concrete type to compile.</param>
     /// <returns>Compiled JSON</returns>
     static abstract string Compile(Type tType);
     
     /// <summary>
-    /// Compiles the <see cref="TConcreteType"/> to JSON as <see cref="TType"/>
+    /// Compiles <typeparamref name="TConcreteType"/> to JSON.
     /// </summary>
-    /// <typeparam name="TConcreteType"></typeparam>
-    /// <returns></returns>
+    /// <typeparam name="TConcreteType">Concrete type to compile.</typeparam>
+    /// <returns>Compiled JSON</returns>
     static string Compile<TConcreteType>() where TConcreteType : TType, new() => TType.Compile(typeof(TConcreteType));
 }

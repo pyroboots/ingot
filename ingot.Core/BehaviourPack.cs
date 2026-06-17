@@ -20,6 +20,12 @@ public class BehaviourPack
     /// Version of the <see cref="BehaviourPack"/>. When <see cref="ResourcePack"/> is linked, it will require at least this version.
     /// </summary>
     public Version BehaviourPackVersion;
+
+    /// <summary>
+    /// Creates a <see cref="BehaviourPack"/> with the given runtime UUID and optional version.
+    /// </summary>
+    /// <param name="uuid">Minecraft UUID to be used at runtime</param>
+    /// <param name="version">Version of the <see cref="BehaviourPack"/>. When <see cref="ResourcePack"/> is linked, it will require at least this version.</param>
     public BehaviourPack(string uuid, Version? version = null)
     {
         Uuid = uuid;

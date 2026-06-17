@@ -59,6 +59,12 @@ public abstract class BlockPermutation
     /// </summary>
     /// <typeparam name="TBlockPermutation">The type class block permutation to compile</typeparam>
     public static void Compile<TBlockPermutation>(ref JsonTextWriter writer) where TBlockPermutation : BlockPermutation => Compile(typeof(TBlockPermutation), ref writer);
+
+    /// <summary>
+    /// Compiles the <see cref="BlockPermutation"/> (as <paramref name="tBlockPermutation"/>) to JSON
+    /// </summary>
+    /// <param name="tBlockPermutation">Concrete type of <see cref="BlockPermutation"/></param>
+    /// <param name="writer">JSON source stream to write to</param>
     public static void Compile(Type tBlockPermutation, ref JsonTextWriter writer)
     {
         BlockPermutation permutation = (Activator.CreateInstance(tBlockPermutation) as BlockPermutation)!;

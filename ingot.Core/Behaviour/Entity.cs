@@ -13,6 +13,9 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
 {
     /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
+    /// <summary>
+    /// Minimum component version written to <c>format_version</c> in the generated entity JSON.
+    /// </summary>
     public virtual Version FormatVersion => new("1.20.10");
     
     /// <summary>

@@ -11,6 +11,12 @@ namespace ingot.Core.TraitSystem;
 /// </summary>
 public record TraitProperty
 {
+    /// <summary>
+    /// Creates a reflected trait property ready for JSON compilation.
+    /// </summary>
+    /// <param name="path">Molang or JSON path prefix for the property value.</param>
+    /// <param name="name">Property name on the trait interface.</param>
+    /// <param name="value">Runtime value of the property.</param>
     public TraitProperty(string path, string name, dynamic value)
     {
         Path = path;
@@ -18,8 +24,17 @@ public record TraitProperty
         Value = value;
     }
     
+    /// <summary>
+    /// Molang or JSON path prefix for the property value.
+    /// </summary>
     public string Path = "@=*";
+    /// <summary>
+    /// Property name on the trait interface.
+    /// </summary>
     public string Name;
+    /// <summary>
+    /// Runtime value of the property.
+    /// </summary>
     public dynamic Value;
 }
 
@@ -30,6 +45,12 @@ public class Trait : IIdentifiable, ICompileableFragment
 {
     /// <inheritdoc/>
     public Identifier Identifier { get; }
+
+    /// <summary>
+    /// Creates a <see cref="Trait"/> from a component identifier and the concrete trait interface type.
+    /// </summary>
+    /// <param name="identifier">Bedrock component identifier (e.g. <c>minecraft:food</c>).</param>
+    /// <param name="root">Concrete trait interface type implemented by the content class.</param>
     public Trait(Identifier identifier, Type root)
     {
         Identifier = identifier;

@@ -12,6 +12,9 @@ using ingot.Core.Common;
 [Trait("minecraft:dyeable", TraitSystem.TraitType.Item)]
 public interface IDyeable : IItemTrait
 {
+    /// <summary>
+    /// Default RGB color when the item has not been dyed, as a JSON array string (e.g. <c>[255, 255, 255]</c>).
+    /// </summary>
     [TraitProperty]
     public virtual string DefaultColor => "[255, 255, 255]";
 }

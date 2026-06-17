@@ -13,8 +13,11 @@ public static class TraitSystem
     /// </summary>
     public enum TraitType
     {
+        /// <summary>Block component traits.</summary>
         Block,
+        /// <summary>Entity component traits.</summary>
         Entity,
+        /// <summary>Item component traits.</summary>
         Item
     }
 

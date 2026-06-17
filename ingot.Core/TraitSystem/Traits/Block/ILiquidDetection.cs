@@ -18,6 +18,9 @@ public interface ILiquidDetection : IBlockTrait
     [TraitProperty]
     public virtual bool CanContainLiquid => false;
 
+    /// <summary>
+    /// Per-liquid detection rule definitions. Only one rule per liquid type is used; additional rules are ignored.
+    /// </summary>
     [TraitProperty]
     public abstract dynamic? DetectionRules { get; }
 

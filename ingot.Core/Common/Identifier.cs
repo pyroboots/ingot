@@ -32,11 +32,22 @@ public class Identifier : IEquatable<Identifier>, ICompileableFragment
         @"^[a-z0-9_]+$", 
         RegexOptions.Compiled);
 
+    /// <summary>
+    /// Creates an identifier from a namespace and name (e.g. <c>test:my_block</c>).
+    /// </summary>
+    /// <param name="namespace">The namespace part of the identifier.</param>
+    /// <param name="name">The name part of the identifier.</param>
     public Identifier(string @namespace, string name)
         : this(@namespace, name, null)
     {
     }
 
+    /// <summary>
+    /// Creates an identifier with an optional auxiliary value (e.g. <c>minecraft:potion_type:awkward</c>).
+    /// </summary>
+    /// <param name="namespace">The namespace part of the identifier.</param>
+    /// <param name="name">The name part of the identifier.</param>
+    /// <param name="auxiliary">Optional auxiliary value appended after a second colon.</param>
     public Identifier(string @namespace, string name, string? auxiliary)
     {
         Namespace = Normalize(@namespace);
@@ -49,6 +60,10 @@ public class Identifier : IEquatable<Identifier>, ICompileableFragment
             ValidatePart(Auxiliary, "auxiliary", nameof(auxiliary));
     }
 
+    /// <summary>
+    /// Parses a full identifier string (e.g. <c>minecraft:dirt</c> or <c>test:item:variant</c>).
+    /// </summary>
+    /// <param name="fullIdentifier">Colon-separated identifier string.</param>
     public Identifier(string fullIdentifier)
     {
         if (string.IsNullOrWhiteSpace(fullIdentifier))
@@ -111,25 +126,49 @@ public class Identifier : IEquatable<Identifier>, ICompileableFragment
     private static string Normalize(string input)
         => string.IsNullOrWhiteSpace(input) ? "" : input.Trim().ToLowerInvariant();
 
+    /// <summary>
+    /// Creates a vanilla <c>minecraft:</c> identifier.
+    /// </summary>
+    /// <param name="name">The vanilla item, block, or entity name.</param>
     public static Identifier Vanilla(string name) => new("minecraft", name);
+
+    /// <summary>
+    /// Creates a vanilla <c>minecraft:</c> identifier with an auxiliary value.
+    /// </summary>
+    /// <param name="type">The vanilla type name (e.g. <c>potion_type</c>).</param>
+    /// <param name="value">The auxiliary value (e.g. <c>awkward</c>).</param>
     public static Identifier VanillaAuxiliary(string type, string value) => new("minecraft", type, value);
+
+    /// <summary>
+    /// Parses a full identifier string into an <see cref="Identifier"/>.
+    /// </summary>
+    /// <param name="id">Colon-separated identifier string.</param>
     public static Identifier Parse(string id) => new(id);
 
+    /// <inheritdoc/>
     public override string ToString()
         => Auxiliary is null ? $"{Namespace}:{Name}" : $"{Namespace}:{Name}:{Auxiliary}";
 
+    /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer) => writer.WriteValue(ToString());
     
+    /// <inheritdoc/>
     public bool Equals(Identifier? other)
         => other is not null
            && Namespace == other.Namespace
            && Name == other.Name
            && Auxiliary == other.Auxiliary;
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj) => obj is Identifier id && Equals(id);
+
+    /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(Namespace, Name, Auxiliary);
 
+    /// <summary>Determines whether two identifiers are equal.</summary>
     public static bool operator ==(Identifier? left, Identifier? right) => left?.Equals(right) ?? right is null;
+
+    /// <summary>Determines whether two identifiers are not equal.</summary>
     public static bool operator !=(Identifier? left, Identifier? right) => !(left == right);
     
     private static JsonTextWriter? _dummyWriter;

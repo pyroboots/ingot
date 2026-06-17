@@ -30,6 +30,9 @@ public interface IWearable : IItemTrait
     [TraitProperty]
     public abstract dynamic? Slot { get; }
 
+    /// <summary>
+    /// Whether the item can be equipped by a dispenser onto an entity.
+    /// </summary>
     [TraitProperty]
     public abstract bool Dispensable { get; }
 }

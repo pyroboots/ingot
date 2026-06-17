@@ -25,6 +25,12 @@ public class ResourcePack
     /// <param name="uuid">Minecraft UUID to be used at runtime</param>
     /// <param name="version">Version of the <see cref="ResourcePack"/>. When <see cref="BehaviourPack"/> is linked, it will require at least this version.</param>
     public static ResourcePack Create(string uuid, Version? version = null) => new(uuid, version);
+
+    /// <summary>
+    /// Creates a <see cref="ResourcePack"/> with the given runtime UUID and optional version.
+    /// </summary>
+    /// <param name="uuid">Minecraft UUID to be used at runtime</param>
+    /// <param name="version">Version of the <see cref="ResourcePack"/>. When <see cref="BehaviourPack"/> is linked, it will require at least this version.</param>
     public ResourcePack(string uuid, Version? version = null)
     {
         Uuid = uuid;

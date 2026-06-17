@@ -17,8 +17,17 @@ public abstract class BrewingMixRecipe : IRecipe, IConcreteCompilable<BrewingMix
     /// </summary>
     public virtual string[] Tags => ["brewing_stand"];
     
+    /// <summary>
+    /// The potion or bottle item placed in the brewing stand input slot.
+    /// </summary>
     public abstract Identifier Input { get; }
+    /// <summary>
+    /// The ingredient added to the brewing stand (e.g. nether wart, blaze powder).
+    /// </summary>
     public abstract Identifier Reagent { get; }
+    /// <summary>
+    /// The resulting item after brewing completes.
+    /// </summary>
     public abstract Identifier Output { get; }
     
     /// <summary>
