@@ -18,7 +18,7 @@ public class DenseLasagnaLoot : LootTable
                 new ItemLootEntry(new Identifier("test", "lasagna"))
                 {
                     Weight = 3,
-                    Functions = [new SetCountFunction { Count = new IntRange(1, 3) }]
+                    Functions = [new SetCount { Count = new IntRange(1, 3) }]
                 },
                 new EmptyLootEntry { Weight = 1 }
             ]
