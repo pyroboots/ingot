@@ -7,44 +7,53 @@ ingot builds **both** a behaviour pack (`bp/`) and a resource pack (`rp/`) from 
 
 For blocks and items, the primary resource concern today is **textures**.
 
-## The ResourcePack Class
+## The Pack Class (recommended)
 
-Create a `ResourcePack` the same way you create a `BehaviourPack`:
+Use `Pack.Create` as the single entry point. Textures declared on your `Block` and `Item` classes are auto-registered during compile:
 
 ```csharp
 using ingot.Core;
-using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
-Identifier myBlock = bp.AddBlock<MyBlock>();
-
-ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-    .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png")
-    .AddItemTexture("lasagna", "assets/lasagna.png");
-
-Pack pack = new()
-{
-    Name = "My Addon",
-    Description = "...",
-    BehaviourPack = bp,
-    ResourcePack = rp,
-    LinkPacks = true
-};
+Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Example with resources")
+    .AddBlock<MyBlock>()   // textures declared on the block class
+    .AddItem<MyItem>();    // icon path declared on the item class
 
 pack.Compile("./output");
 ```
 
-Key members:
+On the behaviour side, provide optional source PNG paths:
 
-- `Create(string uuid, Version? version = null)` - factory (recommended).
-- `AddBlockTexture(string key, string sourcePngPath)` - registers a texture that will be copied to `textures/blocks/` and referenced from `terrain_texture.json`.
-- `AddItemTexture(string key, string sourcePngPath)` - registers an icon that will be copied to `textures/items/` and referenced from `item_texture.json`.
-- `Compile(string dir)` - normally called for you by `Pack.Compile`.
+```csharp
+// MyBlock.cs
+public override MaterialInstances MaterialInstances => new()
+{
+    All = new MaterialInstance("my_block", MaterialInstance.RenderMethods.Opaque, "assets/my_block.png")
+};
 
-`AddBlockTexture` and `AddItemTexture` return the `ResourcePack` so you can chain texture registrations. The `key` must exactly match the texture string you use on the behaviour side.
+// MyItem.cs
+public override string Texture => "my_item";
+public override string? TexturePath => "assets/my_item.png";
+```
+
+Manual texture registration is still available when you need overrides or assets not tied to a specific block/item:
+
+```csharp
+pack.AddBlockTexture("custom_key", "assets/custom.png")
+    .AddItemTexture("another_key", "assets/another.png");
+```
+
+Manual registrations take precedence over auto-discovered paths for the same key.
+
+Key `Pack` members:
+
+- `Create(string behaviourUuid, string name, string description, ...)` - creates linked behaviour and resource packs.
+- `AddBlock<T>()`, `AddItem<T>()`, `AddEntity<T>()`, `AddRecipe<T>()`, `AddLootTable<T>()` - register content (fluent, returns `Pack`).
+- `AddBlockTexture(string key, string sourcePngPath)` - manual block texture override.
+- `AddItemTexture(string key, string sourcePngPath)` - manual item texture override.
+- `Compile(string outputDir)` - compiles both `bp/` and `rp/`.
 
 > [!NOTE]
-> `BehaviourPack` registration works differently: `AddEntity`, `AddBlock`, `AddItem`, and `AddRecipe` each return an `Identifier` (not the pack itself), so you can reuse registered content IDs without duplicating strings.
+> The lower-level `BehaviourPack` and `ResourcePack` types are still available if you need direct access. `Pack` is the recommended developer surface.
 
 ## Texture Keys - the Bridge Between Behaviour and Resources
 
@@ -54,16 +63,19 @@ The strings you write in behaviour code are **keys**, not file paths:
 - `public override string Texture => "lasagna";` on an `Item`
 - `string IDestructionParticles.Texture => "my_particles";` (via trait)
 
-These keys only become real images when you register them on the `ResourcePack` using the matching `AddBlockTexture` / `AddItemTexture` call.
+These keys become real images when you either:
 
-If a key used in behaviour is never registered on the resource pack, the generated atlas files will be missing that entry and you will see missing (purple/black) textures in Minecraft. ingot will emit a compile-time warning if the source PNG for a registered key cannot be found.
+1. Provide a `SourcePath` on the `MaterialInstance` or `TexturePath` on the `Item` (auto-registered during compile), or
+2. Register them manually with `Pack.AddBlockTexture` / `Pack.AddItemTexture`.
+
+If a key has no source PNG (auto or manual), ingot still emits an atlas entry but warns at compile time. Missing assets show as purple/black textures in Minecraft.
 
 ## What Gets Generated in the Resource Pack
 
 When `Pack.Compile` runs, the resource side produces (among other folders):
 
-- `rp/textures/blocks/<key>.png` - your block textures (from `AddBlockTexture`)
-- `rp/textures/items/<key>.png` - your item icons (from `AddItemTexture`)
+- `rp/textures/blocks/<key>.png` - your block textures (auto-registered or from `AddBlockTexture`)
+- `rp/textures/items/<key>.png` - your item icons (auto-registered or from `AddItemTexture`)
 - `rp/textures/terrain_texture.json` - maps block texture keys for `minecraft:material_instances`
 - `rp/textures/item_texture.json` - maps item icon keys for `minecraft:icon`
 
@@ -98,13 +110,17 @@ MyAddon/
 └── LasagnaItem.cs
 ```
 
-Then register with relative paths:
+Then reference them from your block/item definitions:
 
 ```csharp
-.AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png")
+All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest, "assets/block_of_dense_lasagna.png")
 ```
 
-`ResourcePack` resolves the paths with `Path.GetFullPath` at registration time, so the paths work regardless of the current working directory when you later run the compiler.
+```csharp
+public override string? TexturePath => "assets/lasagna.png";
+```
+
+Paths are resolved with `Path.GetFullPath` at registration time, so they work regardless of the current working directory when you later run the compiler.
 
 You can share the same PNG file under different keys or even register the same key for both a block and an item if that makes sense for your design.
 
@@ -114,27 +130,15 @@ Here is a minimal complete example (the `ingot.Example` project contains a riche
 
 ```csharp
 using ingot.Core;
-using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
-Identifier myBlock = bp.AddBlock<MyBlock>();
-Identifier myItem = bp.AddItem<MyItem>();
-
-ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-    .AddBlockTexture("my_block", "assets/my_block.png")
-    .AddItemTexture("my_item", "assets/my_item.png");
-
-Pack pack = new Pack
-{
-    Name = "My Addon",
-    Description = "Example with resources",
-    BehaviourPack = bp,
-    ResourcePack = rp,
-    LinkPacks = true
-};
+Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Example with resources")
+    .AddBlock<MyBlock>()
+    .AddItem<MyItem>();
 
 pack.Compile("./output");
 ```
+
+Textures are declared on `MyBlock` and `MyItem` via `SourcePath` / `TexturePath`. Use `AddBlockTexture` / `AddItemTexture` only when you need manual overrides.
 
 After compilation you will have a ready-to-use `bp/` folder and `rp/` folder (plus `manifest.json` files that cross-link them when `LinkPacks` is true).
 
@@ -161,4 +165,4 @@ These areas will expand in future releases. The current design (key-based regist
 - [Block Permutations](block-permutations.md)
 - API reference for `ResourcePack`
 
-The texture key system is the main integration point between the behaviour and resource halves of your pack. Register once on the `ResourcePack`, reference by the same string from your `Block`/`Item` definitions, and `Pack.Compile` takes care of the rest.
+The texture key is the bridge between behaviour definitions and resource assets. Declare the key in your `Block`/`Item` code, optionally provide a source PNG path, and `Pack.Compile` takes care of the rest.

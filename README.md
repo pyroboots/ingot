@@ -66,25 +66,13 @@ class Program
 {
     static void Main(string[] args)
     {
-        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
-        Identifier lasagna = bp.AddItem<LasagnaItem>();
-        bp.AddBlock<DenseLasagnaBlock>();
-        
-        ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-            .AddItemTexture("lasagna", "assets/lasagna.png")
-            .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png");
-        
-        Pack pack = new()
-        {
-            Description = "Example pack made with ingot",
-            Name = "ingot example",
-            BehaviourPack = bp,
-            ResourcePack = rp,
-            LinkPacks = true,
-            ScriptsEnabled = true,
-        };
-        
-        // and compile the whole pack (bp/ + rp/ + manifests)!
+        Pack pack = Pack.Create(Guid.NewGuid().ToString(), "ingot example", "Example pack made with ingot")
+            .AddItem<LasagnaItem>()
+            .AddBlock<DenseLasagnaBlock>();
+
+        pack.ScriptsEnabled = true;
+
+        // textures declared on block/item classes are auto-registered; compile bp/ + rp/ + manifests
         pack.Compile("./");
     }
 }

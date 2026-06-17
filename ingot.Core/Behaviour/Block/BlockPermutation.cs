@@ -63,6 +63,12 @@ public abstract class BlockPermutation
     {
         BlockPermutation permutation = (Activator.CreateInstance(tBlockPermutation) as BlockPermutation)!;
         List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tBlockPermutation, TraitSystem.TraitSystem.TraitType.Block);
+
+        if (permutation.MaterialInstances is not null)
+        {
+            JsonTextWriter? warnWriter = null;
+            TextureAutoRegistration.RegisterMaterialInstances(permutation.MaterialInstances.Value, ref warnWriter);
+        }
         
         JsonHelper json = new(ref writer);
         

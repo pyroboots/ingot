@@ -26,28 +26,18 @@ Every entity **must** implement:
 
 ## Compilation & Registration
 
-Register entities with a `BehaviourPack`:
+Register entities with `Pack.Create`:
 
 ```csharp
 using ingot.Core;
-using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
-Identifier myEntity = bp.AddEntity<MyEntity>();
-
-Pack pack = new()
-{
-    Name = "My Addon",
-    Description = "Entities made with ingot",
-    BehaviourPack = bp,
-    ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
-    LinkPacks = true
-};
+Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Entities made with ingot")
+    .AddEntity<MyEntity>();
 
 pack.Compile("./output");
 ```
 
-`AddEntity<T>()` returns the registered entity's `Identifier` for reuse elsewhere in your project.
+Capture identifiers from your entity class when you need them for cross-references elsewhere in your project.
 
 This writes `bp/entities/my_entity.json` (filename is the part after the `:` in the identifier).
 

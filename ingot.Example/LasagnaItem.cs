@@ -9,6 +9,7 @@ public class LasagnaItem : Item, IFood, IBlockPlacer
 {
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
+    public override string? TexturePath => "./lasagna.png";
     public override string DisplayName => "Lasagna";
     
     int IFood.Nutrition => 5;

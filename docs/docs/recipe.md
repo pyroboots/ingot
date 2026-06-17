@@ -1,6 +1,6 @@
 # Recipes
 
-Crafting recipes are defined by deriving from `ShapedRecipe` or `ShapelessRecipe` in `ingot.Core.Behaviour.Recipe`. Register them on a `BehaviourPack` with `AddRecipe<T>()`.
+Crafting recipes are defined by deriving from `ShapedRecipe` or `ShapelessRecipe` in `ingot.Core.Behaviour.Recipe`. Register them on a `Pack` with `AddRecipe<T>()`.
 
 ## Shaped Recipe
 
@@ -79,25 +79,15 @@ public class MushroomStewRecipe : ShapelessRecipe
 
 ```csharp
 using ingot.Core;
-using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Recipes made with ingot")
     .AddItem<LasagnaItem>()
     .AddRecipe<LasagnaRecipe>();
-
-Pack pack = new()
-{
-    Name = "My Addon",
-    Description = "Recipes made with ingot",
-    BehaviourPack = bp,
-    ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
-    LinkPacks = true
-};
 
 pack.Compile("./output");
 ```
 
-`AddRecipe<T>()` returns the `BehaviourPack` for fluent chaining, the same as `AddItem<T>()`, `AddBlock<T>()`, and `AddLootTable<T>()`. Capture identifiers from your recipe class when you need a single source of truth for cross-references.
+`AddRecipe<T>()` returns the `Pack` for fluent chaining, the same as `AddItem<T>()`, `AddBlock<T>()`, and `AddLootTable<T>()`. Capture identifiers from your recipe class when you need a single source of truth for cross-references.
 
 This writes `bp/recipes/lasagna.json` (filename is the part after the `:` in the identifier). Shaped recipes use `format_version` `"1.12"` and compile to `minecraft:recipe_shaped`; shapeless recipes compile to `minecraft:recipe_shapeless`.
 

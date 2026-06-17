@@ -70,6 +70,36 @@ public class ResourcePack
         _itemTextureSources[key] = Path.GetFullPath(sourcePngPath);
         return this;
     }
+
+    /// <summary>
+    /// Registers a block texture if the key has not already been added manually.
+    /// </summary>
+    /// <returns><see langword="true"/> when the texture was registered.</returns>
+    internal bool TryAddBlockTexture(string key, string? sourcePngPath)
+    {
+        if (string.IsNullOrWhiteSpace(key) || _blockTextureSources.ContainsKey(key))
+            return false;
+
+        _blockTextureSources[key] = string.IsNullOrWhiteSpace(sourcePngPath)
+            ? string.Empty
+            : Path.GetFullPath(sourcePngPath);
+        return true;
+    }
+
+    /// <summary>
+    /// Registers an item texture if the key has not already been added manually.
+    /// </summary>
+    /// <returns><see langword="true"/> when the texture was registered.</returns>
+    internal bool TryAddItemTexture(string key, string? sourcePngPath)
+    {
+        if (string.IsNullOrWhiteSpace(key) || _itemTextureSources.ContainsKey(key))
+            return false;
+
+        _itemTextureSources[key] = string.IsNullOrWhiteSpace(sourcePngPath)
+            ? string.Empty
+            : Path.GetFullPath(sourcePngPath);
+        return true;
+    }
     
     /// <summary>
     /// Compiles the <see cref="ResourcePack"/> to output <paramref name="dir"/>
@@ -123,7 +153,9 @@ public class ResourcePack
 
             try
             {
-                if (!File.Exists(srcPath))
+                if (string.IsNullOrWhiteSpace(srcPath))
+                    CompilerState.Warn(ref dummyWriter, $"texture key '{key}' has no source PNG registered");
+                else if (!File.Exists(srcPath))
                     CompilerState.Warn(ref dummyWriter, $"source texture not found for key '{key}': {srcPath}");
                 else
                     File.Copy(srcPath, targetFull, overwrite: true);

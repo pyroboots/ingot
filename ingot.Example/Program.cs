@@ -6,7 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+        Pack pack = Pack.Create(Guid.NewGuid().ToString(), "ingot example", "Example pack made with ingot")
             // items
             .AddItem<LasagnaItem>()
             .AddItem<CheeseItem>()
@@ -24,24 +24,7 @@ class Program
             //.AddLootTable<DenseLasagnaLoot>()
             .AddLootTable<LasagnaSpiritLoot>();
 
-        ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-            .AddBlockTexture("block_of_dense_lasagna", "./dense_lasagna.png")
-            .AddItemTexture("lasagna", "./lasagna.png")
-            // ingredient textures optional — compile succeeds without source PNGs
-            .AddItemTexture("cheese", "./lasagna.png")
-            .AddItemTexture("pasta", "./lasagna.png")
-            .AddItemTexture("spooky_special_sauce", "./lasagna.png");
-
-        Pack pack = new()
-        {
-            Description = "Example pack made with ingot",
-            Name = "ingot example",
-            BehaviourPack = bp,
-            ResourcePack = rp,
-            LinkPacks = true,
-            ScriptsEnabled = true,
-        };
-
+        pack.ScriptsEnabled = true;
         pack.Compile("./");
 
         // ingot writes the script module entry in manifest.json but does not copy script sources yet

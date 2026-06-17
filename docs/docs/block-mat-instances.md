@@ -33,7 +33,8 @@ public override MaterialInstances MaterialInstances => new()
 
 ```csharp
 public MaterialInstance(string texture);
-public MaterialInstance(string texture, RenderMethods method);
+public MaterialInstance(string texture, string? sourcePath);
+public MaterialInstance(string texture, RenderMethods method, string? sourcePath = null);
 ```
 
 Available properties (all public fields on the struct):
@@ -41,6 +42,7 @@ Available properties (all public fields on the struct):
 | Property            | Type            | Default          | Description |
 |---------------------|-----------------|------------------|-----------|
 | `Texture`           | `string`        | (required)       | The texture reference (usually without the `textures/` prefix; matches a texture in your resource pack). |
+| `SourcePath`        | `string?`       | `null`           | Optional path to the source PNG. When set, ingot auto-registers this texture during compile unless already added manually. |
 | `RenderMethod`      | `RenderMethods` | `AlphaTest`      | How the texture is blended/alpha tested. |
 | `AmbientOcclusion`  | `float?`        | `null`           | Strength of ambient occlusion on this face. |
 | `FaceDimming`       | `bool?`         | `null`           | Whether the face is dimmed when not facing a light source. |
@@ -143,25 +145,21 @@ Face names are lower-cased (`up`, `down`, `north`, `south`, `east`, `west`). The
 
 ## Connecting to the Resource Pack
 
-The `texture` value in a `MaterialInstance` (e.g. `"block_of_dense_lasagna"`) is just a **key**. It must be fulfilled by your resource pack so that Minecraft can find the actual image at runtime.
-
-Register the assets when building your pack:
+The `texture` value in a `MaterialInstance` (e.g. `"block_of_dense_lasagna"`) is just a **key**. Provide a `SourcePath` on the material instance and ingot auto-registers it during compile:
 
 ```csharp
-using ingot.Core;
-
-ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-    .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png");
-
-Pack pack = new()
+public override MaterialInstances MaterialInstances => new()
 {
-    ...
-    ResourcePack = rp,
-    ...
+    All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest, "assets/block_of_dense_lasagna.png")
 };
+
+Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "...")
+    .AddBlock<MyBlock>();
 
 pack.Compile("./output");
 ```
+
+You can still override or add textures manually with `pack.AddBlockTexture(key, path)` — manual registrations take precedence over auto-discovered paths.
 
 When you compile, ingot will:
 - Copy `assets/block_of_dense_lasagna.png` → `rp/textures/blocks/block_of_dense_lasagna.png`
@@ -177,7 +175,7 @@ When you compile, ingot will:
 }
 ```
 
-The same key workflow applies to permutations - register any alternate texture keys with `ResourcePack.AddBlockTexture`, then reference them from the permutation's `MaterialInstances`.
+The same workflow applies to permutations — set `SourcePath` on the permutation's `MaterialInstances`, or use `Pack.AddBlockTexture` for manual overrides.
 
 See the dedicated [Resource Packs & Textures](resource-packs.md) guide for recommended project layout for your PNGs, how item textures work, limitations, and more.
 

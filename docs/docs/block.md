@@ -122,39 +122,30 @@ Permutations allow different components/traits to apply only when a Molang condi
 
 ## Compilation
 
-You rarely call `Block.Compile(Type)` directly. Instead you register blocks with a `BehaviourPack` and supply the visual assets via a `ResourcePack`:
+You rarely call `Block.Compile(Type)` directly. Instead register blocks with `Pack.Create` and declare textures on the block class via `MaterialInstance.SourcePath`:
 
 ```csharp
 using ingot.Core;
-using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Blocks made with ingot")
     .AddBlock<DenseLasagnaBlock>()
     .AddBlock<AnotherBlock>();
-
-ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-    .AddBlockTexture("block_of_dense_lasagna", "assets/block_of_dense_lasagna.png");
-
-Pack pack = new()
-{
-    Name = "My Addon",
-    Description = "Blocks made with ingot",
-    BehaviourPack = bp,
-    ResourcePack = rp,
-    LinkPacks = true
-};
 
 pack.Compile("./output");
 ```
 
-`AddBlock<T>()` returns the `BehaviourPack` for fluent chaining. Capture identifiers from your block class when you need them for cross-references.
+```csharp
+public override MaterialInstances MaterialInstances => new()
+{
+    All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest, "assets/block_of_dense_lasagna.png")
+};
+```
+
+Use `pack.AddBlockTexture(key, path)` only when you need a manual override. Capture identifiers from your block class when you need them for cross-references.
 
 This writes the full behaviour pack under `bp/` (including `bp/blocks/block_of_dense_lasagna.json` - the filename is the part after the `:` in the identifier) and the resource pack under `rp/` (including copied textures and the generated `terrain_texture.json` that maps your texture keys).
 
 See the [Resource Packs & Textures](resource-packs.md) guide for details on asset organization, the generated atlas files, and how texture keys bridge behaviour and resources.
-
-> [!NOTE]
-> Textures for blocks (and items) are provided on the resource pack side. The strings you return from `MaterialInstances` (and `Item.Texture`) are **keys** that must be registered with `ResourcePack.AddBlockTexture` / `AddItemTexture` so that `pack.Compile` can copy the PNGs and emit the correct `terrain_texture.json` / `item_texture.json`.
 
 ## Full Example
 

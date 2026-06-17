@@ -20,6 +20,8 @@ Every item **must** implement:
 - `Identifier` - full `namespace:name`.
 - `Texture` - the icon texture reference (used inside `minecraft:icon`).
 
+Optionally override `TexturePath` to provide the source PNG. When set, ingot auto-registers the icon during compile unless already added manually.
+
 ## Key Properties
 
 | Property            | Type               | Default          | Description |
@@ -31,6 +33,7 @@ Every item **must** implement:
 | `MaxStackSize`      | `int`              | `64`             | Shortcut for `minecraft:max_stack_size`. |
 | `DisplayName`       | `string`           | `Identifier`     | Shortcut for `minecraft:display_name`. |
 | `AllowOffhand`      | `bool`             | `false`          | Shortcut for `minecraft:allow_off_hand`. |
+| `TexturePath`       | `string?`          | `null`           | Optional source PNG for `Texture`. Auto-registered during compile. |
 
 These are written into the `description.menu_category` and `components` sections of the generated item JSON.
 
@@ -87,33 +90,26 @@ Set `Category = Item.CatalogueCategory.None` (and optionally `HiddenInCommands =
 
 ## Compilation & Registration
 
-Register items with a `BehaviourPack` and provide their icons via a `ResourcePack`:
+Register items with `Pack.Create` and declare icon paths on the item class:
 
 ```csharp
 using ingot.Core;
-using ingot.Core.Common;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString());
-Identifier lasagna = bp.AddItem<LasagnaItem>();
-Identifier fancyTool = bp.AddItem<FancyTool>();
-
-ResourcePack rp = ResourcePack.Create(Guid.NewGuid().ToString())
-    .AddItemTexture("lasagna", "assets/lasagna.png")
-    .AddItemTexture("fancy_tool", "assets/fancy_tool.png");
-
-Pack pack = new()
+public class LasagnaItem : Item
 {
-    Name = "My Addon",
-    Description = "Items made with ingot",
-    BehaviourPack = bp,
-    ResourcePack = rp,
-    LinkPacks = true
-};
+    public override Identifier Identifier => new("test:lasagna");
+    public override string Texture => "lasagna";
+    public override string? TexturePath => "assets/lasagna.png";
+}
+
+Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Items made with ingot")
+    .AddItem<LasagnaItem>()
+    .AddItem<FancyTool>();
 
 pack.Compile("./output");
 ```
 
-Each `AddItem<T>()` call returns the `BehaviourPack` for fluent chaining. Capture identifiers from your item class for cross-references (recipes, loot tables, scripts, etc.) without repeating string literals.
+Use `pack.AddItemTexture(key, path)` only when you need a manual override. Capture identifiers from your item class for cross-references (recipes, loot tables, scripts, etc.) without repeating string literals.
 
 This produces `bp/items/lasagna.json` (filename is the part after the `:` in the identifier) and the corresponding resources under `rp/textures/items/` plus `rp/textures/item_texture.json`.
 

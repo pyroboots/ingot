@@ -1,6 +1,6 @@
 # Loot Tables
 
-Loot tables define what items drop when a block is broken, an entity dies, or other loot events fire. In ingot you derive from `LootTable` in `ingot.Core.Behaviour.Loot`, register them on a `BehaviourPack`, and reference them from blocks via the `Loot` shortcut.
+Loot tables define what items drop when a block is broken, an entity dies, or other loot events fire. In ingot you derive from `LootTable` in `ingot.Core.Behaviour.Loot`, register them on a `Pack`, and reference them from blocks via the `Loot` shortcut.
 
 ## Minimal Loot Table
 
@@ -161,18 +161,9 @@ Permutations can also override `Loot` for state-specific drops. Permutations tha
 ```csharp
 using ingot.Core;
 
-BehaviourPack bp = BehaviourPack.Create(Guid.NewGuid().ToString())
+Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Loot tables made with ingot")
     .AddItem<LasagnaItem>()
     .AddBlock<DenseLasagnaBlock>();
-
-Pack pack = new()
-{
-    Name = "My Addon",
-    Description = "Loot tables made with ingot",
-    BehaviourPack = bp,
-    ResourcePack = ResourcePack.Create(Guid.NewGuid().ToString()),
-    LinkPacks = true
-};
 
 pack.Compile("./output");
 ```
@@ -180,7 +171,7 @@ pack.Compile("./output");
 Or register a loot table explicitly (deduplicated by type):
 
 ```csharp
-bp.AddLootTable<DenseLasagnaLoot>();
+pack.AddLootTable<DenseLasagnaLoot>();
 ```
 
 This writes `bp/loot_tables/blocks/block_of_dense_lasagna.json`. The block's `minecraft:loot` component points at that same relative path.

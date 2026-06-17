@@ -21,7 +21,7 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
 
     public override MaterialInstances MaterialInstances => new()
     {
-        All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest)
+        All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest, "./dense_lasagna.png")
     };
 
     public override Dictionary<string, dynamic[]> States => new()

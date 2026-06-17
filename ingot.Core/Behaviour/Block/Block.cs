@@ -142,6 +142,7 @@ public abstract class Block : IConcreteCompilable<Block>
                 }
 
                 inst.MaterialInstances.Compile(ref w);
+                TextureAutoRegistration.RegisterMaterialInstances(inst.MaterialInstances, ref w);
 
                 CompilerState.Info("compiling traits...");
                 List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tType, TraitSystem.TraitSystem.TraitType.Block);

@@ -63,6 +63,11 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     /// </summary>
     public abstract string Texture { get; }
     /// <summary>
+    /// Optional path to the source PNG for <see cref="Texture"/>. When set, ingot auto-registers the
+    /// item icon in the resource pack during compilation unless it was already added manually.
+    /// </summary>
+    public virtual string? TexturePath => null;
+    /// <summary>
     /// Shortcut for the <c>minecraft:max_stack_size</c> component
     /// </summary>
     public virtual int MaxStackSize => 64;
@@ -118,6 +123,8 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
             CompilerState.Push("components");
             json.Object("components", () =>
             {
+                TextureAutoRegistration.RegisterItemTexture(inst.Texture, inst.TexturePath, ref w);
+
                 json.Object("minecraft:icon", () => json.Property("texture", inst.Texture));
                 json.Object("minecraft:display_name", () => json.Property("value", inst.DisplayName));
                 json.Object("minecraft:max_stack_size", () => json.Property("value", inst.MaxStackSize));

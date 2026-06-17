@@ -7,16 +7,19 @@ public class CheeseItem : Item
 {
     public override Identifier Identifier => new("test:cheese");
     public override string Texture => "cheese";
+    public override string? TexturePath => "./lasagna.png";
 }
 
 public class PastaItem : Item
 {
     public override Identifier Identifier => new("test:pasta");
     public override string Texture => "pasta";
+    public override string? TexturePath => "./lasagna.png";
 }
 
 public class SauceItem : Item
 {
     public override Identifier Identifier => new("test:spooky_special_sauce");
     public override string Texture => "spooky_special_sauce";
+    public override string? TexturePath => "./lasagna.png";
 }

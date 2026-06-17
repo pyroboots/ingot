@@ -1,4 +1,8 @@
 using System.Diagnostics;
+using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Block;
+using ingot.Core.Behaviour.Loot;
+using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
 using Newtonsoft.Json;
 using static ingot.Core.Common.JsonHelper;
@@ -65,6 +69,139 @@ public class Pack
     /// Whether to make the <see cref="BehaviourPack"/> and <see cref="ResourcePack"/> depend on each other
     /// </summary>
     public bool LinkPacks = true;
+
+    /// <summary>
+    /// Creates a <see cref="Pack"/> with linked behaviour and resource packs. This is the recommended entry point.
+    /// </summary>
+    /// <param name="behaviourUuid">Minecraft UUID for the behaviour pack.</param>
+    /// <param name="name">Pack name shown in Minecraft.</param>
+    /// <param name="description">Short pack description.</param>
+    /// <param name="resourceUuid">Minecraft UUID for the resource pack. A new UUID is generated when omitted.</param>
+    /// <param name="behaviourPackVersion">Behaviour pack version used in cross-pack dependencies.</param>
+    /// <param name="resourcePackVersion">Resource pack version used in cross-pack dependencies.</param>
+    public static Pack Create(
+        string behaviourUuid,
+        string name,
+        string description,
+        string? resourceUuid = null,
+        Version? behaviourPackVersion = null,
+        Version? resourcePackVersion = null) =>
+        new()
+        {
+            Name = name,
+            Description = description,
+            BehaviourPack = BehaviourPack.Create(behaviourUuid, behaviourPackVersion),
+            ResourcePack = ResourcePack.Create(resourceUuid ?? Guid.NewGuid().ToString(), resourcePackVersion),
+            LinkPacks = true,
+        };
+
+    /// <summary>
+    /// Adds an entity to the pack.
+    /// </summary>
+    public Pack AddEntity<TEntity>() where TEntity : Entity, new()
+    {
+        BehaviourPack.AddEntity<TEntity>();
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an entity to the pack.
+    /// </summary>
+    public Pack AddEntity(Type tEntity)
+    {
+        BehaviourPack.AddEntity(tEntity);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a block to the pack.
+    /// </summary>
+    public Pack AddBlock<TBlock>() where TBlock : Block, new()
+    {
+        BehaviourPack.AddBlock<TBlock>();
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a block to the pack.
+    /// </summary>
+    public Pack AddBlock(Type tBlock)
+    {
+        BehaviourPack.AddBlock(tBlock);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an item to the pack.
+    /// </summary>
+    public Pack AddItem<TItem>() where TItem : Item, new()
+    {
+        BehaviourPack.AddItem<TItem>();
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an item to the pack.
+    /// </summary>
+    public Pack AddItem(Type tItem)
+    {
+        BehaviourPack.AddItem(tItem);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a recipe to the pack.
+    /// </summary>
+    public Pack AddRecipe<TRecipe>() where TRecipe : IRecipe, new()
+    {
+        BehaviourPack.AddRecipe<TRecipe>();
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a recipe to the pack.
+    /// </summary>
+    public Pack AddRecipe(Type tRecipe)
+    {
+        BehaviourPack.AddRecipe(tRecipe);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a loot table to the pack.
+    /// </summary>
+    public Pack AddLootTable<TLootTable>() where TLootTable : LootTable, new()
+    {
+        BehaviourPack.AddLootTable<TLootTable>();
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a loot table to the pack.
+    /// </summary>
+    public Pack AddLootTable(Type tLootTable)
+    {
+        BehaviourPack.AddLootTable(tLootTable);
+        return this;
+    }
+
+    /// <summary>
+    /// Manually registers a block texture. Takes precedence over behaviour-side auto-registration for the same key.
+    /// </summary>
+    public Pack AddBlockTexture(string key, string sourcePngPath)
+    {
+        ResourcePack.AddBlockTexture(key, sourcePngPath);
+        return this;
+    }
+
+    /// <summary>
+    /// Manually registers an item texture. Takes precedence over behaviour-side auto-registration for the same key.
+    /// </summary>
+    public Pack AddItemTexture(string key, string sourcePngPath)
+    {
+        ResourcePack.AddItemTexture(key, sourcePngPath);
+        return this;
+    }
 
     /// <summary>
     /// Compiles both <see cref="BehaviourPack"/> and <see cref="ResourcePack"/> and generates pack manifests

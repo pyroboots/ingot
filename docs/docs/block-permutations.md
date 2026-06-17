@@ -52,7 +52,7 @@ public class GlowyPermutation : BlockPermutation, IGeometry
 
     public override MaterialInstances? MaterialInstances => new()
     {
-        All = new MaterialInstance("glowy_variant", MaterialInstance.RenderMethods.Blend)
+        All = new MaterialInstance("glowy_variant", MaterialInstance.RenderMethods.Blend, "assets/glowy_variant.png")
     };
 
     // IGeometry via trait
