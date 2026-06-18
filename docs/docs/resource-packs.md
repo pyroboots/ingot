@@ -50,7 +50,12 @@ Key `Pack` members:
 - `AddBlock<T>()`, `AddItem<T>()`, `AddEntity<T>()`, `AddRecipe<T>()`, `AddLootTable<T>()` - register content (fluent, returns `Pack`).
 - `AddBlockTexture(string key, string sourcePngPath)` - manual block texture override.
 - `AddItemTexture(string key, string sourcePngPath)` - manual item texture override.
+- `ScriptsEnabled` - enables Script API in the behaviour pack manifest and generates `scripts/main.js`.
+- `ScriptEntry` - script module entry path (defaults to `scripts/main.js`).
+- `ScriptApiModules` - Script API module dependencies (defaults to `@minecraft/server` 2.8.0).
 - `Compile(string outputDir)` - compiles both `bp/` and `rp/`.
+
+When `ScriptsEnabled` is `true` and blocks define [Block Events](block-events.md), **ingot** also writes per-block scripts under `bp/scripts/blocks/` and imports them from `main.js`.
 
 > [!NOTE]
 > The lower-level `BehaviourPack` and `ResourcePack` types are still available if you need direct access. `Pack` is the recommended developer surface.

@@ -8,6 +8,8 @@
   href: block-permutations.md
 - name: 1.2. Block Material Instances
   href: block-mat-instances.md
+- name: 1.3. Block Events
+  href: block-events.md
 - name: 2. Items
   href: item.md
 - name: 2.1. Recipes

@@ -75,6 +75,69 @@ public class MushroomStewRecipe : ShapelessRecipe
 | `Count` | `int`        | `1`     | Amount required or produced. |
 | `Tag`   | `string?`    | `null`  | Optional item tag matcher. |
 
+## Furnace Recipe
+
+Use `FurnaceRecipe` for smelting recipes:
+
+```csharp
+public class SmeltLasagnaRecipe : FurnaceRecipe
+{
+    public override Identifier Identifier => new("test:smelt_lasagna");
+    public override Identifier Input => new("test:raw_lasagna");
+    public override Identifier Output => new("test:lasagna");
+}
+```
+
+| Member     | Type           | Default      | Description |
+|------------|----------------|--------------|-------------|
+| `Input`    | `Identifier`   | (required)   | Item to smelt. |
+| `Output`   | `Identifier`   | (required)   | Result item. |
+| `Tags`     | `string[]`     | `["furnace"]`| Smelting interfaces (e.g. `blast_furnace`, `smoker`). |
+
+Compiles to `minecraft:recipe_furnace`.
+
+## Brewing Mix Recipe
+
+Use `BrewingMixRecipe` for brewing stand recipes:
+
+```csharp
+public class AwkwardPotionRecipe : BrewingMixRecipe
+{
+    public override Identifier Identifier => new("test:awkward_potion");
+    public override Identifier Input => new("minecraft:potion_type:water");
+    public override Identifier Reagent => new("minecraft:nether_wart");
+    public override Identifier Output => new("minecraft:potion_type:awkward");
+}
+```
+
+| Member    | Type           | Default             | Description |
+|-----------|----------------|---------------------|-------------|
+| `Input`   | `Identifier`   | (required)          | Bottle/potion in the input slot. |
+| `Reagent` | `Identifier`   | (required)          | Ingredient added to the stand. |
+| `Output`  | `Identifier`   | (required)          | Resulting item. |
+| `Tags`    | `string[]`     | `["brewing_stand"]` | Brewing interfaces. |
+
+Compiles to `minecraft:recipe_brewing_mix`. **ingot** warns if potion inputs/outputs are missing auxiliary values.
+
+## Custom Recipe Types
+
+All built-in recipe bases implement `IRecipe` and can be registered with `AddRecipe<T>()` without any special handling in `BehaviourPack`. To add your own recipe category, create an abstract base that implements both `IRecipe` and `IConcreteCompilable<TSelf>`:
+
+```csharp
+public abstract class SmithingRecipe : IRecipe, IConcreteCompilable<SmithingRecipe>
+{
+    public abstract Identifier Identifier { get; }
+    public string Compile() => Compile(GetType());
+
+    public static string Compile(Type tType)
+    {
+        // emit JSON for your recipe type
+    }
+}
+```
+
+User-defined recipes that extend an existing base (e.g. `MyRecipe : ShapedRecipe`) work automatically with `AddRecipe<MyRecipe>()`.
+
 ## Compilation & Registration
 
 ```csharp
@@ -130,4 +193,4 @@ See `LasagnaRecipe.cs` in the [`ingot.Example`](../../ingot.Example) project, wh
 
 - Recipe identifiers are independent from item identifiers, but they often share the same `namespace:name` when the recipe crafts that item.
 - `null` entries in a shaped `Pattern` row become spaces in the compiled pattern string.
-- Only `ShapedRecipe` and `ShapelessRecipe` are compiled today. Other recipe types are not yet supported.
+- Built-in recipe types: `ShapedRecipe`, `ShapelessRecipe`, `FurnaceRecipe`, and `BrewingMixRecipe`. Extend one of these or implement `IRecipe` + `IConcreteCompilable<T>` for custom types.

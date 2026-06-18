@@ -15,7 +15,7 @@
 - **Inheritance-Based, Type-Safe API** - Define items, blocks, entities, and more using clean, strongly-typed C# instead of hand-writing JSON
 - **Automatic Manifest Generation** - `manifest.json` files for both behavior packs and resource packs are created automatically
 - **Full BP + RP Support** - Create behavior packs, resource packs, and linked packs with ease
-- **Script API Ready** - Built-in support for enabling the Script API in your pack
+- **Script API Ready** - Built-in support for enabling the Script API in your pack, including auto-generated [block event scripts](docs/docs/block-events.md)
 - **CompilerState** - Get clear, helpful compile-time feedback to avoid debugging in the Minecraft content log
 - **Extensible & Maintainable** - Designed for large or complex addons where manual JSON becomes painful
 - **Iterable & Reusable** - Because its code, you can define variable and easily change things project-wide
@@ -78,7 +78,7 @@ class Program
 }
 ```
 
-See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, recipes, textures, and the full resource pack side. See the [Resource Packs & Textures](docs/docs/resource-packs.md) and [Recipes](docs/docs/recipe.md) guides for more detail.
+See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, recipes, textures, and the full resource pack side. See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Block Events](docs/docs/block-events.md), and [Recipes](docs/docs/recipe.md) guides for more detail.
 
 ## 🛠️ Project Structure
 
