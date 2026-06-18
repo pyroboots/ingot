@@ -149,6 +149,21 @@ public abstract class Block : IConcreteCompilable<Block>
                 inst.MaterialInstances.Compile(ref w);
                 TextureAutoRegistration.RegisterMaterialInstances(inst.MaterialInstances, ref w);
 
+                if (inst.BlockEvents is { HasEvents: true } blockEvents)
+                {
+                    if (CompilerState.CurrentPack is null)
+                        CompilerState.Warn(ref w, "block events require pack compilation to generate scripts");
+                    else if (!CompilerState.CurrentPack.ScriptsEnabled)
+                        CompilerState.Warn(ref w, "block events require ScriptsEnabled on the pack");
+                    else
+                    {
+                        (string jsonComponentName, string code) = blockEvents.Compile(inst.Identifier);
+                        CompilerState.CurrentPack.RegisterGeneratedScript(blockEvents.GetScriptPath(inst.Identifier), code);
+                        json.Object(jsonComponentName, () => { });
+                        CompilerState.Info($"registered block event component {jsonComponentName}");
+                    }
+                }
+
                 CompilerState.Info("compiling traits...");
                 List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tType, TraitSystem.TraitSystem.TraitType.Block);
                 int c = 0;
