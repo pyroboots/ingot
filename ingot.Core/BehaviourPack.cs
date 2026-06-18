@@ -226,17 +226,7 @@ public class BehaviourPack
             string filename = recipe.Identifier.Name;
             
             string path = Path.Combine(dir, "recipes", $"{filename}.json");
-            string file;
-            
-            if (recipe is ShapedRecipe)
-                file = ShapedRecipe.Compile(recipe.GetType());
-            else if (recipe is ShapelessRecipe)
-                file = ShapelessRecipe.Compile(recipe.GetType());
-            else if (recipe is FurnaceRecipe)
-                file = FurnaceRecipe.Compile(recipe.GetType());
-            else if (recipe is BrewingMixRecipe)
-                file = BrewingMixRecipe.Compile(recipe.GetType());
-            else throw new InvalidCastException("expected a recipe type");
+            string file = recipe.Compile();
             
             File.WriteAllText(path, file);
             

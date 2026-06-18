@@ -26,6 +26,9 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
     /// </summary>
     public abstract RecipeItem Result { get; }
 
+    /// <inheritdoc/>
+    public string Compile() => Compile(GetType());
+
     /// <summary>
     /// Compiles the <see cref="ShapelessRecipe"/> (as <paramref name="tType"/>) to JSON
     /// </summary>

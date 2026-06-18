@@ -25,6 +25,9 @@ public abstract class FurnaceRecipe : IRecipe, IConcreteCompilable<FurnaceRecipe
     /// The result item after smelting <see cref="Input"/>
     /// </summary>
     public abstract Identifier Output { get; }
+
+    /// <inheritdoc/>
+    public string Compile() => Compile(GetType());
     
     /// <summary>
     /// Compiles the <see cref="FurnaceRecipe"/> (as <paramref name="tType"/>) to JSON

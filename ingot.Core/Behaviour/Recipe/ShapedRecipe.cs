@@ -29,6 +29,9 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
     /// Amount of <see cref="Result"/> to get upon crafting
     /// </summary>
     public virtual int ResultAmount => 1;
+
+    /// <inheritdoc/>
+    public string Compile() => Compile(GetType());
     
     /// <summary>
     /// Compiles the <see cref="ShapedRecipe"/> (as <paramref name="tType"/>) to JSON

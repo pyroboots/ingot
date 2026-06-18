@@ -29,6 +29,9 @@ public abstract class BrewingMixRecipe : IRecipe, IConcreteCompilable<BrewingMix
     /// The resulting item after brewing completes.
     /// </summary>
     public abstract Identifier Output { get; }
+
+    /// <inheritdoc/>
+    public string Compile() => Compile(GetType());
     
     /// <summary>
     /// Compiles the <see cref="BrewingMixRecipe"/> (as <paramref name="tType"/>) to JSON
