@@ -41,7 +41,7 @@ public record TraitProperty
 /// <summary>
 /// Contains reflected data of a trait interface
 /// </summary>
-public class Trait : IIdentifiable, ICompileableFragment
+public class Trait : IIdentifiable, ICompilableFragment
 {
     /// <inheritdoc/>
     public Identifier Identifier { get; }

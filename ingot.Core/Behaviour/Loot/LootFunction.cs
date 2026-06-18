@@ -7,7 +7,7 @@ namespace ingot.Core.Behaviour.Loot;
 /// <summary>
 /// A loot table function that modifies a dropped item
 /// </summary>
-public abstract class LootFunction : ICompileableFragment
+public abstract class LootFunction : ICompilableFragment
 {
     /// <summary>
     /// Bedrock function name (e.g. <c>set_count</c>)

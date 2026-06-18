@@ -86,7 +86,7 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
 /// <summary>
 /// Represents an ingredient or output item in a crafting recipe
 /// </summary>
-public record RecipeItem : ICompileableFragment
+public record RecipeItem : ICompilableFragment
 {
     /// <summary>
     /// Identifier of the item

@@ -8,7 +8,7 @@ namespace ingot.Core.Behaviour.Block;
 /// <summary>
 /// Texture and material configuration for the face of a <see cref="Block"/>
 /// </summary>
-public struct MaterialInstance : ICompileableFragment
+public struct MaterialInstance : ICompilableFragment
 {
     /// <summary>
     /// Creates a material instance with the given texture key.
@@ -142,7 +142,7 @@ public struct MaterialInstance : ICompileableFragment
 /// <summary>
 /// Texture and material configuration for the faces of a <see cref="Block"/>
 /// </summary>
-public struct MaterialInstances : ICompileableFragment
+public struct MaterialInstances : ICompilableFragment
 {
     /// <summary>
     /// Creates an empty <see cref="MaterialInstances"/> with no faces configured.

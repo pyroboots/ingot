@@ -5,7 +5,7 @@ namespace ingot.Core.Common;
 /// <summary>
 /// Internal use interface make a class compilable to JSON
 /// </summary>
-public interface ICompileableFragment
+public interface ICompilableFragment
 {
     /// <summary>
     /// Compiles this class to JSON

@@ -5,7 +5,7 @@ namespace ingot.Core.Common;
 /// <summary>
 /// Internal use implementation of a semantic version
 /// </summary>
-public class Version : ICompileableFragment
+public class Version : ICompilableFragment
 {
     /// <summary>
     /// Major version component.

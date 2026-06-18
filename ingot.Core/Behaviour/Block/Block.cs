@@ -65,6 +65,11 @@ public abstract class Block : IConcreteCompilable<Block>
     public abstract MaterialInstances MaterialInstances { get; }
 
     /// <summary>
+    /// Script API event bindings
+    /// </summary>
+    public virtual BlockEvents? BlockEvents => null; 
+
+    /// <summary>
     /// Compiles the <see cref="Block"/> (as <paramref name="tType"/>) to JSON
     /// </summary>
     /// <param name="tType">Concrete type of <see cref="Block"/></param>
@@ -158,7 +163,7 @@ public abstract class Block : IConcreteCompilable<Block>
         });
         
         w.WriteEndObject();
-
+        
         CompilerState.Pop();
 
         return sw.ToString();

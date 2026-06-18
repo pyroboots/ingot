@@ -8,7 +8,7 @@ namespace ingot.Core.Behaviour.Loot;
 /// <summary>
 /// A single entry within a loot pool
 /// </summary>
-public abstract class LootEntry : ICompileableFragment
+public abstract class LootEntry : ICompilableFragment
 {
     /// <summary>
     /// Relative chance for this entry to be selected. Defaults to 1.

@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// Internal use class to represent a Minecraft identifier
 /// </summary>
-public class Identifier : IEquatable<Identifier>, ICompileableFragment
+public class Identifier : IEquatable<Identifier>, ICompilableFragment
 {
     /// <summary>
     /// The <c>minecraft</c> part in <c>minecraft:dirt</c>

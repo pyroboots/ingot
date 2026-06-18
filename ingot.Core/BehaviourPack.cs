@@ -41,23 +41,23 @@ public class BehaviourPack
     /// <summary>
     /// List of <see cref="Entity"/> types added to the pack
     /// </summary>
-    public List<Entity> Entities = new();
+    public readonly List<Entity> Entities = new();
     /// <summary>
     /// List of <see cref="Block"/> types added to the pack
     /// </summary>
-    public List<Block> Blocks = new();
+    public readonly List<Block> Blocks = new();
     /// <summary>
     /// List of <see cref="Item"/> types added to the pack
     /// </summary>
-    public List<Item> Items = new();
+    public readonly List<Item> Items = new();
     /// <summary>
     /// List of <see cref="IRecipe"/> types added to the pack
     /// </summary>
-    public List<IRecipe> Recipes = new();
+    public readonly List<IRecipe> Recipes = new();
     /// <summary>
     /// List of <see cref="LootTable"/> types added to the pack
     /// </summary>
-    public List<LootTable> LootTables = new();
+    public readonly List<LootTable> LootTables = new();
 
     /// <summary>
     /// Adds an entity to the pack

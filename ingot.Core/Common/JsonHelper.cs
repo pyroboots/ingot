@@ -19,8 +19,8 @@ internal class JsonHelper
         if (value is string && ((string)value) == string.Empty) return;
         
         w.WritePropertyName(key);
-        if (value is ICompileableFragment)
-            ((ICompileableFragment)value).Compile(ref w);
+        if (value is ICompilableFragment)
+            ((ICompilableFragment)value).Compile(ref w);
         else
             JsonSerializer.CreateDefault().Serialize(w, value);
     }

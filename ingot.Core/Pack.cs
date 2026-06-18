@@ -260,6 +260,7 @@ public class Pack
                     json.Property("language", "javascript");
                     json.Property("uuid", Guid.NewGuid().ToString());
                     json.Property("entry", ScriptEntry);
+                    File.Create(Path.Combine(outputDir, "bp", ScriptEntry));
                     json.Property("version", new Version(1, 0, 0).AsArray());
                 });
             });

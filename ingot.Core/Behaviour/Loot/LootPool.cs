@@ -8,7 +8,7 @@ namespace ingot.Core.Behaviour.Loot;
 /// <summary>
 /// A pool of weighted loot entries rolled one or more times
 /// </summary>
-public class LootPool : ICompileableFragment
+public class LootPool : ICompilableFragment
 {
     /// <summary>
     /// How many times to roll this pool

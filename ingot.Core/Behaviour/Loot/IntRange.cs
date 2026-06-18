@@ -6,7 +6,7 @@ namespace ingot.Core.Behaviour.Loot;
 /// <summary>
 /// An integer value or min/max range used by loot table rolls and functions
 /// </summary>
-public record IntRange : ICompileableFragment
+public record IntRange : ICompilableFragment
 {
     /// <summary>
     /// Minimum value
