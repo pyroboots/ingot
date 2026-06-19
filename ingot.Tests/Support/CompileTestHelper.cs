@@ -2,11 +2,11 @@ namespace ingot.Tests.Support;
 
 internal static class CompileTestHelper
 {
-    public static string CreateOutputDirectory()
+    public static TempOutputDirectory CreateTempDirectory()
     {
         string outputDir = Path.Combine(Path.GetTempPath(), "ingot-tests", Guid.NewGuid().ToString());
         Directory.CreateDirectory(outputDir);
-        return outputDir;
+        return new TempOutputDirectory(outputDir);
     }
 
     public static void DeleteOutputDirectory(string outputDir)
@@ -14,4 +14,11 @@ internal static class CompileTestHelper
         if (Directory.Exists(outputDir))
             Directory.Delete(outputDir, recursive: true);
     }
+}
+
+internal sealed class TempOutputDirectory(string path) : IDisposable
+{
+    public string Path { get; } = path;
+
+    public void Dispose() => CompileTestHelper.DeleteOutputDirectory(Path);
 }

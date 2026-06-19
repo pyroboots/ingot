@@ -1,25 +1,20 @@
 using ingot.Tests.Content.Entities;
 using ingot.Tests.Support;
 
-namespace ingot.Tests.Tests.Entities;
+namespace ingot.Tests.Entities;
 
 public class EntityCompilesToCorrectFilenameTest
 {
     [Fact]
-    public void Compile_entityCompilesToCorrectFilename()
+    public void Compile_EntityCompilesToCorrectFilename()
     {
-        string outputDir = CompileTestHelper.CreateOutputDirectory();
-        try
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
         {
             PackTestBuilder.Create()
                 .AddEntity<TestEntity>()
-                .Compile(outputDir, verbose: false);
+                .Compile(output.Path, verbose: false);
 
-            Assert.True(File.Exists(Path.Combine(outputDir, "bp", "entities", "test_entity.json")));
-        }
-        finally
-        {
-            CompileTestHelper.DeleteOutputDirectory(outputDir);
+            Assert.True(File.Exists(Path.Combine(output.Path, "bp", "entities", "test_entity.json")));
         }
     }
 }

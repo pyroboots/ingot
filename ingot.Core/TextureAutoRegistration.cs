@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour.Block;
+
 using Newtonsoft.Json;
 
 namespace ingot.Core;

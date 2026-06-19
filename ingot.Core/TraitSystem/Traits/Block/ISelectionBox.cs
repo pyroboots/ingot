@@ -2,8 +2,9 @@
 // https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/examples/blockcomponents/minecraftblock_selection_box?view=minecraft-bedrock-stable
 
 namespace ingot.Core.TraitSystem.Traits.Block;
+
 using System.Numerics;
-using System.Collections.Generic;
+
 using ingot.Core.Common;
 
 /// <summary>

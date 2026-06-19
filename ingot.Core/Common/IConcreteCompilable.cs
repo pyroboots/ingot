@@ -12,7 +12,7 @@ public interface IConcreteCompilable<TType> where TType : IConcreteCompilable<TT
     /// <param name="tType">Concrete type to compile.</param>
     /// <returns>Compiled JSON</returns>
     static abstract string Compile(Type tType);
-    
+
     /// <summary>
     /// Compiles <typeparamref name="TConcreteType"/> to JSON.
     /// </summary>

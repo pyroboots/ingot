@@ -1,12 +1,12 @@
 using ingot.Core.Behaviour;
 using ingot.Tests.Content.Entities;
 
-namespace ingot.Tests.Tests.Entities;
+namespace ingot.Tests.Entities;
 
 public class EntityJsonContainsIdentifierTest
 {
     [Fact]
-    public void Compile_entityJsonContainsFormatVersion()
+    public void Compile_EntityJsonContainsFormatVersion()
     {
         string json = Entity.Compile(typeof(TestEntity));
         Assert.Contains("\"format_version\": \"1.20.10\"", json);

@@ -25,10 +25,11 @@ class Program
             .AddLootTable<LasagnaSpiritLoot>();
 
         pack.ScriptsEnabled = true;
-        pack.Compile("./");
+        const string outputDir = "./artifacts/example/";
+        pack.Compile(outputDir);
 
         // ingot writes the script module entry in manifest.json but does not copy script sources yet
-        string scriptDest = "./bp/scripts/main.js";
+        string scriptDest = Path.Combine(outputDir, "bp/scripts/main.js");
         Directory.CreateDirectory(Path.GetDirectoryName(scriptDest)!);
         string scriptSource = Path.Combine(Directory.GetCurrentDirectory(), "scripts", "main.js");
         if (!File.Exists(scriptSource))

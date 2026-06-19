@@ -2,8 +2,7 @@
 // https://learn.microsoft.com/en-us/minecraft/creator/reference/content/itemreference/examples/itemcomponents/minecraft_dyeable?view=minecraft-bedrock-stable
 
 namespace ingot.Core.TraitSystem.Traits.Item;
-using System.Numerics;
-using System.Collections.Generic;
+
 using ingot.Core.Common;
 
 /// <summary>
@@ -12,9 +11,7 @@ using ingot.Core.Common;
 [Trait("minecraft:dyeable", TraitSystem.TraitType.Item)]
 public interface IDyeable : IItemTrait
 {
-    /// <summary>
-    /// Default RGB color when the item has not been dyed, as a JSON array string (e.g. <c>[255, 255, 255]</c>).
-    /// </summary>
+    /// <inheritdoc/>
     [TraitProperty]
     public virtual string DefaultColor => "[255, 255, 255]";
 }

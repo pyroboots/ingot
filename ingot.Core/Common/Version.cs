@@ -47,12 +47,12 @@ public class Version : ICompilableFragment
 
     /// <inheritdoc/>
     public override string ToString() => $"{Major}.{Minor}.{Patch}";
-    
+
     /// <summary>
     /// Returns the version as a <c>[major, minor, patch]</c> array for manifest JSON.
     /// </summary>
     public int[] AsArray() => new[] { Major, Minor, Patch };
-    
+
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
     {

@@ -1,25 +1,20 @@
 using ingot.Tests.Content;
 using ingot.Tests.Support;
 
-namespace ingot.Tests.Tests.Items;
+namespace ingot.Tests.Items;
 
 public class ItemCompilesToCorrectFilenameTest
 {
     [Fact]
-    public void Compile_itemCompilesToCorrectFilename()
+    public void Compile_ItemCompilesToCorrectFilename()
     {
-        string outputDir = CompileTestHelper.CreateOutputDirectory();
-        try
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
         {
             PackTestBuilder.Create()
                 .AddItem<TestItem>()
-                .Compile(outputDir, verbose: false);
+                .Compile(output.Path, verbose: false);
 
-            Assert.True(File.Exists(Path.Combine(outputDir, "bp", "items", "test_item.json")));
-        }
-        finally
-        {
-            CompileTestHelper.DeleteOutputDirectory(outputDir);
+            Assert.True(File.Exists(Path.Combine(output.Path, "bp", "items", "test_item.json")));
         }
     }
 }

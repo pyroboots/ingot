@@ -3,6 +3,7 @@ using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
+
 using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core;
@@ -37,7 +38,7 @@ public class BehaviourPack
     /// <param name="uuid">Minecraft UUID to be used at runtime</param>
     /// <param name="version">Version of the <see cref="BehaviourPack"/>. When <see cref="ResourcePack"/> is linked, it will require at least this version.</param>
     public static BehaviourPack Create(string uuid, Version? version = null) => new(uuid, version);
-    
+
     /// <summary>
     /// List of <see cref="Entity"/> types added to the pack
     /// </summary>
@@ -72,7 +73,7 @@ public class BehaviourPack
     public BehaviourPack AddEntity(Type tEntity)
     {
         Entity inst = (Activator.CreateInstance(tEntity) as Entity)!;
-        
+
         Entities.Add(inst);
         return this;
     }
@@ -90,7 +91,7 @@ public class BehaviourPack
     public BehaviourPack AddBlock(Type tBlock)
     {
         Block inst = (Activator.CreateInstance(tBlock) as Block)!;
-        
+
         Blocks.Add(inst);
         return this;
     }
@@ -108,7 +109,7 @@ public class BehaviourPack
     public BehaviourPack AddItem(Type tItem)
     {
         Item inst = (Activator.CreateInstance(tItem) as Item)!;
-        
+
         Items.Add(inst);
         return this;
     }
@@ -126,7 +127,7 @@ public class BehaviourPack
     public BehaviourPack AddRecipe(Type tRecipe)
     {
         IRecipe inst = (Activator.CreateInstance(tRecipe) as IRecipe)!;
-        
+
         Recipes.Add(inst);
         return this;
     }
@@ -147,7 +148,7 @@ public class BehaviourPack
             return this;
 
         LootTable inst = (Activator.CreateInstance(tLootTable) as LootTable)!;
-        
+
         LootTables.Add(inst);
         return this;
     }
@@ -159,7 +160,7 @@ public class BehaviourPack
     public void Compile(string dir)
     {
         CompilerState.Push("bp");
-        
+
         Directory.CreateDirectory(dir);
         Directory.CreateDirectory(Path.Combine(dir, "entities"));
         Directory.CreateDirectory(Path.Combine(dir, "blocks"));
@@ -168,88 +169,49 @@ public class BehaviourPack
         Directory.CreateDirectory(Path.Combine(dir, "recipes"));
         Directory.CreateDirectory(Path.Combine(dir, "loot_tables"));
         CompilerState.Info("created folder structure");
-        
-        CompilerState.Info("compiling entities...");
-        CompilerState.Push("entities");
-        int c = 0;
-        foreach (Entity entity in Entities)
-        {
-            c++;
-            string filename = entity.Identifier.Name;
-            
-            string path = Path.Combine(dir, "entities", $"{filename}.json");
-            string file = Entity.Compile(entity.GetType());
-            File.WriteAllText(path, file);
-            
-            CompilerState.Info($"({c}/{Entities.Count}) compiled entity {entity.Identifier}");
-        }
-        CompilerState.Pop();
 
-        CompilerState.Info("compiling blocks...");
-        CompilerState.Push("blocks");
-        c = 0;
-        foreach (Block block in Blocks)
-        {
-            c++;
-            string filename = block.Identifier.Name;
-            
-            string path = Path.Combine(dir, "blocks", $"{filename}.json");
-            string file = Block.Compile(block.GetType());
-            File.WriteAllText(path, file);
-            
-            CompilerState.Info($"({c}/{Blocks.Count}) compiled block {block.Identifier}");
-        }
-        CompilerState.Pop();
-        
-        CompilerState.Info("compiling items...");
-        CompilerState.Push("items");
-        c = 0;
-        foreach (Item item in Items)
-        {
-            c++;
-            string filename = item.Identifier.Name;
-            
-            string path = Path.Combine(dir, "items", $"{filename}.json");
-            string file = Item.Compile(item.GetType());
-            File.WriteAllText(path, file);
-            
-            CompilerState.Info($"({c}/{Items.Count}) compiled item {item.Identifier}");
-        }
-        CompilerState.Pop();
-        
-        CompilerState.Info("compiling recipes...");
-        CompilerState.Push("recipes");
-        c = 0;
-        foreach (IRecipe recipe in Recipes)
-        {
-            c++;
-            string filename = recipe.Identifier.Name;
-            
-            string path = Path.Combine(dir, "recipes", $"{filename}.json");
-            string file = recipe.Compile();
-            
-            File.WriteAllText(path, file);
-            
-            CompilerState.Info($"({c}/{Recipes.Count}) compiled recipe {recipe.Identifier}");
-        }
-        CompilerState.Pop();
+        CompileIdentifiableCollection(Entities, dir, "entities", "entity", e => Entity.Compile(e.GetType()));
+        CompileIdentifiableCollection(Blocks, dir, "blocks", "block", b => Block.Compile(b.GetType()));
+        CompileIdentifiableCollection(Items, dir, "items", "item", i => Item.Compile(i.GetType()));
+        CompileIdentifiableCollection(Recipes, dir, "recipes", "recipe", r => r.Compile());
 
         CompilerState.Info("compiling loot tables...");
         CompilerState.Push("loot_tables");
-        c = 0;
+        int c = 0;
         foreach (LootTable lootTable in LootTables)
         {
             c++;
             string path = Path.Combine(dir, lootTable.Reference);
             Directory.CreateDirectory(path);
-            
+
             string file = LootTable.Compile(lootTable.GetType());
             File.WriteAllText(Path.Combine(path, $"{lootTable.Identifier.Name}.json"), file);
 
             CompilerState.Info($"({c}/{LootTables.Count}) compiled loot table {lootTable.Identifier} -> {Path.Combine(path, $"{lootTable.Identifier.Name}.json")}");
         }
         CompilerState.Pop();
-        
+
+        CompilerState.Pop();
+    }
+
+    private static void CompileIdentifiableCollection<T>(
+        IReadOnlyList<T> items,
+        string dir,
+        string subfolder,
+        string itemLabel,
+        Func<T, string> compile) where T : IIdentifiable
+    {
+        CompilerState.Info($"compiling {subfolder}...");
+        CompilerState.Push(subfolder);
+        int c = 0;
+        foreach (T item in items)
+        {
+            c++;
+            string path = Path.Combine(dir, subfolder, $"{item.Identifier.Name}.json");
+            File.WriteAllText(path, compile(item));
+            CompilerState.Info($"({c}/{items.Count}) compiled {itemLabel} {item.Identifier}");
+        }
+
         CompilerState.Pop();
     }
 }

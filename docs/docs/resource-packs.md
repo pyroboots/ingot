@@ -53,7 +53,17 @@ Key `Pack` members:
 - `ScriptsEnabled` - enables Script API in the behaviour pack manifest and generates `scripts/main.js`.
 - `ScriptEntry` - script module entry path (defaults to `scripts/main.js`).
 - `ScriptApiModules` - Script API module dependencies (defaults to `@minecraft/server` 2.8.0).
+- `PackIcon` - optional path to a PNG copied into both `bp/` and `rp/` using the source filename (e.g. `pack_icon.png`).
 - `Compile(string outputDir)` - compiles both `bp/` and `rp/`.
+
+Set a pack icon before compiling:
+
+```csharp
+pack.PackIcon = "assets/pack_icon.png";
+pack.Compile("./output");
+```
+
+This copies the file to `{outputDir}/bp/pack_icon.png` and `{outputDir}/rp/pack_icon.png`.
 
 When `ScriptsEnabled` is `true` and blocks define [Block Events](block-events.md), **ingot** also writes per-block scripts under `bp/scripts/blocks/` and imports them from `main.js`.
 
@@ -147,7 +157,7 @@ Textures are declared on `MyBlock` and `MyItem` via `SourcePath` / `TexturePath`
 
 After compilation you will have a ready-to-use `bp/` folder and `rp/` folder (plus `manifest.json` files that cross-link them when `LinkPacks` is true).
 
-See the [`ingot.Example`](../../ingot.Example) project for a working end-to-end sample that includes blocks, items, recipes, states, permutations, and both block and item textures.
+See the [`ingot.Example`](../../ingot.Example) project for a working end-to-end sample that includes blocks, items, recipes, states, permutations, and both block and item textures. The docs use `./output` as a generic compile path; this repo's example compiles to `./artifacts/example/`.
 
 ## Current Scope and Limitations
 

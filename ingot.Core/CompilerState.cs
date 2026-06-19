@@ -7,28 +7,49 @@ namespace ingot.Core;
 /// </summary>
 public static class CompilerState
 {
-    private static Stack<string> _traceStack = new(["pack"]);
-    private static List<string> _logs = new();
-    /// <summary>
-    /// Push a new section onto the trace stack
-    /// </summary>
-    /// <param name="trace">Name of the section to show up in any produced logs or warnings</param>
-    public static void Push(string trace) => _traceStack.Push(trace);
-    /// <summary>
-    /// Ends the previous section
-    /// </summary>
-    public static void Pop() => _traceStack.Pop();
+    private static readonly AsyncLocal<CompilerContext> Context = new();
+
+    private static CompilerContext Current => Context.Value ??= new();
+
     /// <summary>
     /// Whether logs produced by <see cref="Info"/> appear in the console
     /// </summary>
-    public static bool ShowInfoLogs = false;
+    public static bool ShowInfoLogs
+    {
+        get => Current.ShowInfoLogs;
+        set => Current.ShowInfoLogs = value;
+    }
 
     /// <summary>
     /// Current pack being compiled. Useful for <see cref="BehaviourPack"/> to generate content for <see cref="ResourcePack"/> and vice versa
     /// </summary>
-    public static Pack? CurrentPack = null; 
+    public static Pack? CurrentPack
+    {
+        get => Current.CurrentPack;
+        set => Current.CurrentPack = value;
+    }
 
-    private static string _getTrace() => string.Join('/', _traceStack.ToArray().Reverse());
+    /// <summary>
+    /// Clears accumulated logs and resets compile-time state before a new pack compilation.
+    /// </summary>
+    public static void Reset()
+    {
+        Context.Value = new CompilerContext();
+    }
+
+    /// <summary>
+    /// Push a new section onto the trace stack
+    /// </summary>
+    /// <param name="trace">Name of the section to show up in any produced logs or warnings</param>
+    public static void Push(string trace) => Current.TraceStack.Push(trace);
+
+    /// <summary>
+    /// Ends the previous section
+    /// </summary>
+    public static void Pop() => Current.TraceStack.Pop();
+
+    private static string GetTrace() =>
+        string.Join('/', Current.TraceStack.ToArray().Reverse());
 
     /// <summary>
     /// Writes a warning to the console and in the JSON output
@@ -37,9 +58,9 @@ public static class CompilerState
     /// <param name="msg">Message to write</param>
     public static void Warn(ref JsonTextWriter? w, string msg)
     {
-        string warning = $"/!\\ [{_getTrace()}] {msg}";
-        _logs.Add(warning);
-        
+        string warning = $"/!\\ [{GetTrace()}] {msg}";
+        Current.Logs.Add(warning);
+
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine(warning);
         Console.ResetColor();
@@ -57,14 +78,22 @@ public static class CompilerState
     /// <param name="msg">Info</param>
     public static void Info(string msg)
     {
-        string log = $"(i) [{_getTrace()}] {msg}";
-        _logs.Add(log);
-        
+        string log = $"(i) [{GetTrace()}] {msg}";
+        Current.Logs.Add(log);
+
         if (ShowInfoLogs) Console.WriteLine(log);
     }
-    
+
     /// <summary>
     /// Returns logs as a list
     /// </summary>
-    public static List<string> GetLogs() => _logs;
+    public static List<string> GetLogs() => Current.Logs;
+
+    private sealed class CompilerContext
+    {
+        public Stack<string> TraceStack = new(["pack"]);
+        public List<string> Logs = new();
+        public bool ShowInfoLogs;
+        public Pack? CurrentPack;
+    }
 }

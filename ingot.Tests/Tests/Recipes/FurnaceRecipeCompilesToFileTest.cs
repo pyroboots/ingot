@@ -1,25 +1,20 @@
 using ingot.Tests.Content.Recipes;
 using ingot.Tests.Support;
 
-namespace ingot.Tests.Tests.Recipes;
+namespace ingot.Tests.Recipes;
 
 public class FurnaceRecipeCompilesToFileTest
 {
     [Fact]
-    public void Compile_furnaceRecipeCompilesToFile()
+    public void Compile_FurnaceRecipeCompilesToFile()
     {
-        string outputDir = CompileTestHelper.CreateOutputDirectory();
-        try
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
         {
             PackTestBuilder.Create()
                 .AddRecipe<TestFurnaceRecipe>()
-                .Compile(outputDir, verbose: false);
+                .Compile(output.Path, verbose: false);
 
-            Assert.True(File.Exists(Path.Combine(outputDir, "bp", "recipes", "furnace_recipe.json")));
-        }
-        finally
-        {
-            CompileTestHelper.DeleteOutputDirectory(outputDir);
+            Assert.True(File.Exists(Path.Combine(output.Path, "bp", "recipes", "furnace_recipe.json")));
         }
     }
 }

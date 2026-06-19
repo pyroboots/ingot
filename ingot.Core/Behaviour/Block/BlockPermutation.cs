@@ -1,7 +1,9 @@
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem;
+
 using Newtonsoft.Json;
+
 using static ingot.Core.Common.JsonHelper;
 
 namespace ingot.Core.Behaviour.Block;
@@ -19,7 +21,7 @@ public abstract class BlockPermutation
     /// Parent <see cref="Block"/> of this <see cref="BlockPermutation"/>
     /// </summary>
     public abstract Block Parent { get; }
-    
+
     /// <summary>
     /// Shortcut for the <c>minecraft:display_name</c> component
     /// </summary>
@@ -48,7 +50,7 @@ public abstract class BlockPermutation
     /// Texture and materials for the <see cref="BlockPermutation"/>. Shortcut for the <c>minecraft:material_instances</c> component
     /// </summary>
     public virtual MaterialInstances? MaterialInstances => null;
-    
+
     /// <summary>
     /// Array of block tags that can enable / expand vanilla functionality
     /// </summary>
@@ -75,23 +77,23 @@ public abstract class BlockPermutation
             JsonTextWriter? warnWriter = null;
             TextureAutoRegistration.RegisterMaterialInstances(permutation.MaterialInstances.Value, ref warnWriter);
         }
-        
+
         JsonHelper json = new(ref writer);
-        
+
         writer.WriteStartObject();
-        
+
         json.Property("condition", permutation.Condition);
         json.Object("components", () =>
         {
-            foreach (string t in permutation.Tags) 
-                json.Object($"tag:{t}", () => {});
-            
+            foreach (string t in permutation.Tags)
+                json.Object($"tag:{t}", () => { });
+
             json.Property("minecraft:display_name", permutation.DisplayName);
             json.Property("minecraft:friction", permutation.Friction);
             json.Property("minecraft:light_emission", permutation.LightEmission);
             json.Property("minecraft:light_dampening", permutation.LightDampening);
             json.Property("minecraft:replaceable", permutation.Replaceable);
-            
+
             if (permutation.Loot is not null)
             {
                 if (CompilerState.CurrentPack is not null
@@ -102,14 +104,14 @@ public abstract class BlockPermutation
 
                 json.Property("minecraft:loot", permutation.Loot.RelativePath);
             }
-            
+
             if (permutation.MaterialInstances is not null)
                 permutation.MaterialInstances.Value.Compile(ref json.Writer);
-            
+
             foreach (Trait trait in traits)
                 trait.Compile(ref json.Writer);
         });
-        
+
         writer.WriteEndObject();
     }
 }

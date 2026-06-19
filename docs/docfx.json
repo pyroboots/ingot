@@ -6,7 +6,9 @@
         {
           "src": "../.",
           "files": [
-            "**/*.csproj"
+            "ingot.Core/ingot.Core.csproj",
+            "ingot.Example/ingot.Example.csproj",
+            "ingot.Generators/ingot.Generators.csproj"
           ]
         }
       ],

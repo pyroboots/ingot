@@ -1,8 +1,11 @@
 using ingot.Core;
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
-using Formatting = Newtonsoft.Json.Formatting;
+
 using static ingot.Core.Common.JsonHelper;
+
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace ingot.Core.Behaviour.Loot;
 
@@ -83,7 +86,7 @@ public abstract class LootTable : IConcreteCompilable<LootTable>, IIdentifiable
         return sw.ToString();
     }
 
-    private Dictionary<LootTableCategory, string> _subdir = new()
+    private readonly Dictionary<LootTableCategory, string> _subdir = new()
     {
         [LootTableCategory.Items] = "items",
         [LootTableCategory.Blocks] = "blocks",

@@ -2,19 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Resource\" />
-      <Folder Include="TraitSystem\Traits\Block\" />
-      <Folder Include="TraitSystem\Traits\Item\" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 </Project>

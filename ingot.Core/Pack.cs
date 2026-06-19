@@ -1,11 +1,15 @@
 using System.Diagnostics;
+
 using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
+
 using static ingot.Core.Common.JsonHelper;
+
 using Formatting = Newtonsoft.Json.Formatting;
 using Version = ingot.Core.Common.Version;
 
@@ -40,7 +44,7 @@ public class Pack
     /// List of authors who helped with the development of the pack
     /// </summary>
     public string[] Authors = [];
-    
+
     /// <summary>
     /// Whether to initialise the behaviour pack with Script API capabilities
     /// </summary>
@@ -216,157 +220,39 @@ public class Pack
     public void Compile(string outputDir, bool verbose = true)
     {
         Stopwatch timer = Stopwatch.StartNew();
-        
+
+        CompilerState.Reset();
         CompilerState.Push(Name);
         CompilerState.ShowInfoLogs = verbose;
         CompilerState.CurrentPack = this;
         GeneratedScripts.Clear();
         CompilerState.Info("pack compilation started");
-        
+
         string behaviourPackDir = Path.Combine(outputDir, "bp");
         CompilerState.Info("compiling bp...");
         BehaviourPack.Compile(behaviourPackDir);
         CompilerState.Info($"compiled bp");
-        
+
         if (ScriptsEnabled)
             WriteGeneratedScripts(behaviourPackDir);
-        
+
         CompilerState.Info("compiling rp...");
         ResourcePack.Compile(Path.Combine(outputDir, "rp"));
         CompilerState.Info($"compiled rp");
-        
-        using (StringWriter sw = new())
-        {
-            JsonTextWriter w = new(sw);
-            w.Formatting = Formatting.Indented;
-            w.Indentation = 4;
 
-            JsonHelper json = new(ref w);
-            
-            w.WriteStartObject();
-            
-            json.Property("format_version", 2);
-            json.Object( "header", () =>
-            {
-                json.Property("name", Name);
-                json.Property("description", Description);
-                json.Property("uuid", BehaviourPack.Uuid);
-                json.Property("version", PackVersion.AsArray());
-                json.Property("min_engine_version", MinEngineVersion.AsArray());
-            });
-            
-            json.Array("modules", () =>
-            {
-                json.Object("", () =>
-                {
-                    json.Property("description", $"{Name} Behaviour");
-                    json.Property("type", "data");
-                    json.Property("uuid", Guid.NewGuid().ToString());
-                    json.Property("version", new Version(1, 0, 0).AsArray());
-                });
-                if (ScriptsEnabled) json.Object("", () =>
-                {
-                    json.Property("type", "script");
-                    json.Property("language", "javascript");
-                    json.Property("uuid", Guid.NewGuid().ToString());
-                    json.Property("entry", ScriptEntry);
-                    json.Property("version", new Version(1, 0, 0).AsArray());
-                });
-            });
-            
-            json.Array("dependencies", () =>
-            {
-                if (LinkPacks) json.Object("", () =>
-                {
-                    json.Property("uuid", ResourcePack.Uuid);
-                    json.Property("version", ResourcePack.ResourcePackVersion.AsArray());
-                });
-                if (ScriptsEnabled) foreach (var kvp in ScriptApiModules)
-                {
-                    json.Object("", () =>
-                    {
-                        json.Property("module_name", kvp.Key);
-                        json.Property("version", kvp.Value.AsArray());
-                    });
-                }
-            });
-            
-            json.Object("metadata", () =>
-            {
-                json.Property("authors", Authors);
-                json.Object("generated_with", () =>
-                {
-                    json.Property("ingot", "https://github.com/pyroboots/ingot");
-                });
-            });
-            
-            w.WriteEndObject();
-            
-            File.WriteAllText(Path.Combine(outputDir, "bp", "manifest.json"), sw.ToString());
-        }
+        ManifestWriter.WriteBehaviourPackManifest(this, Path.Combine(outputDir, "bp", "manifest.json"));
         CompilerState.Info("compiled bp manifest");
-        
-        using (StringWriter sw = new())
-        {
-            JsonTextWriter w = new(sw);
-            w.Formatting = Formatting.Indented;
-            w.Indentation = 4;
-    
-            JsonHelper json = new(ref w);
-            
-            w.WriteStartObject();
-            
-            json.Property("format_version", 2);
-            json.Object("header", () =>
-            {
-                json.Property("name", Name);
-                json.Property("description", Description);
-                json.Property("uuid", ResourcePack.Uuid);
-                json.Property("version", PackVersion.AsArray());
-                json.Property("min_engine_version", MinEngineVersion.AsArray());
-            });
-            
-            json.Array("modules", () =>
-            {
-                json.Object("", () =>
-                {
-                    json.Property("description", $"{Name} Resources");
-                    json.Property("type", "resources");
-                    json.Property("uuid", Guid.NewGuid().ToString());
-                    json.Property("version", new Version(1, 0, 0).AsArray());
-                });
-            });
-            
-            json.Array("dependencies", () =>
-            {
-                if (LinkPacks) json.Object("", () =>
-                {
-                    json.Property("uuid", BehaviourPack.Uuid);
-                    json.Property("version", BehaviourPack.BehaviourPackVersion.AsArray());
-                });
-            });
-            
-            json.Object("metadata", () =>
-            {
-                json.Property("authors", Authors);
-                json.Object("generated_with", () =>
-                {
-                    json.Property("ingot", "https://github.com/pyroboots/ingot");
-                });
-            });
-            
-            w.WriteEndObject();
-            
-            File.WriteAllText(Path.Combine(outputDir, "rp", "manifest.json"), sw.ToString());
-        }
+
+        ManifestWriter.WriteResourcePackManifest(this, Path.Combine(outputDir, "rp", "manifest.json"));
         CompilerState.Info("compiled rp manifest");
-        
+
         if (PackIcon is not null)
         {
-            File.Copy(PackIcon, Path.Combine(outputDir, "bp"));
-            File.Copy(PackIcon, Path.Combine(outputDir, "rp"));
+            string iconName = Path.GetFileName(PackIcon);
+            File.Copy(PackIcon, Path.Combine(outputDir, "bp", iconName), overwrite: true);
+            File.Copy(PackIcon, Path.Combine(outputDir, "rp", iconName), overwrite: true);
         }
-        
+
         timer.Stop();
 
         if (verbose)
@@ -376,7 +262,7 @@ public class Pack
             CompilerState.Info($"pack compiled in {timer.ElapsedMilliseconds}ms");
             CompilerState.Info($"ingot compilation log available at {Path.Combine(outputDir, "ingot.log")}");
         }
-        
+
         CompilerState.ShowInfoLogs = false;
         CompilerState.CurrentPack = null;
         CompilerState.Pop();

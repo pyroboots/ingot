@@ -13,7 +13,7 @@ public static class Formatting
     /// <param name="input">Snake case string</param>
     public static string SnakeToPascalCase(string input)
     {
-        if (string.IsNullOrEmpty(input)) 
+        if (string.IsNullOrEmpty(input))
             return input;
 
         string[] words = input.Split('_', StringSplitOptions.RemoveEmptyEntries);
@@ -27,7 +27,7 @@ public static class Formatting
 
         return result.ToString();
     }
-    
+
     /// <summary>
     /// Converts <c>PascalCase</c> to <c>snake_case</c>
     /// </summary>
@@ -46,9 +46,9 @@ public static class Formatting
 
             if (char.IsUpper(current))
             {
-                if (sb.Length > 0 && 
-                    (char.IsLower(input[i-1]) || 
-                     (i + 1 < input.Length && char.IsLower(input[i+1]))))
+                if (sb.Length > 0 &&
+                    (char.IsLower(input[i - 1]) ||
+                     (i + 1 < input.Length && char.IsLower(input[i + 1]))))
                 {
                     sb.Append('_');
                 }

@@ -1,12 +1,12 @@
 using ingot.Core.Behaviour.Recipe;
 using ingot.Tests.Content.Recipes;
 
-namespace ingot.Tests.Tests.Recipes;
+namespace ingot.Tests.Recipes;
 
 public class ShapedRecipeJsonContainsResultTest
 {
     [Fact]
-    public void Compile_shapedRecipeJsonContainsResult()
+    public void Compile_ShapedRecipeJsonContainsResult()
     {
         string json = ShapedRecipe.Compile(typeof(TestShapedRecipe));
         Assert.Contains("minecraft:recipe_shaped", json);

@@ -1,5 +1,7 @@
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
+
 using static ingot.Core.Common.JsonHelper;
 
 namespace ingot.Core.Behaviour.Loot;
@@ -87,12 +89,12 @@ public class ExplorationMap : LootFunction
         /// <summary>Village</summary>
         Village,
     }
-    
+
     /// <summary>
     /// Destination to mark on the map
     /// </summary>
     public required ExplorationMapDestination Destination { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "exploration_map";
 
@@ -113,7 +115,7 @@ public class LootingEnchant : LootFunction
     /// Bonus quantity to get upon death
     /// </summary>
     public required IntRange Count { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "looting_enchant";
 
@@ -134,7 +136,7 @@ public class RandomAuxiliaryValue : LootFunction
     /// Range of auxiliary values to pick
     /// </summary>
     public required IntRange Values { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "random_aux_value";
 
@@ -159,7 +161,7 @@ public class RandomBlockState : LootFunction
     /// Block state to randomize
     /// </summary>
     public required string BlockState { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "random_block_state";
 
@@ -168,7 +170,7 @@ public class RandomBlockState : LootFunction
     {
         JsonHelper json = new(ref writer);
         json.Property("values", Values);
-        json.Property("blocK_state", BlockState);
+        json.Property("block_state", BlockState);
     }
 }
 
@@ -194,7 +196,7 @@ public class SetActorId : LootFunction
     /// <see cref="Identifier"/> of the entity to put in the spawn egg
     /// </summary>
     public required Identifier Identifier { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "set_actor_id";
 
@@ -215,17 +217,17 @@ public class SetBookContents : LootFunction
     /// Author of the book
     /// </summary>
     public required string Author { get; init; }
-    
+
     /// <summary>
     /// Title of the book
     /// </summary>
     public required string Title { get; init; }
-    
+
     /// <summary>
     /// String array representing the pages of the book
     /// </summary>
     public required string[] Pages { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "set_book_contents";
 
@@ -248,7 +250,7 @@ public class SetDamage : LootFunction
     /// Range of percentage damage to the durability
     /// </summary>
     public required IntRange Damage { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "set_damage";
 
@@ -269,7 +271,7 @@ public class SetLore : LootFunction
     /// Lines of lore on the item
     /// </summary>
     public required string[] Lore { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "set_lore";
 
@@ -290,7 +292,7 @@ public class SetName : LootFunction
     /// Display name of the item
     /// </summary>
     public required string Name { get; init; }
-    
+
     /// <inheritdoc/>
     public override string FunctionName => "set_name";
 

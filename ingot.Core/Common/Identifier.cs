@@ -1,4 +1,5 @@
 using ingot.Core;
+
 using Newtonsoft.Json;
 
 namespace ingot.Core.Common;
@@ -29,7 +30,7 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
     public bool HasAuxiliary => Auxiliary is not null;
 
     private static readonly Regex ValidPartRegex = new(
-        @"^[a-z0-9_]+$", 
+        @"^[a-z0-9_]+$",
         RegexOptions.Compiled);
 
     /// <summary>
@@ -151,7 +152,7 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
 
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer) => writer.WriteValue(ToString());
-    
+
     /// <inheritdoc/>
     public bool Equals(Identifier? other)
         => other is not null
@@ -170,6 +171,6 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
 
     /// <summary>Determines whether two identifiers are not equal.</summary>
     public static bool operator !=(Identifier? left, Identifier? right) => !(left == right);
-    
+
     private static JsonTextWriter? _dummyWriter;
 }

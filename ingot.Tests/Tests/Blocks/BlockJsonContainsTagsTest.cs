@@ -1,12 +1,12 @@
 using ingot.Core.Behaviour.Block;
 using ingot.Tests.Content.Blocks;
 
-namespace ingot.Tests.Tests.Blocks;
+namespace ingot.Tests.Blocks;
 
 public class BlockJsonContainsTagsTest
 {
     [Fact]
-    public void Compile_blockJsonContainsTags()
+    public void Compile_BlockJsonContainsTags()
     {
         string json = Block.Compile(typeof(TaggedTestBlock));
         Assert.Contains("tag:stone", json);

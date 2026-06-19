@@ -1,25 +1,20 @@
 using ingot.Tests.Content.Blocks;
 using ingot.Tests.Support;
 
-namespace ingot.Tests.Tests.Loot;
+namespace ingot.Tests.Loot;
 
 public class LootTableAutoRegistersFromBlockTest
 {
     [Fact]
-    public void Compile_lootTableAutoRegistersFromBlock()
+    public void Compile_LootTableAutoRegistersFromBlock()
     {
-        string outputDir = CompileTestHelper.CreateOutputDirectory();
-        try
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
         {
             PackTestBuilder.Create()
                 .AddBlock<LootTableTestBlock>()
-                .Compile(outputDir, verbose: false);
+                .Compile(output.Path, verbose: false);
 
-            Assert.True(File.Exists(Path.Combine(outputDir, "bp", "loot_tables", "blocks", "loot_block.json")));
-        }
-        finally
-        {
-            CompileTestHelper.DeleteOutputDirectory(outputDir);
+            Assert.True(File.Exists(Path.Combine(output.Path, "bp", "loot_tables", "blocks", "loot_block.json")));
         }
     }
 }

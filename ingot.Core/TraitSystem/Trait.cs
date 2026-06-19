@@ -1,7 +1,11 @@
 using System.Text;
+
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
+
 using static ingot.Core.Common.JsonHelper;
+
 using Formatting = ingot.Core.Common.Formatting;
 
 namespace ingot.Core.TraitSystem;
@@ -23,7 +27,7 @@ public record TraitProperty
         Name = name;
         Value = value;
     }
-    
+
     /// <summary>
     /// Molang or JSON path prefix for the property value.
     /// </summary>
@@ -65,12 +69,12 @@ public class Trait : IIdentifiable, ICompilableFragment
     /// The concrete type this trait is derived from
     /// </summary>
     public Type RootTrait;
-    
+
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
     {
         JsonHelper json = new(ref writer);
-        
+
         json.Object(Identifier.ToString(), () =>
         {
             foreach (TraitProperty property in Properties)

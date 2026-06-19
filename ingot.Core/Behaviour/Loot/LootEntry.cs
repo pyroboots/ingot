@@ -1,6 +1,8 @@
 using ingot.Core;
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
+
 using static ingot.Core.Common.JsonHelper;
 
 namespace ingot.Core.Behaviour.Loot;

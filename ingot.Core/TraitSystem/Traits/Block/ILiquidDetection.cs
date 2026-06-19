@@ -2,8 +2,7 @@
 // https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/examples/blockcomponents/minecraftblock_liquid_detection?view=minecraft-bedrock-stable
 
 namespace ingot.Core.TraitSystem.Traits.Block;
-using System.Numerics;
-using System.Collections.Generic;
+
 using ingot.Core.Common;
 
 /// <summary>
@@ -18,9 +17,7 @@ public interface ILiquidDetection : IBlockTrait
     [TraitProperty]
     public virtual bool CanContainLiquid => false;
 
-    /// <summary>
-    /// Per-liquid detection rule definitions. Only one rule per liquid type is used; additional rules are ignored.
-    /// </summary>
+    /// <inheritdoc/>
     [TraitProperty]
     public abstract dynamic? DetectionRules { get; }
 

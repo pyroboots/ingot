@@ -1,7 +1,10 @@
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
-using Formatting = Newtonsoft.Json.Formatting;
+
 using static ingot.Core.Common.JsonHelper;
+
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace ingot.Core.Behaviour.Recipe;
 
@@ -12,7 +15,7 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
 {
     /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
-    
+
     /// <summary>
     /// Array of valid crafting interfaces this recipe can be used on
     /// </summary>
@@ -32,7 +35,7 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
 
     /// <inheritdoc/>
     public string Compile() => Compile(GetType());
-    
+
     /// <summary>
     /// Compiles the <see cref="ShapedRecipe"/> (as <paramref name="tType"/>) to JSON
     /// </summary>
@@ -40,19 +43,16 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
     /// <returns>Compiled JSON</returns>
     public static string Compile(Type tType)
     {
-        ShapedRecipe inst = (Activator.CreateInstance(tType) as ShapedRecipe)!;
-        
+        ShapedRecipe inst = RecipeCompileHelper.CreateInstance<ShapedRecipe>(tType);
+
         CompilerState.Push(inst.Identifier.ToString());
 
-        StringWriter sw = new();
-        JsonTextWriter w = new(sw);
-        w.Formatting = Formatting.Indented;
-        w.Indentation = 4;
+        (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();
 
         JsonHelper json = new(ref w);
-        
+
         w.WriteStartObject();
-        
+
         json.Property("format_version", "1.12");
         json.Object("minecraft:recipe_shaped", () =>
         {
@@ -69,7 +69,7 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
                 if (row.Length > 3)
                     CompilerState.Warn(ref w, "crafting pattern width should not be longer than 3");
             }
-            
+
             // yes i hate var, but i aint typing a tuple
             var symbols = Symbolize(inst.Pattern);
             json.Array("pattern", () =>
@@ -77,27 +77,27 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
                 foreach (string[] row in symbols.symbolized)
                     w.WriteValue(string.Join("", row));
             });
-            
+
             json.Object("key", () =>
             {
                 foreach (var kvp in symbols.mapping)
-                    json.Object(kvp.Key.ToString(), () => 
+                    json.Object(kvp.Key.ToString(), () =>
                         json.Property("item", kvp.Value.ToString()));
             });
-            
+
             json.Object("result", () =>
             {
                 json.Property("item", inst.Result.ToString());
                 json.Property("count", inst.ResultAmount);
             });
         });
-        
+
         w.WriteEndObject();
-        
+
         CompilerState.Pop();
         return sw.ToString();
     }
-    
+
     private static (string[][] symbolized, Dictionary<char, Identifier> mapping) Symbolize(Identifier?[][] pattern)
     {
         // collect unique non null identifiers in order of first appearance

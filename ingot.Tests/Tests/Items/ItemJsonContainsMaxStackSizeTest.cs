@@ -1,12 +1,12 @@
 using ingot.Core.Behaviour;
 using ingot.Tests.Content.Items;
 
-namespace ingot.Tests.Tests.Items;
+namespace ingot.Tests.Items;
 
 public class ItemJsonContainsMaxStackSizeTest
 {
     [Fact]
-    public void Compile_itemJsonContainsMaxStackSize()
+    public void Compile_ItemJsonContainsMaxStackSize()
     {
         string json = Item.Compile(typeof(EquipmentTestItem));
         Assert.Contains("minecraft:max_stack_size", json);

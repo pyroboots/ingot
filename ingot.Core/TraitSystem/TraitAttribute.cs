@@ -12,12 +12,12 @@ public class TraitAttribute : Attribute
     /// Content type on which this trait is valid on
     /// </summary>
     public TraitSystem.TraitType Constraint;
-    
+
     /// <summary>
     /// Identifier of the encapsulated component
     /// </summary>
     public Identifier Identifier;
-    
+
     /// <summary>
     /// Marks an interface as a valid trait
     /// </summary>

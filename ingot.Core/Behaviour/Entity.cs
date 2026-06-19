@@ -1,6 +1,9 @@
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
+
 using static ingot.Core.Common.JsonHelper;
+
 using Formatting = Newtonsoft.Json.Formatting;
 using Version = System.Version;
 
@@ -17,7 +20,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
     /// Minimum component version written to <c>format_version</c> in the generated entity JSON.
     /// </summary>
     public virtual Version FormatVersion => new("1.20.10");
-    
+
     /// <summary>
     /// Compiles the <see cref="Entity"/> (as <paramref name="tType"/>) to JSON
     /// </summary>
@@ -26,7 +29,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
     public static string Compile(Type tType)
     {
         Entity inst = (Activator.CreateInstance(tType) as Entity)!;
-        
+
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
@@ -35,15 +38,15 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
         w.Indentation = 4;
 
         JsonHelper json = new(ref w);
-        
+
         w.WriteStartObject();
 
         json.Property("format_version", inst.FormatVersion.ToString());
         json.Object("minecraft:entity", () =>
         {
-            
+
         });
-        
+
         w.WriteEndObject();
 
         CompilerState.Pop();

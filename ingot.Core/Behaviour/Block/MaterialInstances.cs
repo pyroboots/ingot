@@ -1,6 +1,9 @@
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
+
 using static ingot.Core.Common.JsonHelper;
+
 using Formatting = ingot.Core.Common.Formatting;
 
 namespace ingot.Core.Behaviour.Block;
@@ -113,7 +116,7 @@ public struct MaterialInstance : ICompilableFragment
     /// Color tinting method applied to this face.
     /// </summary>
     public TintMethods TintMethod = TintMethods.None;
-    
+
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
     {
@@ -124,9 +127,9 @@ public struct MaterialInstance : ICompilableFragment
         var rm = Formatting.PascalToSnakeCase(Enum.GetName(RenderMethod)!);
         var tex = Texture;
         var tm = Formatting.PascalToSnakeCase(Enum.GetName(TintMethod)!);
-        
+
         JsonHelper json = new(ref writer);
-        
+
         json.Object("", () =>
         {
             json.Property("ambient_occlusion", ao);
@@ -154,7 +157,7 @@ public struct MaterialInstances : ICompilableFragment
     /// </summary>
     /// <param name="all">Material applied to all faces via the <c>*</c> wildcard.</param>
     public MaterialInstances(MaterialInstance all) => All = all;
-    
+
     /// <summary>
     /// Material applied to all faces via the <c>*</c> wildcard.
     /// </summary>
@@ -202,7 +205,7 @@ public struct MaterialInstances : ICompilableFragment
             yield return (instance.Texture, instance.SourcePath);
         }
     }
-    
+
     /// <summary>
     /// Compiles <see cref="MaterialInstances"/> to JSON
     /// </summary>
@@ -217,9 +220,9 @@ public struct MaterialInstances : ICompilableFragment
         var west = West;
         var n = North;
         var s = South;
-        
+
         JsonHelper json = new(ref writer);
-        
+
         json.Object("minecraft:material_instances", () =>
         {
             if (a is not null)

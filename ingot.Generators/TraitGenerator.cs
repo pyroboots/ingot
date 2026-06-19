@@ -2,7 +2,9 @@
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+
 using HtmlAgilityPack;
+
 using ingot.Core.Common;
 
 namespace ingot.Generators;
@@ -14,12 +16,12 @@ public record TraitProperty(
     string Description
 );
 
-public class TraitGenerator
+public sealed class TraitGenerator : IAsyncDisposable
 {
-    private readonly HttpClient _httpClient = new HttpClient();
+    private static readonly HttpClient SharedHttpClient = new();
 
     // convert ms doc types to c# types
-    // NOTE: works on a contains basis, order of presidence.
+    // NOTE: works on a contains basis, order of precedence.
     private static readonly Dictionary<string, string> TypeMappings = new(StringComparer.OrdinalIgnoreCase)
     {
         ["x, y, z coordinate array"] = "Vector3",
@@ -64,7 +66,7 @@ public class TraitGenerator
         ["int[]"] = v => v,
         ["Vector3"] = v => $"new Vector3({v})",
         ["Dictionary<string, string>"] = v => string.IsNullOrWhiteSpace(v) ? "new Dictionary<string, string>()" : v,
-        
+
         ["dynamic?"] = v => "null",
     };
 
@@ -97,13 +99,13 @@ public class TraitGenerator
         doc.LoadHtml(html);
 
         HtmlNode? table = doc.DocumentNode.SelectSingleNode("//table");
-        if (table == null) 
+        if (table == null)
             return new List<TraitProperty>();
 
         List<TraitProperty> properties = new List<TraitProperty>();
         HtmlNodeCollection? rows = table.SelectNodes(".//tr");
 
-        if (rows == null) 
+        if (rows == null)
             return properties;
 
         bool isHeader = true;
@@ -111,7 +113,7 @@ public class TraitGenerator
         foreach (HtmlNode row in rows)
         {
             HtmlNodeCollection? cells = row.SelectNodes("th|td");
-            if (cells == null || cells.Count < 4) 
+            if (cells == null || cells.Count < 4)
                 continue;
 
             string name = cells[0].InnerText.Trim();
@@ -131,8 +133,8 @@ public class TraitGenerator
 
             string cleanName = CleanPropertyName(name);
             string cleanDesc = Regex.Replace(desc, @"\s+", " ").Trim();
-            string cleanDefault = defaultVal.Equals("not set", StringComparison.OrdinalIgnoreCase) 
-                || string.IsNullOrEmpty(defaultVal) 
+            string cleanDefault = defaultVal.Equals("not set", StringComparison.OrdinalIgnoreCase)
+                || string.IsNullOrEmpty(defaultVal)
                 ? "" : defaultVal;
 
             properties.Add(new TraitProperty(cleanName, cleanDefault, type, cleanDesc));
@@ -145,8 +147,7 @@ public class TraitGenerator
     {
         name = Regex.Replace(name, @"\s*\(Use On\)", "", RegexOptions.IgnoreCase);
         name = Regex.Replace(name, @"\s*\(as .*?\)", "", RegexOptions.IgnoreCase);
-        name = name.Trim().ToLowerInvariant().Replace(" ", "_");
-        return name;
+        return name.Trim().ToLowerInvariant().Replace(" ", "_");
     }
 
     private static string GenerateInterfaceCode(string interfaceName, string componentName, string constraint, string description, List<TraitProperty> properties, string? nspace)
@@ -155,10 +156,20 @@ public class TraitGenerator
 
         StringBuilder sb = new StringBuilder();
         HashSet<string> seen = new HashSet<string>();
+        HashSet<string> requiredUsings = new(StringComparer.Ordinal);
+
+        foreach (TraitProperty prop in properties)
+        {
+            string csharpType = MapType(prop.RawType);
+            if (csharpType == "Vector3")
+                requiredUsings.Add("System.Numerics");
+            if (csharpType.Contains("Dictionary", StringComparison.Ordinal))
+                requiredUsings.Add("System.Collections.Generic");
+        }
 
         sb.AppendLine(nspace);
-        sb.AppendLine("using System.Numerics;");
-        sb.AppendLine("using System.Collections.Generic;");
+        foreach (string usingDirective in requiredUsings.OrderBy(static u => u, StringComparer.Ordinal))
+            sb.AppendLine($"using {usingDirective};");
         sb.AppendLine("using ingot.Core.Common;");
         sb.AppendLine();
 
@@ -176,7 +187,7 @@ public class TraitGenerator
         foreach (TraitProperty prop in properties)
         {
             string pascalName = Formatting.SnakeToPascalCase(prop.Name);
-            if (!seen.Add(pascalName)) 
+            if (!seen.Add(pascalName))
                 continue;
 
             string csharpType = MapType(prop.RawType);
@@ -185,15 +196,15 @@ public class TraitGenerator
 
             if (!string.IsNullOrEmpty(prop.Description))
             {
-                sb.AppendLine($"    /// <summary>");
+                sb.AppendLine("    /// <summary>");
                 sb.AppendLine($"    /// {prop.Description}");
-                sb.AppendLine($"    /// </summary>");
+                sb.AppendLine("    /// </summary>");
             }
             sb.AppendLine("    [TraitProperty]");
 
             if (isAbstract)
             {
-                if (pascalName.Contains("Identifier")) csharpType = "Identifier";
+                if (pascalName.Contains("Identifier", StringComparison.Ordinal)) csharpType = "Identifier";
                 sb.AppendLine($"    public abstract {csharpType} {pascalName} {{ get; }}");
             }
             else
@@ -202,7 +213,6 @@ public class TraitGenerator
             sb.AppendLine();
         }
 
-        // trim
         if (properties.Count > 0)
             sb.Length -= Environment.NewLine.Length;
 
@@ -218,7 +228,7 @@ public class TraitGenerator
                 return mapping.Value;
         }
         Console.WriteLine($"/!\\ could not map type '{rawType}', fell back to nullable dynamic");
-        return "dynamic?"; // fallback
+        return "dynamic?";
     }
 
     private static string FormatDefaultValue(string csharpType, string rawValue)
@@ -226,109 +236,95 @@ public class TraitGenerator
         if (ValueTransformers.TryGetValue(csharpType, out Func<string, string>? transformer))
             return transformer(rawValue);
 
-        // fallback
         if (csharpType == "string")
             return $"\"{rawValue.Replace("\"", "\\\"")}\"";
 
         return rawValue;
     }
 
-    public void GenerateAllItemTraits(string outputDir)
-    {
-        string[] components =
-        {
-            //"minecraft:allow_off_hand", // handled in item
-            "minecraft:block_placer",
-            "minecraft:bundle_interaction",
-            "minecraft:can_destroy_in_creative",
-            "minecraft:compostable",
-            "minecraft:cooldown",
-            "minecraft:damage",
-            "minecraft:damage_absorption",
-            "minecraft:digger",
-            //"minecraft:display_name", // handled in item
-            "minecraft:durability",
-            "minecraft:durability_sensor",
-            "minecraft:dyeable",
-            "minecraft:enchantable",
-            "minecraft:fire_resistant",
-            "minecraft:food",
-            "minecraft:fuel",
-            "minecraft:glint",
-            "minecraft:hand_equipped",
-            "minecraft:hover_text_color",
-            //"minecraft:icon", // handled in item
-            "minecraft:interact_button",
-            "minecraft:kinetic_weapon",
-            "minecraft:liquid_clipped",
-            //"minecraft:max_stack_size", // handled in item
-            "minecraft:piercing_weapon",
-            "minecraft:projectile",
-            "minecraft:rarity",
-            "minecraft:record",
-            "minecraft:seed",
-            "minecraft:shooter",
-            "minecraft:should_despawn",
-            "minecraft:stacked_by_data",
-            "minecraft:storage_item",
-            "minecraft:storage_weight_limit",
-            "minecraft:storage_weight_modifier",
-            "minecraft:swing_duration",
-            "minecraft:swing_sounds",
-            "minecraft:tags",
-            "minecraft:throwable",
-            "minecraft:use_animation",
-            "minecraft:use_modifiers",
-            "minecraft:wearable",
-        };
-        
-        GenerateTraitsForComponents(components, outputDir, "Item", "minecraft_");
-    }
+    public Task GenerateAllItemTraitsAsync(string outputDir) =>
+        GenerateTraitsForComponentsAsync(
+            [
+                "minecraft:block_placer",
+                "minecraft:bundle_interaction",
+                "minecraft:can_destroy_in_creative",
+                "minecraft:compostable",
+                "minecraft:cooldown",
+                "minecraft:damage",
+                "minecraft:damage_absorption",
+                "minecraft:digger",
+                "minecraft:durability",
+                "minecraft:durability_sensor",
+                "minecraft:dyeable",
+                "minecraft:enchantable",
+                "minecraft:fire_resistant",
+                "minecraft:food",
+                "minecraft:fuel",
+                "minecraft:glint",
+                "minecraft:hand_equipped",
+                "minecraft:hover_text_color",
+                "minecraft:interact_button",
+                "minecraft:kinetic_weapon",
+                "minecraft:liquid_clipped",
+                "minecraft:piercing_weapon",
+                "minecraft:projectile",
+                "minecraft:rarity",
+                "minecraft:record",
+                "minecraft:seed",
+                "minecraft:shooter",
+                "minecraft:should_despawn",
+                "minecraft:stacked_by_data",
+                "minecraft:storage_item",
+                "minecraft:storage_weight_limit",
+                "minecraft:storage_weight_modifier",
+                "minecraft:swing_duration",
+                "minecraft:swing_sounds",
+                "minecraft:tags",
+                "minecraft:throwable",
+                "minecraft:use_animation",
+                "minecraft:use_modifiers",
+                "minecraft:wearable",
+            ],
+            outputDir,
+            "Item",
+            "minecraft_");
 
-    public void GenerateAllBlockTraits(string outputDir)
-    {
-        string[] components =
-        {
-            "minecraft:chest_obstruction",
-            "minecraft:collision_box",
-            "minecraft:connection_rule",
-            "minecraft:crafting_table",          // from "Crafting Table" link
-            //"minecraft:destroy_time",          // use destructible_by_mining instead
-            "minecraft:destructible_by_explosion",
-            "minecraft:destructible_by_mining",
-            "minecraft:destruction_particles",   // from "Destruction Particles"
-            //"minecraft:display_name",          // handled in block
-            "minecraft:entity_fall_on",
-            //"minecraft:explosion_resistance",
-            "minecraft:flammable",
-            //"minecraft:flower_pottable",       // who needs flower pots anyway
-            //"minecraft:friction",              // handled in block
-            "minecraft:geometry",
-            "minecraft:instrument_sound",
-            //"minecraft:light_dampening",       // handled in block
-            //"minecraft:light_emission",        // handled in block
-            "minecraft:liquid_detection",        // from "Liquid Detection"
-            //"minecraft:loot",                  // handled in block
-            "minecraft:map_color",
-            //"minecraft:material_instances",    // handled in block
-            "minecraft:movable",
-            "minecraft:placement_filter",        // from "Placement Filter"
-            "minecraft:precipitation_interactions",
-            "minecraft:random_offset",
-            "minecraft:redstone_conductivity",   // from "Redstone Conductivity"
-            "minecraft:redstone_consumer",
-            "minecraft:redstone_producer",
-            //"minecraft:replaceable",           // handled in block
-            "minecraft:selection_box",
-            "minecraft:support",
-            "minecraft:tick",
-            //"minecraft:transformation",        // from "Transformation"
-        };
+    public Task GenerateAllBlockTraitsAsync(string outputDir) =>
+        GenerateTraitsForComponentsAsync(
+            [
+                "minecraft:chest_obstruction",
+                "minecraft:collision_box",
+                "minecraft:connection_rule",
+                "minecraft:crafting_table",
+                "minecraft:destructible_by_explosion",
+                "minecraft:destructible_by_mining",
+                "minecraft:destruction_particles",
+                "minecraft:entity_fall_on",
+                "minecraft:flammable",
+                "minecraft:geometry",
+                "minecraft:instrument_sound",
+                "minecraft:liquid_detection",
+                "minecraft:map_color",
+                "minecraft:movable",
+                "minecraft:placement_filter",
+                "minecraft:precipitation_interactions",
+                "minecraft:random_offset",
+                "minecraft:redstone_conductivity",
+                "minecraft:redstone_consumer",
+                "minecraft:redstone_producer",
+                "minecraft:selection_box",
+                "minecraft:support",
+                "minecraft:tick",
+            ],
+            outputDir,
+            "Block",
+            "minecraftblock_");
 
-        GenerateTraitsForComponents(components, outputDir, "Block", "minecraftblock_");
-    }
-
-    private void GenerateTraitsForComponents(string[] components, string outputDir, string constraint, string urlPrefix)
+    private static async Task GenerateTraitsForComponentsAsync(
+        string[] components,
+        string outputDir,
+        string constraint,
+        string urlPrefix)
     {
         Stopwatch sw = Stopwatch.StartNew();
         int success = 0;
@@ -342,8 +338,8 @@ public class TraitGenerator
                 string[] parts = component.Split(':');
                 string pageName = parts[1];
                 string url = $"https://learn.microsoft.com/en-us/minecraft/creator/reference/content/{constraint.ToLowerInvariant()}reference/examples/{constraint.ToLowerInvariant()}components/{urlPrefix}{pageName}?view=minecraft-bedrock-stable";
-                
-                string html = _httpClient.GetStringAsync(url).Result;
+
+                string html = await SharedHttpClient.GetStringAsync(url);
 
                 string pascalName = Formatting.SnakeToPascalCase(pageName);
                 string ifaceName = $"I{pascalName}";
@@ -352,7 +348,7 @@ public class TraitGenerator
                 string fullCode = $"// autogenerated by ingot trait generator from\n// {url}\n\n{code}";
 
                 string path = Path.Combine(outputDir, $"{ifaceName}.cs");
-                File.WriteAllText(path, fullCode);
+                await File.WriteAllTextAsync(path, fullCode);
 
                 success++;
             }
@@ -365,4 +361,6 @@ public class TraitGenerator
         sw.Stop();
         Console.WriteLine($"completed {success}/{components.Length} traits in {sw.ElapsedMilliseconds}ms");
     }
+
+    public ValueTask DisposeAsync() => ValueTask.CompletedTask;
 }

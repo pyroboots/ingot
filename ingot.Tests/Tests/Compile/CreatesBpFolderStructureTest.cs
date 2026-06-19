@@ -1,15 +1,14 @@
 using ingot.Tests.Content;
 using ingot.Tests.Support;
 
-namespace ingot.Tests.Tests.Compile;
+namespace ingot.Tests.Compile;
 
 public class CreatesBpFolderStructureTest
 {
     [Fact]
-    public void Compile_createsBpFolderStructure()
+    public void Compile_CreatesBpFolderStructure()
     {
-        string outputDir = CompileTestHelper.CreateOutputDirectory();
-        try
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
         {
             PackTestBuilder.Create()
                 .AddBlock<TestBlock>()
@@ -17,18 +16,14 @@ public class CreatesBpFolderStructureTest
                 .AddEntity<Content.Entities.TestEntity>()
                 .AddRecipe<Content.Recipes.TestShapedRecipe>()
                 .AddLootTable<Content.Loot.TestBlockLootTable>()
-                .Compile(outputDir, verbose: false);
+                .Compile(output.Path, verbose: false);
 
-            Assert.True(Directory.Exists(Path.Combine(outputDir, "bp", "entities")));
-            Assert.True(Directory.Exists(Path.Combine(outputDir, "bp", "blocks")));
-            Assert.True(Directory.Exists(Path.Combine(outputDir, "bp", "items")));
-            Assert.True(Directory.Exists(Path.Combine(outputDir, "bp", "recipes")));
-            Assert.True(Directory.Exists(Path.Combine(outputDir, "bp", "loot_tables")));
-            Assert.True(Directory.Exists(Path.Combine(outputDir, "bp", "scripts")));
-        }
-        finally
-        {
-            CompileTestHelper.DeleteOutputDirectory(outputDir);
+            Assert.True(Directory.Exists(Path.Combine(output.Path, "bp", "entities")));
+            Assert.True(Directory.Exists(Path.Combine(output.Path, "bp", "blocks")));
+            Assert.True(Directory.Exists(Path.Combine(output.Path, "bp", "items")));
+            Assert.True(Directory.Exists(Path.Combine(output.Path, "bp", "recipes")));
+            Assert.True(Directory.Exists(Path.Combine(output.Path, "bp", "loot_tables")));
+            Assert.True(Directory.Exists(Path.Combine(output.Path, "bp", "scripts")));
         }
     }
 }

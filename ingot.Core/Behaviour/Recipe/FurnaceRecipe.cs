@@ -1,5 +1,7 @@
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
+
 using Formatting = ingot.Core.Common.Formatting;
 
 namespace ingot.Core.Behaviour.Recipe;
@@ -15,8 +17,8 @@ public abstract class FurnaceRecipe : IRecipe, IConcreteCompilable<FurnaceRecipe
     /// <summary>
     /// Array of valid smelting interfaces this recipe can be used on
     /// </summary>
-    public virtual string[] Tags => ["furnace"]; 
-    
+    public virtual string[] Tags => ["furnace"];
+
     /// <summary>
     /// The item to be smelted
     /// </summary>
@@ -28,7 +30,7 @@ public abstract class FurnaceRecipe : IRecipe, IConcreteCompilable<FurnaceRecipe
 
     /// <inheritdoc/>
     public string Compile() => Compile(GetType());
-    
+
     /// <summary>
     /// Compiles the <see cref="FurnaceRecipe"/> (as <paramref name="tType"/>) to JSON
     /// </summary>
@@ -36,19 +38,16 @@ public abstract class FurnaceRecipe : IRecipe, IConcreteCompilable<FurnaceRecipe
     /// <returns>Compiled JSON</returns>
     public static string Compile(Type tType)
     {
-        FurnaceRecipe inst = (Activator.CreateInstance(tType) as FurnaceRecipe)!;
-        
+        FurnaceRecipe inst = RecipeCompileHelper.CreateInstance<FurnaceRecipe>(tType);
+
         CompilerState.Push(inst.Identifier.ToString());
 
-        StringWriter sw = new();
-        JsonTextWriter w = new(sw);
-        w.Formatting = Newtonsoft.Json.Formatting.Indented;
-        w.Indentation = 4;
+        (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();
 
         JsonHelper json = new(ref w);
-        
+
         w.WriteStartObject();
-        
+
         json.Property("format_version", "1.12");
         json.Object("minecraft:recipe_furnace", () =>
         {
@@ -61,9 +60,9 @@ public abstract class FurnaceRecipe : IRecipe, IConcreteCompilable<FurnaceRecipe
             json.Property("input", inst.Input);
             json.Property("output", inst.Output);
         });
-        
+
         w.WriteEndObject();
-        
+
         CompilerState.Pop();
         return sw.ToString();
     }

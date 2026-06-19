@@ -1,9 +1,12 @@
 using ingot.Core.Common;
 using ingot.Core.TraitSystem;
+
 using Newtonsoft.Json;
-using Version = ingot.Core.Common.Version;
+
 using static ingot.Core.Common.JsonHelper;
+
 using Formatting = Newtonsoft.Json.Formatting;
+using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core.Behaviour;
 
@@ -22,28 +25,28 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     /// <summary>
     /// Creative inventory tabs
     /// </summary>
-    public enum CatalogueCategory 
-    { 
+    public enum CatalogueCategory
+    {
         /// <summary>
         /// Construction tab
         /// </summary>
-        Construction, 
+        Construction,
         /// <summary>
         /// Nature tabs
         /// </summary>
-        Nature, 
+        Nature,
         /// <summary>
         /// Equipment tab
         /// </summary>
-        Equipment, 
+        Equipment,
         /// <summary>
         /// Items tab
         /// </summary>
-        Items, 
+        Items,
         /// <summary>
         /// Will not appear in the creative inventory
         /// </summary>
-        None 
+        None
     }
     /// <summary>
     /// Which section of the creative inventory the item appears in
@@ -57,7 +60,7 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     /// Whether the item is visible by command item arguments
     /// </summary>
     public virtual bool HiddenInCommands => false;
-    
+
     /// <summary>
     /// Shortcut for the <c>minecraft:icon</c> component
     /// </summary>
@@ -79,7 +82,7 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     /// Shortcut for the <c>minecraft:allow_off_hand</c> component
     /// </summary>
     public virtual bool AllowOffhand => false;
-    
+
     /// <summary>
     /// Compiles the <see cref="Item"/> (as <paramref name="tType"/>) to JSON
     /// </summary>
@@ -88,7 +91,7 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     public static string Compile(Type tType)
     {
         Item inst = (Activator.CreateInstance(tType) as Item)!;
-        
+
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
@@ -97,7 +100,7 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
         w.Indentation = 4;
 
         JsonHelper json = new(ref w);
-        
+
         w.WriteStartObject();
 
         json.Property("format_version", inst.FormatVersion.ToString());

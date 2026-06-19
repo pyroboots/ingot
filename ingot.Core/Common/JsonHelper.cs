@@ -17,7 +17,7 @@ internal class JsonHelper
     {
         if (value is null) return;
         if (value is string && ((string)value) == string.Empty) return;
-        
+
         w.WritePropertyName(key);
         if (value is ICompilableFragment)
             ((ICompilableFragment)value).Compile(ref w);
@@ -34,7 +34,7 @@ internal class JsonHelper
         w.WriteEndArray();
     }
 
-    public JsonTextWriter Writer; 
+    public JsonTextWriter Writer;
     public JsonHelper(ref JsonTextWriter w) => Writer = w;
     public void Property(string key, object? value) => Property(ref Writer, key, value);
     public void Object(string key, Action content) => Object(ref Writer, key, (_writer) => content());

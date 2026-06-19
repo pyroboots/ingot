@@ -2,8 +2,7 @@
 // https://learn.microsoft.com/en-us/minecraft/creator/reference/content/itemreference/examples/itemcomponents/minecraft_wearable?view=minecraft-bedrock-stable
 
 namespace ingot.Core.TraitSystem.Traits.Item;
-using System.Numerics;
-using System.Collections.Generic;
+
 using ingot.Core.Common;
 
 /// <summary>
@@ -30,9 +29,7 @@ public interface IWearable : IItemTrait
     [TraitProperty]
     public abstract dynamic? Slot { get; }
 
-    /// <summary>
-    /// Whether the item can be equipped by a dispenser onto an entity.
-    /// </summary>
+    /// <inheritdoc/>
     [TraitProperty]
     public abstract bool Dispensable { get; }
 }

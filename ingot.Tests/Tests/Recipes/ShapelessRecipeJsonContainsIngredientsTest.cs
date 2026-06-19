@@ -1,12 +1,12 @@
 using ingot.Core.Behaviour.Recipe;
 using ingot.Tests.Content.Recipes;
 
-namespace ingot.Tests.Tests.Recipes;
+namespace ingot.Tests.Recipes;
 
 public class ShapelessRecipeJsonContainsIngredientsTest
 {
     [Fact]
-    public void Compile_shapelessRecipeJsonContainsIngredients()
+    public void Compile_ShapelessRecipeJsonContainsIngredients()
     {
         string json = ShapelessRecipe.Compile(typeof(TestShapelessRecipe));
         Assert.Contains("minecraft:recipe_shapeless", json);

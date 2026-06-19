@@ -1,12 +1,12 @@
 using ingot.Core.Behaviour.Recipe;
 using ingot.Tests.Content.Recipes;
 
-namespace ingot.Tests.Tests.Recipes;
+namespace ingot.Tests.Recipes;
 
 public class FurnaceRecipeJsonContainsInputOutputTest
 {
     [Fact]
-    public void Compile_furnaceRecipeJsonContainsInputOutput()
+    public void Compile_FurnaceRecipeJsonContainsInputOutput()
     {
         string json = FurnaceRecipe.Compile(typeof(TestFurnaceRecipe));
         Assert.Contains("minecraft:recipe_furnace", json);

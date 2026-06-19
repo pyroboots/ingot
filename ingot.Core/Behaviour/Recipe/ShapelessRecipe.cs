@@ -1,7 +1,10 @@
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
-using Formatting = Newtonsoft.Json.Formatting;
+
 using static ingot.Core.Common.JsonHelper;
+
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace ingot.Core.Behaviour.Recipe;
 
@@ -12,7 +15,7 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
 {
     /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
-    
+
     /// <summary>
     /// Array of valid crafting interfaces this recipe can be used on
     /// </summary>
@@ -36,19 +39,16 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
     /// <returns>Compiled JSON</returns>
     public static string Compile(Type tType)
     {
-        ShapelessRecipe inst = (Activator.CreateInstance(tType) as ShapelessRecipe)!;
-        
+        ShapelessRecipe inst = RecipeCompileHelper.CreateInstance<ShapelessRecipe>(tType);
+
         CompilerState.Push(inst.Identifier.ToString());
 
-        StringWriter sw = new();
-        JsonTextWriter w = new(sw);
-        w.Formatting = Formatting.Indented;
-        w.Indentation = 4;
+        (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();
 
         JsonHelper json = new(ref w);
-        
+
         w.WriteStartObject();
-        
+
         json.Property("format_version", "1.12");
         json.Object("minecraft:recipe_shapeless", () =>
         {
@@ -57,7 +57,7 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
                 json.Property("identifier", inst.Identifier.ToString());
             });
             json.Property("tags", inst.Tags);
-            
+
             CompilerState.Push("ingredients");
             CompilerState.Info("compiling ingredients...");
             json.Array("ingredients", () =>
@@ -72,12 +72,12 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
             });
             CompilerState.Pop();
             CompilerState.Info("compiled ingredients");
-            
+
             json.Property("result", inst.Result);
         });
-        
+
         w.WriteEndObject();
-        
+
         CompilerState.Pop();
         return sw.ToString();
     }
@@ -105,7 +105,7 @@ public record RecipeItem : ICompilableFragment
     public void Compile(ref JsonTextWriter writer)
     {
         JsonHelper json = new(ref writer);
-        
+
         writer.WriteStartObject();
         json.Property("item", Item.ToString());
         json.Property("count", Count);

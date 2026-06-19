@@ -3,8 +3,10 @@ using ingot.Core.Common;
 namespace ingot.Core;
 
 using Newtonsoft.Json;
-using Version = Common.Version;
+
 using static ingot.Core.Common.JsonHelper;
+
+using Version = Common.Version;
 
 /// <summary>
 /// C# representation of a Minecraft resource pack
@@ -50,12 +52,7 @@ public class ResourcePack
     /// <param name="sourcePngPath">Path to the source .png file on disk (will be copied as-is).</param>
     public ResourcePack AddBlockTexture(string key, string sourcePngPath)
     {
-        if (string.IsNullOrWhiteSpace(key))
-            throw new ArgumentException("texture key cannot be empty", nameof(key));
-        if (string.IsNullOrWhiteSpace(sourcePngPath))
-            throw new ArgumentException("source png path cannot be empty", nameof(sourcePngPath));
-
-        _blockTextureSources[key] = Path.GetFullPath(sourcePngPath);
+        RegisterTexture(_blockTextureSources, key, sourcePngPath);
         return this;
     }
 
@@ -68,12 +65,7 @@ public class ResourcePack
     /// <param name="sourcePngPath">Path to the source .png file on disk (will be copied as-is).</param>
     public ResourcePack AddItemTexture(string key, string sourcePngPath)
     {
-        if (string.IsNullOrWhiteSpace(key))
-            throw new ArgumentException("texture key cannot be empty", nameof(key));
-        if (string.IsNullOrWhiteSpace(sourcePngPath))
-            throw new ArgumentException("source PNG path cannot be empty", nameof(sourcePngPath));
-
-        _itemTextureSources[key] = Path.GetFullPath(sourcePngPath);
+        RegisterTexture(_itemTextureSources, key, sourcePngPath);
         return this;
     }
 
@@ -81,32 +73,37 @@ public class ResourcePack
     /// Registers a block texture if the key has not already been added manually.
     /// </summary>
     /// <returns><see langword="true"/> when the texture was registered.</returns>
-    internal bool TryAddBlockTexture(string key, string? sourcePngPath)
-    {
-        if (string.IsNullOrWhiteSpace(key) || _blockTextureSources.ContainsKey(key))
-            return false;
-
-        _blockTextureSources[key] = string.IsNullOrWhiteSpace(sourcePngPath)
-            ? string.Empty
-            : Path.GetFullPath(sourcePngPath);
-        return true;
-    }
+    internal bool TryAddBlockTexture(string key, string? sourcePngPath) =>
+        TryRegisterTexture(_blockTextureSources, key, sourcePngPath);
 
     /// <summary>
     /// Registers an item texture if the key has not already been added manually.
     /// </summary>
     /// <returns><see langword="true"/> when the texture was registered.</returns>
-    internal bool TryAddItemTexture(string key, string? sourcePngPath)
+    internal bool TryAddItemTexture(string key, string? sourcePngPath) =>
+        TryRegisterTexture(_itemTextureSources, key, sourcePngPath);
+
+    private static void RegisterTexture(Dictionary<string, string> sources, string key, string sourcePngPath)
     {
-        if (string.IsNullOrWhiteSpace(key) || _itemTextureSources.ContainsKey(key))
+        if (string.IsNullOrWhiteSpace(key))
+            throw new ArgumentException("texture key cannot be empty", nameof(key));
+        if (string.IsNullOrWhiteSpace(sourcePngPath))
+            throw new ArgumentException("source png path cannot be empty", nameof(sourcePngPath));
+
+        sources[key] = Path.GetFullPath(sourcePngPath);
+    }
+
+    private static bool TryRegisterTexture(Dictionary<string, string> sources, string key, string? sourcePngPath)
+    {
+        if (string.IsNullOrWhiteSpace(key) || sources.ContainsKey(key))
             return false;
 
-        _itemTextureSources[key] = string.IsNullOrWhiteSpace(sourcePngPath)
+        sources[key] = string.IsNullOrWhiteSpace(sourcePngPath)
             ? string.Empty
             : Path.GetFullPath(sourcePngPath);
         return true;
     }
-    
+
     /// <summary>
     /// Compiles the <see cref="ResourcePack"/> to output <paramref name="dir"/>
     /// </summary>
@@ -114,15 +111,15 @@ public class ResourcePack
     public void Compile(string dir)
     {
         CompilerState.Push("rp");
-        
+
         Directory.CreateDirectory(dir);
         Directory.CreateDirectory(Path.Combine(dir, "entity"));
         Directory.CreateDirectory(Path.Combine(dir, "models"));
         Directory.CreateDirectory(Path.Combine(dir, "textures"));
-            Directory.CreateDirectory(Path.Combine(dir, "textures", "blocks"));
-            Directory.CreateDirectory(Path.Combine(dir, "textures", "entity"));
-            Directory.CreateDirectory(Path.Combine(dir, "textures", "items"));
-            Directory.CreateDirectory(Path.Combine(dir, "textures", "particle"));
+        Directory.CreateDirectory(Path.Combine(dir, "textures", "blocks"));
+        Directory.CreateDirectory(Path.Combine(dir, "textures", "entity"));
+        Directory.CreateDirectory(Path.Combine(dir, "textures", "items"));
+        Directory.CreateDirectory(Path.Combine(dir, "textures", "particle"));
         CompilerState.Info("created folder structure");
 
         EmitTextureAtlas("terrain_texture.json", _blockTextureSources, "blocks", dir);
@@ -183,7 +180,7 @@ public class ResourcePack
             w.Indentation = 4;
 
             JsonHelper json = new(ref w);
-            
+
             w.WriteStartObject();
             json.Object("texture_data", () =>
             {

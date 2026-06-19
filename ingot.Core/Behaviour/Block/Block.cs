@@ -1,8 +1,11 @@
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem;
+
 using Newtonsoft.Json;
+
 using static ingot.Core.Common.JsonHelper;
+
 using Formatting = Newtonsoft.Json.Formatting;
 using Version = System.Version;
 
@@ -11,7 +14,7 @@ namespace ingot.Core.Behaviour.Block;
 /// <summary>
 /// Implements basic properties of a block
 /// </summary>
-public abstract class Block : IConcreteCompilable<Block>
+public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
 {
     /// <summary>
     /// Block identifier used in the game
@@ -34,7 +37,7 @@ public abstract class Block : IConcreteCompilable<Block>
     /// Array of block tags that can enable / expand vanilla functionality
     /// </summary>
     public virtual string[] Tags => [];
-    
+
     /// <summary>
     /// Shortcut for the <c>minecraft:display_name</c> component
     /// </summary>
@@ -67,7 +70,7 @@ public abstract class Block : IConcreteCompilable<Block>
     /// <summary>
     /// Script API event bindings
     /// </summary>
-    public virtual BlockEvents? BlockEvents => null; 
+    public virtual BlockEvents? BlockEvents => null;
 
     /// <summary>
     /// Compiles the <see cref="Block"/> (as <paramref name="tType"/>) to JSON
@@ -77,7 +80,7 @@ public abstract class Block : IConcreteCompilable<Block>
     public static string Compile(Type tType)
     {
         Block inst = (Activator.CreateInstance(tType) as Block)!;
-        
+
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
@@ -107,7 +110,7 @@ public abstract class Block : IConcreteCompilable<Block>
                 });
             });
             CompilerState.Pop();
-            
+
             CompilerState.Push("permutations");
             json.Array("permutations", () =>
             {
@@ -122,13 +125,13 @@ public abstract class Block : IConcreteCompilable<Block>
                 CompilerState.Info("compiled block permutations");
             });
             CompilerState.Pop();
-            
+
             CompilerState.Push("components");
             json.Object("components", () =>
             {
-                foreach (string t in inst.Tags) 
-                    json.Object($"tag:{t}", () => {});
-                
+                foreach (string t in inst.Tags)
+                    json.Object($"tag:{t}", () => { });
+
                 json.Property("minecraft:display_name", inst.DisplayName);
                 json.Property("minecraft:friction", inst.Friction);
                 json.Property("minecraft:light_emission", inst.LightEmission);
@@ -176,9 +179,9 @@ public abstract class Block : IConcreteCompilable<Block>
             });
             CompilerState.Pop();
         });
-        
+
         w.WriteEndObject();
-        
+
         CompilerState.Pop();
 
         return sw.ToString();

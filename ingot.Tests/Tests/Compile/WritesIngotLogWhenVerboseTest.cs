@@ -1,27 +1,22 @@
 using ingot.Tests.Content;
 using ingot.Tests.Support;
 
-namespace ingot.Tests.Tests.Compile;
+namespace ingot.Tests.Compile;
 
 public class WritesIngotLogWhenVerboseTest
 {
     [Fact]
-    public void Compile_verbose_writesIngotLog()
+    public void Compile_Verbose_WritesIngotLog()
     {
-        string outputDir = CompileTestHelper.CreateOutputDirectory();
-        try
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
         {
             PackTestBuilder.Create()
                 .AddBlock<TestBlock>()
-                .Compile(outputDir, verbose: true);
+                .Compile(output.Path, verbose: true);
 
-            Assert.True(File.Exists(Path.Combine(outputDir, "ingot.log")));
-            string log = File.ReadAllText(Path.Combine(outputDir, "ingot.log"));
+            Assert.True(File.Exists(Path.Combine(output.Path, "ingot.log")));
+            string log = File.ReadAllText(Path.Combine(output.Path, "ingot.log"));
             Assert.Contains("pack compilation started", log);
-        }
-        finally
-        {
-            CompileTestHelper.DeleteOutputDirectory(outputDir);
         }
     }
 }

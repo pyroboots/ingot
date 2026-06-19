@@ -1,12 +1,12 @@
 using ingot.Core.Behaviour;
 using ingot.Tests.Content;
 
-namespace ingot.Tests.Tests.Items;
+namespace ingot.Tests.Items;
 
 public class ItemJsonContainsIconTest
 {
     [Fact]
-    public void Compile_itemJsonContainsIcon()
+    public void Compile_ItemJsonContainsIcon()
     {
         string json = Item.Compile(typeof(TestItem));
         Assert.Contains("minecraft:icon", json);

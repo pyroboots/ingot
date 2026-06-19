@@ -1,4 +1,5 @@
 using ingot.Core.Common;
+
 using Newtonsoft.Json;
 
 namespace ingot.Core.Behaviour.Loot;

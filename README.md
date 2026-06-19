@@ -73,12 +73,12 @@ class Program
         pack.ScriptsEnabled = true;
 
         // textures declared on block/item classes are auto-registered; compile bp/ + rp/ + manifests
-        pack.Compile("./");
+        pack.Compile("./artifacts/example/");
     }
 }
 ```
 
-See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, recipes, textures, and the full resource pack side. See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Block Events](docs/docs/block-events.md), and [Recipes](docs/docs/recipe.md) guides for more detail.
+See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, recipes, textures, and the full resource pack side. The docs use `./output` as a generic compile path; this repo's example compiles to `./artifacts/example/`. See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Block Events](docs/docs/block-events.md), and [Recipes](docs/docs/recipe.md) guides for more detail.
 
 ## 🛠️ Project Structure
 
@@ -87,5 +87,6 @@ See the [`ingot.Example`](./ingot.Example) project for a more complete working e
 | `ingot.Core`      | Core API                                |
 | `ingot.Example`   | Working example of using the library    |
 | `ingot.Generators`| Automatic trait generation from MS Docs |
+| `ingot.Tests`     | xUnit integration and compile tests     |
 
 **Made with ❤️ for the Minecraft Bedrock addon community.**
