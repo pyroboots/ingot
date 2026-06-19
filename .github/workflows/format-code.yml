@@ -6,6 +6,11 @@ on:
   push:
     branches: [ main, master ]
 
+# Required permissions
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   format:
     runs-on: ubuntu-latest
@@ -14,6 +19,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
@@ -23,8 +29,16 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Apply whitespace formatting
-        run: dotnet format whitespace --no-restore --verbosity normal
+      - name: Apply whitespace formatting (changed files only)
+        run: |
+          changed_files=\( (git diff --name-only --diff-filter=ACM origin/ \){{ github.base_ref || 'master' }} | grep -E '\.cs$' || true)
+          if [ -n "$changed_files" ]; then
+            echo "Formatting files:"
+            echo "$changed_files"
+            dotnet format whitespace --no-restore --include $changed_files
+          else
+            echo "No C# files to format."
+          fi
 
       - name: Commit formatting changes (if any)
         uses: stefanzweifel/git-auto-commit-action@v5
