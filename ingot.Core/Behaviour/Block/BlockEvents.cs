@@ -11,7 +11,7 @@ namespace ingot.Core.Behaviour.Block;
 /// <summary>
 /// Autogenerates Script API bindings for block events
 /// </summary>
-public struct BlockEvents
+public struct BlockEvents : IScriptEvents
 {
     /// <summary>Called when an entity falls on the block</summary>
     /// <remarks>
@@ -68,29 +68,31 @@ public struct BlockEvents
     /// <summary>Called when an entity executes an event on the block</summary>
     public string? EntityEvent; // onEntity
 
-    /// <summary>
-    /// Whether any block event handlers are configured.
-    /// </summary>
-    public bool HasEvents =>
-        EntityFallOnEvent is not null
-        || OnPlaceEvent is not null
-        || PlayerBreakEvent is not null
-        || PlayerInteractEvent is not null
-        || PlayerPlaceBeforeEvent is not null
-        || RandomTickEvent is not null
-        || RedstoneUpdateEvent is not null
-        || StepOffEvent is not null
-        || StepOnEvent is not null
-        || TickEvent is not null
-        || BlockStateChangeEvent is not null
-        || EntityEvent is not null;
+    /// <inheritdoc/>
+    public object?[] Events =>
+    [
+        EntityFallOnEvent,
+        OnPlaceEvent,
+        PlayerBreakEvent,
+        PlayerInteractEvent,
+        PlayerPlaceBeforeEvent,
+        RandomTickEvent,
+        RedstoneUpdateEvent,
+        StepOffEvent,
+        StepOnEvent,
+        TickEvent,
+        BlockStateChangeEvent,
+        EntityEvent,
+    ];
+    /// <inheritdoc/>
+    public bool HasEvents => (this as IScriptEvents).HasEvents;
 
     /// <summary>
     /// Behaviour-pack relative path for the generated script file.
     /// </summary>
-    /// <param name="blockId">Block identifier.</param>
-    public string GetScriptPath(Identifier blockId) =>
-        $"scripts/blocks/{blockId.Namespace}_{blockId.Name}_events.js";
+    /// <param name="id">Block identifier.</param>
+    public string GetScriptPath(Identifier id) =>
+        $"scripts/blocks/{id.Namespace}_{id.Name}_events.js";
 
     /// <summary>
     /// Generates the Script API component registration script and JSON component name.

@@ -84,6 +84,11 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     public virtual bool AllowOffhand => false;
 
     /// <summary>
+    /// Script API event bindings
+    /// </summary>
+    public virtual ItemEvents? ItemEvents => null;
+
+    /// <summary>
     /// Compiles the <see cref="Item"/> (as <paramref name="tType"/>) to JSON
     /// </summary>
     /// <param name="tType">Concrete type of <see cref="Item"/></param>
@@ -149,5 +154,45 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
         CompilerState.Pop();
 
         return sw.ToString();
+    }
+}
+
+/// <summary>
+/// Autogenerates Script API bindings for item events
+/// </summary>
+public class ItemEvents : IScriptEvents
+{
+    public string? BeforeDurabilityDamageEvent;
+    public string? CompleteUseEvent;
+    public string? ConsumeEvent;
+    public string? HitEntityEvent;
+    public string? MineBlockEvent;
+    public string? UseEvent;
+    public string? UseOnEvent;
+
+    /// <inheritdoc/>
+    public object?[] Events => 
+    [
+        BeforeDurabilityDamageEvent,
+        CompleteUseEvent,
+        ConsumeEvent,
+        HitEntityEvent,
+        MineBlockEvent,
+        UseEvent,
+        UseOnEvent,
+    ];
+    /// <inheritdoc/>
+    public bool HasEvents => (this as IScriptEvents).HasEvents;
+
+    /// <inheritdoc/>
+    public string GetScriptPath(Identifier id)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public (string jsonComponentName, string code) Compile(Identifier id)
+    {
+        throw new NotImplementedException();
     }
 }
