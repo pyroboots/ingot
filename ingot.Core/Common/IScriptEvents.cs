@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace ingot.Core.Common;
 
 /// <summary>
