@@ -15,6 +15,7 @@ See the [project README](https://github.com/pyroboots/ingot/blob/master/README.m
   - [Block Material Instances](docs/block-mat-instances.md)
   - [Block Events](docs/block-events.md)
 - [Items](docs/item.md)
+  - [Item Events](docs/item-events.md)
 - [Entities](docs/entity.md)
 - [Recipes](docs/recipe.md)
 - [Loot Tables](docs/loot-table.md)

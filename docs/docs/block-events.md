@@ -209,5 +209,6 @@ This means block events only work when compiling through `Pack.Compile(...)` wit
 ## See Also
 
 - [Making a Block](block.md) — base block properties including `BlockEvents`
+- [Item Events](item-events.md) — the same Script API pattern for items
 - [Trait System](trait-system.md) — vanilla components that pair with certain events
 - [Resource Packs & Textures](resource-packs.md) — `Pack` compile workflow

@@ -65,7 +65,7 @@ pack.Compile("./output");
 
 This copies the file to `{outputDir}/bp/pack_icon.png` and `{outputDir}/rp/pack_icon.png`.
 
-When `ScriptsEnabled` is `true` and blocks define [Block Events](block-events.md), **ingot** also writes per-block scripts under `bp/scripts/blocks/` and imports them from `main.js`.
+When `ScriptsEnabled` is `true` and blocks or items define [Block Events](block-events.md) or [Item Events](item-events.md), **ingot** also writes per-content scripts under `bp/scripts/blocks/` and `bp/scripts/items/` and imports them from `main.js`.
 
 > [!NOTE]
 > The lower-level `BehaviourPack` and `ResourcePack` types are still available if you need direct access. `Pack` is the recommended developer surface.
@@ -176,7 +176,8 @@ These areas will expand in future releases. The current design (key-based regist
 ## See Also
 
 - [Making a Block](block.md) and [Block Material Instances](block-mat-instances.md)
-- [Items](item.md)
+- [Items](item.md) and [Item Events](item-events.md)
+- [Block Events](block-events.md)
 - [Block Permutations](block-permutations.md)
 - API reference for `ResourcePack`
 

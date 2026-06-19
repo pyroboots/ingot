@@ -85,7 +85,7 @@ public struct BlockEvents : IScriptEvents
         EntityEvent,
     ];
     /// <inheritdoc/>
-    public bool HasEvents => (this as IScriptEvents).HasEvents;
+    public bool HasEvents => Events.Any(e => e is not null);
 
     /// <inheritdoc/>
     public string GetScriptPath(Identifier id) =>

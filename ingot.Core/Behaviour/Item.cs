@@ -130,21 +130,6 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
             });
             CompilerState.Pop();
 
-            if (inst.ItemEvents is { HasEvents: true } itemEvents)
-            {
-                if (CompilerState.CurrentPack is null)
-                    CompilerState.Warn(ref w, "item events require pack compilation to generate scripts");
-                else if (!CompilerState.CurrentPack.ScriptsEnabled)
-                    CompilerState.Warn(ref w, "item events require ScriptsEnabled on the pack");
-                else
-                {
-                    (string jsonComponentName, string code) = itemEvents.Compile(inst.Identifier);
-                    CompilerState.CurrentPack.RegisterGeneratedScript(itemEvents.GetScriptPath(inst.Identifier), code);
-                    json.Object(jsonComponentName, () => { });
-                    CompilerState.Info($"item event component {jsonComponentName}");
-                }
-            }
-            
             CompilerState.Push("components");
             json.Object("components", () =>
             {
@@ -154,6 +139,21 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
                 json.Object("minecraft:display_name", () => json.Property("value", inst.DisplayName));
                 json.Object("minecraft:max_stack_size", () => json.Property("value", inst.MaxStackSize));
                 json.Object("minecraft:allow_off_hand", () => json.Property("value", inst.AllowOffhand));
+
+                if (inst.ItemEvents is { HasEvents: true } itemEvents)
+                {
+                    if (CompilerState.CurrentPack is null)
+                        CompilerState.Warn(ref w, "item events require pack compilation to generate scripts");
+                    else if (!CompilerState.CurrentPack.ScriptsEnabled)
+                        CompilerState.Warn(ref w, "item events require ScriptsEnabled on the pack");
+                    else
+                    {
+                        (string jsonComponentName, string code) = itemEvents.Compile(inst.Identifier);
+                        CompilerState.CurrentPack.RegisterGeneratedScript(itemEvents.GetScriptPath(inst.Identifier), code);
+                        json.Object(jsonComponentName, () => { });
+                        CompilerState.Info($"item event component {jsonComponentName}");
+                    }
+                }
 
                 CompilerState.Info("compiling traits...");
                 List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tType, TraitSystem.TraitSystem.TraitType.Item);
@@ -177,7 +177,7 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
 /// <summary>
 /// Autogenerates Script API bindings for item events
 /// </summary>
-public class ItemEvents : IScriptEvents
+public struct ItemEvents : IScriptEvents
 {
     /// <summary>Called when an item containing this component is hitting an entity and about to take durability damage</summary>
     public string? BeforeDurabilityDamageEvent; // onBeforeDurabilityDamage
@@ -208,7 +208,7 @@ public class ItemEvents : IScriptEvents
         UseOnEvent,
     ];
     /// <inheritdoc/>
-    public bool HasEvents => (this as IScriptEvents).HasEvents;
+    public bool HasEvents => Events.Any(e => e is not null);
 
     /// <inheritdoc/>
     public string GetScriptPath(Identifier id) => $"scripts/items/{id.Namespace}_{id.Name}_events.js";
@@ -225,7 +225,7 @@ public class ItemEvents : IScriptEvents
         string codeComponentName = ingot.Core.Common.Formatting.SnakeToPascalCase(string.Join('_', [
             id.Namespace,
             id.Name,
-            "block_events_component"
+            "item_events_component"
         ]));
         string jsonComponentName = $"{id.Namespace}:" + ingot.Core.Common.Formatting.PascalToSnakeCase(codeComponentName);
 

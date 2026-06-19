@@ -12,9 +12,11 @@
   href: block-events.md
 - name: 2. Items
   href: item.md
-- name: 2.1. Recipes
+- name: 2.1. Item Events
+  href: item-events.md
+- name: 2.2. Recipes
   href: recipe.md
-- name: 2.2. Loot Tables
+- name: 2.3. Loot Tables
   href: loot-table.md
 - name: 3. Entities
   href: entity.md
