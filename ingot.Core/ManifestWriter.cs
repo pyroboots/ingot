@@ -80,7 +80,7 @@ internal static class ManifestWriter
             }
         });
 
-        WriteMetadata(json, pack.Authors);
+        if (pack.OmitMetadata == false) WriteMetadata(json, pack.Authors);
 
         w.WriteEndObject();
         File.WriteAllText(outputPath, sw.ToString());

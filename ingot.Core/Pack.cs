@@ -72,7 +72,11 @@ public class Pack
     /// <summary>
     /// Whether to make the <see cref="BehaviourPack"/> and <see cref="ResourcePack"/> depend on each other
     /// </summary>
-    public bool LinkPacks = true;
+    public bool LinkPacks = false;
+    /// <summary>
+    /// Omits metadata from the manifests
+    /// </summary>
+    public bool OmitMetadata = false;
 
     internal readonly List<GeneratedScript> GeneratedScripts = new();
 
