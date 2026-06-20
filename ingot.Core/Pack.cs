@@ -217,7 +217,8 @@ public class Pack
     /// </summary>
     /// <param name="outputDir">Output directory to place the behaviour pack and resource pack</param>
     /// <param name="verbose">Whether to print info logs to the console</param>
-    public void Compile(string outputDir, bool verbose = true)
+    /// <param name="cache">Whether to use or generate a cache file</param>
+    public void Compile(string outputDir, bool verbose = true, bool cache = true)
     {
         Stopwatch timer = Stopwatch.StartNew();
 
@@ -226,6 +227,18 @@ public class Pack
         CompilerState.ShowInfoLogs = verbose;
         CompilerState.CurrentPack = this;
         GeneratedScripts.Clear();
+
+        if (cache && CompilerState.Cache is null && File.Exists(Path.Combine(outputDir, ".ingot")))
+        {
+            string json = File.ReadAllText(Path.Combine(outputDir, ".ingot"));
+            CompilerState.Cache = JsonConvert.DeserializeObject<IngotCache>(json);
+
+            BehaviourPack.Uuid = CompilerState.Cache.Value.BehaviourUuid;
+            ResourcePack.Uuid = CompilerState.Cache.Value.ResourceUuid;
+            
+            CompilerState.Info("loaded .ingot cache, using overrides");
+        }
+        
         CompilerState.Info("pack compilation started");
 
         string behaviourPackDir = Path.Combine(outputDir, "bp");
@@ -261,6 +274,23 @@ public class Pack
             Console.WriteLine();
             CompilerState.Info($"pack compiled in {timer.ElapsedMilliseconds}ms");
             CompilerState.Info($"ingot compilation log available at {Path.Combine(outputDir, "ingot.log")}");
+        }
+        
+        if (cache && File.Exists(Path.Combine(outputDir, ".ingot")) == false)
+        {
+            IngotCache ingotCache = new()
+            {
+                BehaviourUuid = BehaviourPack.Uuid,
+                ResourceUuid = ResourcePack.Uuid,
+                Items = BehaviourPack.Items.Select(i => i.Identifier.ToString()).ToArray(),
+                Blocks = BehaviourPack.Blocks.Select(i => i.Identifier.ToString()).ToArray(),
+                Entities = BehaviourPack.Entities.Select(i => i.Identifier.ToString()).ToArray()
+            };
+
+            string json = JsonConvert.SerializeObject(ingotCache, Formatting.Indented);
+            File.WriteAllText(Path.Combine(outputDir, ".ingot"), json);
+            
+            CompilerState.Info("generated .ingot cache");
         }
 
         CompilerState.ShowInfoLogs = false;

@@ -28,6 +28,15 @@ public static class CompilerState
         get => Current.CurrentPack;
         set => Current.CurrentPack = value;
     }
+    
+    /// <summary>
+    /// Contains cached information of pack contents
+    /// </summary>
+    public static IngotCache? Cache
+    {
+        get => Current.Cache;
+        set => Current.Cache = value;
+    }
 
     /// <summary>
     /// Clears accumulated logs and resets compile-time state before a new pack compilation.
@@ -95,5 +104,24 @@ public static class CompilerState
         public List<string> Logs = new();
         public bool ShowInfoLogs;
         public Pack? CurrentPack;
+        public IngotCache? Cache;
     }
+}
+
+/// <summary>
+/// Cache of content at compile time
+/// </summary>
+public struct IngotCache
+{
+    [JsonProperty("rpUuid")]
+    public string ResourceUuid;
+    [JsonProperty("bpUuid")]
+    public string BehaviourUuid;
+    
+    [JsonProperty("entities")]
+    public string[] Entities;
+    [JsonProperty("blocks")]
+    public string[] Blocks;
+    [JsonProperty("items")]
+    public string[] Items;
 }
