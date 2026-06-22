@@ -1,4 +1,4 @@
-# Items
+# Making an Item
 
 Items are defined by deriving from the abstract `Item` class. Like blocks, items use a combination of simple virtual properties and the [trait system](trait-system.md) to describe their behavior.
 

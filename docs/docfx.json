@@ -39,9 +39,11 @@
       "modern"
     ],
     "globalMetadata": {
-      "_appName": "ingot documentation",
-      "_appTitle": "ingot documentation",
+      "_appName": "ingot",
+      "_appTitle": "ingot",
       "_enableSearch": true,
+      "_appLogoPath": "./images/ingotSmall.png",
+      "_appFaviconPath": "./images/ingotSmall.png",
       "pdf": false
     }
   }

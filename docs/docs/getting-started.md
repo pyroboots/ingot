@@ -1,0 +1,214 @@
+# Getting Started
+
+**ingot** is a C# framework for building Minecraft Bedrock Edition addons. Instead of hand-writing JSON for every block, item, recipe, and loot table, you define your content as strongly-typed C# classes. ingot compiles those classes into a behaviour pack (`bp/`) and resource pack (`rp/`) that Minecraft can load directly.
+
+This guide walks you through setting up a project, defining your first content, compiling a pack, and loading it in-game.
+
+## Prerequisites
+
+- [.NET SDK](https://dotnet.microsoft.com/download) (the repo targets **.NET 10**)
+- A Minecraft Bedrock Edition world with **experiments** or **pack loading** enabled (for custom content)
+- A text editor or IDE (Rider, Visual Studio, or VS Code all work well)
+
+## Installation
+
+ingot is distributed as source today. The recommended approach is to add a project reference to `ingot.Core`:
+
+```bash
+git clone https://github.com/pyroboots/ingot.git
+cd ingot
+dotnet build ingot.sln
+```
+
+In your own addon project, reference the core library:
+
+```xml
+<ItemGroup>
+  <ProjectReference Include="path/to/ingot/ingot.Core/ingot.Core.csproj" />
+</ItemGroup>
+```
+
+> **Future:** ingot will be published to NuGet once the API stabilizes.
+
+## Create a Project
+
+Create a console application that will act as your pack compiler:
+
+```bash
+dotnet new console -n MyAddon
+cd MyAddon
+# add the ProjectReference to ingot.Core as shown above
+```
+
+Your project only needs to **run once** to generate the pack files. Many authors keep a small `Program.cs` that registers all content and calls `Pack.Compile(...)`.
+
+## Define Your First Item
+
+Items inherit from `Item` and must provide an `Identifier` and `Texture`. Behaviour beyond that comes from the [trait system](trait-system.md) — C# interfaces that map to Minecraft `minecraft:*` components.
+
+```csharp
+using ingot.Core.Behaviour;
+using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Item;
+
+public class CustomFood : Item, IFood, IUseAnimation
+{
+    public override Identifier Identifier => new("myaddon", "custom_food");
+    public override string Texture => "custom_food";
+
+    public override string DisplayName => "Custom Food";
+
+    int IFood.Nutrition => 4;
+    bool IFood.CanAlwaysEat => true;
+
+    string IUseAnimation.Value => "eat";
+}
+```
+
+Key points:
+
+- `Identifier` uses a `namespace` and `name` (compiled to `namespace:name` in JSON).
+- `Texture` is the icon key referenced in `minecraft:icon` and `item_texture.json`.
+- Implement trait interfaces (`IFood`, `IDurability`, etc.) and provide their properties via [explicit interface implementation](trait-system.md#implementing-trait-properties).
+
+See [Making an Item](item.md) for the full property reference.
+
+## Define Your First Block
+
+Blocks inherit from `Block` and must provide an `Identifier` and `MaterialInstances` (textures for each face):
+
+```csharp
+using ingot.Core.Behaviour.Block;
+using ingot.Core.Common;
+
+public class CustomBlock : Block
+{
+    public override Identifier Identifier => new("myaddon", "custom_block");
+
+    public override MaterialInstances MaterialInstances => new()
+    {
+        All = new MaterialInstance("custom_block")
+    };
+
+    public override string? DisplayName => "Custom Block";
+}
+```
+
+See [Making a Block](block.md) for states, permutations, traits, loot tables, and more.
+
+## Compile a Pack
+
+Use `Pack.Create` as the single entry point. Register every piece of content, then compile:
+
+```csharp
+using ingot.Core;
+
+const string packUuid = "77f1fef2-bb39-411a-b25c-ae475c21169f"; // use a fixed UUID in real projects
+
+Pack pack = Pack.Create(packUuid, "My Addon", "My first ingot pack")
+    .AddItem<CustomFood>()
+    .AddBlock<CustomBlock>();
+
+pack.Compile("./output");
+```
+
+`Pack.Compile` writes:
+
+| Output | Contents |
+|--------|----------|
+| `output/bp/` | Behaviour pack — blocks, items, recipes, loot tables, manifests |
+| `output/rp/` | Resource pack — textures, `terrain_texture.json`, `item_texture.json` |
+| `output/ingot.log` | Compile-time warnings and info (when `verbose` is `true`, the default) |
+| `output/.ingot` | UUID cache so rebuilds keep stable pack IDs |
+
+### Pack UUIDs
+
+Use a **fixed behaviour-pack UUID** in real projects. If you generate a new UUID on every build, Minecraft treats each compile as a completely different pack. The `.ingot` cache file preserves UUIDs across rebuilds when you compile to the same output directory.
+
+### Linking Behaviour and Resource Packs
+
+By default, `Pack.Create` sets `LinkPacks = true`, which adds cross-dependencies in both manifests so Minecraft loads them together. Set `pack.LinkPacks = false` if you manage packs separately.
+
+## Add Textures
+
+Textures declared on your content classes are auto-registered during compile:
+
+```csharp
+// Item — optional source PNG path
+public override string? TexturePath => "assets/custom_food.png";
+
+// Block — source path on the material instance
+public override MaterialInstances MaterialInstances => new()
+{
+    All = new MaterialInstance("custom_block", MaterialInstance.RenderMethods.Opaque, "assets/custom_block.png")
+};
+```
+
+You can also register textures manually:
+
+```csharp
+pack.AddItemTexture("custom_food", "assets/custom_food.png")
+    .AddBlockTexture("custom_block", "assets/custom_block.png");
+```
+
+See [Resource Packs & Textures](resource-packs.md) for the full texture pipeline.
+
+## Load the Pack in Minecraft
+
+1. Run your project (`dotnet run`) to generate `output/bp/` and `output/rp/`.
+2. Copy both folders into your Minecraft development pack directories, or zip them as `.mcpack` files:
+   - **Android:** `.../games/com.mojang.minecraftpe/development_behavior_packs/` and `development_resource_packs/`
+   - **Windows:** `%localappdata%\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang.minecraftpe\`
+3. Create or open a world, go to **Settings → Behavior Packs** and **Resource Packs**, and activate both packs.
+4. If content does not appear, check the in-game **Content Log** and your `output/ingot.log` for warnings.
+
+## Enable Script API (Optional)
+
+To use block or item event scripts:
+
+```csharp
+pack.ScriptsEnabled = true;
+```
+
+ingot generates the Script API manifest entries, custom components, and handler scripts under `bp/scripts/`. You still need to provide or copy your main script entry if you extend beyond the auto-generated imports. See [Block Events](block-events.md) and [Item Events](item-events.md).
+
+## Example Projects in This Repo
+
+| Project | Purpose |
+|---------|---------|
+| [`basicTest`](../../basicTest) | Minimal item + block, compiles to `./output` |
+| [`ingot.Example`](../../ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts |
+
+Build and run the example:
+
+```bash
+dotnet run --project ingot.Example
+# output: ./artifacts/example/
+```
+
+## Project Layout (Recommended)
+
+A typical ingot addon solution looks like this:
+
+```
+MyAddon/
+├── MyAddon.csproj          # references ingot.Core
+├── Program.cs              # Pack.Create + Compile
+├── Content/
+│   ├── Items/
+│   ├── Blocks/
+│   ├── Recipes/
+│   └── Entities/
+├── assets/                 # PNG textures
+└── output/                 # generated bp/ + rp/ (gitignored)
+```
+
+Keep identifiers, traits, and cross-references in C# — recipes can reference item classes, blocks can auto-register loot tables, and refactors stay type-safe.
+
+## Next Steps
+
+- [Trait System](trait-system.md) — how behaviours are composed from interfaces
+- [Making a Block](block.md) / [Making an Item](item.md) — full content guides
+- [Recipes](recipe.md) and [Loot Tables](loot-table.md)
+- [Extending Traits](extending-traits.md) — add custom traits or regenerate from MS docs
+- [API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html)

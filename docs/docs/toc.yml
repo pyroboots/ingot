@@ -1,22 +1,21 @@
+- name: Getting Started
+  href: getting-started.md
 - name: Trait System
   href: trait-system.md
 - name: Resource Packs & Textures
   href: resource-packs.md
+
 - name: 1. Blocks
-  href: block.md
-- name: 1.1. Block Permutations
-  href: block-permutations.md
-- name: 1.2. Block Material Instances
-  href: block-mat-instances.md
-- name: 1.3. Block Events
-  href: block-events.md
+- href: block.md
+- href: block-permutations.md
+- href: block-mat-instances.md
+- href: block-events.md
+
 - name: 2. Items
-  href: item.md
-- name: 2.1. Item Events
-  href: item-events.md
-- name: 2.2. Recipes
-  href: recipe.md
-- name: 2.3. Loot Tables
-  href: loot-table.md
+- href: item.md
+- href: item-events.md
+- href: recipe.md
+- href: loot-table.md
+
 - name: 3. Entities
-  href: entity.md
+- href: entity.md

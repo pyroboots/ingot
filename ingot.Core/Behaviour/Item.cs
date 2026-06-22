@@ -167,7 +167,7 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
             });
             CompilerState.Pop();
         });
-        
+
         w.WriteEndObject();
 
         CompilerState.Pop();

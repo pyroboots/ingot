@@ -1,4 +1,4 @@
-# Entities
+# Making an Entity
 
 Entities in ingot are defined by deriving from the abstract `Entity` class in `ingot.Core.Behaviour`. Entity support is still early - compilation produces a minimal `minecraft:entity` JSON shell with no components or traits yet.
 
