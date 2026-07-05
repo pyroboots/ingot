@@ -60,9 +60,11 @@ Key `Pack` members:
 The behaviour pack manifest includes a script module only when block/item events or services produce at least one script file.
 
 - `PackIcon` - optional path to a PNG copied into both `bp/` and `rp/` using the source filename (e.g. `pack_icon.png`).
-- `Compile(string outputDir)` - compiles both `bp/` and `rp/` under the output directory.
-- `CompileMcaddon(string outputPath)` - compiles to a temporary directory, zips a `.mcaddon` with `{Name} BP/` and `{Name} RP/` at the archive root, then deletes the temp files.
-- `CompileComMojang(string comMojangPath)` - compiles directly into `development_behavior_packs/{Name} BP/` and `development_resource_packs/{Name} RP/` under a `com.mojang` folder.
+- `Compile(string outputDir)` - deletes any existing `bp/` and `rp/` subfolders, then compiles fresh ones under the output directory.
+- `CompileMcaddon(string outputPath)` - deletes any existing `.mcaddon` file, compiles to a temporary directory, zips a `.mcaddon` with `{Name} BP/` and `{Name} RP/` at the archive root, then deletes the temp files.
+- `CompileComMojang(string comMojangPath)` - deletes any existing development pack folders, then compiles directly into `development_behavior_packs/{Name} BP/` and `development_resource_packs/{Name} RP/` under a `com.mojang` folder.
+
+All three methods remove prior pack output before compiling so stale files are not left behind. `.ingot` cache files and `ingot.log` in the output directory are preserved.
 
 Set a pack icon before compiling:
 

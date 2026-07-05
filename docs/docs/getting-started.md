@@ -121,9 +121,9 @@ pack.Compile("./output");
 
 | Method | Output |
 |--------|--------|
-| `Compile(outputDir)` | Writes `bp/` and `rp/` subfolders under `outputDir` |
-| `CompileMcaddon(outputPath)` | Builds a temporary pack, zips it as a `.mcaddon` with `{Name} BP/` and `{Name} RP/` at the archive root, then deletes the temp files |
-| `CompileComMojang(comMojangPath)` | Writes directly into `development_behavior_packs/{Name} BP/` and `development_resource_packs/{Name} RP/` under your `com.mojang` folder |
+| `Compile(outputDir)` | Deletes any existing `bp/` and `rp/` subfolders, then writes fresh ones under `outputDir` |
+| `CompileMcaddon(outputPath)` | Deletes any existing `.mcaddon` file, builds a temporary pack, zips it with `{Name} BP/` and `{Name} RP/` at the archive root, then deletes the temp files |
+| `CompileComMojang(comMojangPath)` | Deletes any existing `development_behavior_packs/{Name} BP/` and `development_resource_packs/{Name} RP/` folders, then writes fresh ones under your `com.mojang` folder |
 
 ```csharp
 // Importable .mcaddon (double-click or open with Minecraft)
@@ -142,7 +142,12 @@ pack.CompileComMojang("/path/to/games/com.mojang");
 | `output/ingot.log` | Compile-time warnings and info (when `verbose` is `true`, the default) |
 | `output/.ingot` | UUID cache so rebuilds keep stable pack IDs |
 
+> [!WARNING]
+> It is recommended that you turn caching off if you use static, pre-generated UUIDs for your packs to avoid using stale caches in the event you need to update the UUID
+
 `CompileMcaddon` stores `.ingot` and `ingot.log` next to the `.mcaddon` file. `CompileComMojang` stores them in the `com.mojang` directory.
+
+All three methods delete prior pack output before compiling. That keeps rebuilds clean when you remove blocks, items, textures, or other content — stale files from an earlier compile are not left behind. Cache files (`.ingot`) and compile logs (`ingot.log`) in the output directory are preserved.
 
 ### Pack UUIDs
 

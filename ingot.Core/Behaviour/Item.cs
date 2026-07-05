@@ -133,7 +133,18 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
             {
                 TextureAutoRegistration.RegisterItemTexture(inst.Texture, inst.TexturePath, ref w);
 
-                json.Object("minecraft:icon", () => json.Property("texture", inst.Texture));
+                json.Object("minecraft:icon", () =>
+                {
+                    if (inst.FormatVersion.Major > 1
+                        || (inst.FormatVersion.Major == 1 && inst.FormatVersion.Minor >= 21))
+                    {
+                        json.Object("textures", () => json.Property("default", inst.Texture));
+                    }
+                    else
+                    {
+                        json.Property("texture", inst.Texture);
+                    }
+                });
                 json.Object("minecraft:display_name", () => json.Property("value", inst.DisplayName));
                 json.Object("minecraft:max_stack_size", () => json.Property("value", inst.MaxStackSize));
                 json.Object("minecraft:allow_off_hand", () => json.Property("value", inst.AllowOffhand));

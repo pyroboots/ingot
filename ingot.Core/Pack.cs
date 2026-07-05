@@ -264,6 +264,7 @@ public class Pack
 
     /// <summary>
     /// Compiles the pack to a Minecraft-importable <c>.mcaddon</c> archive.
+    /// Any existing file at <paramref name="outputPath"/> is deleted first.
     /// The pack is built in a temporary directory, zipped with behaviour and resource
     /// folders at the archive root, then the temporary files are deleted.
     /// </summary>
@@ -305,7 +306,8 @@ public class Pack
     }
 
     /// <summary>
-    /// Compiles both <see cref="BehaviourPack"/> and <see cref="ResourcePack"/> and generates pack manifests
+    /// Compiles both <see cref="BehaviourPack"/> and <see cref="ResourcePack"/> and generates pack manifests.
+    /// Any existing <c>bp/</c> and <c>rp/</c> subfolders under <paramref name="outputDir"/> are deleted first.
     /// </summary>
     /// <param name="outputDir">Output directory to place the behaviour pack and resource pack</param>
     /// <param name="verbose">Whether to print info logs to the console</param>
@@ -323,6 +325,8 @@ public class Pack
 
     /// <summary>
     /// Compiles the pack directly into a Minecraft Bedrock <c>com.mojang</c> directory for local development.
+    /// Any existing <c>development_behavior_packs/{Name} BP/</c> and <c>development_resource_packs/{Name} RP/</c>
+    /// folders are deleted first.
     /// </summary>
     /// <param name="comMojangPath">Path to the <c>com.mojang</c> folder (for example the MCPelauncher Flatpak games directory)</param>
     /// <param name="verbose">Whether to print info logs to the console</param>
@@ -338,8 +342,17 @@ public class Pack
             cache);
     }
 
+    private static void DeleteCompileOutputDirectory(string dir)
+    {
+        if (Directory.Exists(dir))
+            Directory.Delete(dir, recursive: true);
+    }
+
     private void CompileTo(string cacheDir, string behaviourPackDir, string resourcePackDir, bool verbose, bool cache)
     {
+        DeleteCompileOutputDirectory(behaviourPackDir);
+        DeleteCompileOutputDirectory(resourcePackDir);
+
         Stopwatch timer = Stopwatch.StartNew();
 
         CompilerState.Reset();
