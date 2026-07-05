@@ -1,0 +1,1 @@
+event.dimension.playSound("random.eat", event.block.location);

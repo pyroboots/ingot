@@ -1,0 +1,1 @@
+event.block.setType("minecraft:stone");

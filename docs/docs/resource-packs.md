@@ -52,9 +52,13 @@ Key `Pack` members:
 - `AddBlockTexture(string key, string sourcePngPath)` - manual block texture override.
 - `AddItemTexture(string key, string sourcePngPath)` - manual item texture override.
 - `AddGeometry(string identifier, string sourceGeoJsonPath)` - register a block geometry file (`.geo.json`).
-- `ScriptsEnabled` - enables Script API in the behaviour pack manifest and generates `scripts/main.js`.
+- `ScriptsEnabled` - enables Script API script generation during compile.
+- `AddService(sourceFile)` - registers a tick-based [service](script-services.md) copied to `bp/scripts/services/`.
 - `ScriptEntry` - script module entry path (defaults to `scripts/main.js`).
 - `ScriptApiModules` - Script API module dependencies (defaults to `@minecraft/server` 2.8.0).
+
+The behaviour pack manifest includes a script module only when block/item events or services produce at least one script file.
+
 - `PackIcon` - optional path to a PNG copied into both `bp/` and `rp/` using the source filename (e.g. `pack_icon.png`).
 - `Compile(string outputDir)` - compiles both `bp/` and `rp/` under the output directory.
 - `CompileMcaddon(string outputPath)` - compiles to a temporary directory, zips a `.mcaddon` with `{Name} BP/` and `{Name} RP/` at the archive root, then deletes the temp files.
@@ -70,7 +74,11 @@ pack.Compile("./output");
 
 This copies the file to `{outputDir}/bp/pack_icon.png` and `{outputDir}/rp/pack_icon.png`.
 
-When `ScriptsEnabled` is `true` and blocks or items define [Block Events](block-events.md) or [Item Events](item-events.md), **ingot** also writes per-content scripts under `bp/scripts/blocks/` and `bp/scripts/items/` and imports them from `main.js`.
+When `ScriptsEnabled` is `true`, **ingot** writes:
+
+- per-content event scripts under `bp/scripts/blocks/` and `bp/scripts/items/` ([Block Events](block-events.md), [Item Events](item-events.md))
+- [service](script-services.md) scripts under `bp/scripts/services/` (via `AddService`)
+- a generated `bp/scripts/main.js` entry that imports all of the above
 
 ## Deploying to Minecraft
 
@@ -252,7 +260,7 @@ These areas will expand in future releases. The current design (key-based regist
 
 - [Making a Block](block.md) and [Block Material Instances](block-mat-instances.md)
 - [Items](item.md) and [Item Events](item-events.md)
-- [Block Events](block-events.md)
+- [Block Events](block-events.md) and [Script Services](script-services.md)
 - [Block Permutations](block-permutations.md)
 - API reference for `ResourcePack`
 

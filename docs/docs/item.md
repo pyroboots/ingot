@@ -34,7 +34,7 @@ Optionally override `TexturePath` to provide the source PNG. When set, ingot aut
 | `DisplayName`       | `string`           | `Identifier`     | Shortcut for `minecraft:display_name`. |
 | `AllowOffhand`      | `bool`             | `false`          | Shortcut for `minecraft:allow_off_hand`. |
 | `TexturePath`       | `string?`          | `null`           | Optional source PNG for `Texture`. Auto-registered during compile. |
-| `ItemEvents`        | `ItemEvents?`      | `null`           | Script API event handlers. Auto-generates a custom component and JavaScript file when `Pack.ScriptsEnabled` is `true`. See [Item Events](item-events.md). |
+| `ItemEvents`        | `ItemEvents?`      | `null`           | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Item Events](item-events.md). |
 
 These are written into the `description.menu_category` and `components` sections of the generated item JSON.
 
@@ -94,15 +94,19 @@ Set `Category = Item.CatalogueCategory.None` (and optionally `HiddenInCommands =
 Use `ItemEvents` to attach Script API custom component handlers without hand-writing JavaScript registration code:
 
 ```csharp
+using ingot.Core.Scripting;
+
 public override ItemEvents? ItemEvents => new()
 {
-    UseEvent = "event.source.sendMessage('You used the item!');"
+    UseEvent = "event.source.sendMessage('You used the item!');",
+    // or load handler bodies from files:
+    UseOnEvent = ScriptHandler.FromFile("./scripts/items/magic_wand_use_on.js"),
 };
 ```
 
-Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes the handler script to `bp/scripts/items/`, adds the custom component to your item JSON, and imports the script from `bp/scripts/main.js`.
+Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes handler scripts to `bp/scripts/items/`, adds the custom component to your item JSON, and imports them from a generated `bp/scripts/main.js`. For global tick logic, use [services](script-services.md) via `pack.AddService(...)`.
 
-See the dedicated [Item Events](item-events.md) guide for the full event list, required vanilla traits, and compile pipeline details.
+See the dedicated [Item Events](item-events.md) guide for the full event list, trait validation warnings, and compile pipeline details.
 
 ## Compilation & Registration
 
@@ -154,4 +158,4 @@ See `LasagnaItem.cs` in the [`ingot.Example`](../../ingot.Example) project.
 - Item traits are only discovered on the exact type passed to `AddItem<T>`. You can use a base item class and have derived classes add more traits.
 - The generated item JSON always includes `minecraft:icon`, `minecraft:display_name`, `minecraft:max_stack_size`, and `minecraft:allow_off_hand` even if you left the defaults.
 
-For blocks that these items place, see the [Blocks documentation](block.md). To craft items in a crafting table, see [Recipes](recipe.md). For Script API event handlers, see [Item Events](item-events.md).
+For blocks that these items place, see the [Blocks documentation](block.md). To craft items in a crafting table, see [Recipes](recipe.md). For Script API event handlers and services, see [Item Events](item-events.md) and [Script Services](script-services.md).

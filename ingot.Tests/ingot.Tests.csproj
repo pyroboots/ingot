@@ -19,6 +19,7 @@
   <ItemGroup>
     <Content Include="Fixtures\*.png" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="Fixtures\*.geo.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Fixtures\scripts\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

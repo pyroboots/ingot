@@ -41,7 +41,7 @@ Every block **must** implement:
 | `LightDampening`    | `int?`                      | No       | Shortcut for `minecraft:light_dampening`. |
 | `Replaceable`       | `bool?`                     | No       | Shortcut for `minecraft:replaceable`. |
 | `Loot`              | `LootTable?`                | No       | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](loot-table.md). |
-| `BlockEvents`       | `BlockEvents?`              | No       | Script API event handlers. Auto-generates a custom component and JavaScript file when `Pack.ScriptsEnabled` is `true`. See [Block Events](block-events.md). |
+| `BlockEvents`       | `BlockEvents?`              | No       | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Block Events](block-events.md). |
 
 All of the shortcut properties are written directly into the `components` object of the generated `minecraft:block` JSON.
 
@@ -129,15 +129,19 @@ Permutations allow different components/traits to apply only when a Molang condi
 Use `BlockEvents` to attach Script API custom component handlers without hand-writing JavaScript registration code:
 
 ```csharp
+using ingot.Core.Scripting;
+
 public override BlockEvents? BlockEvents => new()
 {
-    OnPlaceEvent = "event.dimension.playSound('random.click', event.block.location);"
+    OnPlaceEvent = "event.dimension.playSound('random.click', event.block.location);",
+    // or load handler bodies from files:
+    PlayerInteractEvent = ScriptHandler.FromFile("./scripts/blocks/pressure_plate_interact.js"),
 };
 ```
 
-Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes the handler script to `bp/scripts/blocks/`, adds the custom component to your block JSON, and imports the script from `bp/scripts/main.js`.
+Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes handler scripts to `bp/scripts/blocks/`, adds the custom component to your block JSON, and imports them from a generated `bp/scripts/main.js`. For global tick logic, use [services](script-services.md) via `pack.AddService(...)`.
 
-See the dedicated [Block Events](block-events.md) guide for the full event list, required vanilla traits, and compile pipeline details.
+See the dedicated [Block Events](block-events.md) guide for the full event list, trait validation warnings, and compile pipeline details.
 
 ## Compilation
 
@@ -199,4 +203,4 @@ See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project
 - Traits are discovered only on the concrete type you pass to `AddBlock<T>`. Inheritance of your own block base classes works as long as the interfaces are implemented somewhere in the hierarchy.
 - For complex blocks, prefer many small focused traits over one giant class.
 
-Next: learn about [block events](block-events.md), [block permutations](block-permutations.md), and [material instances](block-mat-instances.md).
+Next: learn about [block events](block-events.md), [script services](script-services.md), [block permutations](block-permutations.md), and [material instances](block-mat-instances.md).

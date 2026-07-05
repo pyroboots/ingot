@@ -43,7 +43,7 @@ internal static class ManifestWriter
                 json.Property("uuid", Guid.NewGuid().ToString());
                 json.Property("version", new Version(1, 0, 0).AsArray());
             });
-            if (pack.ScriptsEnabled)
+            if (pack.RequiresScriptModule)
             {
                 json.Object("", () =>
                 {
@@ -67,7 +67,7 @@ internal static class ManifestWriter
                 });
             }
 
-            if (pack.ScriptsEnabled)
+            if (pack.RequiresScriptModule)
             {
                 foreach (KeyValuePair<string, Version> kvp in pack.ScriptApiModules)
                 {

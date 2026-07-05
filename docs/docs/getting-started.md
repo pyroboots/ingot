@@ -200,13 +200,16 @@ See [Resource Packs & Textures](resource-packs.md) for the full texture pipeline
 
 ## Enable Script API (Optional)
 
-To use block or item event scripts:
+To use block or item event scripts and tick-based services:
 
 ```csharp
 pack.ScriptsEnabled = true;
+pack.AddService("./scripts/services/tick_service.js"); // optional global tick logic
 ```
 
-ingot generates the Script API manifest entries, custom components, and handler scripts under `bp/scripts/`. You still need to provide or copy your main script entry if you extend beyond the auto-generated imports. See [Block Events](block-events.md) and [Item Events](item-events.md).
+ingot generates custom components, event handler scripts under `bp/scripts/blocks/` and `bp/scripts/items/`, service scripts under `bp/scripts/services/`, and a `scripts/main.js` entry point. The manifest script module is only added when at least one script exists.
+
+See [Block Events](block-events.md), [Item Events](item-events.md), and [Script Services](script-services.md).
 
 ## Example Projects in This Repo
 
@@ -237,6 +240,9 @@ MyAddon/
 │   └── Entities/
 ├── Data/                   # PNG textures (copy to output via .csproj)
 ├── scripts/                # Script API sources (optional)
+│   ├── blocks/             # handler bodies for BlockEvents.FromFile
+│   ├── items/              # handler bodies for ItemEvents.FromFile
+│   └── services/           # tick-based scripts registered with AddService
 └── output/                 # generated bp/ + rp/ (gitignored)
 ```
 
@@ -246,6 +252,7 @@ Keep identifiers, traits, and cross-references in C# — recipes can reference i
 
 - [Trait System](trait-system.md) — how behaviours are composed from interfaces
 - [Making a Block](block.md) / [Making an Item](item.md) — full content guides
+- [Block Events](block-events.md), [Item Events](item-events.md), and [Script Services](script-services.md)
 - [Recipes](recipe.md) and [Loot Tables](loot-table.md)
 - [Extending Traits](extending-traits.md) — add custom traits or regenerate from MS docs
 - [API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html)

@@ -204,14 +204,11 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
                 {
                     if (CompilerState.CurrentPack is null)
                         CompilerState.Warn(ref w, "block events require pack compilation to generate scripts");
-                    else if (!CompilerState.CurrentPack.ScriptsEnabled)
-                        CompilerState.Warn(ref w, "block events require ScriptsEnabled on the pack");
                     else
                     {
-                        (string jsonComponentName, string code) = blockEvents.Compile(inst.Identifier);
-                        CompilerState.CurrentPack.RegisterGeneratedScript(blockEvents.GetScriptPath(inst.Identifier), code);
+                        string jsonComponentName = blockEvents.GetJsonComponentName(inst.Identifier);
                         json.Object(jsonComponentName, () => { });
-                        CompilerState.Info($"registered block event component {jsonComponentName}");
+                        CompilerState.Info($"block event component {jsonComponentName}");
                     }
                 }
 

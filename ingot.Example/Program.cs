@@ -41,8 +41,11 @@ class Program
 
         pack.MinEngineVersion = new Version(1, 21, 0);
         pack.PackIcon = Path.Combine(dataDir, "pack_icon.png");
-        pack.ScriptsEnabled = false;
+        pack.ScriptsEnabled = true;
         pack.LinkPacks = false;
+
+        string scriptsDir = Path.Combine(AppContext.BaseDirectory, "scripts");
+        pack.AddService(Path.Combine(scriptsDir, "services", "tick_service.js"));
 
         pack.AddBlockTexture("block_of_dense_lasagna", Path.Combine(dataDir, "dense_lasagna.png"))
             .AddItemTexture("lasagna", Path.Combine(dataDir, "lasagna.png"))

@@ -4,6 +4,8 @@
   href: trait-system.md
 - name: Resource Packs & Textures
   href: resource-packs.md
+- name: Script Services
+  href: script-services.md
 
 - name: 1. Blocks
 - href: block.md

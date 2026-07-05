@@ -11,6 +11,7 @@ See the [project README](https://github.com/pyroboots/ingot/blob/master/README.m
 - [Getting Started](docs/getting-started.md)
 - [Trait System](docs/trait-system.md)
 - [Resource Packs & Textures](docs/resource-packs.md)
+- [Script Services](docs/script-services.md)
 - [Blocks](docs/block.md)
   - [Block Permutations](docs/block-permutations.md)
   - [Block Material Instances](docs/block-mat-instances.md)

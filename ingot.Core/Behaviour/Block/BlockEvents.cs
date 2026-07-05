@@ -1,176 +1,88 @@
-using System.Text;
-
 using ingot.Core.Common;
-
-using Newtonsoft.Json;
-
-using Formatting = ingot.Core.Common.Formatting;
+using ingot.Core.Scripting;
 
 namespace ingot.Core.Behaviour.Block;
 
 /// <summary>
-/// Autogenerates Script API bindings for block events
+/// Autogenerates Script API bindings for block events.
 /// </summary>
 public struct BlockEvents : IScriptEvents
 {
-    /// <summary>Called when an entity falls on the block</summary>
-    /// <remarks>
-    /// The entity fall on event requires the <c>minecraft:entity_fall_on</c> component to be active on your block to trigger.
-    /// The entity fall on event requires the <c>minecraft:collision_box component</c> to be taller than 3.2 pixels on the Y-axis in order to trigger.
-    /// </remarks>
-    public string? EntityFallOnEvent; // onEntityFallOn
+    /// <summary>Called when an entity falls on the block.</summary>
+    public ScriptHandler? EntityFallOnEvent;
 
-    /// <summary>Called when the block is placed or snow-logged</summary>
-    public string? OnPlaceEvent; // onPlace
+    /// <summary>Called when the block is placed or snow-logged.</summary>
+    public ScriptHandler? OnPlaceEvent;
 
-    /// <summary>Called when the player breaks the block</summary>
-    public string? PlayerBreakEvent; // onPlayerBreak
+    /// <summary>Called when the player breaks the block.</summary>
+    public ScriptHandler? PlayerBreakEvent;
 
-    /// <summary>Called when the player interacts with / uses the block</summary>
-    /// <remarks>
-    /// The <c>onPlayerInteract</c> hook is not called when the player interacts with the block using an empty bucket.
-    /// </remarks>
-    public string? PlayerInteractEvent; // onPlayerInteract
+    /// <summary>Called when the player interacts with / uses the block.</summary>
+    public ScriptHandler? PlayerInteractEvent;
 
-    /// <summary>Called before a player places the block, preventing the client-side placement of the block</summary>
-    public string? PlayerPlaceBeforeEvent; // beforeOnPlayerPlace
+    /// <summary>Called before a player places the block, preventing the client-side placement of the block.</summary>
+    public ScriptHandler? PlayerPlaceBeforeEvent;
 
-    /// <summary>Triggered on every random tick, allowing for behaviour like random crop growth</summary>
-    public string? RandomTickEvent; // onRandomTick
+    /// <summary>Triggered on every random tick, allowing for behaviour like random crop growth.</summary>
+    public ScriptHandler? RandomTickEvent;
 
-    /// <summary>Triggers every time the block receives a redstone update</summary>
-    /// <remarks>
-    /// The redstone update event requires the <c>minecraft:redstone_consumer</c> component to be active on your block to trigger.
-    /// </remarks>
-    public string? RedstoneUpdateEvent; // onRedstoneUpdate
+    /// <summary>Triggers every time the block receives a redstone update.</summary>
+    public ScriptHandler? RedstoneUpdateEvent;
 
-    /// <summary>Called when an entity steps off the block</summary>
-    /// <remarks>
-    /// The step off event requires the <c>minecraft:collision_box</c> component to be taller than 3.2 pixels on the Y-axis in order to trigger.
-    /// </remarks>
-    public string? StepOffEvent; // onStepOff
+    /// <summary>Called when an entity steps off the block.</summary>
+    public ScriptHandler? StepOffEvent;
 
-    /// <summary>Called when an entity steps onto the block</summary>
-    /// <remarks>
-    /// The step off event requires the <c>minecraft:collision_box</c> component to be taller than 3.2 pixels on the Y-axis in order to trigger.
-    /// </remarks>
-    public string? StepOnEvent; // onStepOn
+    /// <summary>Called when an entity steps onto the block.</summary>
+    public ScriptHandler? StepOnEvent;
 
-    /// <summary>Triggers between <c>X</c> and <c>Y</c> amount of ticks inside <c>interval_range</c> of the block's <c>minecraft:tick</c> component</summary>
-    /// <remarks>
-    /// The tick event requires the <c>minecraft:tick</c> component to be active on your block to trigger.
-    /// </remarks>
-    public string? TickEvent; // onTick
+    /// <summary>Triggers between ticks inside the block's minecraft:tick component interval range.</summary>
+    public ScriptHandler? TickEvent;
 
-    /// <summary>Called whenever the block permutation is changed to another permutation of the same block type</summary>
-    public string? BlockStateChangeEvent; // onBlockStateChange
+    /// <summary>Called whenever the block permutation is changed to another permutation of the same block type.</summary>
+    public ScriptHandler? BlockStateChangeEvent;
 
-    /// <summary>Called when an entity executes an event on the block</summary>
-    public string? EntityEvent; // onEntity
+    /// <summary>Called when an entity executes an event on the block.</summary>
+    public ScriptHandler? EntityEvent;
 
     /// <inheritdoc/>
-    public object?[] Events =>
-    [
-        EntityFallOnEvent,
-        OnPlaceEvent,
-        PlayerBreakEvent,
-        PlayerInteractEvent,
-        PlayerPlaceBeforeEvent,
-        RandomTickEvent,
-        RedstoneUpdateEvent,
-        StepOffEvent,
-        StepOnEvent,
-        TickEvent,
-        BlockStateChangeEvent,
-        EntityEvent,
-    ];
+    public bool HasEvents => Bindings.Count > 0;
+
     /// <inheritdoc/>
-    public bool HasEvents => Events.Any(e => e is not null);
+    public IReadOnlyList<ScriptEventBinding> Bindings
+    {
+        get
+        {
+            List<ScriptEventBinding> bindings = new();
+            AddBinding(bindings, "onEntityFallOn", EntityFallOnEvent);
+            AddBinding(bindings, "onPlace", OnPlaceEvent);
+            AddBinding(bindings, "onPlayerBreak", PlayerBreakEvent);
+            AddBinding(bindings, "onPlayerInteract", PlayerInteractEvent);
+            AddBinding(bindings, "beforeOnPlayerPlace", PlayerPlaceBeforeEvent);
+            AddBinding(bindings, "onRandomTick", RandomTickEvent);
+            AddBinding(bindings, "onRedstoneUpdate", RedstoneUpdateEvent);
+            AddBinding(bindings, "onStepOff", StepOffEvent);
+            AddBinding(bindings, "onStepOn", StepOnEvent);
+            AddBinding(bindings, "onTick", TickEvent);
+            AddBinding(bindings, "onBlockStateChange", BlockStateChangeEvent);
+            AddBinding(bindings, "onEntity", EntityEvent);
+            return bindings;
+        }
+    }
 
     /// <inheritdoc/>
     public string GetScriptPath(Identifier id) =>
         $"scripts/blocks/{id.Namespace}_{id.Name}_events.js";
 
     /// <inheritdoc/>
-    public (string jsonComponentName, string code) Compile(Identifier id)
+    public string GetJsonComponentName(Identifier id) =>
+        ScriptEventsGenerator.GetJsonComponentName(id, ScriptComponentKind.Block);
+
+    /// <inheritdoc/>
+    public ScriptComponentKind ComponentKind => ScriptComponentKind.Block;
+
+    private static void AddBinding(List<ScriptEventBinding> bindings, string scriptApiEvent, ScriptHandler? handler)
     {
-        StringBuilder sb = new();
-        sb.AppendLine("// autogenerated by ingot");
-
-        sb.AppendLine("import { system } from \"@minecraft/server\";");
-        sb.AppendLine();
-
-        string codeComponentName = Formatting.SnakeToPascalCase(string.Join('_', [
-            id.Namespace,
-            id.Name,
-            "block_events_component"
-        ]));
-        string jsonComponentName = $"{id.Namespace}:" + Formatting.PascalToSnakeCase(codeComponentName);
-
-        sb.AppendLine($"const {codeComponentName} = {{");
-
-        if (EntityFallOnEvent is not null)
-            sb.AppendLine(ComponentEvent("onEntityFallOn", EntityFallOnEvent));
-        if (OnPlaceEvent is not null)
-            sb.AppendLine(ComponentEvent("onPlace", OnPlaceEvent));
-        if (PlayerBreakEvent is not null)
-            sb.AppendLine(ComponentEvent("onPlayerBreak", PlayerBreakEvent));
-        if (PlayerInteractEvent is not null)
-            sb.AppendLine(ComponentEvent("onPlayerInteract", PlayerInteractEvent));
-        if (PlayerPlaceBeforeEvent is not null)
-            sb.AppendLine(ComponentEvent("beforeOnPlayerPlace", PlayerPlaceBeforeEvent));
-        if (RandomTickEvent is not null)
-            sb.AppendLine(ComponentEvent("onRandomTick", RandomTickEvent));
-        if (RedstoneUpdateEvent is not null)
-            sb.AppendLine(ComponentEvent("onRedstoneUpdate", RedstoneUpdateEvent));
-        if (StepOffEvent is not null)
-            sb.AppendLine(ComponentEvent("onStepOff", StepOffEvent));
-        if (StepOnEvent is not null)
-            sb.AppendLine(ComponentEvent("onStepOn", StepOnEvent));
-        if (TickEvent is not null)
-            sb.AppendLine(ComponentEvent("onTick", TickEvent));
-        if (BlockStateChangeEvent is not null)
-            sb.AppendLine(ComponentEvent("onBlockStateChange", BlockStateChangeEvent));
-        if (EntityEvent is not null)
-            sb.AppendLine(ComponentEvent("onEntity", EntityEvent));
-
-        sb.AppendLine("};");
-        sb.AppendLine();
-
-        /*
-         * system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {
-               blockComponentRegistry.registerCustomComponent(
-                   "wiki:creative_mode_only",
-                   BlockCreativeModeOnlyComponent
-               );
-           });
-         */
-
-        sb.AppendLine("system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {");
-        sb.AppendLine($"    blockComponentRegistry.registerCustomComponent(");
-        sb.AppendLine($"        \"{jsonComponentName}\",");
-        sb.AppendLine($"        {codeComponentName}");
-        sb.AppendLine($"    );");
-        sb.AppendLine("});");
-
-        return (jsonComponentName, sb.ToString());
-    }
-
-    private string ComponentEvent(string name, string content)
-    {
-        StringBuilder sb = new();
-
-        /*
-         * onEntityFallOn(event) {
-         *      ...
-         * },
-         */
-
-        sb.Append(name);
-        sb.AppendLine("(event) {");
-        sb.AppendLine(content);
-        sb.AppendLine("},");
-
-        return sb.ToString();
+        if (handler is { IsConfigured: true } configured)
+            bindings.Add(new ScriptEventBinding(scriptApiEvent, configured));
     }
 }

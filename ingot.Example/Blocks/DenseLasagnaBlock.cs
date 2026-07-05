@@ -1,6 +1,7 @@
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
+using ingot.Core.Scripting;
 using ingot.Core.TraitSystem.Traits.Block;
 
 using Version = ingot.Core.Common.Version;
@@ -32,6 +33,11 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
     public override Dictionary<string, dynamic[]> States => new()
     {
         { "test:radioactive", [false, true] }
+    };
+
+    public override BlockEvents? BlockEvents => new()
+    {
+        OnPlaceEvent = ScriptHandler.FromFile(Path.Combine(AppContext.BaseDirectory, "scripts", "blocks", "dense_lasagna_on_place.js")),
     };
 }
 
