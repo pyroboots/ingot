@@ -128,6 +128,7 @@ public sealed class TraitGenerator : IAsyncDisposable
             }
             isHeader = false;
 
+            // TODO: add deprecated attrib
             if (desc.Contains("Deprecated", StringComparison.OrdinalIgnoreCase))
                 continue;
 
