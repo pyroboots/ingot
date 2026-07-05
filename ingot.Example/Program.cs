@@ -45,7 +45,7 @@ class Program
         pack.LinkPacks = false;
 
         string scriptsDir = Path.Combine(AppContext.BaseDirectory, "scripts");
-        pack.AddService(Path.Combine(scriptsDir, "services", "tick_service.js"));
+        pack.AddService(Path.Combine(scriptsDir, "services", "tick_service.js"), intervalTicks: 20);
 
         pack.AddBlockTexture("block_of_dense_lasagna", Path.Combine(dataDir, "dense_lasagna.png"))
             .AddItemTexture("lasagna", Path.Combine(dataDir, "lasagna.png"))

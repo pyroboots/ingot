@@ -215,7 +215,7 @@ Common pairings:
 Script generation is a dedicated pass that runs after behaviour-pack JSON is written:
 
 1. During `Block.Compile`, if `BlockEvents.HasEvents` is `true`, the custom component name is written into the block's `components` object.
-2. After `BehaviourPack.Compile` finishes, **ingot** scans all registered blocks and items, validates trait pairings, generates per-content scripts, copies [services](script-services.md), and writes `scripts/main.js`.
+2. After `BehaviourPack.Compile` finishes, **ingot** scans all registered blocks and items, validates trait pairings, generates per-content scripts, wraps [services](script-services.md) to run every tick, and writes `scripts/main.js`.
 3. The behaviour pack manifest includes a script module only when at least one script file was produced.
 
 Block events require compiling through `Pack.Compile(...)`. Calling `Block.Compile(typeof(MyBlock))` in isolation writes JSON only when pack context is available.

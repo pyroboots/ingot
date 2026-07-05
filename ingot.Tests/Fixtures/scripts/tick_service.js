@@ -1,3 +1,1 @@
-import { system } from "@minecraft/server";
-
-system.runInterval(() => {}, 1);
+// service tick body marker

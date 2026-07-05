@@ -15,7 +15,7 @@
 - **Inheritance-Based, Type-Safe API** - Define items, blocks, entities, and more using clean, strongly-typed C# instead of hand-writing JSON
 - **Automatic Manifest Generation** - `manifest.json` files for both behavior packs and resource packs are created automatically
 - **Full BP + RP Support** - Create behavior packs, resource packs, and linked packs with ease
-- **Script API Ready** - File-based or inline [block](docs/docs/block-events.md) and [item event](docs/docs/item-events.md) handlers, plus tick-based [services](docs/docs/script-services.md), with compile-time trait validation
+- **Script API Ready** - File-based or inline [block](docs/docs/block-events.md) and [item event](docs/docs/item-events.md) handlers, plus [services](docs/docs/script-services.md) auto-wrapped to run every tick, with compile-time trait validation
 - **CompilerState** - Get clear, helpful compile-time feedback to avoid debugging in the Minecraft content log
 - **Extensible & Maintainable** - Designed for large or complex addons where manual JSON becomes painful
 - **Iterable & Reusable** - Because its code, you can define variable and easily change things project-wide

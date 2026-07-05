@@ -35,7 +35,7 @@ internal static class ScriptCompiler
         }
 
         foreach (ScriptServiceRegistration service in pack.Services)
-            pack.ScriptRegistry.RegisterService(service.SourceFile, service.RelativePath);
+            pack.ScriptRegistry.RegisterService(service.SourceFile, service.RelativePath, service.IntervalTicks);
 
         if (!pack.ScriptRegistry.HasEntries)
             return false;
@@ -95,7 +95,9 @@ internal static class ScriptCompiler
             string content = entry.Kind switch
             {
                 ScriptEntryKind.Generated => entry.GeneratedContent!,
-                ScriptEntryKind.Service => File.ReadAllText(entry.SourceFilePath!),
+                ScriptEntryKind.Service => ScriptServiceGenerator.Generate(
+                    File.ReadAllText(entry.SourceFilePath!),
+                    entry.ServiceIntervalTicks),
                 _ => throw new InvalidOperationException($"unknown script entry kind: {entry.Kind}"),
             };
 

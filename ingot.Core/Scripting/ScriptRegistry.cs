@@ -18,15 +18,15 @@ internal sealed class ScriptRegistry
     public void RegisterGenerated(string relativePath, string content)
     {
         string normalized = NormalizeRelativePath(relativePath);
-        _entries[normalized] = new ScriptEntry(normalized, ScriptEntryKind.Generated, content, null);
+        _entries[normalized] = new ScriptEntry(normalized, ScriptEntryKind.Generated, content, null, 1);
     }
 
-    /// <summary>Registers a service script copied from a source file.</summary>
-    public void RegisterService(string sourceFile, string relativePath)
+    /// <summary>Registers a service script generated from a source file.</summary>
+    public void RegisterService(string sourceFile, string relativePath, int intervalTicks)
     {
         string normalized = NormalizeRelativePath(relativePath);
         string resolvedSource = Path.GetFullPath(sourceFile);
-        _entries[normalized] = new ScriptEntry(normalized, ScriptEntryKind.Service, null, resolvedSource);
+        _entries[normalized] = new ScriptEntry(normalized, ScriptEntryKind.Service, null, resolvedSource, intervalTicks);
     }
 
     /// <summary>Clears all registered scripts.</summary>
@@ -43,7 +43,8 @@ internal readonly record struct ScriptEntry(
     string RelativePath,
     ScriptEntryKind Kind,
     string? GeneratedContent,
-    string? SourceFilePath);
+    string? SourceFilePath,
+    int ServiceIntervalTicks);
 
 /// <summary>
 /// Kind of script entry in the registry.
@@ -52,6 +53,6 @@ internal enum ScriptEntryKind
 {
     /// <summary>Generated Script API component registration script.</summary>
     Generated,
-    /// <summary>Copied service script that runs every tick.</summary>
+    /// <summary>Service script wrapped to run every tick.</summary>
     Service,
 }

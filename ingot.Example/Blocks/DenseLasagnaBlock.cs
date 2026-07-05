@@ -38,6 +38,7 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
     public override BlockEvents? BlockEvents => new()
     {
         OnPlaceEvent = ScriptHandler.FromFile(Path.Combine(AppContext.BaseDirectory, "scripts", "blocks", "dense_lasagna_on_place.js")),
+        PlayerInteractEvent = ScriptHandler.Inline(@"event.block.setPermutation(event.block.permutation.withState(""test:radioactive"", true)); event.block.dimension.playSound(""place.lodestone"", event.block.location);")
     };
 }
 

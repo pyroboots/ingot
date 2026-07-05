@@ -53,7 +53,7 @@ Key `Pack` members:
 - `AddItemTexture(string key, string sourcePngPath)` - manual item texture override.
 - `AddGeometry(string identifier, string sourceGeoJsonPath)` - register a block geometry file (`.geo.json`).
 - `ScriptsEnabled` - enables Script API script generation during compile.
-- `AddService(sourceFile)` - registers a tick-based [service](script-services.md) copied to `bp/scripts/services/`.
+- `AddService(sourceFile, name?, intervalTicks?)` - registers a [service](script-services.md) whose tick body is wrapped in `system.runInterval` (default every tick) and written to `bp/scripts/services/`.
 - `ScriptEntry` - script module entry path (defaults to `scripts/main.js`).
 - `ScriptApiModules` - Script API module dependencies (defaults to `@minecraft/server` 2.8.0).
 
@@ -77,7 +77,7 @@ This copies the file to `{outputDir}/bp/pack_icon.png` and `{outputDir}/rp/pack_
 When `ScriptsEnabled` is `true`, **ingot** writes:
 
 - per-content event scripts under `bp/scripts/blocks/` and `bp/scripts/items/` ([Block Events](block-events.md), [Item Events](item-events.md))
-- [service](script-services.md) scripts under `bp/scripts/services/` (via `AddService`)
+- [service](script-services.md) scripts under `bp/scripts/services/` (via `AddService`, wrapped to run every tick)
 - a generated `bp/scripts/main.js` entry that imports all of the above
 
 ## Deploying to Minecraft

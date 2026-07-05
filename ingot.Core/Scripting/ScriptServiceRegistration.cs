@@ -5,4 +5,5 @@ namespace ingot.Core.Scripting;
 /// </summary>
 /// <param name="SourceFile">Path to the JavaScript source file.</param>
 /// <param name="RelativePath">Behaviour-pack relative output path.</param>
-internal readonly record struct ScriptServiceRegistration(string SourceFile, string RelativePath);
+/// <param name="IntervalTicks">Ticks between each run of the service body.</param>
+internal readonly record struct ScriptServiceRegistration(string SourceFile, string RelativePath, int IntervalTicks);

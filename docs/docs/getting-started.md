@@ -207,7 +207,7 @@ pack.ScriptsEnabled = true;
 pack.AddService("./scripts/services/tick_service.js"); // optional global tick logic
 ```
 
-ingot generates custom components, event handler scripts under `bp/scripts/blocks/` and `bp/scripts/items/`, service scripts under `bp/scripts/services/`, and a `scripts/main.js` entry point. The manifest script module is only added when at least one script exists.
+ingot generates custom components, event handler scripts under `bp/scripts/blocks/` and `bp/scripts/items/`, service scripts under `bp/scripts/services/` (wrapped in `system.runInterval` to run every tick), and a `scripts/main.js` entry point. The manifest script module is only added when at least one script exists.
 
 See [Block Events](block-events.md), [Item Events](item-events.md), and [Script Services](script-services.md).
 
@@ -242,7 +242,7 @@ MyAddon/
 ├── scripts/                # Script API sources (optional)
 │   ├── blocks/             # handler bodies for BlockEvents.FromFile
 │   ├── items/              # handler bodies for ItemEvents.FromFile
-│   └── services/           # tick-based scripts registered with AddService
+│   └── services/           # tick handler bodies registered with AddService
 └── output/                 # generated bp/ + rp/ (gitignored)
 ```
 

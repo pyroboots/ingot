@@ -245,15 +245,20 @@ public class Pack
     }
 
     /// <summary>
-    /// Registers a Script API service that runs every tick. The source file is copied into
-    /// <c>bp/scripts/services/</c> and imported from <c>scripts/main.js</c>.
+    /// Registers a Script API service that runs every tick. The source file contains the tick
+    /// handler body; ingot wraps it in <c>system.runInterval</c> and writes the result to
+    /// <c>bp/scripts/services/</c>, imported from <c>scripts/main.js</c>.
     /// </summary>
-    /// <param name="sourceFile">Path to the JavaScript service source file.</param>
+    /// <param name="sourceFile">Path to the JavaScript service tick body.</param>
     /// <param name="name">Optional output file name. Defaults to the source file name.</param>
-    public Pack AddService(string sourceFile, string? name = null)
+    /// <param name="intervalTicks">Ticks between each run of the service body. Defaults to 1 (every tick).</param>
+    public Pack AddService(string sourceFile, string? name = null, int intervalTicks = 1)
     {
+        if (intervalTicks < 1)
+            throw new ArgumentOutOfRangeException(nameof(intervalTicks), intervalTicks, "service interval must be at least 1 tick");
+
         string fileName = name ?? Path.GetFileName(sourceFile);
-        _services.Add(new ScriptServiceRegistration(sourceFile, $"scripts/services/{fileName}"));
+        _services.Add(new ScriptServiceRegistration(sourceFile, $"scripts/services/{fileName}", intervalTicks));
         return this;
     }
 

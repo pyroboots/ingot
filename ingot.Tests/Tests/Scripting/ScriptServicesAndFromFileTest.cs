@@ -19,7 +19,26 @@ public class ScriptServicesAndFromFileTest
 
             string servicePath = Path.Combine(output.Path, "bp", "scripts", "services", "tick_service.js");
             Assert.True(File.Exists(servicePath));
-            Assert.Contains("runInterval", File.ReadAllText(servicePath));
+            string service = File.ReadAllText(servicePath);
+            Assert.Contains("system.runInterval(() => {", service);
+            Assert.Contains("}, 1);", service);
+            Assert.Contains("service tick body marker", service);
+        }
+    }
+
+    [Fact]
+    public void Compile_Service_WithCustomInterval_UsesIntervalInGeneratedScript()
+    {
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
+        {
+            Pack pack = PackTestBuilder.Create();
+            pack.ScriptsEnabled = true;
+            pack.AddService(FixturePaths.Resolve("scripts/tick_service.js"), intervalTicks: 20);
+            pack.Compile(output.Path, verbose: false);
+
+            string service = File.ReadAllText(Path.Combine(output.Path, "bp", "scripts", "services", "tick_service.js"));
+            Assert.Contains("}, 20);", service);
+            Assert.DoesNotContain("}, 1);", service);
 
             string mainJs = File.ReadAllText(Path.Combine(output.Path, "bp", "scripts", "main.js"));
             Assert.Contains("./services/tick_service.js", mainJs);
