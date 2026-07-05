@@ -8,8 +8,6 @@ using ingot.Core.Common;
 
 using Newtonsoft.Json;
 
-using static ingot.Core.Common.JsonHelper;
-
 using Formatting = Newtonsoft.Json.Formatting;
 using Version = ingot.Core.Common.Version;
 
@@ -221,6 +219,18 @@ public class Pack
     public Pack AddGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null)
     {
         ResourcePack.AddGeometry(identifier, sourceGeoJsonPath, rpName);
+        return this;
+    }
+    
+    /// <summary>
+    /// Adds a function to the <see cref="BehaviourPack"/>
+    /// </summary>
+    /// <param name="identifier">The name of the function in game</param>
+    /// <param name="sourceFile">The function source file</param>
+    /// <param name="service">Whether to run this function every tick</param>
+    public Pack AddFunction(string identifier, string sourceFile, bool service = false)
+    {
+        BehaviourPack.AddFunction(identifier, sourceFile, service);
         return this;
     }
 

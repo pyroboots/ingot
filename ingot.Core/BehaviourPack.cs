@@ -19,6 +19,7 @@ public class BehaviourPack
     /// Minecraft UUID to be used at runtime
     /// </summary>
     public string Uuid;
+
     /// <summary>
     /// Version of the <see cref="BehaviourPack"/>. When <see cref="ResourcePack"/> is linked, it will require at least this version.
     /// </summary>
@@ -64,8 +65,12 @@ public class BehaviourPack
     /// <summary>
     /// Function paths executed every tick via <c>functions/tick.json</c>
     /// </summary>
-    public string[] TickFunctions = [];
-
+    public List<string> TickFunctions = new();
+    /// <summary>
+    /// Dictionary of <c>.mcfunction</c>s by identifier and source file
+    /// </summary>
+    public Dictionary<string, string> Functions = new();
+    
     /// <summary>
     /// Adds an entity to the pack
     /// </summary>
@@ -158,6 +163,18 @@ public class BehaviourPack
         LootTables.Add(inst);
         return this;
     }
+    
+    /// <summary>
+    /// Adds a function to the <see cref="BehaviourPack"/>
+    /// </summary>
+    /// <param name="identifier">The name of the function in game</param>
+    /// <param name="sourceFile">The function source file</param>
+    /// <param name="service">Whether to run this function every tick</param>
+    public void AddFunction(string identifier, string sourceFile, bool service)
+    {
+        Functions.Add(identifier, sourceFile);
+        if (service) TickFunctions.Add(identifier);
+    }
 
     /// <summary>
     /// Compiles the <see cref="BehaviourPack"/> to output <paramref name="dir"/>
@@ -167,6 +184,7 @@ public class BehaviourPack
     {
         CompilerState.Push("bp");
 
+        #region dirs
         Directory.CreateDirectory(dir);
         Directory.CreateDirectory(Path.Combine(dir, "entities"));
         Directory.CreateDirectory(Path.Combine(dir, "blocks"));
@@ -176,12 +194,16 @@ public class BehaviourPack
         Directory.CreateDirectory(Path.Combine(dir, "loot_tables"));
         Directory.CreateDirectory(Path.Combine(dir, "functions"));
         CompilerState.Info("created folder structure");
+        #endregion
 
+        #region identifiable compilation
         CompileIdentifiableCollection(Entities, dir, "entities", "entity", e => Entity.Compile(e.GetType()));
         CompileIdentifiableCollection(Blocks, dir, "blocks", "block", b => Block.Compile(b.GetType()));
         CompileIdentifiableCollection(Items, dir, "items", "item", i => Item.Compile(i.GetType()));
         CompileIdentifiableCollection(Recipes, dir, "recipes", "recipe", r => r.Compile());
-
+        #endregion
+        
+        #region loot tables
         CompilerState.Info("compiling loot tables...");
         CompilerState.Push("loot_tables");
         int c = 0;
@@ -197,19 +219,27 @@ public class BehaviourPack
             CompilerState.Info($"({c}/{LootTables.Count}) compiled loot table {lootTable.Identifier} -> {Path.Combine(path, $"{lootTable.Identifier.Name}.json")}");
         }
         CompilerState.Pop();
+        #endregion
+        
+        #region funcs
+        CompilerState.Info("compiling functions...");
+        CompilerState.Push("functions");
+        c = 0;
+        foreach (var kvp in Functions)
+        {
+            c++;
+            File.Copy(kvp.Value, Path.Combine(dir, "functions",  $"{kvp.Key}.mcfunction"), true);
 
-        WriteTickFunctions(dir);
-
-        CompilerState.Pop();
-    }
-
-    private void WriteTickFunctions(string dir)
-    {
-        CompilerState.Push("functions/tick.json");
-
+            CompilerState.Info($"({c}/{Functions.Count}) compiled function {kvp.Key}");
+        }
+        
+        CompilerState.Push("tick.json");
         string json = JsonConvert.SerializeObject(new { values = TickFunctions }, Newtonsoft.Json.Formatting.Indented);
         File.WriteAllText(Path.Combine(dir, "functions", "tick.json"), json + Environment.NewLine);
-        CompilerState.Info($"wrote tick.json with {TickFunctions.Length} functions");
+        CompilerState.Info($"wrote tick.json with {TickFunctions.Count} functions");
+        CompilerState.Pop();
+        CompilerState.Pop();
+        #endregion
 
         CompilerState.Pop();
     }
