@@ -8,6 +8,7 @@ See the [project README](https://github.com/pyroboots/ingot/blob/master/README.m
 
 ## Documentation
 
+- [Getting Started](docs/getting-started.md)
 - [Trait System](docs/trait-system.md)
 - [Resource Packs & Textures](docs/resource-packs.md)
 - [Blocks](docs/block.md)

@@ -18,6 +18,9 @@ internal static class TextureAutoRegistration
 
         foreach ((string key, string? sourcePath) in instances.EnumerateTextures())
         {
+            if (string.IsNullOrWhiteSpace(sourcePath))
+                continue;
+
             if (!IsCustomTextureKey(key))
                 continue;
 
@@ -38,7 +41,7 @@ internal static class TextureAutoRegistration
 
     public static void RegisterItemTexture(string key, string? sourcePath, ref JsonTextWriter? warnWriter)
     {
-        if (CompilerState.CurrentPack is null || !IsCustomTextureKey(key))
+        if (CompilerState.CurrentPack is null || string.IsNullOrWhiteSpace(sourcePath) || !IsCustomTextureKey(key))
             return;
 
         ResourcePack rp = CompilerState.CurrentPack.ResourcePack;

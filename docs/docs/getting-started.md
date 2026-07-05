@@ -84,6 +84,9 @@ using ingot.Core.Common;
 public class CustomBlock : Block
 {
     public override Identifier Identifier => new("myaddon", "custom_block");
+    public override string? Geometry => "minecraft:geometry.full_block";
+    public override string? ResourceTexture => "custom_block";
+    public override string? Sound => "stone";
 
     public override MaterialInstances MaterialInstances => new()
     {
@@ -112,6 +115,24 @@ Pack pack = Pack.Create(packUuid, "My Addon", "My first ingot pack")
 pack.Compile("./output");
 ```
 
+### Compile targets
+
+`Pack` exposes three compile methods:
+
+| Method | Output |
+|--------|--------|
+| `Compile(outputDir)` | Writes `bp/` and `rp/` subfolders under `outputDir` |
+| `CompileMcaddon(outputPath)` | Builds a temporary pack, zips it as a `.mcaddon` with `{Name} BP/` and `{Name} RP/` at the archive root, then deletes the temp files |
+| `CompileComMojang(comMojangPath)` | Writes directly into `development_behavior_packs/{Name} BP/` and `development_resource_packs/{Name} RP/` under your `com.mojang` folder |
+
+```csharp
+// Importable .mcaddon (double-click or open with Minecraft)
+pack.CompileMcaddon("./output/my-addon.mcaddon");
+
+// Local development folders (MCPelauncher, Android, Windows, etc.)
+pack.CompileComMojang("/path/to/games/com.mojang");
+```
+
 `Pack.Compile` writes:
 
 | Output | Contents |
@@ -120,6 +141,8 @@ pack.Compile("./output");
 | `output/rp/` | Resource pack — textures, `terrain_texture.json`, `item_texture.json` |
 | `output/ingot.log` | Compile-time warnings and info (when `verbose` is `true`, the default) |
 | `output/.ingot` | UUID cache so rebuilds keep stable pack IDs |
+
+`CompileMcaddon` stores `.ingot` and `ingot.log` next to the `.mcaddon` file. `CompileComMojang` stores them in the `com.mojang` directory.
 
 ### Pack UUIDs
 
@@ -134,33 +157,46 @@ By default, `Pack.Create` sets `LinkPacks = true`, which adds cross-dependencies
 Textures declared on your content classes are auto-registered during compile:
 
 ```csharp
-// Item — optional source PNG path
-public override string? TexturePath => "assets/custom_food.png";
+// Item — optional source PNG path (resolved at compile time)
+public override string? TexturePath => Path.Combine(AppContext.BaseDirectory, "Data", "custom_food.png");
 
 // Block — source path on the material instance
 public override MaterialInstances MaterialInstances => new()
 {
-    All = new MaterialInstance("custom_block", MaterialInstance.RenderMethods.Opaque, "assets/custom_block.png")
+    All = new MaterialInstance("custom_block", MaterialInstance.RenderMethods.Opaque,
+        Path.Combine(AppContext.BaseDirectory, "Data", "custom_block.png"))
 };
 ```
 
-You can also register textures manually:
+You can also register textures manually — this is the recommended approach when assets are copied to your build output via the `.csproj`:
 
 ```csharp
-pack.AddItemTexture("custom_food", "assets/custom_food.png")
-    .AddBlockTexture("custom_block", "assets/custom_block.png");
+string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
+
+pack.AddItemTexture("custom_food", Path.Combine(dataDir, "custom_food.png"))
+    .AddBlockTexture("custom_block", Path.Combine(dataDir, "custom_block.png"))
+    .AddGeometry("geometry.custom_block", Path.Combine(dataDir, "custom_block.geo.json"));
+```
+
+Copy assets into the output directory from your project file:
+
+```xml
+<ItemGroup>
+  <None Include="Data\**\*" CopyToOutputDirectory="PreserveNewest" />
+</ItemGroup>
 ```
 
 See [Resource Packs & Textures](resource-packs.md) for the full texture pipeline.
 
 ## Load the Pack in Minecraft
 
-1. Run your project (`dotnet run`) to generate `output/bp/` and `output/rp/`.
-2. Copy both folders into your Minecraft development pack directories, or zip them as `.mcpack` files:
-   - **Android:** `.../games/com.mojang.minecraftpe/development_behavior_packs/` and `development_resource_packs/`
-   - **Windows:** `%localappdata%\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang.minecraftpe\`
+1. Run your project (`dotnet run`) to compile the pack.
+2. Load it using one of these methods:
+   - **`CompileMcaddon`** — import the generated `.mcaddon` file (behaviour and resource packs are bundled with the correct zip layout).
+   - **`CompileComMojang`** — compile straight into `development_behavior_packs/` and `development_resource_packs/` under your `com.mojang` folder (for example MCPelauncher on Linux: `~/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang`).
+   - **`Compile`** — copy `output/bp/` and `output/rp/` into the development pack folders manually, or zip each folder as a `.mcpack`.
 3. Create or open a world, go to **Settings → Behavior Packs** and **Resource Packs**, and activate both packs.
-4. If content does not appear, check the in-game **Content Log** and your `output/ingot.log` for warnings.
+4. If content does not appear, check the in-game **Content Log** and your compile log (`ingot.log`) for warnings.
 
 ## Enable Script API (Optional)
 
@@ -176,14 +212,14 @@ ingot generates the Script API manifest entries, custom components, and handler 
 
 | Project | Purpose |
 |---------|---------|
-| [`basicTest`](../../basicTest) | Minimal item + block, compiles to `./output` |
-| [`ingot.Example`](../../ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts |
+| [`basicTest`](../../basicTest) | Minimal block, entity, and loot table; stable UUIDs; textures from `Data/`; compiles to `./output` |
+| [`ingot.Example`](../../ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts; compiles to `./artifacts/example/` |
 
 Build and run the example:
 
 ```bash
 dotnet run --project ingot.Example
-# output: ./artifacts/example/
+# output: ./artifacts/example/bp/ and ./artifacts/example/rp/
 ```
 
 ## Project Layout (Recommended)
@@ -199,7 +235,8 @@ MyAddon/
 │   ├── Blocks/
 │   ├── Recipes/
 │   └── Entities/
-├── assets/                 # PNG textures
+├── Data/                   # PNG textures (copy to output via .csproj)
+├── scripts/                # Script API sources (optional)
 └── output/                 # generated bp/ + rp/ (gitignored)
 ```
 

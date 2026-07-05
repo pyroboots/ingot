@@ -1,7 +1,7 @@
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 
-namespace ingot.Example;
+namespace ingot.Example.LootTables;
 
 public class LasagnaSpiritLoot : LootTable
 {

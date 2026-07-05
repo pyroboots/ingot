@@ -66,14 +66,21 @@ class Program
 {
     static void Main(string[] args)
     {
-        Pack pack = Pack.Create(Guid.NewGuid().ToString(), "ingot example", "Example pack made with ingot")
+        const string bpUuid = "a8f3c2e1-4b5d-6e7f-8091-a2b3c4d5e6f7";
+        const string rpUuid = "b9e4d3c2-5a6b-7c8d-9e0f-b1c2d3e4f5a6";
+        string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
+
+        Pack pack = Pack.Create(bpUuid, "ingot example", "Example pack made with ingot", rpUuid)
             .AddItem<LasagnaItem>()
             .AddBlock<DenseLasagnaBlock>();
 
         pack.ScriptsEnabled = true;
+        pack.AddBlockTexture("block_of_dense_lasagna", Path.Combine(dataDir, "dense_lasagna.png"))
+            .AddItemTexture("lasagna", Path.Combine(dataDir, "lasagna.png"));
 
-        // textures declared on block/item classes are auto-registered; compile bp/ + rp/ + manifests
         pack.Compile("./artifacts/example/");
+        // or: pack.CompileMcaddon("./artifacts/example/ingot example.mcaddon");
+        // or: pack.CompileComMojang("/path/to/games/com.mojang");
     }
 }
 ```

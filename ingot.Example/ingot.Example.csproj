@@ -9,4 +9,9 @@
       <ProjectReference Include="..\ingot.Core\ingot.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="Data\**\*" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="scripts\**\*" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
 </Project>

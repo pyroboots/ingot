@@ -5,7 +5,7 @@ namespace ingot.Tests.Content.Blocks;
 
 internal class GlowyTestPermutation : BlockPermutation
 {
-    public override string Condition => "q.get_block_state('test:lit') == true";
+    public override string Condition => "query.block_state('test:lit') == true";
     public override Block Parent => new PermutationTestBlock();
     public override int? LightEmission => 10;
 

@@ -3,14 +3,19 @@ using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Block;
 
-namespace ingot.Example;
+using Version = ingot.Core.Common.Version;
+
+namespace ingot.Example.Blocks;
 
 public class DenseLasagnaBlock : Block, IDestructibleByMining
 {
+    public override Version FormatVersion => new(1, 20, 80);
     public override Identifier Identifier => new("test:block_of_dense_lasagna");
-    public override string DisplayName => "Dense Lasagna";
+    public override string DisplayName => "Block of Dense Lasagna";
+    public override string? Geometry => "minecraft:geometry.full_block";
+    public override string? Sound => "shroomlight";
     public override LootTable? Loot => new DenseLasagnaLoot();
-    public override string[] Tags => ["stone"];
+    public override string[] Tags => ["minecraft:is_hoe_item_destructible"];
 
     dynamic? IDestructibleByMining.ItemSpecificSpeeds => null;
     float IDestructibleByMining.SecondsToDestroy => 2f;
@@ -21,18 +26,18 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
 
     public override MaterialInstances MaterialInstances => new()
     {
-        All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest, "./dense_lasagna.png")
+        All = new MaterialInstance("shroomlight", MaterialInstance.RenderMethods.AlphaTest)
     };
 
     public override Dictionary<string, dynamic[]> States => new()
     {
-        { "test:radioactive", [true, false] }
+        { "test:radioactive", [false, true] }
     };
 }
 
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
-    public override string Condition => "q.get_block_state('test:radioactive') == true";
+    public override string Condition => "query.block_state('test:radioactive') == true";
     public override Block Parent => new DenseLasagnaBlock();
 
     public override int? LightEmission => 7;

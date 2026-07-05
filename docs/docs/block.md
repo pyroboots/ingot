@@ -33,6 +33,9 @@ Every block **must** implement:
 | `Permutations`      | `List<BlockPermutation>`    | No       | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
 | `Tags`              | `string[]`                  | No       | Block tags written as empty `tag:<name>` components. Defaults to an empty array. |
 | `DisplayName`       | `string?`                   | No       | Shortcut for `minecraft:display_name`. |
+| `Geometry`          | `string?`                   | No       | Shortcut for `minecraft:geometry`. Use `"minecraft:geometry.full_block"` for standard cube blocks. |
+| `ResourceTexture`   | `string?`                   | No       | Texture key written to `rp/blocks.json`. |
+| `Sound`             | `string?`                   | No       | Sound identifier written to `rp/blocks.json`. |
 | `Friction`          | `float?`                    | No       | Shortcut for `minecraft:friction`. |
 | `LightEmission`     | `int?`                      | No       | Shortcut for `minecraft:light_emission` (0-15). |
 | `LightDampening`    | `int?`                      | No       | Shortcut for `minecraft:light_dampening`. |
@@ -143,23 +146,42 @@ You rarely call `Block.Compile(Type)` directly. Instead register blocks with `Pa
 ```csharp
 using ingot.Core;
 
-Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Blocks made with ingot")
+const string packUuid = "77f1fef2-bb39-411a-b25c-ae475c21169f";
+string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
+
+Pack pack = Pack.Create(packUuid, "My Addon", "Blocks made with ingot")
     .AddBlock<DenseLasagnaBlock>()
     .AddBlock<AnotherBlock>();
+
+pack.AddBlockTexture("block_of_dense_lasagna", Path.Combine(dataDir, "dense_lasagna.png"));
 
 pack.Compile("./output");
 ```
 
 ```csharp
+public override string? Geometry => "minecraft:geometry.full_block";
+public override string? ResourceTexture => "block_of_dense_lasagna";
+public override string? Sound => "stone";
+
 public override MaterialInstances MaterialInstances => new()
 {
-    All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest, "assets/block_of_dense_lasagna.png")
+    All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest)
 };
 ```
 
-Use `pack.AddBlockTexture(key, path)` only when you need a manual override. Capture identifiers from your block class when you need them for cross-references.
+Register textures with `pack.AddBlockTexture(key, path)` or provide a `SourcePath` on the `MaterialInstance`. Capture identifiers from your block class when you need them for cross-references.
 
-This writes the full behaviour pack under `bp/` (including `bp/blocks/block_of_dense_lasagna.json` - the filename is the part after the `:` in the identifier) and the resource pack under `rp/` (including copied textures and the generated `terrain_texture.json` that maps your texture keys).
+For custom block models (anything other than vanilla `minecraft:geometry.full_block` or `minecraft:geometry.cross`), register the `.geo.json` file alongside your textures:
+
+```csharp
+pack.AddGeometry("geometry.my_block", Path.Combine(dataDir, "my_block.geo.json"));
+```
+
+```csharp
+public override string? Geometry => "geometry.my_block";
+```
+
+This writes the full behaviour pack under `bp/` (including `bp/blocks/block_of_dense_lasagna.json` - the filename is the part after the `:` in the identifier) and the resource pack under `rp/` (including copied textures, geometry files, and the generated `terrain_texture.json` that maps your texture keys).
 
 See the [Resource Packs & Textures](resource-packs.md) guide for details on asset organization, the generated atlas files, and how texture keys bridge behaviour and resources.
 
@@ -170,6 +192,8 @@ See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project
 ## Tips & Gotchas
 
 - Always provide a `MaterialInstances` - it is abstract.
+- Custom blocks need `Geometry` (typically `"minecraft:geometry.full_block"`) to be valid in modern Bedrock versions. For non-vanilla shapes, set `Geometry` to your custom identifier and register the `.geo.json` with `Pack.AddGeometry`.
+- Set `ResourceTexture` and `Sound` when you want entries in `rp/blocks.json`.
 - Block state values are serialized verbatim; make sure your Molang conditions in permutations match the exact values and state names.
 - Many traits have a mixture of required (`abstract`) and optional (`virtual`) members - the compiler will happily emit null/empty values for missing abstracts, but you will get warnings.
 - Traits are discovered only on the concrete type you pass to `AddBlock<T>`. Inheritance of your own block base classes works as long as the interfaces are implemented somewhere in the hierarchy.

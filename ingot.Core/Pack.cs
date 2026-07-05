@@ -198,23 +198,76 @@ public class Pack
     /// <summary>
     /// Manually registers a block texture. Takes precedence over behaviour-side auto-registration for the same key.
     /// </summary>
-    public Pack AddBlockTexture(string key, string sourcePngPath)
+    public Pack AddBlockTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddBlockTexture(key, sourcePngPath);
+        ResourcePack.AddBlockTexture(key, sourcePngPath, rpName);
         return this;
     }
 
     /// <summary>
     /// Manually registers an item texture. Takes precedence over behaviour-side auto-registration for the same key.
     /// </summary>
-    public Pack AddItemTexture(string key, string sourcePngPath)
+    public Pack AddItemTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddItemTexture(key, sourcePngPath);
+        ResourcePack.AddItemTexture(key, sourcePngPath, rpName);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers a block geometry file (<c>.geo.json</c>) that will be copied into the resource pack under
+    /// <c>models/blocks/</c>. The <paramref name="identifier"/> must match the geometry referenced from
+    /// behaviour-side <c>minecraft:geometry</c>.
+    /// </summary>
+    public Pack AddGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null)
+    {
+        ResourcePack.AddGeometry(identifier, sourceGeoJsonPath, rpName);
         return this;
     }
 
     internal void RegisterGeneratedScript(string relativePath, string content) =>
         GeneratedScripts.Add(new GeneratedScript(relativePath, content));
+
+    /// <summary>
+    /// Compiles the pack to a Minecraft-importable <c>.mcaddon</c> archive.
+    /// The pack is built in a temporary directory, zipped with behaviour and resource
+    /// folders at the archive root, then the temporary files are deleted.
+    /// </summary>
+    /// <param name="outputPath">Path to the <c>.mcaddon</c> file to create</param>
+    /// <param name="verbose">Whether to print info logs to the console</param>
+    /// <param name="cache">Whether to use or generate a <c>.ingot</c> cache file next to the output</param>
+    public void CompileMcaddon(string outputPath, bool verbose = true, bool cache = true)
+    {
+        string resolvedOutputPath = Path.GetFullPath(outputPath);
+        string outputDir = Path.GetDirectoryName(resolvedOutputPath)!;
+        string tempDir = Path.Combine(Path.GetTempPath(), "ingot", Guid.NewGuid().ToString());
+
+        Directory.CreateDirectory(tempDir);
+
+        try
+        {
+            string cachePath = Path.Combine(outputDir, ".ingot");
+            if (cache && File.Exists(cachePath))
+                File.Copy(cachePath, Path.Combine(tempDir, ".ingot"), overwrite: true);
+
+            Compile(tempDir, verbose, cache);
+
+            Directory.CreateDirectory(outputDir);
+
+            if (cache && File.Exists(Path.Combine(tempDir, ".ingot")))
+                File.Copy(Path.Combine(tempDir, ".ingot"), cachePath, overwrite: true);
+
+            string logPath = Path.Combine(tempDir, "ingot.log");
+            if (verbose && File.Exists(logPath))
+                File.Copy(logPath, Path.Combine(outputDir, "ingot.log"), overwrite: true);
+
+            McaddonWriter.Write(resolvedOutputPath, tempDir, Name);
+        }
+        finally
+        {
+            if (Directory.Exists(tempDir))
+                Directory.Delete(tempDir, recursive: true);
+        }
+    }
 
     /// <summary>
     /// Compiles both <see cref="BehaviourPack"/> and <see cref="ResourcePack"/> and generates pack manifests
@@ -224,6 +277,34 @@ public class Pack
     /// <param name="cache">Whether to use or generate a cache file</param>
     public void Compile(string outputDir, bool verbose = true, bool cache = true)
     {
+        string resolved = Path.GetFullPath(outputDir);
+        CompileTo(
+            resolved,
+            Path.Combine(resolved, "bp"),
+            Path.Combine(resolved, "rp"),
+            verbose,
+            cache);
+    }
+
+    /// <summary>
+    /// Compiles the pack directly into a Minecraft Bedrock <c>com.mojang</c> directory for local development.
+    /// </summary>
+    /// <param name="comMojangPath">Path to the <c>com.mojang</c> folder (for example the MCPelauncher Flatpak games directory)</param>
+    /// <param name="verbose">Whether to print info logs to the console</param>
+    /// <param name="cache">Whether to use or generate a <c>.ingot</c> cache file in the <paramref name="comMojangPath"/> directory</param>
+    public void CompileComMojang(string comMojangPath, bool verbose = true, bool cache = true)
+    {
+        string root = Path.GetFullPath(comMojangPath);
+        CompileTo(
+            root,
+            Path.Combine(root, "development_behavior_packs", $"{Name} BP"),
+            Path.Combine(root, "development_resource_packs", $"{Name} RP"),
+            verbose,
+            cache);
+    }
+
+    private void CompileTo(string cacheDir, string behaviourPackDir, string resourcePackDir, bool verbose, bool cache)
+    {
         Stopwatch timer = Stopwatch.StartNew();
 
         CompilerState.Reset();
@@ -232,9 +313,9 @@ public class Pack
         CompilerState.CurrentPack = this;
         GeneratedScripts.Clear();
 
-        if (cache && CompilerState.Cache is null && File.Exists(Path.Combine(outputDir, ".ingot")))
+        if (cache && CompilerState.Cache is null && File.Exists(Path.Combine(cacheDir, ".ingot")))
         {
-            string json = File.ReadAllText(Path.Combine(outputDir, ".ingot"));
+            string json = File.ReadAllText(Path.Combine(cacheDir, ".ingot"));
             CompilerState.Cache = JsonConvert.DeserializeObject<IngotCache>(json);
 
             BehaviourPack.Uuid = CompilerState.Cache.Value.BehaviourUuid;
@@ -245,7 +326,6 @@ public class Pack
         
         CompilerState.Info("pack compilation started");
 
-        string behaviourPackDir = Path.Combine(outputDir, "bp");
         CompilerState.Info("compiling bp...");
         BehaviourPack.Compile(behaviourPackDir);
         CompilerState.Info($"compiled bp");
@@ -254,33 +334,33 @@ public class Pack
             WriteGeneratedScripts(behaviourPackDir);
 
         CompilerState.Info("compiling rp...");
-        ResourcePack.Compile(Path.Combine(outputDir, "rp"));
+        ResourcePack.Compile(resourcePackDir);
         CompilerState.Info($"compiled rp");
 
-        ManifestWriter.WriteBehaviourPackManifest(this, Path.Combine(outputDir, "bp", "manifest.json"));
+        ManifestWriter.WriteBehaviourPackManifest(this, Path.Combine(behaviourPackDir, "manifest.json"));
         CompilerState.Info("compiled bp manifest");
 
-        ManifestWriter.WriteResourcePackManifest(this, Path.Combine(outputDir, "rp", "manifest.json"));
+        ManifestWriter.WriteResourcePackManifest(this, Path.Combine(resourcePackDir, "manifest.json"));
         CompilerState.Info("compiled rp manifest");
 
         if (PackIcon is not null)
         {
             string iconName = Path.GetFileName(PackIcon);
-            File.Copy(PackIcon, Path.Combine(outputDir, "bp", iconName), overwrite: true);
-            File.Copy(PackIcon, Path.Combine(outputDir, "rp", iconName), overwrite: true);
+            File.Copy(PackIcon, Path.Combine(behaviourPackDir, iconName), overwrite: true);
+            File.Copy(PackIcon, Path.Combine(resourcePackDir, iconName), overwrite: true);
         }
 
         timer.Stop();
 
         if (verbose)
         {
-            File.WriteAllText(Path.Combine(outputDir, "ingot.log"), string.Join('\n', CompilerState.GetLogs()));
+            File.WriteAllText(Path.Combine(cacheDir, "ingot.log"), string.Join('\n', CompilerState.GetLogs()));
             Console.WriteLine();
             CompilerState.Info($"pack compiled in {timer.ElapsedMilliseconds}ms");
-            CompilerState.Info($"ingot compilation log available at {Path.Combine(outputDir, "ingot.log")}");
+            CompilerState.Info($"ingot compilation log available at {Path.Combine(cacheDir, "ingot.log")}");
         }
         
-        if (cache && File.Exists(Path.Combine(outputDir, ".ingot")) == false)
+        if (cache && File.Exists(Path.Combine(cacheDir, ".ingot")) == false)
         {
             IngotCache ingotCache = new()
             {
@@ -292,7 +372,7 @@ public class Pack
             };
 
             string json = JsonConvert.SerializeObject(ingotCache, Formatting.Indented);
-            File.WriteAllText(Path.Combine(outputDir, ".ingot"), json);
+            File.WriteAllText(Path.Combine(cacheDir, ".ingot"), json);
             
             CompilerState.Info("generated .ingot cache");
         }

@@ -96,7 +96,7 @@ Use these for leaves, grass, vines, waterlogged blocks, etc.
 ```csharp
 public class GlowingPermutation : BlockPermutation
 {
-    public override string Condition => "q.get_block_state('mynamespace:lit') == true";
+    public override string Condition => "query.block_state('mynamespace:lit') == true";
     public override Block Parent => new MyBlock();
 
     public override MaterialInstances? MaterialInstances => new()
@@ -148,21 +148,26 @@ Face names are lower-cased (`up`, `down`, `north`, `south`, `east`, `west`). The
 The `texture` value in a `MaterialInstance` (e.g. `"block_of_dense_lasagna"`) is just a **key**. Provide a `SourcePath` on the material instance and ingot auto-registers it during compile:
 
 ```csharp
+// MyBlock.cs
 public override MaterialInstances MaterialInstances => new()
 {
-    All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest, "assets/block_of_dense_lasagna.png")
+    All = new MaterialInstance("block_of_dense_lasagna", MaterialInstance.RenderMethods.AlphaTest)
 };
 
-Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "...")
+// Program.cs
+string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
+
+Pack pack = Pack.Create("77f1fef2-bb39-411a-b25c-ae475c21169f", "My Addon", "...")
     .AddBlock<MyBlock>();
 
+pack.AddBlockTexture("block_of_dense_lasagna", Path.Combine(dataDir, "dense_lasagna.png"));
 pack.Compile("./output");
 ```
 
-You can still override or add textures manually with `pack.AddBlockTexture(key, path)` — manual registrations take precedence over auto-discovered paths.
+You can provide a `SourcePath` on the `MaterialInstance` instead of calling `AddBlockTexture`. Manual registrations take precedence over auto-discovered paths.
 
 When you compile, ingot will:
-- Copy `assets/block_of_dense_lasagna.png` → `rp/textures/blocks/block_of_dense_lasagna.png`
+- Copy `Data/dense_lasagna.png` → `rp/textures/blocks/block_of_dense_lasagna.png`
 - Generate (or update) `rp/textures/terrain_texture.json` containing the mapping:
 
 ```json

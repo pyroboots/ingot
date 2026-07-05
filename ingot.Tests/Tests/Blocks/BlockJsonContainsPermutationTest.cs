@@ -10,7 +10,7 @@ public class BlockJsonContainsPermutationTest
     {
         string json = Block.Compile(typeof(PermutationTestBlock));
         Assert.Contains("\"permutations\"", json);
-        Assert.Contains("q.get_block_state('test:lit') == true", json);
+        Assert.Contains("query.block_state('test:lit') == true", json);
         Assert.Contains("\"minecraft:light_emission\": 10", json);
     }
 }

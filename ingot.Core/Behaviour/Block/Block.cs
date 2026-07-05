@@ -7,7 +7,8 @@ using Newtonsoft.Json;
 using static ingot.Core.Common.JsonHelper;
 
 using Formatting = Newtonsoft.Json.Formatting;
-using Version = System.Version;
+using Version = ingot.Core.Common.Version;
+
 
 namespace ingot.Core.Behaviour.Block;
 
@@ -39,9 +40,34 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
     public virtual string[] Tags => [];
 
     /// <summary>
+    /// Which section of the creative inventory the block appears in
+    /// </summary>
+    public virtual Item.CatalogueCategory Category => Item.CatalogueCategory.Items;
+    /// <summary>
+    /// Which item group of <see cref="Category"/> the block appears in
+    /// </summary>
+    public virtual string? Group => null;
+
+    /// <summary>
     /// Shortcut for the <c>minecraft:display_name</c> component
     /// </summary>
     public virtual string? DisplayName => null;
+    /// <summary>
+    /// Localized name written to <c>texts/en_US.lang</c>. Defaults to <see cref="DisplayName"/>.
+    /// </summary>
+    public virtual string? LangName => DisplayName;
+    /// <summary>
+    /// Shortcut for the <c>minecraft:geometry</c> component
+    /// </summary>
+    public virtual string? Geometry => null;
+    /// <summary>
+    /// Texture key written to <c>blocks.json</c> in the resource pack
+    /// </summary>
+    public virtual string? ResourceTexture => null;
+    /// <summary>
+    /// Sound identifier written to <c>blocks.json</c> in the resource pack
+    /// </summary>
+    public virtual string? Sound => null;
     /// <summary>
     /// Shortcut for the <c>minecraft:friction</c> component
     /// </summary>
@@ -98,33 +124,53 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
             json.Object("description", () =>
             {
                 json.Property("identifier", inst.Identifier);
-                json.Object("states", () =>
+
+                if (inst.Category != Item.CatalogueCategory.None)
                 {
-                    foreach (var kvp in inst.States)
+                    json.Object("menu_category", () =>
                     {
-                        int length = kvp.Value.Length;
-                        if (length > 16)
-                            CompilerState.Warn(ref w, $"block state {kvp.Key} has more than 16 possible permutations");
-                        json.Property(kvp.Key, kvp.Value);
-                    }
-                });
+                        if (inst.Group?.Length > 256)
+                            CompilerState.Warn(ref w, "block catalogue group exceeds 256 char limit");
+
+                        json.Property("group", inst.Group);
+                        string categoryName = Enum.GetName(typeof(Item.CatalogueCategory), inst.Category)!.ToLower();
+                        json.Property("category", categoryName);
+                    });
+                }
+
+                if (inst.States.Count > 0)
+                {
+                    json.Object("states", () =>
+                    {
+                        foreach (var kvp in inst.States)
+                        {
+                            int length = kvp.Value.Length;
+                            if (length > 16)
+                                CompilerState.Warn(ref w, $"block state {kvp.Key} has more than 16 possible permutations");
+                            json.Property(kvp.Key, kvp.Value);
+                        }
+                    });
+                }
             });
             CompilerState.Pop();
 
-            CompilerState.Push("permutations");
-            json.Array("permutations", () =>
+            if (inst.Permutations.Count > 0)
             {
-                CompilerState.Info("compiling block permutations...");
-                int c = 0;
-                foreach (BlockPermutation p in inst.Permutations)
+                CompilerState.Push("permutations");
+                json.Array("permutations", () =>
                 {
-                    c++;
-                    BlockPermutation.Compile(p.GetType(), ref w);
-                    CompilerState.Info($"({c}/{inst.Permutations.Count}) compiled block permutation {p.GetType().Name}");
-                }
-                CompilerState.Info("compiled block permutations");
-            });
-            CompilerState.Pop();
+                    CompilerState.Info("compiling block permutations...");
+                    int c = 0;
+                    foreach (BlockPermutation p in inst.Permutations)
+                    {
+                        c++;
+                        BlockPermutation.Compile(p.GetType(), ref w);
+                        CompilerState.Info($"({c}/{inst.Permutations.Count}) compiled block permutation {p.GetType().Name}");
+                    }
+                    CompilerState.Info("compiled block permutations");
+                });
+                CompilerState.Pop();
+            }
 
             CompilerState.Push("components");
             json.Object("components", () =>
@@ -148,6 +194,8 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
 
                     json.Property("minecraft:loot", inst.Loot.RelativePath);
                 }
+
+                json.Property("minecraft:geometry", inst.Geometry);
 
                 inst.MaterialInstances.Compile(ref w);
                 TextureAutoRegistration.RegisterMaterialInstances(inst.MaterialInstances, ref w);

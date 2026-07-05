@@ -60,7 +60,11 @@ public abstract class LootTable : IConcreteCompilable<LootTable>, IIdentifiable
         CompilerState.Push(inst.Identifier.ToString());
 
         if (inst.Pools.Length == 0)
+        {
             CompilerState.Warn(ref _dummyWriter, "loot table has no pools");
+            CompilerState.Pop();
+            return "{}";
+        }
 
         StringWriter sw = new();
         JsonTextWriter w = new(sw);

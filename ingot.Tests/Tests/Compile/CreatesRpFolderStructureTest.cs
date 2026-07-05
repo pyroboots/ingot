@@ -19,6 +19,7 @@ public class CreatesRpFolderStructureTest
             Assert.True(Directory.Exists(Path.Combine(output.Path, "rp", "textures", "entity")));
             Assert.True(Directory.Exists(Path.Combine(output.Path, "rp", "textures", "particle")));
             Assert.True(Directory.Exists(Path.Combine(output.Path, "rp", "models")));
+            Assert.True(Directory.Exists(Path.Combine(output.Path, "rp", "models", "blocks")));
         }
     }
 }

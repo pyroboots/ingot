@@ -4,6 +4,8 @@ using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
 
+using Newtonsoft.Json;
+
 using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core;
@@ -59,6 +61,10 @@ public class BehaviourPack
     /// List of <see cref="LootTable"/> types added to the pack
     /// </summary>
     public readonly List<LootTable> LootTables = new();
+    /// <summary>
+    /// Function paths executed every tick via <c>functions/tick.json</c>
+    /// </summary>
+    public string[] TickFunctions = [];
 
     /// <summary>
     /// Adds an entity to the pack
@@ -168,6 +174,7 @@ public class BehaviourPack
         Directory.CreateDirectory(Path.Combine(dir, "scripts"));
         Directory.CreateDirectory(Path.Combine(dir, "recipes"));
         Directory.CreateDirectory(Path.Combine(dir, "loot_tables"));
+        Directory.CreateDirectory(Path.Combine(dir, "functions"));
         CompilerState.Info("created folder structure");
 
         CompileIdentifiableCollection(Entities, dir, "entities", "entity", e => Entity.Compile(e.GetType()));
@@ -190,6 +197,19 @@ public class BehaviourPack
             CompilerState.Info($"({c}/{LootTables.Count}) compiled loot table {lootTable.Identifier} -> {Path.Combine(path, $"{lootTable.Identifier.Name}.json")}");
         }
         CompilerState.Pop();
+
+        WriteTickFunctions(dir);
+
+        CompilerState.Pop();
+    }
+
+    private void WriteTickFunctions(string dir)
+    {
+        CompilerState.Push("functions/tick.json");
+
+        string json = JsonConvert.SerializeObject(new { values = TickFunctions }, Newtonsoft.Json.Formatting.Indented);
+        File.WriteAllText(Path.Combine(dir, "functions", "tick.json"), json + Environment.NewLine);
+        CompilerState.Info($"wrote tick.json with {TickFunctions.Length} functions");
 
         CompilerState.Pop();
     }

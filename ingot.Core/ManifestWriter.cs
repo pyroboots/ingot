@@ -145,7 +145,7 @@ internal static class ManifestWriter
             json.Property("authors", authors);
             json.Object("generated_with", () =>
             {
-                json.Property("ingot", "https://github.com/pyroboots/ingot");
+                json.Property("ingot", new[] { "https://github.com/pyroboots/ingot", "1.0.1" });
             });
         });
     }

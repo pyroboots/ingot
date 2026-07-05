@@ -1,7 +1,7 @@
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
 
-namespace ingot.Example;
+namespace ingot.Example.Recipes;
 
 public class LasagnaRecipe : ShapedRecipe
 {

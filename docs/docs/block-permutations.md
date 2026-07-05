@@ -9,7 +9,7 @@ Derive from `BlockPermutation`:
 ```csharp
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
-    public override string Condition => "q.get_block_state('test:radioactive') == true";
+    public override string Condition => "query.block_state('test:radioactive') == true";
     public override Block Parent => new DenseLasagnaBlock();
 
     public override int? LightEmission => 7;
@@ -43,7 +43,7 @@ using ingot.Core.TraitSystem.Traits.Block;
 
 public class GlowyPermutation : BlockPermutation, IGeometry
 {
-    public override string Condition => "q.get_block_state('mynamespace:mode') == 2";
+    public override string Condition => "query.block_state('mynamespace:mode') == 2";
     public override Block Parent => new MyBlock();
 
     public override int? LightEmission => 15;
@@ -61,6 +61,12 @@ public class GlowyPermutation : BlockPermutation, IGeometry
     Identifier IGeometry.Identifier => new("geometry.my_glowy_block");
     string IGeometry.UvLock => "true";
 }
+```
+
+Register the geometry file in `Program.cs` so it is copied into the resource pack:
+
+```csharp
+pack.AddGeometry("geometry.my_glowy_block", Path.Combine(dataDir, "my_glowy_block.geo.json"));
 ```
 
 Tags on a permutation compile the same way as on a base block - each entry becomes an empty `tag:<name>` component inside the permutation's `components` object.
@@ -100,16 +106,16 @@ public class MyBlock : Block
 
 ```csharp
 // Simple boolean state
-"q.get_block_state('test:is_active') == true"
+"query.block_state('test:is_active') == true"
 
 // Integer comparison
-"q.get_block_state('mynamespace:power') >= 3"
+"query.block_state('mynamespace:power') >= 3"
 
 // String state
-"q.get_block_state('mynamespace:color') == 'red'"
+"query.block_state('mynamespace:color') == 'red'"
 
 // Multiple conditions
-"q.get_block_state('test:mode') == 1 && q.get_block_state('test:powered') == true"
+"query.block_state('test:mode') == 1 && query.block_state('test:powered') == true"
 ```
 
 Use the exact state names (including namespace) that you declared in the block's `States` dictionary.
@@ -121,7 +127,7 @@ The example project contains a complete permutation:
 ```csharp
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
-    public override string Condition => "q.get_block_state('test:radioactive') == true";
+    public override string Condition => "query.block_state('test:radioactive') == true";
     public override Block Parent => new DenseLasagnaBlock();
     
     public override int? LightEmission => 7;
