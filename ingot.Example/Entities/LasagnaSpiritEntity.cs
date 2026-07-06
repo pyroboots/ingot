@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Entity;
 using ingot.Core.Common;
 
 namespace ingot.Example.Entities;

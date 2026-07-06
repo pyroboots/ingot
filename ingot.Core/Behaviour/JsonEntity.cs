@@ -5,7 +5,7 @@ namespace ingot.Core.Behaviour;
 /// <summary>
 /// An entity defined by pre-authored JSON rather than ingot traits.
 /// </summary>
-public abstract class JsonEntity : Entity
+public abstract class JsonEntity : Entity.Entity
 {
     /// <summary>
     /// Complete entity JSON to write to disk.
