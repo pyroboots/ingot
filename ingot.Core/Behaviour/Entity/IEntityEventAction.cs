@@ -85,7 +85,7 @@ public abstract class DropItemEntityEventAction : IEntityEventAction
         
         json.Object(Name, () =>
         {
-            json.Property("slot", Enums.AsString(Slot));
+            json.Property("slot", Enums.InventorySlot_AsString(Slot));
         });
     }
 }
@@ -208,7 +208,7 @@ public abstract class SequenceEntityEventAction : IEntityEventAction
         json.Array(Name, () =>
         {
             foreach (IEntityEventAction a in EventActions) 
-                a.Compile(ref json.Writer);
+                json.Object("", () => a.Compile(ref json.Writer));
         });
     }
 }
@@ -238,7 +238,7 @@ public abstract class QueueCommandEntityEventAction : IEntityEventAction
         
         json.Object(Name, () =>
         {
-            json.Property("target", Enums.AsString(Target));
+            json.Property("target", Enums.Target_AsString(Target));
             json.Property("command", Commands);
         });
     }

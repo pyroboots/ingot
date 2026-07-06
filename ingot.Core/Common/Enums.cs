@@ -6,10 +6,8 @@ namespace ingot.Core.Common;
 public abstract class Enums
 {
     /// <summary>
-    /// Returns the enum as its typical lowercase name
+    /// Converts <typeparamref name="TEnum"/> to its Minecraft string equivalent
     /// </summary>
-    /// <param name="value">Enumeration value</param>
-    /// <typeparam name="TEnum">Enumeration</typeparam>
     public static string AsString<TEnum>(TEnum value) =>
         Formatting.PascalToSnakeCase(Enum.GetName(typeof(TEnum), value));
     
@@ -33,6 +31,11 @@ public abstract class Enums
         /// <summary>Equates to <c>slot.weapon.offhand</c></summary>
         Offhand
     }
+    /// <summary>
+    /// Converts <see cref="InventorySlot"/> to its Minecraft string equivalent
+    /// </summary>
+    public static string InventorySlot_AsString(InventorySlot slot)
+        => $"slot.{(AsString(slot) == "mainhand" || AsString(slot) == "offhand" ? "weapon" : "armor")}.{AsString(slot)}";
 
     /// <summary>
     /// Enumeration of target selectors
@@ -58,4 +61,8 @@ public abstract class Enums
         /// <summary>Equates to <c>player</c></summary>
         Player,
     }
+    /// <summary>
+    /// Converts <see cref="Target"/> to its Minecraft string equivalent
+    /// </summary>
+    public static string Target_AsString(Target selector) => AsString(selector);
 }

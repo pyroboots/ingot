@@ -4,12 +4,12 @@ using ingot.Core.TraitSystem;
 using Newtonsoft.Json;
 
 using Formatting = Newtonsoft.Json.Formatting;
-using Version = System.Version;
+using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core.Behaviour.Entity;
 
 /// <summary>
-/// Implements basic properties of an item
+/// Implements basic properties of an entity
 /// </summary>
 public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
 {
@@ -30,7 +30,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
     /// <summary>
     /// Whether the entity requires experimental gameplay.
     /// </summary>
-    public virtual bool IsExperimental => true;
+    public virtual bool IsExperimental => false;
 
     /// <summary>
     /// List of entity <c>component_group</c>s
@@ -73,6 +73,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
                 json.Property("identifier", inst.Identifier);
                 json.Property("is_spawnable", inst.IsSpawnable);
                 json.Property("is_summonable", inst.IsSummonable);
+                json.Property("is_experimental", inst.IsExperimental);
             });
             
             CompilerState.Push("component_groups");
