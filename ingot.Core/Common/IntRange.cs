@@ -1,8 +1,6 @@
-using ingot.Core.Common;
-
 using Newtonsoft.Json;
 
-namespace ingot.Core.Behaviour.Loot;
+namespace ingot.Core.Common;
 
 /// <summary>
 /// An integer value or min/max range used by loot table rolls and functions

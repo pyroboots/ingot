@@ -19,11 +19,22 @@ public record TraitProperty(
 public sealed class TraitGenerator : IAsyncDisposable
 {
     private static readonly HttpClient SharedHttpClient = new();
+    private static readonly Dictionary<string, string> MappedTypes = new(StringComparer.OrdinalIgnoreCase);
+    private static readonly HashSet<string> WarnedUnmappedTypes = new(StringComparer.OrdinalIgnoreCase);
 
     // convert ms doc types to c# types
     // NOTE: works on a contains basis, order of precedence.
     private static readonly Dictionary<string, string> TypeMappings = new(StringComparer.OrdinalIgnoreCase)
     {
+        ["Minecraft Event Reference"] = "Identifier",
+        ["Array of Riders items"] = "EntityRider[]",
+        ["Array of Feed Items items"] = "EntityFeedItem[]",
+        ["Minecraft filter"] = "EntityFilter",
+        ["Filter item"] = "EntityFilter",
+        ["Range of floats"] = "FloatRange",
+        ["Minecraft Event Trigger"] = "EntityEventTrigger",
+        ["Array of Break items"] = "EntityBlockBreakEntry[]",
+        
         ["x, y, z coordinate array"] = "Vector3",
         ["Array of numbers"] = "int[]",
         ["Array of strings"] = "string[]",
@@ -67,7 +78,7 @@ public sealed class TraitGenerator : IAsyncDisposable
         ["Vector3"] = v => $"new Vector3({v})",
         ["Dictionary<string, string>"] = v => string.IsNullOrWhiteSpace(v) ? "new Dictionary<string, string>()" : v,
 
-        ["dynamic?"] = v => "null",
+        ["dynamic"] = v => "null",
     };
 
     public static string GenerateTraitInterfaceFromMsDoc(string html, string interfaceName, string componentName, string constraint, string? @namespace = null)
@@ -102,11 +113,11 @@ public sealed class TraitGenerator : IAsyncDisposable
         if (table == null)
             return new List<TraitProperty>();
 
-        List<TraitProperty> properties = new List<TraitProperty>();
+        Dictionary<string, TraitProperty> propertiesByName = new(StringComparer.OrdinalIgnoreCase);
         HtmlNodeCollection? rows = table.SelectNodes(".//tr");
 
         if (rows == null)
-            return properties;
+            return [];
 
         bool isHeader = true;
 
@@ -133,23 +144,52 @@ public sealed class TraitGenerator : IAsyncDisposable
                 continue;
 
             string cleanName = CleanPropertyName(name);
+            if (string.IsNullOrEmpty(cleanName))
+                continue;
+
             string cleanDesc = Regex.Replace(desc, @"\s+", " ").Trim();
             string cleanDefault = defaultVal.Equals("not set", StringComparison.OrdinalIgnoreCase)
                 || string.IsNullOrEmpty(defaultVal)
                 ? "" : defaultVal;
 
-            properties.Add(new TraitProperty(cleanName, cleanDefault, type, cleanDesc));
+            TraitProperty candidate = new(cleanName, cleanDefault, type, cleanDesc);
+            if (!propertiesByName.TryGetValue(cleanName, out TraitProperty? existing)
+                || ShouldReplaceProperty(existing, candidate))
+            {
+                propertiesByName[cleanName] = candidate;
+            }
         }
 
-        return properties;
+        return propertiesByName.Values.ToList();
     }
 
     private static string CleanPropertyName(string name)
     {
-        name = Regex.Replace(name, @"\s*\(Use On\)", "", RegexOptions.IgnoreCase);
-        name = Regex.Replace(name, @"\s*\(as .*?\)", "", RegexOptions.IgnoreCase);
+        name = Regex.Replace(name, @"\s*\([^)]*\)", "", RegexOptions.IgnoreCase);
         return name.Trim().ToLowerInvariant().Replace(" ", "_");
     }
+
+    private static string ToInterfaceName(string pageName)
+    {
+        string normalized = pageName.Replace('.', '_');
+        return $"I{Formatting.SnakeToPascalCase(normalized)}";
+    }
+
+    private static int ScoreProperty(TraitProperty prop)
+    {
+        int score = 0;
+        string csharpType = MapType(prop.RawType);
+        if (csharpType != "dynamic")
+            score += 10;
+        if (!string.IsNullOrEmpty(prop.DefaultValue))
+            score += 5;
+        if (!string.IsNullOrEmpty(prop.Description))
+            score += 1;
+        return score;
+    }
+
+    private static bool ShouldReplaceProperty(TraitProperty existing, TraitProperty candidate) =>
+        ScoreProperty(candidate) > ScoreProperty(existing);
 
     private static string GenerateInterfaceCode(string interfaceName, string componentName, string constraint, string description, List<TraitProperty> properties, string? nspace)
     {
@@ -172,6 +212,7 @@ public sealed class TraitGenerator : IAsyncDisposable
         foreach (string usingDirective in requiredUsings.OrderBy(static u => u, StringComparer.Ordinal))
             sb.AppendLine($"using {usingDirective};");
         sb.AppendLine("using ingot.Core.Common;");
+        sb.AppendLine("using ingot.Core.Behaviour.Entity;");
         sb.AppendLine();
 
         if (!string.IsNullOrEmpty(description))
@@ -223,13 +264,23 @@ public sealed class TraitGenerator : IAsyncDisposable
 
     private static string MapType(string rawType)
     {
+        if (MappedTypes.TryGetValue(rawType, out string? cached))
+            return cached;
+
         foreach (KeyValuePair<string, string> mapping in TypeMappings)
         {
             if (rawType.Contains(mapping.Key, StringComparison.OrdinalIgnoreCase))
+            {
+                MappedTypes[rawType] = mapping.Value;
                 return mapping.Value;
+            }
         }
-        Console.WriteLine($"/!\\ could not map type '{rawType}', fell back to nullable dynamic");
-        return "dynamic?";
+
+        if (WarnedUnmappedTypes.Add(rawType))
+            Console.WriteLine($"/!\\ could not map type '{rawType}', fell back to dynamic");
+
+        MappedTypes[rawType] = "dynamic";
+        return "dynamic";
     }
 
     private static string FormatDefaultValue(string csharpType, string rawValue)
@@ -320,6 +371,211 @@ public sealed class TraitGenerator : IAsyncDisposable
             outputDir,
             "Block",
             "minecraftblock_");
+    
+    public Task GenerateAllEntityTraitsAsync(string outputDir) =>
+        GenerateTraitsForComponentsAsync(
+            [
+                "minecraft:addrider",
+                "minecraft:admire_item",
+                "minecraft:ageable",
+                "minecraft:ambient_sound_interval",
+                "minecraft:anger_level",
+                "minecraft:angry",
+                "minecraft:annotation.break_door",
+                "minecraft:annotation.open_door",
+                "minecraft:apply_knockback_rules",
+                "minecraft:apply_knockback_rules_instance",
+                "minecraft:area_attack",
+                "minecraft:attack",
+                "minecraft:attack_cooldown",
+                "minecraft:balloonable",
+                "minecraft:barter",
+                "minecraft:block_climber",
+                "minecraft:block_sensor",
+                "minecraft:body_rotation_always_follows_head",
+                "minecraft:body_rotation_axis_aligned",
+                "minecraft:body_rotation_blocked",
+                "minecraft:body_rotation_locked_to_vehicle",
+                "minecraft:boostable",
+                "minecraft:boss",
+                "minecraft:break_blocks",
+                "minecraft:breathable",
+                "minecraft:breedable",
+                "minecraft:bribeable",
+                "minecraft:buoyant",
+                "minecraft:burns_in_daylight",
+                "minecraft:cannot_be_attacked",
+                "minecraft:can_climb",
+                "minecraft:can_fly",
+                "minecraft:can_join_raid",
+                "minecraft:can_power_jump",
+                "minecraft:celebrate_hunt",
+                "minecraft:collision_box",
+                "minecraft:color",
+                "minecraft:color2",
+                "minecraft:combat_regeneration",
+                "minecraft:conditional_bandwidth_optimization",
+                "minecraft:custom_hit_test",
+                "minecraft:damage_over_time",
+                "minecraft:damage_sensor",
+                "minecraft:dash",
+                "minecraft:dash_action",
+                "minecraft:default_look_angle",
+                "minecraft:despawn",
+                "minecraft:dimension_bound",
+                "minecraft:drying_out_timer",
+                "minecraft:dweller",
+                "minecraft:economy_trade_table",
+                "minecraft:entity_armor_equipment_slot_mapping",
+                "minecraft:entity_sensor",
+                "minecraft:environment_sensor",
+                "minecraft:equipment",
+                "minecraft:equippable",
+                "minecraft:equip_item",
+                "minecraft:exhaustion_values",
+                "minecraft:experience_reward",
+                "minecraft:explode",
+                "minecraft:fire_immune",
+                "minecraft:floats_in_liquid",
+                "minecraft:flocking",
+                "minecraft:flying_speed",
+                "minecraft:follow_range",
+                "minecraft:free_camera_controlled",
+                "minecraft:friction_modifier",
+                "minecraft:game_event_movement_tracking",
+                "minecraft:genetics",
+                "minecraft:giveable",
+                "minecraft:ground_offset",
+                "minecraft:group_size",
+                "minecraft:grows_crop",
+                "minecraft:healable",
+                "minecraft:heartbeat",
+                "minecraft:hide",
+                "minecraft:home",
+                "minecraft:horse.jump_strength",
+                "minecraft:hurt_on_condition",
+                "minecraft:ignore_cannot_be_attacked",
+                "minecraft:input_air_controlled",
+                "minecraft:input_ground_controlled",
+                "minecraft:inside_block_notifier",
+                "minecraft:insomnia",
+                "minecraft:instant_despawn",
+                "minecraft:interact",
+                "minecraft:inventory",
+                "minecraft:is_baby",
+                "minecraft:is_charged",
+                "minecraft:is_chested",
+                "minecraft:is_collidable",
+                "minecraft:is_dyeable",
+                "minecraft:is_hidden_when_invisible",
+                "minecraft:is_ignited",
+                "minecraft:is_illager_captain",
+                "minecraft:is_pregnant",
+                "minecraft:is_saddled",
+                "minecraft:is_shaking",
+                "minecraft:is_sheared",
+                "minecraft:is_stackable",
+                "minecraft:is_stunned",
+                "minecraft:is_tamed",
+                "minecraft:item_controllable",
+                "minecraft:item_hopper",
+                "minecraft:jump.dynamic",
+                "minecraft:jump.static",
+                "minecraft:knockback_resistance",
+                "minecraft:lava_movement",
+                "minecraft:leashable",
+                "minecraft:leashable_to",
+                "minecraft:looked_at",
+                "minecraft:loot",
+                "minecraft:managed_wandering_trader",
+                "minecraft:mark_variant",
+                "minecraft:mob_effect",
+                "minecraft:mob_effect_immunity",
+                "minecraft:movement",
+                "minecraft:movement.amphibious",
+                "minecraft:movement.basic",
+                "minecraft:movement.fly",
+                "minecraft:movement.generic",
+                "minecraft:movement.hover",
+                "minecraft:movement.jump",
+                "minecraft:movement.skip",
+                "minecraft:movement.sound_distance_offset",
+                "minecraft:movement.sway",
+                "minecraft:nameable",
+                "minecraft:navigation.climb",
+                "minecraft:navigation.float",
+                "minecraft:navigation.fly",
+                "minecraft:navigation.generic",
+                "minecraft:navigation.hover",
+                "minecraft:navigation.swim",
+                "minecraft:navigation.walk",
+                "minecraft:offspring",
+                "minecraft:out_of_control",
+                "minecraft:peek",
+                "minecraft:persistent",
+                "minecraft:physics",
+                "minecraft:player.exhaustion",
+                "minecraft:player.experience",
+                "minecraft:player.level",
+                "minecraft:player.saturation",
+                "minecraft:preferred_path",
+                "minecraft:projectile",
+                "minecraft:pushable",
+                "minecraft:pushable_by_block",
+                "minecraft:pushable_by_entity",
+                "minecraft:push_through",
+                "minecraft:raid_trigger",
+                "minecraft:rail_movement",
+                "minecraft:rail_sensor",
+                "minecraft:ravager_blocked",
+                "minecraft:reflect_projectiles",
+                "minecraft:remove_in_peaceful",
+                "minecraft:renders_when_invisible",
+                "minecraft:rideable",
+                "minecraft:rotation_axis_aligned",
+                "minecraft:rotation_locked_to_vehicle",
+                "minecraft:scale",
+                "minecraft:scale_by_age",
+                "minecraft:scheduler",
+                "minecraft:shareables",
+                "minecraft:shooter",
+                "minecraft:sittable",
+                "minecraft:skin_id",
+                "minecraft:sound_volume",
+                "minecraft:spawn_egg_interaction",
+                "minecraft:spawn_entity",
+                "minecraft:spawn_on_death",
+                "minecraft:spell_effects",
+                "minecraft:strength",
+                "minecraft:suspect_tracking",
+                "minecraft:tameable",
+                "minecraft:tamemount",
+                "minecraft:target_nearby_sensor",
+                "minecraft:teleport",
+                "minecraft:tick_world",
+                "minecraft:timer",
+                "minecraft:trade_table",
+                "minecraft:trail",
+                "minecraft:transformation",
+                "minecraft:transient",
+                "minecraft:trusting",
+                "minecraft:type_family",
+                "minecraft:underwater_mount_breathing",
+                "minecraft:underwater_movement",
+                "minecraft:uses_legacy_friction",
+                "minecraft:variable_max_auto_step",
+                "minecraft:variant",
+                "minecraft:vertical_movement_action",
+                "minecraft:vibration_damper",
+                "minecraft:vibration_listener",
+                "minecraft:walk_animation_speed",
+                "minecraft:wants_jockey",
+                "minecraft:water_movement",
+                "minecraft:wither_target_highest_damage",
+            ],
+            outputDir,
+            "Entity",
+            "minecraftcomponent_");
 
     private static async Task GenerateTraitsForComponentsAsync(
         string[] components,
@@ -342,8 +598,7 @@ public sealed class TraitGenerator : IAsyncDisposable
 
                 string html = await SharedHttpClient.GetStringAsync(url);
 
-                string pascalName = Formatting.SnakeToPascalCase(pageName);
-                string ifaceName = $"I{pascalName}";
+                string ifaceName = ToInterfaceName(pageName);
 
                 string code = GenerateTraitInterfaceFromMsDoc(html, ifaceName, component, constraint);
                 string fullCode = $"// autogenerated by ingot trait generator from\n// {url}\n\n{code}";
