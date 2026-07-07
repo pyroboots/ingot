@@ -15,5 +15,6 @@ internal static class Program
         await generator.GenerateAllBlockTraitsAsync(blockOutputDir);
         await generator.GenerateAllItemTraitsAsync(itemOutputDir);
         await generator.GenerateAllEntityTraitsAsync("/home/pyro/RiderProjects/ingot/ingot.Core/TraitSystem/Traits/Entity");
+        await generator.GenerateAllEntityBehaviourTraitsAsync("/home/pyro/RiderProjects/ingot/ingot.Core/TraitSystem/Traits/Entity/Behaviour");
     }
 }

@@ -169,10 +169,10 @@ public sealed class TraitGenerator : IAsyncDisposable
         return name.Trim().ToLowerInvariant().Replace(" ", "_");
     }
 
-    private static string ToInterfaceName(string pageName)
+    private static string ToInterfaceName(string pageName, bool isBehaviour = false)
     {
         string normalized = pageName.Replace('.', '_');
-        return $"I{Formatting.SnakeToPascalCase(normalized)}";
+        return $"I{(isBehaviour ? "Behavior" : "")}{Formatting.SnakeToPascalCase(normalized)}";
     }
 
     private static int ScoreProperty(TraitProperty prop)
@@ -576,12 +576,122 @@ public sealed class TraitGenerator : IAsyncDisposable
             outputDir,
             "Entity",
             "minecraftcomponent_");
+    
+    public Task GenerateAllEntityBehaviourTraitsAsync(string outputDir) =>
+        GenerateTraitsForComponentsAsync(
+            [
+                "minecraft:behavior.nearest_attackable_target",
+                "minecraft:behavior.melee_attack",
+                "minecraft:behavior.panic",
+                "minecraft:behavior.hurt_by_target",
+                "minecraft:behavior.look_at_player",
+                "minecraft:behavior.random_stroll",
+                "minecraft:behavior.random_look_around",
+                "minecraft:behavior.float",
+                "minecraft:behavior.follow_owner",
+                "minecraft:behavior.breed",
+                "minecraft:behavior.tempt",
+                "minecraft:behavior.avoid_mob_type",
+                "minecraft:behavior.move_towards_target",
+                "minecraft:behavior.leap_at_target",
+                "minecraft:behavior.owner_hurt_by_target",
+                "minecraft:behavior.owner_hurt_target",
+                "minecraft:behavior.follow_parent",
+                "minecraft:behavior.look_at_target",
+                "minecraft:behavior.open_door",
+                "minecraft:behavior.break_door",
+                "minecraft:behavior.move_to_water",
+                "minecraft:behavior.move_to_land",
+                "minecraft:behavior.go_home",
+                "minecraft:behavior.move_towards_restriction",
+                "minecraft:behavior.move_indoors",
+                "minecraft:behavior.find_cover",
+                "minecraft:behavior.flee_sun",
+                "minecraft:behavior.follow_mob",
+                "minecraft:behavior.mingle",
+                "minecraft:behavior.make_love",
+                "minecraft:behavior.lay_egg",
+                "minecraft:behavior.harvest_farm_block",
+                "minecraft:behavior.fertilize_farm_block",
+                "minecraft:behavior.eat_block",
+                "minecraft:behavior.equip_item",
+                "minecraft:behavior.hold_ground",
+                "minecraft:behavior.knockback_roar",
+                "minecraft:behavior.charge_attack",
+                "minecraft:behavior.delayed_attack",
+                "minecraft:behavior.admire_item",
+                "minecraft:behavior.aquatic_charge_attack",
+                "minecraft:behavior.avoid_block",
+                "minecraft:behavior.barter",
+                "minecraft:behavior.beg",
+                "minecraft:behavior.celebrate",
+                "minecraft:behavior.celebrate_survive",
+                "minecraft:behavior.charge_held_item",
+                "minecraft:behavior.circle_around_anchor",
+                "minecraft:behavior.controlled_by_player",
+                "minecraft:behavior.croak",
+                "minecraft:behavior.defend_trusted_target",
+                "minecraft:behavior.defend_village_target",
+                "minecraft:behavior.dig",
+                "minecraft:behavior.door_interact",
+                "minecraft:behavior.drink_milk",
+                "minecraft:behavior.drink_potion",
+                "minecraft:behavior.drop_item_for",
+                "minecraft:behavior.eat_carried_item",
+                "minecraft:behavior.eat_mob",
+                "minecraft:behavior.emerge",
+                "minecraft:behavior.enderman_leave_block",
+                "minecraft:behavior.enderman_take_block",
+                "minecraft:behavior.explore_outskirts",
+                "minecraft:behavior.find_mount",
+                "minecraft:behavior.find_underwater_treasure",
+                "minecraft:behavior.fire_at_target",
+                "minecraft:behavior.float_tempt",
+                "minecraft:behavior.float_wander",
+                "minecraft:behavior.follow_caravan",
+                "minecraft:behavior.follow_target_captain",
+                "minecraft:behavior.follow_target_leader",
+                "minecraft:behavior.go_and_give_items_to_noteblock",
+                "minecraft:behavior.go_and_give_items_to_owner",
+                "minecraft:behavior.guardian_attack",
+                "minecraft:behavior.hide",
+                "minecraft:behavior.hover",
+                "minecraft:behavior.inspect_bookshelf",
+                "minecraft:behavior.investigate_suspicious_location",
+                "minecraft:behavior.jump_around_target",
+                "minecraft:behavior.jump_to_block",
+                "minecraft:behavior.lay_down",
+                "minecraft:behavior.look_at_entity",
+                "minecraft:behavior.look_at_trading_player",
+                "minecraft:behavior.melee_box_attack",
+                "minecraft:behavior.mount_pathing",
+                "minecraft:behavior.move_around_target",
+                "minecraft:behavior.move_outdoors",
+                "minecraft:behavior.move_through_village",
+                "minecraft:behavior.move_towards_dwelling_restriction",
+                "minecraft:behavior.move_towards_home_restriction",
+                "minecraft:behavior.move_to_block",
+                "minecraft:behavior.move_to_liquid",
+                "minecraft:behavior.move_to_poi",
+                "minecraft:behavior.move_to_random_block",
+                "minecraft:behavior.move_to_village",
+                "minecraft:behavior.nap",
+                "minecraft:behavior.nearest_prioritized_attackable_target",
+                "minecraft:behavior.ocelotattack",
+                "minecraft:behavior.ocelot_sit_on_block",
+                "minecraft:behavior.offer_flower",
+                "minecraft:behavior.pet_sleep_with_owner",
+            ],
+            outputDir,
+            "Entity",
+            "minecraftbehavior_", true);
 
     private static async Task GenerateTraitsForComponentsAsync(
         string[] components,
         string outputDir,
         string constraint,
-        string urlPrefix)
+        string urlPrefix,
+        bool isBehavior = false)
     {
         Stopwatch sw = Stopwatch.StartNew();
         int success = 0;
@@ -590,15 +700,14 @@ public sealed class TraitGenerator : IAsyncDisposable
         {
             Console.WriteLine($"generating '{component}' interface...");
 
+            string[] parts = component.Split(':');
+            string pageName = isBehavior ? parts[1].Replace("behavior.", "") : parts[1];
+            string url = $"https://learn.microsoft.com/en-us/minecraft/creator/reference/content/{constraint.ToLowerInvariant()}reference/examples/{constraint.ToLowerInvariant()}{(isBehavior ? "goals" : "components")}/{urlPrefix}{pageName}?view=minecraft-bedrock-stable";
             try
             {
-                string[] parts = component.Split(':');
-                string pageName = parts[1];
-                string url = $"https://learn.microsoft.com/en-us/minecraft/creator/reference/content/{constraint.ToLowerInvariant()}reference/examples/{constraint.ToLowerInvariant()}components/{urlPrefix}{pageName}?view=minecraft-bedrock-stable";
-
                 string html = await SharedHttpClient.GetStringAsync(url);
 
-                string ifaceName = ToInterfaceName(pageName);
+                string ifaceName = ToInterfaceName(pageName, isBehavior);
 
                 string code = GenerateTraitInterfaceFromMsDoc(html, ifaceName, component, constraint);
                 string fullCode = $"// autogenerated by ingot trait generator from\n// {url}\n\n{code}";
@@ -611,6 +720,8 @@ public sealed class TraitGenerator : IAsyncDisposable
             catch (Exception ex)
             {
                 Console.WriteLine($"failed to generate {component}: {ex.Message}");
+                if (ex is HttpRequestException)
+                    Console.WriteLine(url);
             }
         }
 
