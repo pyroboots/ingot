@@ -14,5 +14,7 @@ public class EntityJsonContainsIdentifierTest
         Assert.Contains("minecraft:entity", json);
         Assert.Contains("\"identifier\": \"test:test_entity\"", json);
         Assert.Contains("\"is_summonable\": true", json);
+        Assert.Contains("\"is_spawnable\": false", json);
+        Assert.Contains("\"is_experimental\": false", json);
     }
 }

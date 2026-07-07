@@ -18,7 +18,7 @@ public interface IEntityEventAction : ICompilableFragment
 /// <summary>
 /// Entity event action to remove an entity component group
 /// </summary>
-public abstract class ComponentGroupRemoveEntityEventAction : IEntityEventAction
+public class ComponentGroupRemoveEntityEventAction : IEntityEventAction
 {
     /// <inheritdoc/>
     public string Name => "remove";
@@ -43,7 +43,7 @@ public abstract class ComponentGroupRemoveEntityEventAction : IEntityEventAction
 /// <summary>
 /// Entity event action to add an entity component group
 /// </summary>
-public abstract class ComponentGroupAddEntityEventAction : IEntityEventAction
+public class ComponentGroupAddEntityEventAction : IEntityEventAction
 {
     /// <inheritdoc/>
     public string Name => "add";
@@ -68,7 +68,7 @@ public abstract class ComponentGroupAddEntityEventAction : IEntityEventAction
 /// <summary>
 /// Entity event action to drop an item from an inventory slot
 /// </summary>
-public abstract class DropItemEntityEventAction : IEntityEventAction
+public class DropItemEntityEventAction : IEntityEventAction
 {
     /// <inheritdoc/>
     public string Name => "drop_item";
@@ -93,7 +93,7 @@ public abstract class DropItemEntityEventAction : IEntityEventAction
 /// <summary>
 /// Entity event action to emit a particle
 /// </summary>
-public abstract class EmitParticleEntityEventAction : IEntityEventAction
+public class EmitParticleEntityEventAction : IEntityEventAction
 {
     /// <inheritdoc/>
     public string Name => "emit_particle";
@@ -118,7 +118,7 @@ public abstract class EmitParticleEntityEventAction : IEntityEventAction
 /// <summary>
 /// Entity event action to emit a vibration
 /// </summary>
-public abstract class EmitVibrationEntityEventAction : IEntityEventAction
+public class EmitVibrationEntityEventAction : IEntityEventAction
 {
     /// <inheritdoc/>
     public string Name => "emit_vibration";
@@ -153,7 +153,7 @@ public abstract class EmitVibrationEntityEventAction : IEntityEventAction
 /// <summary>
 /// Chooses a list of entity event actions to execute from a weighted pool
 /// </summary>
-public abstract class RandomizeEntityEventAction : IEntityEventAction
+public class RandomizeEntityEventAction : IEntityEventAction
 {
     /// <inheritdoc/>
     public string Name => "randomize";
@@ -190,7 +190,7 @@ public abstract class RandomizeEntityEventAction : IEntityEventAction
 /// <summary>
 /// Ordered execution sequence of entity event actions
 /// </summary>
-public abstract class SequenceEntityEventAction : IEntityEventAction
+public class SequenceEntityEventAction : IEntityEventAction
 {
     /// <inheritdoc/>
     public string Name => "sequence";
@@ -216,7 +216,7 @@ public abstract class SequenceEntityEventAction : IEntityEventAction
 /// <summary>
 /// Runs a command
 /// </summary>
-public abstract class QueueCommandEntityEventAction : IEntityEventAction
+public class QueueCommandEntityEventAction : IEntityEventAction
 {
     /// <inheritdoc/>
     public string Name => "queue_command";
