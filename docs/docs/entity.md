@@ -1,6 +1,6 @@
 # Making an Entity
 
-Entities are defined by deriving from the abstract `Entity` class in `ingot.Core.Behaviour.Entity`. Like blocks and items, entities use the [trait system](trait-system.md) for component definitions, and ingot also provides C# types for `component_groups` and `events`.
+Entities are defined by deriving from the abstract `Entity` class in `ingot.Core.Behaviour.Entity`. Like blocks and items, entities use the [trait system](trait-system.md) for component definitions. ingot also provides C# types for [component groups](entity-component-groups.md) and [events](entity-events.md).
 
 ## Minimal Entity
 
@@ -26,8 +26,8 @@ Every entity **must** implement:
 | `IsSpawnable`      | `bool`                                    | `false`     | Whether the entity can spawn naturally in the world. |
 | `IsSummonable`     | `bool`                                    | `true`      | Whether the entity can be summoned with commands. |
 | `IsExperimental`   | `bool`                                    | `false`     | Whether the entity requires experimental gameplay. |
-| `ComponentGroups`  | `EntityComponentGroup[]`                  | `[]`        | Named component sets toggled by events. |
-| `Events`           | `Dictionary<Identifier, IEntityEventAction[]>` | `{}`     | Event definitions and their actions. |
+| `ComponentGroups`  | `EntityComponentGroup[]`                  | `[]`        | Named component sets toggled by events. See [Entity Component Groups](entity-component-groups.md). |
+| `Events`           | `Dictionary<Identifier, IEntityEventAction[]>` | `{}`     | Event definitions and their actions. See [Entity Events](entity-events.md). |
 
 These are written into the `description`, `component_groups`, `components`, and `events` sections of the generated entity JSON.
 
@@ -56,137 +56,54 @@ Override `IsSpawnable`, `IsSummonable`, or `IsExperimental` on your entity class
 
 ## Component Groups
 
-Component groups are the entity equivalent of [block permutations](block-permutations.md). Each group is a named set of components that can be added or removed at runtime through events.
-
-Derive from `EntityComponentGroup`:
-
-```csharp
-using ingot.Core.Behaviour.Entity;
-using ingot.Core.Common;
-
-public class AdultGroup : EntityComponentGroup
-{
-    public override Identifier Identifier => new("mynamespace:adult");
-}
-```
-
-Register the group on your entity:
-
-```csharp
-public class MyEntity : Entity
-{
-    public override Identifier Identifier => new("mynamespace:my_entity");
-    public override EntityComponentGroup[] ComponentGroups => [new AdultGroup()];
-}
-```
-
-Any [entity trait](trait-system.md) implemented on the group class is compiled into that group's `components` object.
+Component groups let you attach different sets of traits to an entity at runtime. See the dedicated [Entity Component Groups](entity-component-groups.md) guide.
 
 ## Entity Events
 
-Events are defined on the entity as a dictionary keyed by event name. Each event contains one or more actions.
-
-```csharp
-using ingot.Core.Behaviour.Entity;
-using ingot.Core.Common;
-
-public class MyEntity : Entity
-{
-    public override Identifier Identifier => new("mynamespace:my_entity");
-    public override Dictionary<Identifier, IEntityEventAction[]> Events => new()
-    {
-        [new("mynamespace:grow_up")] =
-        [
-            new ComponentGroupAddEntityEventAction
-            {
-                ComponentGroups = [new Identifier("mynamespace:adult")]
-            }
-        ]
-    };
-}
-```
-
-### Built-in Event Actions
-
-ingot ships with C# types for common Bedrock event actions:
-
-| Type | JSON key | Purpose |
-|------|----------|---------|
-| `ComponentGroupAddEntityEventAction` | `add` | Add one or more component groups. |
-| `ComponentGroupRemoveEntityEventAction` | `remove` | Remove one or more component groups. |
-| `SequenceEntityEventAction` | `sequence` | Run actions in order. |
-| `RandomizeEntityEventAction` | `randomize` | Pick from a weighted pool of action sets. |
-| `DropItemEntityEventAction` | `drop_item` | Drop an item from an inventory slot. |
-| `EmitParticleEntityEventAction` | `emit_particle` | Emit a particle effect. |
-| `EmitVibrationEntityEventAction` | `emit_vibration` | Emit a sculk vibration. |
-| `QueueCommandEntityEventAction` | `queue_command` | Queue one or more commands. |
-
-Each action type can be instantiated directly — create an instance and populate its properties.
-
-### Sequence and Randomize
-
-Use `SequenceEntityEventAction` when multiple steps must run in order:
-
-```csharp
-public override Dictionary<Identifier, IEntityEventAction[]> Events => new()
-{
-    [new("minecraft:entity_spawned")] =
-    [
-        new SequenceEntityEventAction
-        {
-            EventActions =
-            [
-                new ComponentGroupAddEntityEventAction
-                {
-                    ComponentGroups = [new Identifier("mynamespace:adult")]
-                },
-                new ComponentGroupAddEntityEventAction
-                {
-                    ComponentGroups = [new Identifier("mynamespace:baby")]
-                }
-            ]
-        }
-    ]
-};
-```
-
-Use `RandomizeEntityEventAction` for weighted outcomes:
-
-```csharp
-new RandomizeEntityEventAction
-{
-    EventActions =
-    [
-        new(80, [
-            new ComponentGroupAddEntityEventAction
-            {
-                ComponentGroups = [new Identifier("mynamespace:white")]
-            }
-        ]),
-        new(20, [
-            new ComponentGroupAddEntityEventAction
-            {
-                ComponentGroups = [new Identifier("mynamespace:black")]
-            }
-        ])
-    ]
-};
-```
+Events add or remove component groups, run commands, emit particles, and more. See the dedicated [Entity Events](entity-events.md) guide.
 
 ## Adding Behavior with Traits
 
 Entity traits use the same pattern as blocks and items. Implement `IEntityTrait` interfaces on your entity class or on `EntityComponentGroup` subclasses:
 
 ```csharp
-public class MyEntity : Entity, ISomeEntityTrait
+using ingot.Core.Behaviour.Entity;
+using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Entity;
+
+public class MyEntity : Entity, IHealth, ITypeFamily
 {
     public override Identifier Identifier => new("mynamespace:my_entity");
 
-    // ISomeEntityTrait properties...
+    int IHealth.Max => 20;
+    dynamic ITypeFamily.Family => "mob";
 }
 ```
 
-Entity trait generation is still in progress. See the [Trait System](trait-system.md) page for the current status.
+### Behaviour Presets
+
+For common mob archetypes, ingot provides preset interfaces that bundle the typical components for a mob type. See the [Trait System - Entity Traits and Behaviour Presets](trait-system.md#entity-traits-and-behaviour-presets) section for the full list.
+
+```csharp
+public class LasagnaSpiritEntity : Entity, IEntityBehaviourPresetFlying
+{
+    public override Identifier Identifier => new("test:lasagna_spirit");
+
+    dynamic ITypeFamily.Family => "lasagna";
+    int IHealth.Max => 20;
+    dynamic IDespawn.DespawnFromDistance => null;
+    EntityFilter IDespawn.Filters => null;
+
+    float IMovement.Max => 6;
+    float IMovement.Value => 3;
+    string[] INavigationFly.BlocksToAvoid => [];
+    float IBehaviorFloatWander.FloatDuration => 6f;
+}
+```
+
+Presets compose many individual traits. You can still add extra traits beyond what a preset provides, or implement traits one at a time without using a preset.
+
+See the [Entity Traits API reference](https://pyroboots.github.io/ingot/api/ingot.Core.TraitSystem.Traits.Entity.html) for the complete list.
 
 ## Raw JSON Entities
 
@@ -226,11 +143,10 @@ This writes `bp/entities/my_entity.json` (filename is the part after the `:` in 
 
 ## Current Limitations
 
-- Entity trait generation is still a work in progress — see [Trait System](trait-system.md).
-- Not all Bedrock event action types are modelled yet (`trigger`, `filters`, `first_valid`, etc.).
 - Entity resource support (models, textures, render controllers) is not yet available on the `ResourcePack` side.
-- Duplicate sibling action keys in a single event (e.g. two `add` blocks) are not merged at compile time yet.
 
 ## Full Example
 
 See `LasagnaSpiritEntity.cs` in the [`ingot.Example`](../../ingot.Example) project.
+
+Next: learn about [entity component groups](entity-component-groups.md) and [entity events](entity-events.md).

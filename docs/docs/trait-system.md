@@ -28,7 +28,7 @@ public class MyItem : Item, IFood, IDurability
 }
 ```
 
-Traits can also be applied to [block permutations](block-permutations.md) so that certain components only appear under specific conditions.
+Traits can also be applied to [block permutations](block-permutations.md) and [entity component groups](entity-component-groups.md) so that certain components only appear under specific conditions.
 
 ## Implementing Trait Properties
 
@@ -66,7 +66,7 @@ public float SaturationModifier => 0.9f;
 
 ## How the Trait System Works
 
-1. When `Block.Compile(Type)`, `Item.Compile(Type)`, or `BehaviourPack` compilation runs, `TraitSystem.GetTraits(...)` is called on the concrete type.
+1. When `Block.Compile(Type)`, `Item.Compile(Type)`, `Entity.Compile(Type)`, or `BehaviourPack` compilation runs, `TraitSystem.GetTraits(...)` is called on the concrete type.
 2. It enumerates all interfaces implemented by the type.
 3. For each interface that carries a `[Trait("minecraft:xxx", TraitType.Block/Item)]` attribute, a `Trait` entry is created.
 4. Every property on that interface decorated with `[TraitProperty]` (or `[TraitProperty("path")]`) is inspected.
@@ -98,11 +98,59 @@ Example output for a destructible block trait:
 |--------------|------------------|---------------|------------------------------------|
 | Blocks       | `IBlockTrait`    | `Block`       | Used on `Block` and `BlockPermutation` |
 | Items        | `IItemTrait`     | `Item`        | Used on `Item`                     |
-| Entities     | `IEntityTrait`   | `Entity`      | (Work in progress - not documented yet) |
+| Entities     | `IEntityTrait`   | `Entity`      | Used on `Entity` and `EntityComponentGroup` |
 
 See the API reference for the full list of available traits:
 - [Block Traits](https://pyroboots.github.io/ingot/api/ingot.Core.TraitSystem.Traits.Block.html)
 - [Item Traits](https://pyroboots.github.io/ingot/api/ingot.Core.TraitSystem.Traits.Item.html)
+- [Entity Traits](https://pyroboots.github.io/ingot/api/ingot.Core.TraitSystem.Traits.Entity.html)
+
+## Entity Traits and Behaviour Presets
+
+Entity traits work the same way as block and item traits - implement `IEntityTrait` interfaces on your `Entity` class or on `EntityComponentGroup` subclasses. Entity traits are auto-generated from the official Microsoft docs, the same as blocks and items.
+
+For common mob archetypes, ingot provides **behaviour preset** interfaces in `ingot.Core.Behaviour.Entity` that bundle the typical components for a mob type:
+
+| Preset | Typical use |
+|--------|-------------|
+| `IBasicEntity` | Core components every mob needs (health, physics, collision, despawn) |
+| `IEntityBehaviourPresetPassive` | Passive land mob (wander, float, walk navigation) |
+| `IEntityBehaviourPresetTimid` | Passive mob that flees threats |
+| `IEntityBehaviourPresetNeutral` | Neutral mob that retaliates when attacked |
+| `IEntityBehaviourPresetHostile` | Hostile mob that seeks and attacks targets |
+| `IEntityBehaviourPresetTameable` | Tameable passive mob |
+| `IEntityBehaviourPresetAquatic` | Aquatic mob |
+| `IEntityBehaviourPresetAmphibious` | Mob that moves between land and water |
+| `IEntityBehaviourPresetFlying` | Flying mob |
+| `IEntityBehaviourPresetFlyingHostile` | Hostile flying mob |
+| `IEntityBehaviourPresetAquaticHostile` | Hostile aquatic mob |
+
+Implement a preset on your entity class, then provide the required abstract properties via explicit interface implementation:
+
+```csharp
+using ingot.Core.Behaviour.Entity;
+using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Entity;
+
+public class MyFlyingMob : Entity, IEntityBehaviourPresetFlying
+{
+    public override Identifier Identifier => new("mynamespace:flying_mob");
+
+    dynamic ITypeFamily.Family => "mob";
+    int IHealth.Max => 20;
+    dynamic IDespawn.DespawnFromDistance => null;
+    EntityFilter IDespawn.Filters => null;
+
+    float IMovement.Max => 6;
+    float IMovement.Value => 3;
+    string[] INavigationFly.BlocksToAvoid => [];
+    float IBehaviorFloatWander.FloatDuration => 6f;
+}
+```
+
+Presets compose many individual traits. You can still implement additional `IEntityTrait` interfaces beyond what a preset provides, or skip presets entirely and implement traits one at a time.
+
+See [Making an Entity](entity.md), [Entity Component Groups](entity-component-groups.md), and [Entity Events](entity-events.md) for a full example.
 
 ## Creating New Traits
 
@@ -124,4 +172,4 @@ After adding a hand-written trait, make sure to also handle any special serializ
 
 ## Summary
 
-The trait system lets you compose block and item behavior using ordinary C# interface inheritance. It keeps your addon code readable, refactorable, and type-safe while still producing the exact JSON format that Minecraft Bedrock expects.
+The trait system lets you compose block, item, and entity behavior using ordinary C# interface inheritance. It keeps your addon code readable, refactorable, and type-safe while still producing the exact JSON format that Minecraft Bedrock expects.

@@ -10,8 +10,15 @@ namespace ingot.Core.Behaviour.Entity;
 /// </summary>
 public abstract class EntityComponentGroup : ICompilableFragment, IIdentifiable
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Identifier of the component group
+    /// </summary>
     public abstract Identifier Identifier { get; }
+
+    /// <summary>
+    /// Parent <see cref="Entity"/> of this <see cref="EntityComponentGroup"/>
+    /// </summary>
+    public abstract Entity Parent { get; }
     
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)

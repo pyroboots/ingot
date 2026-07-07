@@ -27,7 +27,7 @@ You can also configure the script entry point and module dependencies on `Pack`:
 
 ## Basic Usage
 
-Override `ItemEvents` on your item class. Each property is a `ScriptHandler` containing the **body** of a JavaScript event handler — the code inside the handler function, not a full function declaration:
+Override `ItemEvents` on your item class. Each property is a `ScriptHandler` containing the **body** of a JavaScript event handler - the code inside the handler function, not a full function declaration:
 
 ```csharp
 using ingot.Core.Behaviour;
@@ -218,8 +218,8 @@ Script generation is a dedicated pass after behaviour-pack JSON is written. See 
 
 ## See Also
 
-- [Making an Item](item.md) — base item properties including `ItemEvents`
-- [Script Services](script-services.md) — tick-based Script API modules
-- [Trait System](trait-system.md) — vanilla components that pair with certain events
-- [Resource Packs & Textures](resource-packs.md) — `Pack` compile workflow
-- [Block Events](block-events.md) — the same Script API pattern for blocks
+- [Making an Item](item.md) - base item properties including `ItemEvents`
+- [Script Services](script-services.md) - tick-based Script API modules
+- [Trait System](trait-system.md) - vanilla components that pair with certain events
+- [Resource Packs & Textures](resource-packs.md) - `Pack` compile workflow
+- [Block Events](block-events.md) - the same Script API pattern for blocks

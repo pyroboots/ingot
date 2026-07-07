@@ -1,87 +1,69 @@
 using ingot.Core.Behaviour.Entity;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Entity;
 
 namespace ingot.Example.Entities;
 
-public class LasagnaSpiritCalmGroup : EntityComponentGroup
+public class LasagnaSpiritEntity : Entity, IEntityBehaviourPresetFlying
 {
-    public override Identifier Identifier => new("test:lasagna_spirit_calm");
-}
+    public override Identifier Identifier => new("test", "lasagna_spirit");
+    public dynamic Family => "lasagna";
+    int IHealth.Max => 20;
+    
+    
+    dynamic IDespawn.DespawnFromDistance => null;
+    EntityFilter IDespawn.Filters => null;
+    
+    float IMovement.Max => 6;
+    float IMovement.Value => 3;
 
-public class LasagnaSpiritEnragedGroup : EntityComponentGroup
-{
-    public override Identifier Identifier => new("test:lasagna_spirit_enraged");
-}
+    string[] INavigationFly.BlocksToAvoid => [];
+    float IBehaviorFloatWander.FloatDuration => 6f;
 
-public class LasagnaSpiritEntity : Entity
-{
-    public override Identifier Identifier => new("test:lasagna_spirit");
-    public override bool IsSummonable => true;
-
-    public override EntityComponentGroup[] ComponentGroups =>
-    [
-        new LasagnaSpiritCalmGroup(),
-        new LasagnaSpiritEnragedGroup()
-    ];
+    public override EntityComponentGroup[] ComponentGroups => [new LasagnaSpiritEntityAngry()];
 
     public override Dictionary<Identifier, IEntityEventAction[]> Events => new()
     {
-        [new("minecraft:entity_spawned")] =
-        [
-            new RandomizeEntityEventAction
+        [new Identifier("minecraft:entity_spawned")] = new []
+        {
+            new RandomizeEntityEventAction()
             {
-                EventActions =
-                [
-                    new(90, [
-                        new ComponentGroupAddEntityEventAction
+                EventActions = new []
+                {
+                    new RandomizeEntityEventAction.EventActionPool(0.5f, new []
+                    {
+                        new ComponentGroupAddEntityEventAction()
                         {
-                            ComponentGroups = [new Identifier("test:lasagna_spirit_calm")]
+                            ComponentGroups = new []
+                            {
+                                new Identifier("test", "lasagna_spirit_angry"),
+                            }
                         }
-                    ]),
-                    new(10, [
-                        new ComponentGroupAddEntityEventAction
-                        {
-                            ComponentGroups = [new Identifier("test:lasagna_spirit_enraged")]
-                        }
-                    ])
-                ]
+                    })
+                }
             }
-        ],
-        [new("test:enrage")] =
-        [
-            new ComponentGroupRemoveEntityEventAction
-            {
-                ComponentGroups = [new Identifier("test:lasagna_spirit_calm")]
-            },
-            new ComponentGroupAddEntityEventAction
-            {
-                ComponentGroups = [new Identifier("test:lasagna_spirit_enraged")]
-            },
-            new EmitVibrationEntityEventAction
-            {
-                Type = EmitVibrationEntityEventAction.VibrationType.EntityAct
-            }
-        ],
-        [new("test:calm_down")] =
-        [
-            new SequenceEntityEventAction
-            {
-                EventActions =
-                [
-                    new ComponentGroupRemoveEntityEventAction
-                    {
-                        ComponentGroups = [new Identifier("test:lasagna_spirit_enraged")]
-                    },
-                    new ComponentGroupAddEntityEventAction
-                    {
-                        ComponentGroups = [new Identifier("test:lasagna_spirit_calm")]
-                    },
-                    new EmitParticleEntityEventAction
-                    {
-                        Particle = new Identifier("minecraft:heart_particle")
-                    }
-                ]
-            }
-        ]
+        }
     };
+}
+
+public class LasagnaSpiritEntityAngry : EntityComponentGroup, IEntityBehaviourPresetFlyingHostile
+{
+    public override Identifier Identifier => new("test", "lasagna_spirit_angry");
+    public override Entity Parent => new LasagnaSpiritEntity();
+    public dynamic Family { get; }
+    public int Max { get; }
+    public int Value { get; }
+
+    float IMovement.Value => Value;
+
+    public dynamic DespawnFromDistance { get; }
+    public EntityFilter Filters { get; }
+    float IMovement.Max => Max;
+
+    public string[] BlocksToAvoid { get; }
+    public float FloatDuration { get; }
+    public FloatRange Damage { get; }
+    public string EffectName { get; }
+    public int AttackInterval { get; }
+    public string AttackTypes { get; }
 }

@@ -6,4 +6,5 @@ namespace ingot.Tests.Content.Entities;
 internal class AdultComponentGroup : EntityComponentGroup
 {
     public override Identifier Identifier => new("test:adult");
+    public override Entity Parent => new ComponentGroupTestEntity();
 }

@@ -21,3 +21,5 @@
 
 - name: 3. Entities
 - href: entity.md
+- href: entity-component-groups.md
+- href: entity-events.md

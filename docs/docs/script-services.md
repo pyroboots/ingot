@@ -18,7 +18,7 @@ pack.AddService("./scripts/services/slow_service.js", intervalTicks: 20);
 
 ## Writing a Service
 
-A service source file contains only the **tick handler body** — the code that should run each interval. You do not write `system.runInterval` yourself; ingot wraps your body automatically:
+A service source file contains only the **tick handler body** - the code that should run each interval. You do not write `system.runInterval` yourself; ingot wraps your body automatically:
 
 ```javascript
 for (const player of world.getAllPlayers())
@@ -48,7 +48,7 @@ The generated file is imported from `bp/scripts/main.js`.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `sourceFile` | `string` | — | Path to the JavaScript tick handler body. |
+| `sourceFile` | `string` | - | Path to the JavaScript tick handler body. |
 | `name` | `string?` | source file name | Output file name under `bp/scripts/services/`. |
 | `intervalTicks` | `int` | `1` | Ticks between each invocation. Must be at least 1. |
 
@@ -58,7 +58,7 @@ The generated file is imported from `bp/scripts/main.js`.
 |---------|-------------------|----------|
 | Registration | `BlockEvents` / `ItemEvents` on content classes | `pack.AddService(...)` |
 | Source file contents | Handler body for one Script API event | Tick handler body |
-| Tick wrapping | No — fires only when the event occurs | Yes — `system.runInterval(..., intervalTicks)` |
+| Tick wrapping | No - fires only when the event occurs | Yes - `system.runInterval(..., intervalTicks)` |
 | Output path | `bp/scripts/blocks/` or `bp/scripts/items/` | `bp/scripts/services/` |
 | Code generation | Component registration boilerplate + your body | Tick loop wrapper + your body |
 

@@ -30,7 +30,7 @@ A permutation can provide its own versions of the same shortcuts available on `B
 - `LightEmission`
 - `LightDampening`
 - `Replaceable`
-- `Loot` (`LootTable?` — see [Loot Tables](loot-table.md))
+- `Loot` (`LootTable?` - see [Loot Tables](loot-table.md))
 - `MaterialInstances` (completely replace the block's materials under this condition)
 - `Tags` (block tags applied only when this condition is true)
 

@@ -19,6 +19,8 @@ See the [project README](https://github.com/pyroboots/ingot/blob/master/README.m
 - [Items](docs/item.md)
   - [Item Events](docs/item-events.md)
 - [Entities](docs/entity.md)
+  - [Entity Component Groups](docs/entity-component-groups.md)
+  - [Entity Events](docs/entity-events.md)
 - [Recipes](docs/recipe.md)
 - [Loot Tables](docs/loot-table.md)
 

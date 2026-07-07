@@ -44,7 +44,7 @@ Your project only needs to **run once** to generate the pack files. Many authors
 
 ## Define Your First Item
 
-Items inherit from `Item` and must provide an `Identifier` and `Texture`. Behaviour beyond that comes from the [trait system](trait-system.md) — C# interfaces that map to Minecraft `minecraft:*` components.
+Items inherit from `Item` and must provide an `Identifier` and `Texture`. Behaviour beyond that comes from the [trait system](trait-system.md) - C# interfaces that map to Minecraft `minecraft:*` components.
 
 ```csharp
 using ingot.Core.Behaviour;
@@ -137,8 +137,8 @@ pack.CompileComMojang("/path/to/games/com.mojang");
 
 | Output | Contents |
 |--------|----------|
-| `output/bp/` | Behaviour pack — blocks, items, recipes, loot tables, manifests |
-| `output/rp/` | Resource pack — textures, `terrain_texture.json`, `item_texture.json` |
+| `output/bp/` | Behaviour pack - blocks, items, recipes, loot tables, manifests |
+| `output/rp/` | Resource pack - textures, `terrain_texture.json`, `item_texture.json` |
 | `output/ingot.log` | Compile-time warnings and info (when `verbose` is `true`, the default) |
 | `output/.ingot` | UUID cache so rebuilds keep stable pack IDs |
 
@@ -147,7 +147,7 @@ pack.CompileComMojang("/path/to/games/com.mojang");
 
 `CompileMcaddon` stores `.ingot` and `ingot.log` next to the `.mcaddon` file. `CompileComMojang` stores them in the `com.mojang` directory.
 
-All three methods delete prior pack output before compiling. That keeps rebuilds clean when you remove blocks, items, textures, or other content — stale files from an earlier compile are not left behind. Cache files (`.ingot`) and compile logs (`ingot.log`) in the output directory are preserved.
+All three methods delete prior pack output before compiling. That keeps rebuilds clean when you remove blocks, items, textures, or other content - stale files from an earlier compile are not left behind. Cache files (`.ingot`) and compile logs (`ingot.log`) in the output directory are preserved.
 
 ### Pack UUIDs
 
@@ -162,10 +162,10 @@ By default, `Pack.Create` sets `LinkPacks = true`, which adds cross-dependencies
 Textures declared on your content classes are auto-registered during compile:
 
 ```csharp
-// Item — optional source PNG path (resolved at compile time)
+// Item - optional source PNG path (resolved at compile time)
 public override string? TexturePath => Path.Combine(AppContext.BaseDirectory, "Data", "custom_food.png");
 
-// Block — source path on the material instance
+// Block - source path on the material instance
 public override MaterialInstances MaterialInstances => new()
 {
     All = new MaterialInstance("custom_block", MaterialInstance.RenderMethods.Opaque,
@@ -173,7 +173,7 @@ public override MaterialInstances MaterialInstances => new()
 };
 ```
 
-You can also register textures manually — this is the recommended approach when assets are copied to your build output via the `.csproj`:
+You can also register textures manually - this is the recommended approach when assets are copied to your build output via the `.csproj`:
 
 ```csharp
 string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
@@ -197,9 +197,9 @@ See [Resource Packs & Textures](resource-packs.md) for the full texture pipeline
 
 1. Run your project (`dotnet run`) to compile the pack.
 2. Load it using one of these methods:
-   - **`CompileMcaddon`** — import the generated `.mcaddon` file (behaviour and resource packs are bundled with the correct zip layout).
-   - **`CompileComMojang`** — compile straight into `development_behavior_packs/` and `development_resource_packs/` under your `com.mojang` folder (for example MCPelauncher on Linux: `~/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang`).
-   - **`Compile`** — copy `output/bp/` and `output/rp/` into the development pack folders manually, or zip each folder as a `.mcpack`.
+   - **`CompileMcaddon`** - import the generated `.mcaddon` file (behaviour and resource packs are bundled with the correct zip layout).
+   - **`CompileComMojang`** - compile straight into `development_behavior_packs/` and `development_resource_packs/` under your `com.mojang` folder (for example MCPelauncher on Linux: `~/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang`).
+   - **`Compile`** - copy `output/bp/` and `output/rp/` into the development pack folders manually, or zip each folder as a `.mcpack`.
 3. Create or open a world, go to **Settings → Behavior Packs** and **Resource Packs**, and activate both packs.
 4. If content does not appear, check the in-game **Content Log** and your compile log (`ingot.log`) for warnings.
 
@@ -220,7 +220,7 @@ See [Block Events](block-events.md), [Item Events](item-events.md), and [Script 
 
 | Project | Purpose |
 |---------|---------|
-| [`basicTest`](../../basicTest) | Minimal block, entity, and loot table; stable UUIDs; textures from `Data/`; compiles to `./output` |
+| [`ingot.Tests`](../../ingot.Tests) | xUnit integration and compile tests covering blocks, items, entities, recipes, loot tables, textures, and scripts |
 | [`ingot.Example`](../../ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts; compiles to `./artifacts/example/` |
 
 Build and run the example:
@@ -251,13 +251,13 @@ MyAddon/
 └── output/                 # generated bp/ + rp/ (gitignored)
 ```
 
-Keep identifiers, traits, and cross-references in C# — recipes can reference item classes, blocks can auto-register loot tables, and refactors stay type-safe.
+Keep identifiers, traits, and cross-references in C# - recipes can reference item classes, blocks can auto-register loot tables, and refactors stay type-safe.
 
 ## Next Steps
 
-- [Trait System](trait-system.md) — how behaviours are composed from interfaces
-- [Making a Block](block.md) / [Making an Item](item.md) — full content guides
+- [Trait System](trait-system.md) - how behaviours are composed from interfaces
+- [Making a Block](block.md) / [Making an Item](item.md) - full content guides
 - [Block Events](block-events.md), [Item Events](item-events.md), and [Script Services](script-services.md)
 - [Recipes](recipe.md) and [Loot Tables](loot-table.md)
-- [Extending Traits](extending-traits.md) — add custom traits or regenerate from MS docs
+- [Trait System - Creating New Traits](trait-system.md#creating-new-traits) - add custom traits or regenerate from MS docs
 - [API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html)

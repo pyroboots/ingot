@@ -88,7 +88,7 @@ When `ScriptsEnabled` is `true`, **ingot** writes:
 |--------|-------------|
 | `Compile("./output")` | Inspect generated JSON, commit `bp/`/`rp/` to version control, or copy folders manually |
 | `CompileMcaddon("./output/my-pack.mcaddon")` | Share or import a single addon file with the correct zip structure |
-| `CompileComMojang("/path/to/games/com.mojang")` | Fast iteration — writes straight into development pack folders |
+| `CompileComMojang("/path/to/games/com.mojang")` | Fast iteration - writes straight into development pack folders |
 
 ```csharp
 pack.CompileMcaddon("./artifacts/example/ingot example.mcaddon");
@@ -136,7 +136,7 @@ pack.AddGeometry("geometry.my_block", sourcePath, rpName: "custom_name");
 // -> rp/models/blocks/custom_name.geo.json
 ```
 
-Vanilla geometry identifiers such as `minecraft:geometry.full_block` do not need to be registered — only custom models you author yourself.
+Vanilla geometry identifiers such as `minecraft:geometry.full_block` do not need to be registered - only custom models you author yourself.
 
 The identifier inside your `.geo.json` file must match what you reference in behaviour. For example, if your block uses `geometry.my_block`, the geometry description in the JSON should look like:
 

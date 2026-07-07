@@ -27,7 +27,7 @@ You can also configure the script entry point and module dependencies on `Pack`:
 
 ## Basic Usage
 
-Override `BlockEvents` on your block class. Each property is a `ScriptHandler` containing the **body** of a JavaScript event handler — the code inside the handler function, not a full function declaration.
+Override `BlockEvents` on your block class. Each property is a `ScriptHandler` containing the **body** of a JavaScript event handler - the code inside the handler function, not a full function declaration.
 
 ### Inline handlers
 
@@ -231,8 +231,8 @@ Block events require compiling through `Pack.Compile(...)`. Calling `Block.Compi
 
 ## See Also
 
-- [Making a Block](block.md) — base block properties including `BlockEvents`
-- [Item Events](item-events.md) — the same Script API pattern for items
-- [Script Services](script-services.md) — tick-based Script API modules
-- [Trait System](trait-system.md) — vanilla components that pair with certain events
-- [Resource Packs & Textures](resource-packs.md) — `Pack` compile workflow
+- [Making a Block](block.md) - base block properties including `BlockEvents`
+- [Item Events](item-events.md) - the same Script API pattern for items
+- [Script Services](script-services.md) - tick-based Script API modules
+- [Trait System](trait-system.md) - vanilla components that pair with certain events
+- [Resource Packs & Textures](resource-packs.md) - `Pack` compile workflow

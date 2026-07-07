@@ -180,7 +180,7 @@ When you compile, ingot will:
 }
 ```
 
-The same workflow applies to permutations — set `SourcePath` on the permutation's `MaterialInstances`, or use `Pack.AddBlockTexture` for manual overrides.
+The same workflow applies to permutations - set `SourcePath` on the permutation's `MaterialInstances`, or use `Pack.AddBlockTexture` for manual overrides.
 
 See the dedicated [Resource Packs & Textures](resource-packs.md) guide for recommended project layout for your PNGs, how item textures work, limitations, and more.
 
