@@ -6,6 +6,7 @@
   href: resource-packs.md
 - name: Script Services
   href: script-services.md
+  tag: Scripts
 
 - name: 1. Blocks
 - href: block.md
@@ -13,11 +14,13 @@
 - href: block-mat-instances.md
 - name: Block Events
   href: block-events.md
+  tag: Scripts
 
 - name: 2. Items
 - href: item.md
 - name: Item Events
   href: item-events.md
+  tag: Scripts
 - href: recipe.md
 - href: loot-table.md
 

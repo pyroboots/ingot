@@ -420,13 +420,7 @@ nav#toc a[href]:not([href="#"]),
   gap: 0.35rem;
 }
 
-nav#toc a[href$="block-events.html"]::after,
-nav#toc a[href$="item-events.html"]::after,
-nav#toc a[href$="script-services.html"]::after,
-.sidetoc a[href$="block-events.html"]::after,
-.sidetoc a[href$="item-events.html"]::after,
-.sidetoc a[href$="script-services.html"]::after {
-  content: "Scripts";
+.ingot-toc-tag {
   font-size: 0.58rem;
   font-weight: 700;
   letter-spacing: 0.05em;
