@@ -15,7 +15,7 @@ public interface IEquipment : IEntityTrait
     /// A list of slots with the chance to drop an equipped item from that slot. Can be an array of slot name strings or an array of objects with slot and drop_chance properties.
     /// </summary>
     [TraitProperty]
-    public abstract string[] SlotDropChance { get; }
+    public virtual string[]? SlotDropChance => null;
 
     /// <summary>
     /// The file path to the equipment table, relative to the behavior pack's root.

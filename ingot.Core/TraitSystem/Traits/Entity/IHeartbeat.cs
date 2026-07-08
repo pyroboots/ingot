@@ -21,5 +21,5 @@ public interface IHeartbeat : IEntityTrait
     /// Level sound event to be played as the heartbeat sound.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger SoundEvent { get; }
+    public virtual EntityEventTrigger? SoundEvent => null;
 }

@@ -15,5 +15,5 @@ public interface IIsDyeable : IEntityTrait
     /// The text that will display when interacting with this entity with a dye when playing with Touch-screen controls.
     /// </summary>
     [TraitProperty]
-    public abstract string InteractText { get; }
+    public virtual string? InteractText => null;
 }

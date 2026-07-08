@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Reflection;
 
 using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Block;
@@ -116,20 +117,134 @@ public class Pack
 
     /// <summary>
     /// Adds an entity to the pack.
+    /// When <paramref name="discoverClient"/> is true (default), also registers a matching
+    /// <see cref="ClientEntity{TParent}"/> and nested <see cref="RenderController"/> types if found.
     /// </summary>
-    public Pack AddEntity<TEntity>() where TEntity : Entity, new()
+    public Pack AddEntity<TEntity>(bool discoverClient = true) where TEntity : Entity, new()
     {
         BehaviourPack.AddEntity<TEntity>();
+        if (discoverClient)
+            DiscoverAndRegisterClientSide(typeof(TEntity));
         return this;
     }
 
     /// <summary>
     /// Adds an entity to the pack.
+    /// When <paramref name="discoverClient"/> is true (default), also registers a matching
+    /// client entity / render controller if found.
     /// </summary>
-    public Pack AddEntity(Type tEntity)
+    public Pack AddEntity(Type tEntity, bool discoverClient = true)
     {
         BehaviourPack.AddEntity(tEntity);
+        if (discoverClient)
+            DiscoverAndRegisterClientSide(tEntity);
         return this;
+    }
+
+    private void DiscoverAndRegisterClientSide(Type tEntity)
+    {
+        if (!typeof(Entity).IsAssignableFrom(tEntity))
+            return;
+
+        Entity? inst = null;
+        try
+        {
+            inst = Activator.CreateInstance(tEntity) as Entity;
+        }
+        catch
+        {
+            // ignore construct failures; discovery is best-effort
+        }
+
+        Type? clientType = inst?.ClientEntityType;
+        if (clientType is null)
+            clientType = FindClientEntityType(tEntity);
+
+        if (clientType is not null && typeof(ClientEntity).IsAssignableFrom(clientType))
+            ResourcePack.AddClientEntity(clientType);
+
+        // Nested RenderController types on the entity or client type
+        foreach (Type nested in EnumerateNestedRenderControllers(tEntity, clientType))
+            ResourcePack.AddRenderController(nested);
+    }
+
+    private static Type? FindClientEntityType(Type tEntity)
+    {
+        // Nested type named Client: Entity.Client : ClientEntity<Entity>
+        Type? nestedClient = tEntity.GetNestedType("Client", BindingFlags.Public | BindingFlags.NonPublic);
+        if (nestedClient is not null && IsClientEntityFor(nestedClient, tEntity))
+            return nestedClient;
+
+        List<Type> matches = tEntity.Assembly.GetTypes()
+            .Where(t => !t.IsAbstract && !t.IsInterface && IsClientEntityFor(t, tEntity))
+            .ToList();
+
+        if (matches.Count == 0)
+            return null;
+        if (matches.Count == 1)
+            return matches[0];
+
+        // Prefer conventional name: FooEntity -> FooClientEntity, Bar -> BarClientEntity
+        string expectedName = tEntity.Name.EndsWith("Entity", StringComparison.Ordinal)
+            ? tEntity.Name[..^"Entity".Length] + "ClientEntity"
+            : tEntity.Name + "ClientEntity";
+
+        Type? conventional = matches.FirstOrDefault(t => t.Name == expectedName);
+        if (conventional is not null)
+            return conventional;
+
+        // Prefer same-namespace exact suffix ClientEntity without extra qualifiers
+        Type? simple = matches
+            .Where(t => t.Namespace == tEntity.Namespace && t.Name.EndsWith("ClientEntity", StringComparison.Ordinal))
+            .OrderBy(t => t.Name.Length)
+            .FirstOrDefault();
+        return simple ?? matches[0];
+    }
+
+    private static bool IsClientEntityFor(Type candidate, Type tEntity)
+    {
+        Type? t = candidate;
+        while (t is not null && t != typeof(object))
+        {
+            if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(ClientEntity<>))
+            {
+                Type parentArg = t.GetGenericArguments()[0];
+                return parentArg == tEntity;
+            }
+            t = t.BaseType;
+        }
+
+        // Also accept subclasses of ClientEntity`1 closed over tEntity
+        if (!typeof(ClientEntity).IsAssignableFrom(candidate))
+            return false;
+
+        Type? baseType = candidate.BaseType;
+        while (baseType is not null && baseType != typeof(object))
+        {
+            if (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(ClientEntity<>))
+                return baseType.GetGenericArguments()[0] == tEntity;
+            baseType = baseType.BaseType;
+        }
+
+        return false;
+    }
+
+    private static IEnumerable<Type> EnumerateNestedRenderControllers(Type tEntity, Type? clientType)
+    {
+        foreach (Type nested in tEntity.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            if (typeof(RenderController).IsAssignableFrom(nested) && !nested.IsAbstract)
+                yield return nested;
+        }
+
+        if (clientType is null)
+            yield break;
+
+        foreach (Type nested in clientType.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            if (typeof(RenderController).IsAssignableFrom(nested) && !nested.IsAbstract)
+                yield return nested;
+        }
     }
 
     /// <summary>

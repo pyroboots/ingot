@@ -42,7 +42,7 @@ public interface IBehaviorDropItemFor : IEntityTrait
     /// The loot table that contains the possible loot the entity can drop with this goal.
     /// </summary>
     [TraitProperty]
-    public abstract string LootTable { get; }
+    public virtual string? LootTable => null;
 
     /// <summary>
     /// The maximum height the entities head will look at when dropping the item. The entity will always be looking at its target.

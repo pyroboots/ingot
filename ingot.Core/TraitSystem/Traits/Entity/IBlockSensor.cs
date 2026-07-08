@@ -15,7 +15,7 @@ public interface IBlockSensor : IEntityTrait
     /// List of blocks to watch for being broken to fire off a specified event. If a block is in multiple lists, multiple events will fire.
     /// </summary>
     [TraitProperty]
-    public abstract EntityBlockBreakEntry[] OnBreak { get; }
+    public virtual EntityBlockBreakEntry[]? OnBreak => null;
 
     /// <summary>
     /// The maximum radial distance in which a specified block can be detected. The biggest radius is 32.0.
@@ -27,5 +27,5 @@ public interface IBlockSensor : IEntityTrait
     /// List of sources that break the block to listen for. If none are specified, all block breaks will be detected.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Sources { get; }
+    public virtual EntityFilter? Sources => null;
 }

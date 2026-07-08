@@ -15,7 +15,7 @@ public interface IGenetics : IEntityTrait
     /// The list of genes that this entity has and will cross with a partner during breeding.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Genes { get; }
+    public virtual dynamic? Genes => null;
 
     /// <summary>
     /// Chance that an allele will be replaced with a random one instead of the parent's allele during birth.

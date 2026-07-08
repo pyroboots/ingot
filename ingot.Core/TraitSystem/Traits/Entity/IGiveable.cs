@@ -21,8 +21,8 @@ public interface IGiveable : IEntityTrait
     /// The list of items that can be given to the entity to place in their inventory. Can be an array or a single item string.
     /// </summary>
     [TraitProperty]
-    public abstract string[] Items { get; }
+    public virtual string[]? Items => null;
 
     [TraitProperty]
-    public abstract string OnGive { get; }
+    public virtual string? OnGive => null;
 }

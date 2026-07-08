@@ -15,11 +15,11 @@ public interface IConditionalBandwidthOptimization : IEntityTrait
     /// The object containing the conditional bandwidth optimization values.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic ConditionalValues { get; }
+    public virtual dynamic? ConditionalValues => null;
 
     /// <summary>
     /// The object containing the default bandwidth optimization values.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic DefaultValues { get; }
+    public virtual dynamic? DefaultValues => null;
 }

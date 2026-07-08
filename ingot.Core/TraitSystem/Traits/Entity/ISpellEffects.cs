@@ -15,11 +15,11 @@ public interface ISpellEffects : IEntityTrait
     /// List of effects to add to this entity.
     /// </summary>
     [TraitProperty]
-    public abstract EntitySpellEffect[] AddEffects { get; }
+    public virtual EntitySpellEffect[]? AddEffects => null;
 
     /// <summary>
     /// List of identifiers of effects to be removed from this entity after adding this component
     /// </summary>
     [TraitProperty]
-    public abstract string RemoveEffects { get; }
+    public virtual string? RemoveEffects => null;
 }

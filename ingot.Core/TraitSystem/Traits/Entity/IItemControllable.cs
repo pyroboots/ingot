@@ -15,5 +15,5 @@ public interface IItemControllable : IEntityTrait
     /// List of items that can be used to control this entity while ridden. Can be a single string or an array of strings.
     /// </summary>
     [TraitProperty]
-    public abstract string[] ControlItems { get; }
+    public virtual string[]? ControlItems => null;
 }

@@ -15,7 +15,7 @@ public interface IAgeable : IEntityTrait
     /// List of items that are dropped when an entity grows up
     /// </summary>
     [TraitProperty]
-    public abstract string[] DropItems { get; }
+    public virtual string[]? DropItems => null;
 
     /// <summary>
     /// Length of time before an entity grows up (-1 to always stay a baby)
@@ -27,35 +27,35 @@ public interface IAgeable : IEntityTrait
     /// List of items that can be fed to an entity to age them up. Can be a single item string, an array of strings, or an array of objects with item and growth properties.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic FeedItems { get; }
+    public virtual dynamic? FeedItems => null;
 
     /// <summary>
     /// Event to fire when the entity grows up. Can be an event name string or an object with <c>event</c> / <c>target</c>.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic GrowUp { get; }
+    public virtual dynamic? GrowUp => null;
 
     /// <summary>
     /// List of conditions to meet so that the entity can be fed.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter InteractFilters { get; }
+    public virtual EntityFilter? InteractFilters => null;
 
     [TraitProperty]
-    public abstract string PauseGrowth { get; }
+    public virtual string? PauseGrowth => null;
 
     /// <summary>
     /// List of items that can be fed to a baby entity to pause its growth. This item requires a format version of at least 1.26.10.
     /// </summary>
     [TraitProperty]
-    public abstract string[] PauseGrowthItems { get; }
+    public virtual string[]? PauseGrowthItems => null;
 
     [TraitProperty]
-    public abstract string ResetGrowth { get; }
+    public virtual string? ResetGrowth => null;
 
     /// <summary>
     /// List of items that can be fed to a baby entity to reset its growth timer. This item requires a format version of at least 1.26.10.
     /// </summary>
     [TraitProperty]
-    public abstract string[] ResetGrowthItems { get; }
+    public virtual string[]? ResetGrowthItems => null;
 }

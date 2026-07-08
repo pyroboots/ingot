@@ -27,7 +27,7 @@ public interface IBehaviorJumpAroundTarget : IEntityTrait
     /// Conditions that need to be met for the behavior to start.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// The jump angles in float degrees that are allowed when performing the jump. The order in which the angles are chosen is randomized.

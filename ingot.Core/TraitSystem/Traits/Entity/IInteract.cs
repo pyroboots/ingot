@@ -30,7 +30,7 @@ public interface IInteract : IEntityTrait
     /// The entity's slot to remove and drop the item from, if any, upon successful interaction.
     /// </summary>
     [TraitProperty]
-    public abstract string DropItemSlot { get; }
+    public virtual string? DropItemSlot => null;
 
     /// <summary>
     /// Per-interaction field; not valid at the root of <c>minecraft:interact</c>.
@@ -43,7 +43,7 @@ public interface IInteract : IEntityTrait
     /// The entity's slot to equip the item to, if any, upon successful interaction.
     /// </summary>
     [TraitProperty]
-    public abstract string EquipItemSlot { get; }
+    public virtual string? EquipItemSlot => null;
 
     /// <summary>
     /// Per-interaction field; not valid at the root of <c>minecraft:interact</c>.
@@ -63,7 +63,7 @@ public interface IInteract : IEntityTrait
     /// Text to show when the player is able to interact in this way with this entity when playing with touch-screen controls.
     /// </summary>
     [TraitProperty]
-    public abstract string InteractText { get; }
+    public virtual string? InteractText => null;
 
     /// <summary>
     /// The list of interactions for this entity.

@@ -21,7 +21,7 @@ public interface IBehaviorMeleeAttack : IEntityTrait
     /// Defines the entity types this entity will attack.
     /// </summary>
     [TraitProperty]
-    public abstract string AttackTypes { get; }
+    public virtual string? AttackTypes => null;
 
     /// <summary>
     /// Allows the mob, if on fire and empty handed, to ignite its target upon a successful attack.

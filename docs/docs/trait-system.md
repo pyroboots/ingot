@@ -133,6 +133,8 @@ For common mob archetypes, ingot provides **behaviour preset** interfaces in `in
 | `IEntityPresetFlying` | Flying mob |
 | `IEntityPresetFlyingHostile` | Hostile flying mob |
 | `IEntityPresetAquaticHostile` | Hostile aquatic mob |
+| `IEntityPresetPassiveLand` | Livestock-style passive land mob (goals, leash, breathable, lava hurt, …) |
+| `IEntityPresetSameSpeciesOffspring` | Offspring pairs map to the same species id |
 
 Implement a preset on your entity class, then provide the required abstract properties via explicit interface implementation:
 

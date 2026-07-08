@@ -15,7 +15,7 @@ public interface IBarter : IEntityTrait
     /// Loot table that's used to drop a random item.
     /// </summary>
     [TraitProperty]
-    public abstract string BarterTable { get; }
+    public virtual string? BarterTable => null;
 
     /// <summary>
     /// Duration, in seconds, for which mob won't barter items if it was hurt.

@@ -15,11 +15,11 @@ public interface IExperienceReward : IEntityTrait
     /// XP amount (or Molang expression) awarded when this entity is bred.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic OnBred { get; }
+    public virtual dynamic? OnBred => null;
 
     /// <summary>
     /// XP amount (or Molang expression) awarded when this entity dies.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic OnDeath { get; }
+    public virtual dynamic? OnDeath => null;
 }

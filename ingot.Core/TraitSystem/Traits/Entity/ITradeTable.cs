@@ -21,7 +21,7 @@ public interface ITradeTable : IEntityTrait
     /// Name to be displayed while trading with this entity.
     /// </summary>
     [TraitProperty]
-    public abstract string DisplayName { get; }
+    public virtual string? DisplayName => null;
 
     /// <summary>
     /// Used to determine if trading with entity opens the new trade screen.

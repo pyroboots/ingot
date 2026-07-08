@@ -41,3 +41,29 @@ public abstract class EntityComponentGroup : ICompilableFragment, IIdentifiable
         CompilerState.Pop();
     }
 }
+
+/// <summary>
+/// Component group whose parent entity type is <typeparamref name="TParent"/>, so
+/// <see cref="Parent"/> is inferred without re-stating it on every group.
+/// </summary>
+/// <typeparam name="TParent">Behaviour entity that owns this group.</typeparam>
+public abstract class EntityComponentGroup<TParent> : EntityComponentGroup
+    where TParent : Entity, new()
+{
+    /// <inheritdoc/>
+    public override Entity Parent => new TParent();
+
+    /// <summary>
+    /// Builds a group id in the parent entity's namespace with the given name segment
+    /// (e.g. parent <c>test:custom_cow</c> + <c>custom_cow_baby</c>).
+    /// </summary>
+    protected Identifier GroupId(string name) =>
+        new(Parent.Identifier.Namespace, name);
+
+    /// <summary>
+    /// Builds a group id by appending a suffix to the parent entity name
+    /// (e.g. parent <c>test:custom_cow</c> + <c>_baby</c> → <c>test:custom_cow_baby</c>).
+    /// </summary>
+    protected Identifier GroupIdFromParent(string suffix) =>
+        Parent.Identifier.WithNameSuffix(suffix);
+}

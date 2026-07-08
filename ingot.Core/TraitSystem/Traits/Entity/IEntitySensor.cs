@@ -27,5 +27,5 @@ public interface IEntitySensor : IEntityTrait
     /// The list of subsensors which sense for entities and emit events when all their conditions are met.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Subsensors { get; }
+    public virtual dynamic? Subsensors => null;
 }

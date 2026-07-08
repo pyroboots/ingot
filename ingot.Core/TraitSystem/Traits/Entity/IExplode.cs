@@ -12,7 +12,7 @@ using ingot.Core.Behaviour.Entity;
 public interface IExplode : IEntityTrait
 {
     [TraitProperty]
-    public abstract dynamic Add { get; }
+    public virtual dynamic? Add => null;
 
     /// <summary>
     /// If true, the explosion will affect blocks and entities under water. This item requires a format version of at least 1.21.40.

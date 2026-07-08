@@ -21,7 +21,7 @@ public interface IDespawn : IEntityTrait
     /// Specifies if the 'min_distance' and 'max_distance' are used in the standard despawn rules.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic DespawnFromDistance { get; }
+    public virtual dynamic? DespawnFromDistance => null;
 
     /// <summary>
     /// Determines if the "min_range_inactivity_timer" is used in the standard despawn rules.
@@ -39,7 +39,7 @@ public interface IDespawn : IEntityTrait
     /// The list of conditions that must be satisfied before the Actor is despawned. If a filter is defined then standard despawn rules are ignored.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// The amount of time in seconds that the mob must be inactive.

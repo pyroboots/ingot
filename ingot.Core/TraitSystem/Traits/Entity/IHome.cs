@@ -15,7 +15,7 @@ public interface IHome : IEntityTrait
     /// Optional list of blocks that can be considered a valid home.
     /// </summary>
     [TraitProperty]
-    public abstract string[] HomeBlockList { get; }
+    public virtual string[]? HomeBlockList => null;
 
     /// <summary>
     /// Optional radius that the entity will be restricted to in relation to its home.

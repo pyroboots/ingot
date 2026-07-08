@@ -63,7 +63,7 @@ public interface IBehaviorTempt : IEntityTrait
     /// Sound to play while the mob is being tempted.
     /// </summary>
     [TraitProperty]
-    public abstract string TemptSound { get; }
+    public virtual string? TemptSound => null;
 
     /// <summary>
     /// Distance in blocks this mob can get tempted by a player holding an item they like.

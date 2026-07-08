@@ -21,13 +21,13 @@ public interface ICelebrateHunt : IEntityTrait
     /// The list of conditions that target of hunt must satisfy to initiate celebration.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter CeleberationTargets { get; }
+    public virtual EntityFilter? CeleberationTargets => null;
 
     /// <summary>
     /// The sound event to play when the mob is celebrating
     /// </summary>
     [TraitProperty]
-    public abstract string CelebrateSound { get; }
+    public virtual string? CelebrateSound => null;
 
     /// <summary>
     /// Duration, in seconds, of celebration

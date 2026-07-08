@@ -33,5 +33,5 @@ public interface IPreferredPath : IEntityTrait
     /// A list of block types with their associated pathfinding costs. Each entry specifies blocks and their cost value.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic PreferredPathBlocks { get; }
+    public virtual dynamic? PreferredPathBlocks => null;
 }

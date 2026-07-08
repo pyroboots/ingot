@@ -110,6 +110,37 @@ public class ClientEntitySounds
     /// Values may be a sound name string or a richer object (volume/pitch/sound).
     /// </summary>
     public required Dictionary<string, object> Events { get; init; }
+
+    /// <summary>
+    /// Maps common gameplay events to vanilla <c>mob.{name}.*</c> sound definitions
+    /// (say / hurt / death / step, plus optional milk).
+    /// </summary>
+    /// <param name="vanillaMobName">Vanilla mob folder name, e.g. <c>cow</c>, <c>pig</c>.</param>
+    /// <param name="includeMilk">When true, adds <c>milk</c> → <c>mob.{name}.milk</c>.</param>
+    /// <param name="pitch">Optional pitch range (default 0.8–1.2).</param>
+    public static ClientEntitySounds FromVanilla(
+        string vanillaMobName,
+        bool includeMilk = false,
+        float[]? pitch = null)
+    {
+        string mob = vanillaMobName.Trim().ToLowerInvariant();
+        Dictionary<string, object> events = new()
+        {
+            ["ambient"] = $"mob.{mob}.say",
+            ["hurt"] = $"mob.{mob}.hurt",
+            ["death"] = $"mob.{mob}.death",
+            ["step"] = $"mob.{mob}.step",
+        };
+        if (includeMilk)
+            events["milk"] = $"mob.{mob}.milk";
+
+        return new ClientEntitySounds
+        {
+            Volume = 1f,
+            Pitch = pitch ?? [0.8f, 1.2f],
+            Events = events,
+        };
+    }
 }
 
 /// <summary>

@@ -48,6 +48,13 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
     public virtual Dictionary<Identifier, IEntityEventAction[]> Events => new();
 
     /// <summary>
+    /// Optional explicit client-entity type for resource-pack visuals.
+    /// When null, <see cref="Pack.AddEntity{TEntity}"/> may discover a
+    /// <c>ClientEntity&lt;TEntity&gt;</c> (or nested <c>Client</c> type) in the same assembly.
+    /// </summary>
+    public virtual Type? ClientEntityType => null;
+
+    /// <summary>
     /// Compiles the <see cref="Entity"/> (as <paramref name="tType"/>) to JSON
     /// </summary>
     /// <param name="tType">Concrete type of <see cref="Entity"/></param>

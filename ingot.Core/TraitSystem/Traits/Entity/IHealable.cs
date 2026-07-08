@@ -15,7 +15,7 @@ public interface IHealable : IEntityTrait
     /// The filter group that defines the conditions for using this item to heal the entity.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// Determines if item can be used regardless of entity being at full health.
@@ -27,5 +27,5 @@ public interface IHealable : IEntityTrait
     /// The array of items that can be used to heal this entity.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Items { get; }
+    public virtual dynamic? Items => null;
 }

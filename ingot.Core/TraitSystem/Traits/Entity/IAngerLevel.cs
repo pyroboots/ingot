@@ -45,7 +45,7 @@ public interface IAngerLevel : IEntityTrait
     /// Conditions that make this entry in the list valid
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter BroadcastFilters { get; }
+    public virtual EntityFilter? BroadcastFilters => null;
 
     /// <summary>
     /// Distance in blocks within which other entities of the same entity type will become angry
@@ -57,13 +57,13 @@ public interface IAngerLevel : IEntityTrait
     /// A list of entity families to broadcast anger to
     /// </summary>
     [TraitProperty]
-    public abstract string[] BroadcastTargets { get; }
+    public virtual string[]? BroadcastTargets => null;
 
     /// <summary>
     /// Event to fire when this entity is calmed down
     /// </summary>
     [TraitProperty]
-    public abstract string CalmEvent { get; }
+    public virtual string? CalmEvent => null;
 
     /// <summary>
     /// The default amount of annoyingness for any given nuisance. Specifies how much to raise anger level on each provocation.
@@ -90,7 +90,7 @@ public interface IAngerLevel : IEntityTrait
     /// Filter out mob types that it should not attack while angry (other Piglins)
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// The maximum anger level that can be reached. Applies to any nuisance Value must be &gt;= 0.
@@ -102,13 +102,13 @@ public interface IAngerLevel : IEntityTrait
     /// Filter that is applied to determine if a mob can be a nuisance
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter NuisanceFilter { get; }
+    public virtual EntityFilter? NuisanceFilter => null;
 
     /// <summary>
     /// Sounds to play when the entity is getting provoked. Evaluated in order. First matching condition wins
     /// </summary>
     [TraitProperty]
-    public abstract dynamic OnIncreaseSounds { get; }
+    public virtual dynamic? OnIncreaseSounds => null;
 
     /// <summary>
     /// Defines if the mob should remove target if it falls below 'angry' threshold

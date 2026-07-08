@@ -15,5 +15,5 @@ public interface IInsideBlockNotifier : IEntityTrait
     /// List of blocks, with certain block states, that we are monitoring to see if the entity is inside.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic BlockList { get; }
+    public virtual dynamic? BlockList => null;
 }

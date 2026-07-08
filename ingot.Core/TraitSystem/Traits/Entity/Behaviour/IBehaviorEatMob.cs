@@ -24,13 +24,13 @@ public interface IBehaviorEatMob : IEntityTrait
     /// Sets the sound that should play when eating a mob.
     /// </summary>
     [TraitProperty]
-    public abstract string EatMobSound { get; }
+    public virtual string? EatMobSound => null;
 
     /// <summary>
     /// The loot table for loot to be dropped when eating a mob.
     /// </summary>
     [TraitProperty]
-    public abstract string LootTable { get; }
+    public virtual string? LootTable => null;
 
     /// <summary>
     /// As priority approaches 0, the priority is increased. The higher the priority, the sooner this behavior will be executed as a goal.

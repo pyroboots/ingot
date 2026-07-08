@@ -21,5 +21,5 @@ public interface IEquipItem : IEntityTrait
     /// List of items that the entity should not equip.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic ExcludedItems { get; }
+    public virtual dynamic? ExcludedItems => null;
 }

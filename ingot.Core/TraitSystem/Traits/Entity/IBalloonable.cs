@@ -27,13 +27,13 @@ public interface IBalloonable : IEntityTrait
     /// Event to call when this entity is ballooned.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnBalloon { get; }
+    public virtual EntityEventTrigger? OnBalloon => null;
 
     /// <summary>
     /// Event to call when this entity is unballooned.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnUnballoon { get; }
+    public virtual EntityEventTrigger? OnUnballoon => null;
 
     /// <summary>
     /// Distance in blocks at which the 'spring' effect that lifts it.

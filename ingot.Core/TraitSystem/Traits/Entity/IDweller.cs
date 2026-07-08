@@ -24,7 +24,7 @@ public interface IDweller : IEntityTrait
     public abstract bool CanMigrate { get; }
 
     [TraitProperty]
-    public abstract string DwellerRole { get; }
+    public virtual string? DwellerRole => null;
 
     /// <summary>
     /// A padding distance for checking if the entity is within the dwelling.
@@ -36,13 +36,13 @@ public interface IDweller : IEntityTrait
     /// The role of which the entity plays in the dwelling. Current Roles: inhabitant, defender, hostile, passive.
     /// </summary>
     [TraitProperty]
-    public abstract string DwellingRole { get; }
+    public virtual string? DwellingRole => null;
 
     /// <summary>
     /// The type of dwelling the entity wishes to join. Current Types: village.
     /// </summary>
     [TraitProperty]
-    public abstract string DwellingType { get; }
+    public virtual string? DwellingType => null;
 
     /// <summary>
     /// Determines how much reputation players are rewarded on first founding.
@@ -54,7 +54,7 @@ public interface IDweller : IEntityTrait
     /// Allows the user to define a starting profession for this particular Dweller, instead of letting them choose organically. (They still need to gain experience from trading before this takes effect.)
     /// </summary>
     [TraitProperty]
-    public abstract string PreferredProfession { get; }
+    public virtual string? PreferredProfession => null;
 
     /// <summary>
     /// How often the entity checks on their dwelling status in ticks. Positive values only.

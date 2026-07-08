@@ -27,11 +27,11 @@ public interface INameable : IEntityTrait
     /// Trigger to run when the entity gets named
     /// </summary>
     [TraitProperty]
-    public abstract string DefaultTrigger { get; }
+    public virtual string? DefaultTrigger => null;
 
     /// <summary>
     /// Describes the special names for this entity and the events to call when the entity acquires those names
     /// </summary>
     [TraitProperty]
-    public abstract dynamic NameActions { get; }
+    public virtual dynamic? NameActions => null;
 }

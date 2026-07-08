@@ -12,13 +12,13 @@ using ingot.Core.Behaviour.Entity;
 public interface IDryingOutTimer : IEntityTrait
 {
     [TraitProperty]
-    public abstract string DriedOutEvent { get; }
+    public virtual string? DriedOutEvent => null;
 
     [TraitProperty]
-    public abstract string RecoverAfterDriedOutEvent { get; }
+    public virtual string? RecoverAfterDriedOutEvent => null;
 
     [TraitProperty]
-    public abstract string StoppedDryingOutEvent { get; }
+    public virtual string? StoppedDryingOutEvent => null;
 
     /// <summary>
     /// Amount of time in seconds to dry out fully.

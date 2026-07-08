@@ -39,7 +39,7 @@ public interface INavigationGeneric : IEntityTrait
     /// Tells the pathfinder which blocks to avoid when creating a path
     /// </summary>
     [TraitProperty]
-    public abstract string[] BlocksToAvoid { get; }
+    public virtual string[]? BlocksToAvoid => null;
 
     /// <summary>
     /// Tells the pathfinder whether or not it can jump out of water (like a dolphin)
@@ -126,5 +126,5 @@ public interface INavigationGeneric : IEntityTrait
     public virtual bool IsAmphibious => false;
 
     [TraitProperty]
-    public abstract string UsingDoorAnnotation { get; }
+    public virtual string? UsingDoorAnnotation => null;
 }

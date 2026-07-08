@@ -12,11 +12,11 @@ using ingot.Core.Behaviour.Entity;
 public interface IAttackCooldown : IEntityTrait
 {
     [TraitProperty]
-    public abstract string AttackCooldownCompleteEvent { get; }
+    public virtual string? AttackCooldownCompleteEvent => null;
 
     /// <summary>
     /// Amount of time in seconds for the cooldown. Can be specified as a number or a pair of numbers (min and max).
     /// </summary>
     [TraitProperty]
-    public abstract FloatRange AttackCooldownTime { get; }
+    public virtual FloatRange? AttackCooldownTime => null;
 }

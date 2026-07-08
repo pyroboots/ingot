@@ -15,5 +15,5 @@ public interface IEquippable : IEntityTrait
     /// List of slots and the item that can be equipped.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Slots { get; }
+    public virtual dynamic? Slots => null;
 }

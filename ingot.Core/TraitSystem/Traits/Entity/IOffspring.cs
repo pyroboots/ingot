@@ -21,7 +21,7 @@ public interface IOffspring : IEntityTrait
     /// Determines how likely the baby of parents with the same variant will deny that variant and take a random variant within the given range instead.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic DenyParentsVariant { get; }
+    public virtual dynamic? DenyParentsVariant => null;
 
     /// <summary>
     /// If true, the babies will be automatically tamed if its parents are
@@ -33,7 +33,7 @@ public interface IOffspring : IEntityTrait
     /// Determines how likely the babies are to NOT inherit one of their parent's variances. Values are between 0.0 and 1.0, with a higher number meaning more likely to mutate.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic MutationFactor { get; }
+    public virtual dynamic? MutationFactor => null;
 
     /// <summary>
     /// The map of entity to offspring definitions that this entity can make offspring with
@@ -46,13 +46,13 @@ public interface IOffspring : IEntityTrait
     /// List of attributes that should benefit from parent centric attribute blending. For example, horses blend their health, movement, and jump_strength in their offspring.
     /// </summary>
     [TraitProperty]
-    public abstract string[] ParentCentricAttributeBlending { get; }
+    public virtual string[]? ParentCentricAttributeBlending => null;
 
     /// <summary>
     /// Entity properties that should be inherited from the parent entities (map or list).
     /// </summary>
     [TraitProperty]
-    public abstract dynamic PropertyInheritance { get; }
+    public virtual dynamic? PropertyInheritance => null;
 
     /// <summary>
     /// Range used to determine random extra variant.

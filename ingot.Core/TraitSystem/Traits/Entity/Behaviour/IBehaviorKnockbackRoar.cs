@@ -75,7 +75,7 @@ public interface IBehaviorKnockbackRoar : IEntityTrait
     public virtual int KnockbackVerticalStrength => 4;
 
     [TraitProperty]
-    public abstract string OnRoarEnd { get; }
+    public virtual string? OnRoarEnd => null;
 
     /// <summary>
     /// As priority approaches 0, the priority is increased. The higher the priority, the sooner this behavior will be executed as a goal.

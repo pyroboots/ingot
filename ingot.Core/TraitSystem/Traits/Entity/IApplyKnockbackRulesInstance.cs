@@ -27,7 +27,7 @@ public interface IApplyKnockbackRulesInstance : IEntityTrait
     /// Filter for the entity type that will be affected by these knockback rules.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filter { get; }
+    public virtual EntityFilter? Filter => null;
 
     /// <summary>
     /// Power with which a target should be knocked backwards.

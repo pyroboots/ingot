@@ -21,7 +21,7 @@ public interface IAmbientSoundInterval : IEntityTrait
     /// List of dynamic level sound events, with conditions for choosing between them. Evaluated in order, first one wins. If none evaluate to true, 'event_name' will take precedence.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic EventNames { get; }
+    public virtual dynamic? EventNames => null;
 
     /// <summary>
     /// Maximum time in seconds to randomly add to the ambient sound delay time.

@@ -15,7 +15,7 @@ public interface IAttack : IEntityTrait
     /// Range of the random amount of damage the melee attack deals.
     /// </summary>
     [TraitProperty]
-    public abstract FloatRange Damage { get; }
+    public virtual FloatRange? Damage => null;
 
     /// <summary>
     /// Amplifier level (potion tier) of the status ailment applied to the damaged entity.
@@ -33,5 +33,5 @@ public interface IAttack : IEntityTrait
     /// Identifier of the status ailment to apply to an entity attacked by this entity's melee attack.
     /// </summary>
     [TraitProperty]
-    public abstract string EffectName { get; }
+    public virtual string? EffectName => null;
 }

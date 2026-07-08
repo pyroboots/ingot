@@ -27,7 +27,7 @@ public interface IReflectProjectiles : IEntityTrait
     /// [EXPERIMENTAL] An array of strings defining the types of projectiles that are reflected when they hit the entity.
     /// </summary>
     [TraitProperty]
-    public abstract string[] ReflectedProjectiles { get; }
+    public virtual string[]? ReflectedProjectiles => null;
 
     /// <summary>
     /// [EXPERIMENTAL] A Molang expression defining the velocity scaling of the reflected projectile. Values below 1 decrease the projectile's velocity, and values above 1 increase it.

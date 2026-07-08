@@ -18,25 +18,25 @@ public interface ITamemount : IEntityTrait
     public virtual int AttemptTemperMod => 5;
 
     [TraitProperty]
-    public abstract dynamic AutoRejectItems { get; }
+    public virtual dynamic? AutoRejectItems => null;
 
     /// <summary>
     /// The list of items that, if carried while interacting with the entity, will anger it.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Autorejectitems { get; }
+    public virtual dynamic? Autorejectitems => null;
 
     /// <summary>
     /// The list of items that can be used to increase the entity's temper and speed up the taming process.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFeedItem[] FeedItems { get; }
+    public virtual EntityFeedItem[]? FeedItems => null;
 
     /// <summary>
     /// The text that shows in the feeding interact button.
     /// </summary>
     [TraitProperty]
-    public abstract string FeedText { get; }
+    public virtual string? FeedText => null;
 
     /// <summary>
     /// The maximum value for the entity's random starting temper.
@@ -54,11 +54,11 @@ public interface ITamemount : IEntityTrait
     /// The text that shows in the riding interact button.
     /// </summary>
     [TraitProperty]
-    public abstract string RideText { get; }
+    public virtual string? RideText => null;
 
     /// <summary>
     /// Event that triggers when the entity becomes tamed.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger TameEvent { get; }
+    public virtual EntityEventTrigger? TameEvent => null;
 }

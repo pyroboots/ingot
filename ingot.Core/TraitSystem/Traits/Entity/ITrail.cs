@@ -22,7 +22,7 @@ public interface ITrail : IEntityTrait
     /// One or more conditions that must be met in order to cause the chosen block type to spawn.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter SpawnFilter { get; }
+    public virtual EntityFilter? SpawnFilter => null;
 
     /// <summary>
     /// The distance from the entities current position to spawn the block.

@@ -12,14 +12,14 @@ using ingot.Core.Behaviour.Entity;
 public interface IMovement : IEntityTrait
 {
     /// <summary>
-    /// Maximum movement speed this entity can have.
-    /// </summary>
-    [TraitProperty]
-    public abstract float Max { get; }
-
-    /// <summary>
     /// The base movement speed value. Higher values result in faster movement. Can be a single number or a range object with range_min and range_max properties.
     /// </summary>
     [TraitProperty]
     public abstract float Value { get; }
+
+    /// <summary>
+    /// Maximum movement speed this entity can have. Defaults to <see cref="Value"/>.
+    /// </summary>
+    [TraitProperty]
+    public virtual float Max => Value;
 }

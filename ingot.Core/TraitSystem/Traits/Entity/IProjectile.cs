@@ -52,7 +52,7 @@ public interface IProjectile : IEntityTrait
     /// Identifier of the sound to play when the projectile hits a block. Defaults to hit_sound when empty.
     /// </summary>
     [TraitProperty]
-    public abstract string HitGroundSound { get; }
+    public virtual string? HitGroundSound => null;
 
     /// <summary>
     /// If true, when the projectile hits a vehicle with at least one passenger, the on-hit behavior is applied to the passenger closest to the impact point instead of the vehicle itself.
@@ -64,7 +64,7 @@ public interface IProjectile : IEntityTrait
     /// Identifier of the sound to play when the projectile hits an entity. Also used for block hits when hit_ground_sound is not specified.
     /// </summary>
     [TraitProperty]
-    public abstract string HitSound { get; }
+    public virtual string? HitSound => null;
 
     /// <summary>
     /// If true, the projectile steers towards an active target while in flight.
@@ -76,7 +76,7 @@ public interface IProjectile : IEntityTrait
     /// Array of entity identifiers that the projectile will pass through without registering a hit.
     /// </summary>
     [TraitProperty]
-    public abstract string[] IgnoredEntities { get; }
+    public virtual string[]? IgnoredEntities => null;
 
     /// <summary>
     /// Fraction of the projectile's velocity preserved each tick while traveling through air. Values below 1.0 cause it to slow down over time.
@@ -130,7 +130,7 @@ public interface IProjectile : IEntityTrait
     /// Map of on-hit subcomponents that drive what happens when the projectile impacts a block, fluid, or entity. Each key is a subcomponent name and its value is that subcomponent's configuration.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnHit { get; }
+    public virtual EntityEventTrigger? OnHit => null;
 
     /// <summary>
     /// Number of ticks immediately after launch during which the projectile cannot hit its own shooter.
@@ -172,7 +172,7 @@ public interface IProjectile : IEntityTrait
     /// Identifier of the sound to play when the projectile is fired.
     /// </summary>
     [TraitProperty]
-    public abstract string ShootSound { get; }
+    public virtual string? ShootSound => null;
 
     /// <summary>
     /// If true, the projectile is aimed at the shooter's current target (when one exists) rather than straight ahead.

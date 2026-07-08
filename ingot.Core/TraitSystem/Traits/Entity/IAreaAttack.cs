@@ -15,7 +15,7 @@ public interface IAreaAttack : IEntityTrait
     /// The type of damage that is applied to entities that enter the damage range.
     /// </summary>
     [TraitProperty]
-    public abstract string Cause { get; }
+    public virtual string? Cause => null;
 
     /// <summary>
     /// Attack cooldown (in seconds) for how often this entity can attack a target.
@@ -39,13 +39,13 @@ public interface IAreaAttack : IEntityTrait
     /// A localization key to use as the death message when the area attack kills an entity. If empty, the default death message for the damage cause is used.
     /// </summary>
     [TraitProperty]
-    public abstract string DeathMessageOverride { get; }
+    public virtual string? DeathMessageOverride => null;
 
     /// <summary>
     /// The set of entities that are valid to apply the damage to when within range.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter EntityFilter { get; }
+    public virtual EntityFilter? EntityFilter => null;
 
     /// <summary>
     /// If the entity should play their attack sound when attacking a target.

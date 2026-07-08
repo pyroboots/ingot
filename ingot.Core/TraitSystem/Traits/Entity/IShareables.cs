@@ -39,7 +39,7 @@ public interface IShareables : IEntityTrait
     /// List of items or item tags that the entity wants to share.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Items { get; }
+    public virtual dynamic? Items => null;
 
     /// <summary>
     /// Boolean value that controls if the mob is able to pick up more of the same item if it is already holding that item

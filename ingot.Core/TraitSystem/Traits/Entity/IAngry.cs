@@ -15,7 +15,7 @@ public interface IAngry : IEntityTrait
     /// The sound event to play when the mob is angry
     /// </summary>
     [TraitProperty]
-    public abstract string AngrySound { get; }
+    public virtual string? AngrySound => null;
 
     /// <summary>
     /// If set, other entities of the same entity definition within the broadcastRange will also become angry
@@ -45,7 +45,7 @@ public interface IAngry : IEntityTrait
     /// Conditions that make this entry in the list valid
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter BroadcastFilters { get; }
+    public virtual EntityFilter? BroadcastFilters => null;
 
     /// <summary>
     /// Distance in blocks within which other entities of the same entity type will become angry
@@ -57,10 +57,10 @@ public interface IAngry : IEntityTrait
     /// A list of entity families to broadcast anger to
     /// </summary>
     [TraitProperty]
-    public abstract string[] BroadcastTargets { get; }
+    public virtual string[]? BroadcastTargets => null;
 
     [TraitProperty]
-    public abstract string CalmEvent { get; }
+    public virtual string? CalmEvent => null;
 
     /// <summary>
     /// The amount of time in seconds that the entity will be angry.
@@ -78,7 +78,7 @@ public interface IAngry : IEntityTrait
     /// Filter out mob types that it should not attack while angry (other Piglins)
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// The range of time in seconds to randomly wait before playing the sound again.

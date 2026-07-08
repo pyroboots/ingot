@@ -15,7 +15,7 @@ public interface IGroupSize : IEntityTrait
     /// The list of conditions that must be satisfied for other entities to be counted towards group size.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// Radius from center of entity.

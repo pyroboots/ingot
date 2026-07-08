@@ -78,7 +78,7 @@ public interface IBehaviorFireAtTarget : IEntityTrait
     /// Actor definition to use as projectile for the ranged attack. The actor must be a projectile. This field is required for the goal to be usable.
     /// </summary>
     [TraitProperty]
-    public abstract string ProjectileDef { get; }
+    public virtual string? ProjectileDef => null;
 
     /// <summary>
     /// Field of view (in degrees) when using sensing to detect a target for attack.

@@ -74,7 +74,7 @@ public class ClientEntityPackCompileTest
         using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
 
         PackTestBuilder.Create()
-            .AddEntity<TestEntity>()
+            .AddEntity<TestEntity>(discoverClient: false)
             .AddClientEntity<TestClientEntityWithTexturePath>()
             .Compile(output.Path, verbose: false);
 

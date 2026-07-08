@@ -21,7 +21,7 @@ public interface IBehaviorJumpToBlock : IEntityTrait
     /// Blocks that the mob can't jump to.
     /// </summary>
     [TraitProperty]
-    public abstract string[] ForbiddenBlocks { get; }
+    public virtual string[]? ForbiddenBlocks => null;
 
     /// <summary>
     /// The maximum velocity with which the mob can jump.
@@ -45,7 +45,7 @@ public interface IBehaviorJumpToBlock : IEntityTrait
     /// Blocks that the mob prefers jumping to.
     /// </summary>
     [TraitProperty]
-    public abstract string[] PreferredBlocks { get; }
+    public virtual string[]? PreferredBlocks => null;
 
     /// <summary>
     /// Chance (between 0.0 and 1.0) that the mob will jump to a preferred block, if in range. Only matters if preferred blocks are defined.

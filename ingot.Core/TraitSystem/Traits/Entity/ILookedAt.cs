@@ -21,7 +21,7 @@ public interface ILookedAt : IEntityTrait
     /// Defines which entities are considered when searching for entities looking at the owner entity.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// Limits the search to only the nearest Player that meets the specified "filters" rather than all nearby entities.
@@ -39,7 +39,7 @@ public interface ILookedAt : IEntityTrait
     /// A list of locations on the owner entity towards which line of sight checks are performed. At least one location must be unobstructed for the entity to be considered as looked at.
     /// </summary>
     [TraitProperty]
-    public abstract string[] LookAtLocations { get; }
+    public virtual string[]? LookAtLocations => null;
 
     /// <summary>
     /// Specifies the range for the random number of seconds that must pass before the owner entity can check again for entities looking at it, after detecting an entity looking at it.
@@ -51,7 +51,7 @@ public interface ILookedAt : IEntityTrait
     /// Defines the event to trigger when an entity is detected looking at the owner entity.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger LookedAtEvent { get; }
+    public virtual EntityEventTrigger? LookedAtEvent => null;
 
     /// <summary>
     /// Defines the minimum, continuous time the owner entity has to be looked at before being considered as such. Defaults to 0 if not explicitly specified.
@@ -63,7 +63,7 @@ public interface ILookedAt : IEntityTrait
     /// Defines the event to trigger when no entity is found looking at the owner entity.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger NotLookedAtEvent { get; }
+    public virtual EntityEventTrigger? NotLookedAtEvent => null;
 
     /// <summary>
     /// When true, the field of view narrows as the distance between the owner entity and the entity looking at it increases.

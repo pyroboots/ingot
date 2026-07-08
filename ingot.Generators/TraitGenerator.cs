@@ -235,8 +235,13 @@ public sealed class TraitGenerator : IAsyncDisposable
                 continue;
 
             string csharpType = MapType(prop.RawType);
-            bool isAbstract = string.IsNullOrEmpty(prop.DefaultValue);
-            string defaultExpr = isAbstract ? "" : FormatDefaultValue(csharpType, prop.DefaultValue);
+            bool hasDefault = !string.IsNullOrEmpty(prop.DefaultValue);
+            if (pascalName.Contains("Identifier", StringComparison.Ordinal) && csharpType == "dynamic")
+                csharpType = "Identifier";
+
+            // Optional / reference-like fields without a documented default omit at compile (null skip)
+            // instead of forcing every implementer to write `=> null!`.
+            bool optionalNullDefault = !hasDefault && IsOptionalTraitPropertyType(csharpType);
 
             if (!string.IsNullOrEmpty(prop.Description))
             {
@@ -246,14 +251,24 @@ public sealed class TraitGenerator : IAsyncDisposable
             }
             sb.AppendLine("    [TraitProperty]");
 
-            if (isAbstract)
+            if (optionalNullDefault)
             {
-                if (pascalName.Contains("Identifier", StringComparison.Ordinal)) csharpType = "Identifier";
+                string nullableType = csharpType is "string" or "dynamic"
+                    ? $"{csharpType}?"
+                    : csharpType.EndsWith('?')
+                        ? csharpType
+                        : $"{csharpType}?";
+                sb.AppendLine($"    public virtual {nullableType} {pascalName} => null;");
+            }
+            else if (!hasDefault)
+            {
                 sb.AppendLine($"    public abstract {csharpType} {pascalName} {{ get; }}");
             }
             else
+            {
+                string defaultExpr = FormatDefaultValue(csharpType, prop.DefaultValue);
                 sb.AppendLine($"    public virtual {csharpType} {pascalName} => {defaultExpr};");
-
+            }
             sb.AppendLine();
         }
 
@@ -263,6 +278,19 @@ public sealed class TraitGenerator : IAsyncDisposable
         sb.AppendLine("}");
         return sb.ToString();
     }
+
+    /// <summary>
+    /// Types that are safe to default to null when the docs omit a default value.
+    /// Value types stay abstract (or use documented defaults) so required numbers are still forced.
+    /// </summary>
+    private static bool IsOptionalTraitPropertyType(string csharpType) =>
+        csharpType is "dynamic" or "string"
+        || csharpType.EndsWith("[]", StringComparison.Ordinal)
+        || csharpType.StartsWith("List<", StringComparison.Ordinal)
+        || csharpType.StartsWith("Dictionary<", StringComparison.Ordinal)
+        || csharpType is "Identifier" or "EntityFilter" or "EntityEventTrigger"
+            or "EntityFeedItem" or "EntityRider" or "EntitySpellEffect"
+            or "FloatRange" or "IntRange";
 
     private static string MapType(string rawType)
     {

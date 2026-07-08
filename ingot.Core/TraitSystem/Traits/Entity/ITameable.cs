@@ -18,14 +18,14 @@ public interface ITameable : IEntityTrait
     public virtual float Probability => 1f;
 
     [TraitProperty]
-    public abstract string TameEvent { get; }
+    public virtual string? TameEvent => null;
 
     /// <summary>
     /// The list of items that can be used to tame this entity
     /// </summary>
     [TraitProperty]
-    public abstract string[] TameItems { get; }
+    public virtual string[]? TameItems => null;
 
     [TraitProperty]
-    public abstract string Tameitems { get; }
+    public virtual string? Tameitems => null;
 }

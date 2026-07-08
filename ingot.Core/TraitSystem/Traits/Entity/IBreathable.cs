@@ -15,7 +15,7 @@ public interface IBreathable : IEntityTrait
     /// List of blocks this entity can breathe in, in addition to the selected items above.
     /// </summary>
     [TraitProperty]
-    public abstract string[] BreatheBlocks { get; }
+    public virtual string[]? BreatheBlocks => null;
 
     /// <summary>
     /// If set, this entity can breathe in air.
@@ -65,7 +65,7 @@ public interface IBreathable : IEntityTrait
     /// List of blocks this entity cannot breathe in, in addition to the selected items above.
     /// </summary>
     [TraitProperty]
-    public abstract string[] NonBreatheBlocks { get; }
+    public virtual string[]? NonBreatheBlocks => null;
 
     /// <summary>
     /// Time in seconds between suffocation damage.

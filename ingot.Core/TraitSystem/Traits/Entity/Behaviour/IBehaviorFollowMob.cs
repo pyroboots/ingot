@@ -15,13 +15,13 @@ public interface IBehaviorFollowMob : IEntityTrait
     /// If non-empty, provides criteria for filtering which nearby Mobs can be followed.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// The type of actor to prefer following. If left unspecified, a random actor among those in range will be chosen.
     /// </summary>
     [TraitProperty]
-    public abstract string PreferredActorType { get; }
+    public virtual string? PreferredActorType => null;
 
     /// <summary>
     /// As priority approaches 0, the priority is increased. The higher the priority, the sooner this behavior will be executed as a goal.

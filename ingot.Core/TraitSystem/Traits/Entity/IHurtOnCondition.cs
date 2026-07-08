@@ -15,5 +15,5 @@ public interface IHurtOnCondition : IEntityTrait
     /// List of damage conditions that when met can cause damage to the entity.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic DamageConditions { get; }
+    public virtual dynamic? DamageConditions => null;
 }

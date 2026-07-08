@@ -33,25 +33,25 @@ public interface IRideable : IEntityTrait
     /// List of entities that can ride this entity.
     /// </summary>
     [TraitProperty]
-    public abstract string[] FamilyTypes { get; }
+    public virtual string[]? FamilyTypes => null;
 
     /// <summary>
     /// The text to display when the player can interact with the entity when playing with touch-screen controls.
     /// </summary>
     [TraitProperty]
-    public abstract string InteractText { get; }
+    public virtual string? InteractText => null;
 
     /// <summary>
     /// Event to execute on the owner entity when an entity starts riding it. This item requires a format version of at least 1.21.80.
     /// </summary>
     [TraitProperty]
-    public abstract Identifier OnRiderEnterEvent { get; }
+    public virtual Identifier? OnRiderEnterEvent => null;
 
     /// <summary>
     /// Event to execute on the owner entity when an entity stops riding it. This item requires a format version of at least 1.21.80.
     /// </summary>
     [TraitProperty]
-    public abstract Identifier OnRiderExitEvent { get; }
+    public virtual Identifier? OnRiderExitEvent => null;
 
     /// <summary>
     /// The max width a mob can have to be a rider. A value of 0 ignores this parameter.

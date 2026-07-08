@@ -27,7 +27,7 @@ public interface IEconomyTradeTable : IEntityTrait
     /// Name to be displayed while trading with this entity
     /// </summary>
     [TraitProperty]
-    public abstract string DisplayName { get; }
+    public virtual string? DisplayName => null;
 
     /// <summary>
     /// Used in legacy prices to determine how much should Demand be modified by when the player has the Hero of the Village mob effect

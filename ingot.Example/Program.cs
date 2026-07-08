@@ -30,9 +30,8 @@ class Program
             .AddItem<SauceItem>()
             // blocks
             .AddBlock<DenseLasagnaBlock>()
-            // entities
+            // entities (client entity auto-discovered; RC registered explicitly)
             .AddEntity<CowEntity>()
-            .AddClientEntity<CowClientEntity>()
             .AddRenderController<CowV3RenderController>()
             // recipes
             .AddRecipe<LasagnaRecipe>()

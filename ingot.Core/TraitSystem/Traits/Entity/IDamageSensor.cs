@@ -18,5 +18,5 @@ public interface IDamageSensor : IEntityTrait
     /// List of triggers with the events to call when taking specific kinds of damage.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Triggers { get; }
+    public virtual dynamic? Triggers => null;
 }

@@ -33,13 +33,13 @@ public interface IRailSensor : IEntityTrait
     /// Event to call when the rail is activated
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnActivate { get; }
+    public virtual EntityEventTrigger? OnActivate => null;
 
     /// <summary>
     /// Event to call when the rail is deactivated
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnDeactivate { get; }
+    public virtual EntityEventTrigger? OnDeactivate => null;
 
     /// <summary>
     /// If true, command blocks will start ticking when passing over an activated rail

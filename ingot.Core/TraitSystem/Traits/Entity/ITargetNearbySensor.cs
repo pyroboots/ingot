@@ -24,16 +24,16 @@ public interface ITargetNearbySensor : IEntityTrait
     public virtual bool MustSee => false;
 
     [TraitProperty]
-    public abstract string OnInsideRange { get; }
+    public virtual string? OnInsideRange => null;
 
     [TraitProperty]
-    public abstract string OnOutsideRange { get; }
+    public virtual string? OnOutsideRange => null;
 
     /// <summary>
     /// Event to call when an entity exits visual range. Can specify 'event' for the name of the event and 'target' for the target of the event
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnVisionLostInsideRange { get; }
+    public virtual EntityEventTrigger? OnVisionLostInsideRange => null;
 
     /// <summary>
     /// Maximum distance in blocks that another entity will be considered in the 'outside' range

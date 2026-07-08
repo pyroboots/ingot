@@ -15,7 +15,7 @@ public interface IBehaviorAdmireItem : IEntityTrait
     /// The sound event to play when admiring the item
     /// </summary>
     [TraitProperty]
-    public abstract string AdmireItemSound { get; }
+    public virtual string? AdmireItemSound => null;
 
     [TraitProperty]
     public virtual dynamic ControlFlags => null;

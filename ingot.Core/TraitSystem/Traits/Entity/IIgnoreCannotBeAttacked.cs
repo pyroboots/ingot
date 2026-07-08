@@ -15,5 +15,5 @@ public interface IIgnoreCannotBeAttacked : IEntityTrait
     /// Defines which entities are exceptions and are allowed to be attacked by the owner entity, potentially attacked entity is subject "other".
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 }

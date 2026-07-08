@@ -132,14 +132,67 @@ using ingot.Core;
 const string packUuid = "77f1fef2-bb39-411a-b25c-ae475c21169f";
 
 Pack pack = Pack.Create(packUuid, "My Addon", "Entities made with ingot")
-    .AddEntity<MyEntity>();
+    .AddEntity<MyEntity>(); // also discovers ClientEntity&lt;MyEntity&gt; / nested Client by default
 
 pack.Compile("./output");
 ```
 
-Capture identifiers from your entity class when you need them for cross-references elsewhere in your project.
+`AddEntity<T>(discoverClient: true)` (default) looks for a matching client entity:
+
+1. Nested type `MyEntity.Client : ClientEntity<MyEntity>`
+2. Or a type named `MyClientEntity` in the same assembly
+3. Or `Entity.ClientEntityType` when set explicitly
+
+Use `AddEntity<T>(discoverClient: false)` to skip RP discovery. Nested `RenderController` types on the entity are registered when found; top-level controllers still use `AddRenderController<T>()`.
 
 This writes `bp/entities/my_entity.json` (filename is the part after the `:` in the identifier).
+
+## Write less: presets, events, groups
+
+### Behaviour presets
+
+Prefer presets over listing dozens of traits. `IEntityPresetPassiveLand` bundles walk navigation, panic/tempt/breed goals, leash/balloon/nameable, lava hurt, and sensible AI priorities. Override only what differs:
+
+```csharp
+public class CowEntity : Entity, IEntityPresetPassiveLand, IEntityPresetSameSpeciesOffspring
+{
+    public override Identifier Identifier => new("test", "custom_cow");
+    string IEntityPresetSameSpeciesOffspring.SpeciesId => Identifier.ToString();
+    dynamic ITypeFamily.Family => new[] { "cow", "mob" };
+    int IHealth.Max => 10;
+    float IMovement.Value => 0.25f;
+    string[] IBehaviorTempt.Items => ["wheat"];
+}
+```
+
+Optional trait properties default to `null` and are omitted from JSON - you no longer need `=> null!` stubs for unused fields.
+
+### Event helpers
+
+Use `EntityEvents` instead of hand-building nested actions:
+
+```csharp
+public override Dictionary<Identifier, IEntityEventAction[]> Events => EntityEvents.Map(
+    (Identifier.Vanilla("entity_spawned"),
+        EntityEvents.SpawnedAdultOrBaby(95f, 5f, "test:spawn_adult", Baby.Id)),
+    (Identifier.Vanilla("ageable_grow_up"), EntityEvents.GrowUp(Baby.Id, Adult.Id)),
+    (new Identifier("test", "spawn_adult"), [EntityEvents.Add(Adult.Id)])
+);
+```
+
+### Component groups
+
+Prefer `EntityComponentGroup<TParent>` so `Parent` is inferred. Nested types under the entity keep groups co-located:
+
+```csharp
+public class Baby : EntityComponentGroup<CowEntity>, IIsBaby, IScale, IAgeable
+{
+    public static Identifier Id { get; } = new("test", "custom_cow_baby");
+    public override Identifier Identifier => Id;
+    float IScale.Value => 0.5f;
+    // ...
+}
+```
 
 ## Client Entities & Render Controllers
 
@@ -357,9 +410,6 @@ Event keys are the gameplay names Bedrock fires (`ambient`, `hurt`, `death`, `st
 
 ## Full Example
 
-See the [`ingot.Example`](../../ingot.Example) project:
-
-- `LasagnaSpiritEntity.cs` - custom flying mob (behaviour + client entity)
-- `CowEntity.cs` - full cow-style behaviour, client entity, render controller, and `EntitySounds` as `test:custom_cow`
+See [`CowEntity.cs`](../../ingot.Example/Entities/CowEntity.cs) in `ingot.Example`: presets + event DSL + nested `Baby`/`Adult`/`Client`, `EntitySounds.FromVanilla("cow")`, and `CowV3RenderController`.
 
 Next: learn about [entity component groups](entity-component-groups.md) and [entity events](entity-events.md).

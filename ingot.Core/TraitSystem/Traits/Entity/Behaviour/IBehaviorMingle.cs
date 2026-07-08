@@ -36,7 +36,7 @@ public interface IBehaviorMingle : IEntityTrait
     /// The entity type that this entity is allowed to mingle with
     /// </summary>
     [TraitProperty]
-    public abstract string MinglePartnerType { get; }
+    public virtual string? MinglePartnerType => null;
 
     /// <summary>
     /// As priority approaches 0, the priority is increased. The higher the priority, the sooner this behavior will be executed as a goal.

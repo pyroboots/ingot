@@ -21,5 +21,5 @@ public interface IBribeable : IEntityTrait
     /// The list of items that can be used to bribe the entity. Can be an array or a single item string.
     /// </summary>
     [TraitProperty]
-    public abstract string[] BribeItems { get; }
+    public virtual string[]? BribeItems => null;
 }

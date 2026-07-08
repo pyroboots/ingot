@@ -15,13 +15,13 @@ public interface ISpawnEntity : IEntityTrait
     /// List of entity spawn definitions. Can be a single object or an array of objects.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Entities { get; }
+    public virtual dynamic? Entities => null;
 
     /// <summary>
     /// If present, the specified entity will only spawn if the filter evaluates to true.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter Filters { get; }
+    public virtual EntityFilter? Filters => null;
 
     /// <summary>
     /// Maximum amount of time to randomly wait in seconds before another entity is spawned.
@@ -57,7 +57,7 @@ public interface ISpawnEntity : IEntityTrait
     /// Identifier of the entity to spawn, leave empty to spawn the item defined by "spawn_item" instead.
     /// </summary>
     [TraitProperty]
-    public abstract string SpawnEntity { get; }
+    public virtual string? SpawnEntity => null;
 
     /// <summary>
     /// Event to call on the spawned entity when it spawns.
@@ -78,7 +78,7 @@ public interface ISpawnEntity : IEntityTrait
     /// Event to call on this entity when the item is spawned.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger SpawnItemEvent { get; }
+    public virtual EntityEventTrigger? SpawnItemEvent => null;
 
     /// <summary>
     /// Method to use to spawn the entity.

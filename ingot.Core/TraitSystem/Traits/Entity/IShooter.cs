@@ -21,7 +21,7 @@ public interface IShooter : IEntityTrait
     /// Actor definition to use as the default projectile for the ranged attack. The actor definition must have the projectile component to be able to be shot as a projectile.
     /// </summary>
     [TraitProperty]
-    public abstract string Def { get; }
+    public virtual string? Def => null;
 
     /// <summary>
     /// If set, the projectiles are flagged as magic and the ranged attack goal will not run at the same time as other magic goals (for example, drink_potion).
@@ -39,11 +39,11 @@ public interface IShooter : IEntityTrait
     /// List of projectiles that can be used by the shooter.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Projectiles { get; }
+    public virtual dynamic? Projectiles => null;
 
     /// <summary>
     /// Sound that is played when the shooter shoots a projectile.
     /// </summary>
     [TraitProperty]
-    public abstract string Sound { get; }
+    public virtual string? Sound => null;
 }

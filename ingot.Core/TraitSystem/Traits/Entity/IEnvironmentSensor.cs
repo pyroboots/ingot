@@ -15,5 +15,5 @@ public interface IEnvironmentSensor : IEntityTrait
     /// The list of triggers that fire when the environment conditions match the given filter criteria. Can be an array of trigger objects or a single trigger object.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Triggers { get; }
+    public virtual dynamic? Triggers => null;
 }

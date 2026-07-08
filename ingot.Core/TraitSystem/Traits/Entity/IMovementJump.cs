@@ -15,7 +15,7 @@ public interface IMovementJump : IEntityTrait
     /// Delay in seconds after landing when using the slime move control. Can be a single number, an array [min, max], or an object with range_min and range_max.
     /// </summary>
     [TraitProperty]
-    public abstract FloatRange JumpDelay { get; }
+    public virtual FloatRange? JumpDelay => null;
 
     /// <summary>
     /// The maximum number in degrees the mob can turn per tick.

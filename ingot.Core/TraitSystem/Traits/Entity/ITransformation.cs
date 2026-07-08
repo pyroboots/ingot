@@ -15,13 +15,13 @@ public interface ITransformation : IEntityTrait
     /// List of components to add to the entity after the transformation
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Add { get; }
+    public virtual dynamic? Add => null;
 
     /// <summary>
     /// Sound to play when the transformation starts
     /// </summary>
     [TraitProperty]
-    public abstract string BeginTransformSound { get; }
+    public virtual string? BeginTransformSound => null;
 
     [TraitProperty]
     public abstract float Delay { get; }
@@ -42,7 +42,7 @@ public interface ITransformation : IEntityTrait
     /// Entity Definition that this entity will transform into
     /// </summary>
     [TraitProperty]
-    public abstract string Into { get; }
+    public virtual string? Into => null;
 
     /// <summary>
     /// If this entity has trades and has leveled up, it should maintain that level after transformation.
@@ -66,5 +66,5 @@ public interface ITransformation : IEntityTrait
     /// Sound to play when the entity is done transforming
     /// </summary>
     [TraitProperty]
-    public abstract string TransformationSound { get; }
+    public virtual string? TransformationSound => null;
 }

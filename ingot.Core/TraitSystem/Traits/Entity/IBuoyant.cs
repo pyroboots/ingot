@@ -51,7 +51,7 @@ public interface IBuoyant : IEntityTrait
     /// List of blocks this entity can float on. Must be a liquid block.
     /// </summary>
     [TraitProperty]
-    public abstract string[] LiquidBlocks { get; }
+    public virtual string[]? LiquidBlocks => null;
 
     /// <summary>
     /// Type of vertical movement applied to the entity.

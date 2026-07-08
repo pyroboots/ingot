@@ -15,5 +15,5 @@ public interface IEntityArmorEquipmentSlotMapping : IEntityTrait
     /// The armor slot an item equipped to 'minecraft:equippable''s second slot should be equipped to.
     /// </summary>
     [TraitProperty]
-    public abstract string ArmorSlot { get; }
+    public virtual string? ArmorSlot => null;
 }

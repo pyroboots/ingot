@@ -61,13 +61,13 @@ public interface IBreedable : IEntityTrait
     /// Determines how likely the baby of parents with the same variant will deny that variant and take a random variant within the given range instead.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic DenyParentsVariant { get; }
+    public virtual dynamic? DenyParentsVariant => null;
 
     /// <summary>
     /// The list of nearby block requirements to get the entity into the 'love' state.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic EnvironmentRequirements { get; }
+    public virtual dynamic? EnvironmentRequirements => null;
 
     /// <summary>
     /// Chance that up to 16 babies will spawn.
@@ -87,13 +87,13 @@ public interface IBreedable : IEntityTrait
     /// The filters to run when attempting to fall in love.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter LoveFilters { get; }
+    public virtual EntityFilter? LoveFilters => null;
 
     /// <summary>
     /// Determines how likely the babies are to NOT inherit one of their parent's variances.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic MutationFactor { get; }
+    public virtual dynamic? MutationFactor => null;
 
     /// <summary>
     /// If true, the entity needs to be at full health before it can breed.

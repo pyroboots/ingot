@@ -15,5 +15,5 @@ public interface IMobEffectImmunity : IEntityTrait
     /// List of names of effects the entity is immune to.
     /// </summary>
     [TraitProperty]
-    public abstract string[] MobEffects { get; }
+    public virtual string[]? MobEffects => null;
 }

@@ -146,6 +146,18 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
     /// <param name="id">Colon-separated identifier string.</param>
     public static Identifier Parse(string id) => new(id);
 
+    /// <summary>
+    /// Returns a new identifier in the same namespace with <paramref name="suffix"/> appended to the name
+    /// (e.g. <c>test:custom_cow</c> + <c>_baby</c> → <c>test:custom_cow_baby</c>).
+    /// </summary>
+    public Identifier WithNameSuffix(string suffix) =>
+        new(Namespace, Name + suffix, Auxiliary);
+
+    /// <summary>
+    /// Returns a new identifier in the same namespace with a different name.
+    /// </summary>
+    public Identifier WithName(string name) => new(Namespace, name, Auxiliary);
+
     /// <inheritdoc/>
     public override string ToString()
         => Auxiliary is null ? $"{Namespace}:{Name}" : $"{Namespace}:{Name}:{Auxiliary}";

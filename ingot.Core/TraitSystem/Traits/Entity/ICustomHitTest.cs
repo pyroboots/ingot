@@ -15,5 +15,5 @@ public interface ICustomHitTest : IEntityTrait
     /// List of hitboxes for melee and ranged hits against the entity.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Hitboxes { get; }
+    public virtual dynamic? Hitboxes => null;
 }

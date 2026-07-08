@@ -39,7 +39,7 @@ public interface INavigationWalk : IEntityTrait
     /// List of block descriptors that the pathfinder should avoid. Items can be block identifier strings or objects with name/tags properties.
     /// </summary>
     [TraitProperty]
-    public abstract string[] BlocksToAvoid { get; }
+    public virtual string[]? BlocksToAvoid => null;
 
     /// <summary>
     /// Tells the pathfinder whether or not it can jump out of water (like a dolphin)
@@ -54,7 +54,7 @@ public interface INavigationWalk : IEntityTrait
     public virtual bool CanBreakDoors => false;
 
     [TraitProperty]
-    public abstract bool CanFloat { get; }
+    public virtual bool CanFloat => true;
 
     /// <summary>
     /// Tells the pathfinder whether or not it can jump up blocks
@@ -129,5 +129,5 @@ public interface INavigationWalk : IEntityTrait
     public virtual bool IsAmphibious => false;
 
     [TraitProperty]
-    public abstract string UsingDoorAnnotation { get; }
+    public virtual string? UsingDoorAnnotation => null;
 }

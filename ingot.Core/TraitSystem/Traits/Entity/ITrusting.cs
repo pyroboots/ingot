@@ -18,11 +18,11 @@ public interface ITrusting : IEntityTrait
     public virtual float Probability => 1f;
 
     [TraitProperty]
-    public abstract string TrustEvent { get; }
+    public virtual string? TrustEvent => null;
 
     /// <summary>
     /// The list of items that can be used to get the entity to trust players. Can be an array or a single item string.
     /// </summary>
     [TraitProperty]
-    public abstract string[] TrustItems { get; }
+    public virtual string[]? TrustItems => null;
 }

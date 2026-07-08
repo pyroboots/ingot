@@ -15,5 +15,5 @@ public interface IBreakBlocks : IEntityTrait
     /// A list of the blocks that can be broken as this entity moves around.
     /// </summary>
     [TraitProperty]
-    public abstract string[] BreakableBlocks { get; }
+    public virtual string[]? BreakableBlocks => null;
 }

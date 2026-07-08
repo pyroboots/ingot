@@ -15,7 +15,7 @@ public interface IBoostable : IEntityTrait
     /// List of items that can be used to boost while riding this entity.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic BoostItems { get; }
+    public virtual dynamic? BoostItems => null;
 
     /// <summary>
     /// Time in seconds for the boost.

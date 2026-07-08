@@ -12,8 +12,8 @@ using ingot.Core.Behaviour.Entity;
 public interface ISittable : IEntityTrait
 {
     [TraitProperty]
-    public abstract string SitEvent { get; }
+    public virtual string? SitEvent => null;
 
     [TraitProperty]
-    public abstract string StandEvent { get; }
+    public virtual string? StandEvent => null;
 }

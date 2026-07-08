@@ -15,17 +15,17 @@ public interface IPeek : IEntityTrait
     /// Event to call when the entity is done peeking.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnClose { get; }
+    public virtual EntityEventTrigger? OnClose => null;
 
     /// <summary>
     /// Event to call when the entity starts peeking.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnOpen { get; }
+    public virtual EntityEventTrigger? OnOpen => null;
 
     /// <summary>
     /// Event to call when the entity's target entity starts peeking.
     /// </summary>
     [TraitProperty]
-    public abstract EntityEventTrigger OnTargetOpen { get; }
+    public virtual EntityEventTrigger? OnTargetOpen => null;
 }

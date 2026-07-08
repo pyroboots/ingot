@@ -40,10 +40,10 @@ public interface ILeashable : IEntityTrait
     public virtual int MaxDistance => 0;
 
     [TraitProperty]
-    public abstract string OnLeash { get; }
+    public virtual string? OnLeash => null;
 
     [TraitProperty]
-    public abstract string OnUnleash { get; }
+    public virtual string? OnUnleash => null;
 
     /// <summary>
     /// When set to true, "on_unleash" does not trigger when the entity gets unleashed for reasons other than the player directly interacting with it.
@@ -55,7 +55,7 @@ public interface ILeashable : IEntityTrait
     /// Defines how this entity behaves when leashed to another entity. The first preset which "filter" conditions are met will be applied; if none match, a default configuration is used instead.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Presets { get; }
+    public virtual dynamic? Presets => null;
 
     /// <summary>
     /// Distance in blocks at which the 'spring' effect starts acting to keep this entity close to the entity that leashed it.

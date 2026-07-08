@@ -15,7 +15,7 @@ public interface IAddrider : IEntityTrait
     /// Type of entity to acquire as a rider
     /// </summary>
     [TraitProperty]
-    public abstract string EntityType { get; }
+    public virtual string? EntityType => null;
 
     /// <summary>
     /// List of riders to be added to the entity. Can only spawn as many riders as "minecraft:rideable" has "seat_count".
@@ -27,5 +27,5 @@ public interface IAddrider : IEntityTrait
     /// Trigger event when a rider is acquired
     /// </summary>
     [TraitProperty]
-    public abstract Identifier SpawnEvent { get; }
+    public virtual Identifier? SpawnEvent => null;
 }

@@ -39,11 +39,11 @@ public interface IMobEffect : IEntityTrait
     /// The set of entities that are valid to apply the mob effect to.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFilter EntityFilter { get; }
+    public virtual EntityFilter? EntityFilter => null;
 
     /// <summary>
     /// The mob effect that is applied to entities that enter this entities effect range.
     /// </summary>
     [TraitProperty]
-    public abstract string MobEffect { get; }
+    public virtual string? MobEffect => null;
 }
