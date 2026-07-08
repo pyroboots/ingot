@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Item;
 using ingot.Tests.Content.Items;
 
 namespace ingot.Tests.Items;

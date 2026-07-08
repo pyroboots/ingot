@@ -63,12 +63,10 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
             json.Property("tags", inst.Tags);
 
             if (inst.Pattern.Length > 3)
-                CompilerState.Warn(ref w, "crafting pattern height should not be higher than 3");
+                throw new ArgumentException("crafting pattern height should not be higher than 3");
             foreach (Identifier[] row in inst.Pattern)
-            {
                 if (row.Length > 3)
-                    CompilerState.Warn(ref w, "crafting pattern width should not be longer than 3");
-            }
+                    throw new  ArgumentException("crafting pattern width should not be longer than 3");
 
             // yes i hate var, but i aint typing a tuple
             var symbols = Symbolize(inst.Pattern);

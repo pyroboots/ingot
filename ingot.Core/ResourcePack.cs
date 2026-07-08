@@ -1,5 +1,6 @@
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Entity;
+using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 
 namespace ingot.Core;
@@ -358,7 +359,6 @@ public class ResourcePack
         string texturesRoot = Path.Combine(outputDir, "textures", "entity");
         Directory.CreateDirectory(texturesRoot);
 
-        JsonTextWriter? dummyWriter = null;
         int c = 0;
         foreach (var (key, source) in _entityTextureSources)
         {
@@ -369,21 +369,15 @@ public class ResourcePack
             if (!string.IsNullOrEmpty(targetDir))
                 Directory.CreateDirectory(targetDir);
 
-            try
-            {
-                if (string.IsNullOrWhiteSpace(source.SourcePath))
-                    CompilerState.Warn(ref dummyWriter, $"entity texture key '{key}' has no source PNG registered");
-                else if (!File.Exists(source.SourcePath))
-                    CompilerState.Warn(ref dummyWriter, $"source entity texture not found for key '{key}': {source.SourcePath}");
-                else
-                    File.Copy(source.SourcePath, targetFull, overwrite: true);
+            if (string.IsNullOrWhiteSpace(source.SourcePath))
+                throw new ArgumentException($"entity texture key '{key}' has no source PNG registered");
+            if (!File.Exists(source.SourcePath))
+                throw new FileNotFoundException(
+                    $"source entity texture not found for key '{key}': {source.SourcePath}",
+                    source.SourcePath);
 
-                CompilerState.Info($"({c}/{_entityTextureSources.Count}) registered entity texture '{key}' -> textures/entity/{rpRelative}.png");
-            }
-            catch (Exception ex)
-            {
-                CompilerState.Warn(ref dummyWriter, $"failed to process entity texture key '{key}': {ex.Message}");
-            }
+            File.Copy(source.SourcePath, targetFull, overwrite: true);
+            CompilerState.Info($"({c}/{_entityTextureSources.Count}) registered entity texture '{key}' -> textures/entity/{rpRelative}.png");
         }
 
         CompilerState.Info($"wrote {_entityTextureSources.Count} entity texture(s)");
@@ -458,7 +452,7 @@ public class ResourcePack
                 langEntries.Add($"tile.{block.Identifier}.name={block.LangName}");
         }
 
-        foreach (Behaviour.Item item in CompilerState.CurrentPack.BehaviourPack.Items)
+        foreach (Item item in CompilerState.CurrentPack.BehaviourPack.Items)
         {
             if (item.DisplayName is not null)
                 langEntries.Add($"item.{item.Identifier}.name={item.DisplayName}");
@@ -574,28 +568,21 @@ public class ResourcePack
         string targetDir = Path.Combine(outputDir, "models", "blocks");
         Directory.CreateDirectory(targetDir);
 
-        JsonTextWriter? dummyWriter = null;
         int c = 0;
         foreach (var (identifier, source) in _geometrySources)
         {
             c++;
             string targetFull = Path.Combine(targetDir, $"{source.RpName}.geo.json");
 
-            try
-            {
-                if (!File.Exists(source.SourcePath))
-                {
-                    CompilerState.Warn(ref dummyWriter, $"source geometry not found for identifier '{identifier}': {source.SourcePath}");
-                    continue;
-                }
+            if (string.IsNullOrWhiteSpace(source.SourcePath))
+                throw new ArgumentException($"geometry identifier '{identifier}' has no source geo.json registered");
+            if (!File.Exists(source.SourcePath))
+                throw new FileNotFoundException(
+                    $"source geometry not found for identifier '{identifier}': {source.SourcePath}",
+                    source.SourcePath);
 
-                File.Copy(source.SourcePath, targetFull, overwrite: true);
-                CompilerState.Info($"({c}/{_geometrySources.Count}) registered geometry '{identifier}' -> models/blocks/{source.RpName}.geo.json");
-            }
-            catch (Exception ex)
-            {
-                CompilerState.Warn(ref dummyWriter, $"failed to process geometry identifier '{identifier}': {ex.Message}");
-            }
+            File.Copy(source.SourcePath, targetFull, overwrite: true);
+            CompilerState.Info($"({c}/{_geometrySources.Count}) registered geometry '{identifier}' -> models/blocks/{source.RpName}.geo.json");
         }
 
         CompilerState.Info($"wrote {_geometrySources.Count} geometry file(s)");
@@ -619,7 +606,6 @@ public class ResourcePack
         Directory.CreateDirectory(targetSubdir);
 
         Dictionary<string, object> textureDataEntries = new();
-        JsonTextWriter? dummyWriter = null;
         int c = 0;
         foreach (var (key, source) in sources)
         {
@@ -627,22 +613,16 @@ public class ResourcePack
             string rpPath = $"textures/{subdir}/{source.RpName}";
             string targetFull = Path.Combine(targetSubdir, $"{source.RpName}.png");
 
-            try
-            {
-                if (string.IsNullOrWhiteSpace(source.SourcePath))
-                    CompilerState.Warn(ref dummyWriter, $"texture key '{key}' has no source PNG registered");
-                else if (!File.Exists(source.SourcePath))
-                    CompilerState.Warn(ref dummyWriter, $"source texture not found for key '{key}': {source.SourcePath}");
-                else
-                    File.Copy(source.SourcePath, targetFull, overwrite: true);
+            if (string.IsNullOrWhiteSpace(source.SourcePath))
+                throw new ArgumentException($"texture key '{key}' has no source PNG registered");
+            if (!File.Exists(source.SourcePath))
+                throw new FileNotFoundException(
+                    $"source texture not found for key '{key}': {source.SourcePath}",
+                    source.SourcePath);
 
-                textureDataEntries[key] = new { textures = rpPath };
-                CompilerState.Info($"({c}/{sources.Count}) registered texture '{key}' -> {rpPath}");
-            }
-            catch (Exception ex)
-            {
-                CompilerState.Warn(ref dummyWriter, $"failed to process texture key '{key}': {ex.Message}");
-            }
+            File.Copy(source.SourcePath, targetFull, overwrite: true);
+            textureDataEntries[key] = new { textures = rpPath };
+            CompilerState.Info($"({c}/{sources.Count}) registered texture '{key}' -> {rpPath}");
         }
 
         using (StringWriter sw = new())

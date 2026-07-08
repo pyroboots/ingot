@@ -65,4 +65,35 @@ public abstract class Enums
     /// Converts <see cref="Target"/> to its Minecraft string equivalent
     /// </summary>
     public static string Target_AsString(Target selector) => AsString(selector);
+    
+    /// <summary>
+    /// Creative inventory tabs
+    /// </summary>
+    public enum CatalogueCategory
+    {
+        /// <summary>
+        /// Construction tab
+        /// </summary>
+        Construction,
+        /// <summary>
+        /// Nature tabs
+        /// </summary>
+        Nature,
+        /// <summary>
+        /// Equipment tab
+        /// </summary>
+        Equipment,
+        /// <summary>
+        /// Items tab
+        /// </summary>
+        Items,
+        /// <summary>
+        /// Will not appear in the creative inventory
+        /// </summary>
+        None
+    }
+    /// <summary>
+    /// Converts <see cref="CatalogueCategory"/> to its Minecraft string equivalent
+    /// </summary>
+    public static string CatalogueCategory_AsString(Target selector) => AsString(selector);
 }

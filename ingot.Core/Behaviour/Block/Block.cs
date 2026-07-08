@@ -42,7 +42,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
     /// <summary>
     /// Which section of the creative inventory the block appears in
     /// </summary>
-    public virtual Item.CatalogueCategory Category => Item.CatalogueCategory.Items;
+    public virtual Enums.CatalogueCategory Category => Enums.CatalogueCategory.Items;
     /// <summary>
     /// Which item group of <see cref="Category"/> the block appears in
     /// </summary>
@@ -120,20 +120,19 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
         json.Property("format_version", inst.FormatVersion.ToString());
         json.Object("minecraft:block", () =>
         {
-            CompilerState.Push("description");
             json.Object("description", () =>
             {
                 json.Property("identifier", inst.Identifier);
 
-                if (inst.Category != Item.CatalogueCategory.None)
+                if (inst.Category != Enums.CatalogueCategory.None)
                 {
                     json.Object("menu_category", () =>
                     {
                         if (inst.Group?.Length > 256)
-                            CompilerState.Warn(ref w, "block catalogue group exceeds 256 char limit");
+                            throw new ArgumentException($"block catalogue group ({inst.Group}) exceeds 256 char limit");
 
                         json.Property("group", inst.Group);
-                        string categoryName = Enum.GetName(typeof(Item.CatalogueCategory), inst.Category)!.ToLower();
+                        string categoryName = Enum.GetName(typeof(Enums.CatalogueCategory), inst.Category)!.ToLower();
                         json.Property("category", categoryName);
                     });
                 }
@@ -146,17 +145,16 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
                         {
                             int length = kvp.Value.Length;
                             if (length > 16)
-                                CompilerState.Warn(ref w, $"block state {kvp.Key} has more than 16 possible permutations");
+                                throw new ArgumentException(
+                                    $"block state {kvp.Key} has more than 16 possible permutations");
                             json.Property(kvp.Key, kvp.Value);
                         }
                     });
                 }
             });
-            CompilerState.Pop();
 
             if (inst.Permutations.Count > 0)
             {
-                CompilerState.Push("permutations");
                 json.Array("permutations", () =>
                 {
                     CompilerState.Info("compiling block permutations...");
@@ -169,10 +167,8 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
                     }
                     CompilerState.Info("compiled block permutations");
                 });
-                CompilerState.Pop();
             }
 
-            CompilerState.Push("components");
             json.Object("components", () =>
             {
                 foreach (string t in inst.Tags)
@@ -222,7 +218,6 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
                     CompilerState.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
                 }
             });
-            CompilerState.Pop();
         });
 
         w.WriteEndObject();

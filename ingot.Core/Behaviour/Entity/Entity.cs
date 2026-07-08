@@ -88,8 +88,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
                 json.Property("is_experimental", inst.IsExperimental);
                 json.Property("runtime_identifier", inst.RuntimeIdentifier);
             });
-            
-            CompilerState.Push("component_groups");
+
             json.Object("component_groups", () =>
             {
                 int c = 0;
@@ -98,13 +97,11 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
                     c++;
                     w.WritePropertyName(ecg.Identifier.ToString());
                     ecg.Compile(ref w);
-                    
+
                     CompilerState.Info($"({c}/{inst.ComponentGroups.Length}) compiled component group {ecg.Identifier}");
                 }
             });
-            CompilerState.Pop();
-            
-            CompilerState.Push("components");
+
             json.Object("components", () =>
             {
                 CompilerState.Info("compiling traits...");
@@ -117,16 +114,13 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
                     CompilerState.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
                 }
             });
-            CompilerState.Pop();
-            
-            CompilerState.Push("events");
+
             json.Object("events", () =>
             {
                 CompilerState.Info("compiling events...");
                 int c = 0;
                 foreach (var kvp in inst.Events)
                 {
-                    CompilerState.Push(kvp.Key.ToString());
                     c++;
                     json.Object(kvp.Key.ToString(), () =>
                     {
@@ -135,16 +129,14 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
                         {
                             i++;
                             e.Compile(ref w);
-                            
+
                             CompilerState.Info($"({i}/{kvp.Value.Length}) compiled event action {e.Name}");
                         }
                     });
-                    CompilerState.Pop();
-                    
+
                     CompilerState.Info($"({c}/{inst.Events.Count}) compiled event {kvp.Key}");
                 }
             });
-            CompilerState.Pop();
         });
 
         w.WriteEndObject();

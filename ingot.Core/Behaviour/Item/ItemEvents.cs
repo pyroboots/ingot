@@ -1,7 +1,7 @@
 using ingot.Core.Common;
 using ingot.Core.Scripting;
 
-namespace ingot.Core.Behaviour;
+namespace ingot.Core.Behaviour.Item;
 
 /// <summary>
 /// Autogenerates Script API bindings for item events.

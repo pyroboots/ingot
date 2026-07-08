@@ -6,11 +6,23 @@ internal class JsonHelper
 {
     public static void Object(ref JsonTextWriter w, string key, Action<JsonTextWriter> content)
     {
-        if (key != "")
-            w.WritePropertyName(key);
-        w.WriteStartObject();
-        content(w);
-        w.WriteEndObject();
+        bool trace = !string.IsNullOrEmpty(key);
+        if (trace)
+            CompilerState.Push(key);
+
+        try
+        {
+            if (key != "")
+                w.WritePropertyName(key);
+            w.WriteStartObject();
+            content(w);
+            w.WriteEndObject();
+        }
+        finally
+        {
+            if (trace)
+                CompilerState.Pop();
+        }
     }
 
     public static void Property(ref JsonTextWriter w, string key, object? value)
@@ -27,11 +39,23 @@ internal class JsonHelper
 
     public static void Array(ref JsonTextWriter w, string key, Action<JsonTextWriter> items)
     {
-        if (key != "")
-            w.WritePropertyName(key);
-        w.WriteStartArray();
-        items(w);
-        w.WriteEndArray();
+        bool trace = !string.IsNullOrEmpty(key);
+        if (trace)
+            CompilerState.Push(key);
+
+        try
+        {
+            if (key != "")
+                w.WritePropertyName(key);
+            w.WriteStartArray();
+            items(w);
+            w.WriteEndArray();
+        }
+        finally
+        {
+            if (trace)
+                CompilerState.Pop();
+        }
     }
 
     public JsonTextWriter Writer;

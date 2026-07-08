@@ -58,7 +58,6 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
             });
             json.Property("tags", inst.Tags);
 
-            CompilerState.Push("ingredients");
             CompilerState.Info("compiling ingredients...");
             json.Array("ingredients", () =>
             {
@@ -70,7 +69,6 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
                     CompilerState.Info($"({c}/{inst.Ingredients.Length}) compiled ingredient {i.Item}");
                 }
             });
-            CompilerState.Pop();
             CompilerState.Info("compiled ingredients");
 
             json.Property("result", inst.Result);

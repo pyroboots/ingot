@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Item;
 

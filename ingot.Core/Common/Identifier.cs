@@ -30,7 +30,7 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
     public bool HasAuxiliary => Auxiliary is not null;
 
     private static readonly Regex ValidPartRegex = new(
-        @"^[a-z0-9_]+$",
+        @"^[a-z0-9_.]+$",
         RegexOptions.Compiled);
 
     /// <summary>
@@ -68,13 +68,7 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
     public Identifier(string fullIdentifier)
     {
         if (string.IsNullOrWhiteSpace(fullIdentifier))
-        {
-            CompilerState.Warn(ref _dummyWriter, $"identifier cannot be empty or whitespace");
-            Namespace = "minecraft";
-            Name = "unknown";
-            Auxiliary = null;
-            return;
-        }
+            throw new ArgumentException($"identifier cannot be empty or whitespace");
 
         string[] parts = fullIdentifier.Split(':', StringSplitOptions.TrimEntries);
 
@@ -111,17 +105,11 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
     private static void ValidatePart(string value, string partName, string paramName)
     {
         if (string.IsNullOrWhiteSpace(value))
-        {
-            CompilerState.Warn(ref _dummyWriter, $"identifier {partName} cannot be empty");
-            return;
-        }
+            throw new ArgumentException($"identifier {partName} cannot be empty");
 
         if (!ValidPartRegex.IsMatch(value))
-        {
-            CompilerState.Warn(ref _dummyWriter,
-                $"invalid identifier {partName} ({value}) " +
-                "only lowercase letters, numbers, underscores are allowed");
-        }
+            throw new ArgumentException($"invalid identifier {partName} ({value}) " +
+                                        "only lowercase letters, numbers, underscores are allowed");
     }
 
     private static string Normalize(string input)

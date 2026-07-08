@@ -4,6 +4,7 @@ using System.Reflection;
 using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Entity;
+using ingot.Core.Behaviour.Item;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;

@@ -3,12 +3,10 @@ using ingot.Core.TraitSystem;
 
 using Newtonsoft.Json;
 
-using static ingot.Core.Common.JsonHelper;
-
 using Formatting = Newtonsoft.Json.Formatting;
 using Version = ingot.Core.Common.Version;
 
-namespace ingot.Core.Behaviour;
+namespace ingot.Core.Behaviour.Item;
 
 /// <summary>
 /// Implements basic properties of an item
@@ -21,39 +19,13 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     /// Minimum component version
     /// </summary>
     public virtual Version FormatVersion => new("1.20.10");
-
-    /// <summary>
-    /// Creative inventory tabs
-    /// </summary>
-    public enum CatalogueCategory
-    {
-        /// <summary>
-        /// Construction tab
-        /// </summary>
-        Construction,
-        /// <summary>
-        /// Nature tabs
-        /// </summary>
-        Nature,
-        /// <summary>
-        /// Equipment tab
-        /// </summary>
-        Equipment,
-        /// <summary>
-        /// Items tab
-        /// </summary>
-        Items,
-        /// <summary>
-        /// Will not appear in the creative inventory
-        /// </summary>
-        None
-    }
+    
     /// <summary>
     /// Which section of the creative inventory the item appears in
     /// </summary>
-    public virtual CatalogueCategory Category => CatalogueCategory.Items;
+    public virtual Enums.CatalogueCategory Category => Enums.CatalogueCategory.Items;
     /// <summary>
-    /// Which item group of <see cref="CatalogueCategory"/> the item appears in
+    /// Which item group of <see cref="Enums.CatalogueCategory"/> the item appears in
     /// </summary>
     public virtual string? Group => null;
     /// <summary>
@@ -111,24 +83,21 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
         json.Property("format_version", inst.FormatVersion.ToString());
         json.Object("minecraft:item", () =>
         {
-            CompilerState.Push("description");
             json.Object("description", () =>
             {
                 json.Property("identifier", inst.Identifier);
                 json.Object("menu_category", () =>
                 {
                     if (inst.Group?.Length > 256)
-                        CompilerState.Warn(ref w, "item catalogue group exceeds 256 char limit");
+                        throw new ArgumentException("item catalogue group exceeds 256 char limit");
 
                     json.Property("group", inst.Group);
-                    string categoryName = Enum.GetName(typeof(CatalogueCategory), inst.Category)!.ToLower();
+                    string categoryName = Enum.GetName(typeof(Enums.CatalogueCategory), inst.Category)!.ToLower();
                     json.Property("category", categoryName);
                     json.Property("hidden_in_commands", inst.HiddenInCommands);
                 });
             });
-            CompilerState.Pop();
 
-            CompilerState.Push("components");
             json.Object("components", () =>
             {
                 TextureAutoRegistration.RegisterItemTexture(inst.Texture, inst.TexturePath, ref w);
@@ -171,7 +140,6 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
                     CompilerState.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
                 }
             });
-            CompilerState.Pop();
         });
 
         w.WriteEndObject();

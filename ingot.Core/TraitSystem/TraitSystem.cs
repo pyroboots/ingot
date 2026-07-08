@@ -47,12 +47,8 @@ public static class TraitSystem
 
             CompilerState.Push(traitAttr.Identifier.ToString());
             if (traitAttr.Constraint != constraint)
-            {
-                CompilerState.Warn(ref dummyWriter,
-                    $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint}), omitting from compiled json");
-                CompilerState.Pop();
-                continue;
-            }
+                throw new ArgumentException(
+                    $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint})");
 
             Trait trait = new(traitAttr.Identifier, iface);
             trait.Properties.AddRange(ReflectTraitProperties(iface, instance, ref dummyWriter));
@@ -82,29 +78,14 @@ public static class TraitSystem
 
         TraitAttribute? traitAttr = interfaceType.GetCustomAttribute<TraitAttribute>();
         if (traitAttr == null)
-        {
-            string err = $"type {interfaceType.Name} is not a trait";
-            CompilerState.Warn(ref dummyWriter, err);
-            CompilerState.Pop();
-            throw new ArgumentException(err);
-        }
+            throw new ArgumentException($"type {interfaceType.Name} is not a trait");
 
         if (traitAttr.Constraint != constraint)
-        {
-            string err =
-                $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint})";
-            CompilerState.Warn(ref dummyWriter, err);
-            CompilerState.Pop();
-            throw new ArgumentException(err);
-        }
+            throw new ArgumentException(
+                $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint})");
 
         if (!interfaceType.IsAssignableFrom(objectType))
-        {
-            string err = $"{objectType.Name} does not implement trait interface {interfaceType.Name}";
-            CompilerState.Warn(ref dummyWriter, err);
-            CompilerState.Pop();
-            throw new ArgumentException(err);
-        }
+            throw new ArgumentException($"{objectType.Name} does not implement trait interface {interfaceType.Name}");
 
         Trait trait = new(traitAttr.Identifier, interfaceType);
         trait.Properties.AddRange(ReflectTraitProperties(interfaceType, inst!, ref dummyWriter));
@@ -140,11 +121,7 @@ public static class TraitSystem
 
             MethodInfo? getter = property.GetGetMethod();
             if (getter == null)
-            {
-                CompilerState.Warn(ref dummyWriter, $"property {property.Name} has no getter, omitting");
-                CompilerState.Pop();
-                continue;
-            }
+                throw new ArgumentException($"property {property.Name} has no getter");
 
             object? value = null;
             try
@@ -153,7 +130,7 @@ public static class TraitSystem
             }
             catch (Exception ex)
             {
-                CompilerState.Warn(ref dummyWriter, $"failed to get value for property {property.Name}: {ex.Message}");
+                throw new ArgumentException($"failed to get value for property {property.Name}: {ex.Message}");
             }
 
             if (value == null || (value is string str && string.IsNullOrEmpty(str)))
@@ -260,7 +237,7 @@ public static class TraitSystem
         foreach (var item in properties)
             members[item.Member.Name] = (item.Attr, item.Member)!;
 
-        // Fields
+        // fields
         var fields = type.GetFields(flags)
             .Select(f => (Member: f, Attr: f.GetCustomAttribute<TAttribute>(inherit: true)))
             .Where(x => x.Attr != null);
