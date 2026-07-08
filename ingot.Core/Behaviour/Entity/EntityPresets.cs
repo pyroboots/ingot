@@ -16,7 +16,7 @@ public interface IBasicEntity :
 /// <summary>
 /// Preset entity interface that implements typical behaviours and properties of a passive land mob
 /// </summary>
-public interface IEntityBehaviourPresetPassive : IBasicEntity,
+public interface IEntityPresetPassive : IBasicEntity,
     IMovement,
     IBehaviorFloat,
     IBehaviorRandomStroll,
@@ -28,14 +28,14 @@ public interface IEntityBehaviourPresetPassive : IBasicEntity,
 /// <summary>
 /// Preset entity interface that implements typical behaviours of a passive land mob that flees from threats
 /// </summary>
-public interface IEntityBehaviourPresetTimid : IEntityBehaviourPresetPassive,
+public interface IEntityPresetTimid : IEntityPresetPassive,
     IBehaviorPanic,
     IBehaviorAvoidMobType;
 
 /// <summary>
 /// Preset entity interface that implements typical behaviours of a neutral land mob that retaliates when attacked
 /// </summary>
-public interface IEntityBehaviourPresetNeutral : IEntityBehaviourPresetPassive,
+public interface IEntityPresetNeutral : IEntityPresetPassive,
     IAttack,
     IFollowRange,
     IBehaviorHurtByTarget,
@@ -46,13 +46,13 @@ public interface IEntityBehaviourPresetNeutral : IEntityBehaviourPresetPassive,
 /// <summary>
 /// Preset entity interface that implements typical behaviours of a hostile land mob that actively seeks and attacks targets
 /// </summary>
-public interface IEntityBehaviourPresetHostile : IEntityBehaviourPresetNeutral,
+public interface IEntityPresetHostile : IEntityPresetNeutral,
     IBehaviorNearestAttackableTarget;
 
 /// <summary>
 /// Preset entity interface that implements typical behaviours of a tameable passive land mob
 /// </summary>
-public interface IEntityBehaviourPresetTameable : IEntityBehaviourPresetPassive,
+public interface IEntityPresetTameable : IEntityPresetPassive,
     ITameable,
     IBehaviorFollowOwner,
     IBehaviorOwnerHurtByTarget,
@@ -61,7 +61,7 @@ public interface IEntityBehaviourPresetTameable : IEntityBehaviourPresetPassive,
 /// <summary>
 /// Preset entity interface that implements typical behaviours and properties of an aquatic mob
 /// </summary>
-public interface IEntityBehaviourPresetAquatic : IBasicEntity,
+public interface IEntityPresetAquatic : IBasicEntity,
     IMovement,
     INavigationSwim,
     IMovementGeneric,
@@ -71,7 +71,7 @@ public interface IEntityBehaviourPresetAquatic : IBasicEntity,
 /// <summary>
 /// Preset entity interface that implements typical behaviours and properties of an amphibious mob that moves between land and water
 /// </summary>
-public interface IEntityBehaviourPresetAmphibious : IEntityBehaviourPresetAquatic,
+public interface IEntityPresetAmphibious : IEntityPresetAquatic,
     IMovementAmphibious,
     IBehaviorFloat,
     IBehaviorRandomStroll,
@@ -81,7 +81,7 @@ public interface IEntityBehaviourPresetAmphibious : IEntityBehaviourPresetAquati
 /// <summary>
 /// Preset entity interface that implements typical behaviours and properties of a flying mob
 /// </summary>
-public interface IEntityBehaviourPresetFlying : IBasicEntity,
+public interface IEntityPresetFlying : IBasicEntity,
     IMovement,
     INavigationFly,
     IMovementFly,
@@ -92,7 +92,7 @@ public interface IEntityBehaviourPresetFlying : IBasicEntity,
 /// <summary>
 /// Preset entity interface that implements typical behaviours of a hostile flying mob
 /// </summary>
-public interface IEntityBehaviourPresetFlyingHostile : IEntityBehaviourPresetFlying,
+public interface IEntityPresetFlyingHostile : IEntityPresetFlying,
     IAttack,
     IFollowRange,
     IBehaviorHurtByTarget,
@@ -104,7 +104,7 @@ public interface IEntityBehaviourPresetFlyingHostile : IEntityBehaviourPresetFly
 /// <summary>
 /// Preset entity interface that implements typical behaviours of a hostile aquatic mob
 /// </summary>
-public interface IEntityBehaviourPresetAquaticHostile : IEntityBehaviourPresetAquatic,
+public interface IEntityPresetAquaticHostile : IEntityPresetAquatic,
     IAttack,
     IFollowRange,
     IBehaviorHurtByTarget,
@@ -112,3 +112,24 @@ public interface IEntityBehaviourPresetAquaticHostile : IEntityBehaviourPresetAq
     IBehaviorMeleeAttack,
     IBehaviorMoveTowardsTarget,
     IBehaviorLookAtTarget;
+
+/// <summary>
+/// Preset entity interface that implements behaviour that emulates a block's collision
+/// </summary>
+public interface IEntityPresetSolid :
+    IIsCollidable,
+    ICollisionBox,
+    IBodyRotationBlocked,
+    IRotationAxisAligned,
+    IRendersWhenInvisible,
+    ISpellEffects,
+    IIsStackable,
+    IPushThrough
+{
+    EntitySpellEffect[] ISpellEffects.AddEffects =>
+    [
+        new() { InfiniteDuration = true, Effect = "invisibility", Duration = 0, }
+    ];
+
+    float IPushThrough.Value => 1;
+}

@@ -4,7 +4,7 @@ using ingot.Core.TraitSystem.Traits.Entity;
 
 namespace ingot.Example.Entities;
 
-public class LasagnaSpiritEntity : Entity, IEntityBehaviourPresetFlying
+public class LasagnaSpiritEntity : Entity, IEntityPresetFlying
 {
     public override Identifier Identifier => new("test", "lasagna_spirit");
     public dynamic Family => "lasagna";
@@ -46,7 +46,7 @@ public class LasagnaSpiritEntity : Entity, IEntityBehaviourPresetFlying
     };
 }
 
-public class LasagnaSpiritEntityAngry : EntityComponentGroup, IEntityBehaviourPresetFlyingHostile
+public class LasagnaSpiritEntityAngry : EntityComponentGroup, IEntityPresetFlyingHostile
 {
     public override Identifier Identifier => new("test", "lasagna_spirit_angry");
     public override Entity Parent => new LasagnaSpiritEntity();
@@ -66,4 +66,12 @@ public class LasagnaSpiritEntityAngry : EntityComponentGroup, IEntityBehaviourPr
     public string EffectName { get; }
     public int AttackInterval { get; }
     public string AttackTypes { get; }
+}
+
+public class LasagnaSpiritClientEntity : ClientEntity<LasagnaSpiritEntity>
+{
+    [ClientEntityMaterial]
+    public string Default => "spider";
+
+    public override string DefaultTexture { get; }
 }

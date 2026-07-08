@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 using HtmlAgilityPack;
 
+using ingot.Core.Behaviour.Entity;
 using ingot.Core.Common;
 
 namespace ingot.Generators;
@@ -26,14 +27,15 @@ public sealed class TraitGenerator : IAsyncDisposable
     // NOTE: works on a contains basis, order of precedence.
     private static readonly Dictionary<string, string> TypeMappings = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["Minecraft Event Reference"] = "Identifier",
-        ["Array of Riders items"] = "EntityRider[]",
-        ["Array of Feed Items items"] = "EntityFeedItem[]",
-        ["Minecraft filter"] = "EntityFilter",
-        ["Filter item"] = "EntityFilter",
-        ["Range of floats"] = "FloatRange",
-        ["Minecraft Event Trigger"] = "EntityEventTrigger",
-        ["Array of Break items"] = "EntityBlockBreakEntry[]",
+        ["Minecraft Event Reference"] = nameof(Identifier),
+        ["Array of Riders items"] = $"{nameof(EntityRider)}[]",
+        ["Array of Feed Items items"] = $"{nameof(EntityFeedItem)}[]",
+        ["Minecraft filter"] = nameof(EntityFilter),
+        ["Filter item"] = nameof(EntityFilter),
+        ["Range of floats"] = nameof(FloatRange),
+        ["Minecraft Event Trigger"] = nameof(EntityEventTrigger),
+        ["Array of Break items"] = $"{nameof(EntityBlockBreakEntry)}[]",
+        ["Array of Add Effects items"] = $"{nameof(EntitySpellEffect)}[]",
         
         ["x, y, z coordinate array"] = "Vector3",
         ["Array of numbers"] = "int[]",

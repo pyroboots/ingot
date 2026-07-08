@@ -15,7 +15,7 @@ public interface ISpellEffects : IEntityTrait
     /// List of effects to add to this entity.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic AddEffects { get; }
+    public abstract EntitySpellEffect[] AddEffects { get; }
 
     /// <summary>
     /// List of identifiers of effects to be removed from this entity after adding this component

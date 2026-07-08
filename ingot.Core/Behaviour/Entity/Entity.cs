@@ -36,6 +36,11 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
     /// List of entity <c>component_group</c>s
     /// </summary>
     public virtual EntityComponentGroup[] ComponentGroups => [];
+
+    /// <summary>
+    /// Optional parameter that is used to imitate a vanilla entity's hard-coded elements
+    /// </summary>
+    public virtual Identifier? RuntimeIdentifier => null;
     
     /// <summary>
     /// List of entity <c>event</c>s
@@ -74,6 +79,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
                 json.Property("is_spawnable", inst.IsSpawnable);
                 json.Property("is_summonable", inst.IsSummonable);
                 json.Property("is_experimental", inst.IsExperimental);
+                json.Property("runtime_identifier", inst.RuntimeIdentifier);
             });
             
             CompilerState.Push("component_groups");

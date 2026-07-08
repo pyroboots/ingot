@@ -163,4 +163,41 @@ public static class TraitSystem
 
         return properties;
     }
+    
+    /// <summary>
+    /// Returns all properties and fields decorated with the specified attribute.
+    /// </summary>
+    /// <typeparam name="TAttribute">The type of attribute to search for</typeparam>
+    /// <param name="type">The type to inspect</param>
+    /// <returns>Dictionary: Key = member name, Value = (Attribute instance, MemberInfo)</returns>
+    public static Dictionary<string, (TAttribute Attribute, MemberInfo Member)> GetAttributedMembers<TAttribute>(Type type) where TAttribute : Attribute
+    {
+        if (type == null) 
+            throw new ArgumentNullException(nameof(type));
+
+        Dictionary<string, (TAttribute Attribute, MemberInfo Member)> members = new();
+
+        const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic |
+                                   BindingFlags.Instance | BindingFlags.Static;
+
+        // props
+        var properties = type.GetProperties(flags)
+            .Select(p => (Member: p, Attr: p.GetCustomAttribute<TAttribute>(inherit: true)))
+            .Where(x => x.Attr != null);
+
+        foreach (var item in properties)
+            members[item.Member.Name] = (item.Attr, item.Member)!;
+
+        // Fields
+        var fields = type.GetFields(flags)
+            .Select(f => (Member: f, Attr: f.GetCustomAttribute<TAttribute>(inherit: true)))
+            .Where(x => x.Attr != null);
+
+        foreach (var item in fields)
+            // skip backing fields by default
+            if (!item.Member.Name.Contains(">k__BackingField"))
+                members[item.Member.Name] = (item.Attr, item.Member)!;
+
+        return members;
+    }
 }

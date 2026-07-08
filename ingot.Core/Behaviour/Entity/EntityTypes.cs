@@ -140,3 +140,38 @@ public class EntityBlockBreakEntry : ICompilableFragment
         });
     }
 }
+
+/// <summary>
+/// Represents a spell effect for the <see cref="ISpellEffects"/> trait
+/// </summary>
+public class EntitySpellEffect : ICompilableFragment
+{
+    /// <summary>
+    /// Whether to show a screen animation when this effect is applied
+    /// </summary>
+    public bool DisplayOnScreenAnimation = false;
+    /// <summary>
+    /// How long - in seconds - the effect lasts for when applied
+    /// </summary>
+    public required float Duration;
+    /// <summary>
+    /// Effect to add to this entity
+    /// </summary>
+    public required string Effect;
+    /// <summary>
+    /// Whether to override the effect duration to be infinite
+    /// </summary>
+    public bool InfiniteDuration = false;
+    
+    /// <inheritdoc/>
+    public void Compile(ref JsonTextWriter writer)
+    {
+        JsonHelper json = new(ref writer);
+        json.Object("", () =>
+        {
+            json.Property(Formatting.PascalToSnakeCase(nameof(DisplayOnScreenAnimation)), DisplayOnScreenAnimation);
+            json.Property(Formatting.PascalToSnakeCase(nameof(Duration)), InfiniteDuration ? "infinite" : Duration);
+            json.Property(Formatting.PascalToSnakeCase(nameof(Effect)), Effect);
+        });
+    }
+}
