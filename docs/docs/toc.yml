@@ -11,11 +11,13 @@
 - href: block.md
 - href: block-permutations.md
 - href: block-mat-instances.md
-- href: block-events.md
+- name: Block Events
+  href: block-events.md
 
 - name: 2. Items
 - href: item.md
-- href: item-events.md
+- name: Item Events
+  href: item-events.md
 - href: recipe.md
 - href: loot-table.md
 

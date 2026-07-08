@@ -7,7 +7,7 @@ This guide walks you through setting up a project, defining your first content, 
 ## Prerequisites
 
 - [.NET SDK](https://dotnet.microsoft.com/download) (the repo targets **.NET 10**)
-- A Minecraft Bedrock Edition world with **experiments** or **pack loading** enabled (for custom content)
+- A Minecraft Bedrock Edition
 - A text editor or IDE (Rider, Visual Studio, or VS Code all work well)
 
 ## Installation
@@ -40,7 +40,7 @@ cd MyAddon
 # add the ProjectReference to ingot.Core as shown above
 ```
 
-Your project only needs to **run once** to generate the pack files. Many authors keep a small `Program.cs` that registers all content and calls `Pack.Compile(...)`.
+Your project only needs to **run once** to generate the pack files. Keep a small `Program.cs` that registers all content and calls `Pack.Compile(...)`.
 
 ## Define Your First Item
 
@@ -156,6 +156,9 @@ Use a **fixed behaviour-pack UUID** in real projects. If you generate a new UUID
 ### Linking Behaviour and Resource Packs
 
 By default, `Pack.Create` sets `LinkPacks = true`, which adds cross-dependencies in both manifests so Minecraft loads them together. Set `pack.LinkPacks = false` if you manage packs separately.
+
+> [!NOTE]
+> `Pack.CompileMcaddon` does **not** require `LinkPacks` to be true.
 
 ## Add Textures
 

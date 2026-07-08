@@ -24,6 +24,10 @@
   --ingot-gradient: linear-gradient(135deg, #c4b5fd 0%, #e8b4f8 45%, #f5c2e7 100%);
   --ingot-gradient-subtle: linear-gradient(180deg, #faf8ff 0%, #f3eeff 100%);
 
+  --ingot-tag-bg: color-mix(in srgb, var(--ingot-amethyst) 16%, var(--ingot-surface));
+  --ingot-tag-text: var(--ingot-amethyst-deep);
+  --ingot-tag-border: color-mix(in srgb, var(--ingot-amethyst) 35%, transparent);
+
   --bs-font-sans-serif: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   --bs-font-monospace: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
@@ -63,6 +67,10 @@
   --ingot-glow: rgba(245, 189, 230, 0.1);
   --ingot-gradient: linear-gradient(135deg, #b7bdf8 0%, #c6a0f6 40%, #f5bde6 100%);
   --ingot-gradient-subtle: linear-gradient(180deg, #24273a 0%, #2a2d42 100%);
+
+  --ingot-tag-bg: color-mix(in srgb, var(--ingot-mauve) 28%, var(--ingot-surface));
+  --ingot-tag-text: var(--ingot-pink-soft);
+  --ingot-tag-border: color-mix(in srgb, var(--ingot-mauve) 40%, transparent);
 
   --bs-body-bg: var(--ingot-bg);
   --bs-body-color: var(--ingot-text);
@@ -404,6 +412,33 @@ article table td {
 }
 
 /* TOC sidebar */
+nav#toc a[href]:not([href="#"]),
+.sidetoc a[href]:not([href="#"]) {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+nav#toc a[href$="block-events.html"]::after,
+nav#toc a[href$="item-events.html"]::after,
+nav#toc a[href$="script-services.html"]::after,
+.sidetoc a[href$="block-events.html"]::after,
+.sidetoc a[href$="item-events.html"]::after,
+.sidetoc a[href$="script-services.html"]::after {
+  content: "Scripts";
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--ingot-tag-border);
+  background: var(--ingot-tag-bg);
+  color: var(--ingot-tag-text);
+}
+
 .toc .nav-link.active,
 #affix .nav-link.active {
   color: var(--ingot-pink) !important;
