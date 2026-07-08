@@ -48,6 +48,11 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
     public virtual Dictionary<Identifier, IEntityEventAction[]> Events => new();
 
     /// <summary>
+    /// List of entity properties
+    /// </summary>
+    public virtual Dictionary<Identifier, IEntityProperty> Properties => new();
+
+    /// <summary>
     /// Optional explicit client-entity type for resource-pack visuals.
     /// When null, <see cref="Pack.AddEntity{TEntity}"/> may discover a
     /// <c>ClientEntity&lt;TEntity&gt;</c> (or nested <c>Client</c> type) in the same assembly.
@@ -83,6 +88,11 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
             json.Object("description", () =>
             {
                 json.Property("identifier", inst.Identifier);
+                json.Object("properties", () =>
+                {
+                    foreach (var kvp in inst.Properties)
+                        json.Property(kvp.Key.ToString(), kvp.Value);
+                });
                 json.Property("is_spawnable", inst.IsSpawnable);
                 json.Property("is_summonable", inst.IsSummonable);
                 json.Property("is_experimental", inst.IsExperimental);

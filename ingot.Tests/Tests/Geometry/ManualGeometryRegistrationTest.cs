@@ -80,14 +80,17 @@ public class ManualGeometryRegistrationTest
     }
 
     [Fact]
-    public void Compile_AddGeometryMissingSourceDoesNotCopyFile()
+    public void Compile_AddGeometryMissingSourceThrows()
     {
         using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
+        string missingPath = Path.Combine(output.Path, "does_not_exist.geo.json");
 
-        PackTestBuilder.Create()
-            .AddGeometry("geometry.missing", Path.Combine(output.Path, "does_not_exist.geo.json"))
-            .Compile(output.Path, verbose: false);
+        FileNotFoundException ex = Assert.Throws<FileNotFoundException>(() =>
+            PackTestBuilder.Create()
+                .AddGeometry("geometry.missing", missingPath)
+                .Compile(output.Path, verbose: false));
 
+        Assert.Contains("geometry.missing", ex.Message);
         Assert.False(File.Exists(Path.Combine(output.Path, "rp", "models", "blocks", "missing.geo.json")));
     }
 
