@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour.Block;
+using ingot.Core.Behaviour.Entity;
 using ingot.Core.Common;
 
 namespace ingot.Core;
@@ -45,7 +46,21 @@ public class ResourcePack
 
     private readonly Dictionary<string, TextureSource> _blockTextureSources = new();
     private readonly Dictionary<string, TextureSource> _itemTextureSources = new();
+    private readonly Dictionary<string, TextureSource> _entityTextureSources = new();
     private readonly Dictionary<string, GeometrySource> _geometrySources = new();
+    private readonly List<ClientEntity> _clientEntities = new();
+    private readonly List<RenderController> _renderControllers = new();
+    private readonly HashSet<string> _registeredRenderControllerIds = new(StringComparer.Ordinal);
+
+    /// <summary>
+    /// Client entity definitions registered on this pack.
+    /// </summary>
+    public IReadOnlyList<ClientEntity> ClientEntities => _clientEntities;
+
+    /// <summary>
+    /// Render controllers registered on this pack.
+    /// </summary>
+    public IReadOnlyList<RenderController> RenderControllers => _renderControllers;
 
     /// <summary>
     /// Registers a texture (PNG on disk) that will be copied into the resource pack under
@@ -110,6 +125,74 @@ public class ResourcePack
         return this;
     }
 
+    /// <summary>
+    /// Registers an entity texture (PNG on disk) that will be copied into the resource pack under
+    /// <c>textures/entity/</c>. The path used in client-entity short-names should be
+    /// <c>textures/entity/{rpName}</c>.
+    /// </summary>
+    /// <param name="key">Relative path under <c>textures/entity/</c> (e.g. <c>my_mob</c> or <c>spider/cave_spider</c>).</param>
+    /// <param name="sourcePngPath">Path to the source .png file on disk (will be copied as-is).</param>
+    /// <param name="rpName">Optional relative path under <c>textures/entity/</c>. Defaults to <paramref name="key"/>.</param>
+    public ResourcePack AddEntityTexture(string key, string sourcePngPath, string? rpName = null)
+    {
+        RegisterTexture(_entityTextureSources, key, sourcePngPath, rpName);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers an entity texture if the key has not already been added manually.
+    /// </summary>
+    /// <returns><see langword="true"/> when the texture was registered.</returns>
+    internal bool TryAddEntityTexture(string key, string? sourcePngPath) =>
+        TryRegisterTexture(_entityTextureSources, key, sourcePngPath);
+
+    /// <summary>
+    /// Adds a client entity definition to the resource pack.
+    /// </summary>
+    public ResourcePack AddClientEntity<TClientEntity>() where TClientEntity : ClientEntity, new() =>
+        AddClientEntity(typeof(TClientEntity));
+
+    /// <summary>
+    /// Adds a client entity definition to the resource pack.
+    /// </summary>
+    public ResourcePack AddClientEntity(Type tClientEntity)
+    {
+        ClientEntity inst = (Activator.CreateInstance(tClientEntity) as ClientEntity)!;
+        _clientEntities.Add(inst);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a render controller to the resource pack.
+    /// </summary>
+    public ResourcePack AddRenderController<TRenderController>() where TRenderController : RenderController, new() =>
+        AddRenderController(typeof(TRenderController));
+
+    /// <summary>
+    /// Adds a render controller to the resource pack.
+    /// </summary>
+    public ResourcePack AddRenderController(Type tRenderController)
+    {
+        RenderController inst = (Activator.CreateInstance(tRenderController) as RenderController)!;
+        RegisterRenderControllerInstance(inst);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a pre-built render controller instance to the resource pack.
+    /// </summary>
+    public ResourcePack AddRenderController(RenderController controller)
+    {
+        RegisterRenderControllerInstance(controller);
+        return this;
+    }
+
+    private void RegisterRenderControllerInstance(RenderController inst)
+    {
+        _renderControllers.Add(inst);
+        _registeredRenderControllerIds.Add(inst.ControllerId);
+    }
+
     private static void RegisterTexture(
         Dictionary<string, TextureSource> sources,
         string key,
@@ -148,8 +231,10 @@ public class ResourcePack
 
         Directory.CreateDirectory(dir);
         Directory.CreateDirectory(Path.Combine(dir, "entity"));
+        Directory.CreateDirectory(Path.Combine(dir, "render_controllers"));
         Directory.CreateDirectory(Path.Combine(dir, "models"));
         Directory.CreateDirectory(Path.Combine(dir, "models", "blocks"));
+        Directory.CreateDirectory(Path.Combine(dir, "models", "entity"));
         Directory.CreateDirectory(Path.Combine(dir, "textures"));
         Directory.CreateDirectory(Path.Combine(dir, "textures", "blocks"));
         Directory.CreateDirectory(Path.Combine(dir, "textures", "entity"));
@@ -169,10 +254,139 @@ public class ResourcePack
         if (_geometrySources.Count > 0)
             EmitGeometries(dir);
 
+        // Client entities may auto-register entity textures during compile.
+        EmitClientEntities(dir);
+
+        if (_entityTextureSources.Count > 0)
+            EmitEntityTextures(dir);
+
+        EmitRenderControllers(dir);
+
         WriteBlocksJson(dir);
         WriteLanguageFiles(dir);
         WriteStubFiles(dir);
+        WriteEntitySoundsJson(dir);
 
+        CompilerState.Pop();
+    }
+
+    private void EmitClientEntities(string dir)
+    {
+        if (_clientEntities.Count == 0)
+            return;
+
+        CompilerState.Push("entity");
+        CompilerState.Info("compiling client entities...");
+
+        string entityDir = Path.Combine(dir, "entity");
+        Directory.CreateDirectory(entityDir);
+
+        int c = 0;
+        foreach (ClientEntity clientEntity in _clientEntities)
+        {
+            c++;
+            Type tType = clientEntity.GetType();
+            string json = ClientEntity.Compile(tType);
+            string path = Path.Combine(entityDir, $"{clientEntity.Identifier.Name}.json");
+            File.WriteAllText(path, json);
+            CompilerState.Info($"({c}/{_clientEntities.Count}) compiled client entity {clientEntity.Identifier}");
+        }
+
+        CompilerState.Pop();
+    }
+
+    private void EmitRenderControllers(string dir)
+    {
+        CompilerState.Push("render_controllers");
+
+        string rcDir = Path.Combine(dir, "render_controllers");
+        Directory.CreateDirectory(rcDir);
+
+        // Explicitly registered controllers
+        int c = 0;
+        foreach (RenderController controller in _renderControllers)
+        {
+            c++;
+            string json = RenderController.CompileInstance(controller);
+            string path = Path.Combine(rcDir, $"{controller.FileName}.json");
+            File.WriteAllText(path, json);
+            CompilerState.Info($"({c}/{_renderControllers.Count}) compiled render controller {controller.ControllerId}");
+        }
+
+        // Auto-emit simple controllers referenced by client entities but not registered
+        HashSet<string> emittedIds = new(_registeredRenderControllerIds, StringComparer.Ordinal);
+        int autoCount = 0;
+        foreach (ClientEntity clientEntity in _clientEntities)
+        {
+            if (!clientEntity.EmitDefaultRenderController)
+                continue;
+
+            foreach (string controllerId in clientEntity.RenderControllers)
+            {
+                if (string.IsNullOrWhiteSpace(controllerId) || emittedIds.Contains(controllerId))
+                    continue;
+
+                // Only auto-emit controller.render.* ids; leave vanilla/reused controllers alone
+                // when they don't start with controller.render. - actually always skip if looks like
+                // a well-known reuse without a custom definition. Auto-emit any unregistered id
+                // that starts with controller.render. so simple entities work out of the box.
+                if (!controllerId.StartsWith("controller.render.", StringComparison.Ordinal))
+                    continue;
+
+                RenderController simple = RenderController.CreateSimple(controllerId);
+                string json = RenderController.CompileInstance(simple);
+                string path = Path.Combine(rcDir, $"{simple.FileName}.json");
+                File.WriteAllText(path, json);
+                emittedIds.Add(controllerId);
+                autoCount++;
+                CompilerState.Info($"auto-emitted default render controller {controllerId}");
+            }
+        }
+
+        if (_renderControllers.Count == 0 && autoCount == 0)
+            CompilerState.Info("no render controllers to compile");
+        else if (autoCount > 0)
+            CompilerState.Info($"wrote {_renderControllers.Count} registered + {autoCount} auto-emitted render controller(s)");
+
+        CompilerState.Pop();
+    }
+
+    private void EmitEntityTextures(string outputDir)
+    {
+        CompilerState.Push("entity textures");
+
+        string texturesRoot = Path.Combine(outputDir, "textures", "entity");
+        Directory.CreateDirectory(texturesRoot);
+
+        JsonTextWriter? dummyWriter = null;
+        int c = 0;
+        foreach (var (key, source) in _entityTextureSources)
+        {
+            c++;
+            string rpRelative = source.RpName.Replace('\\', '/').Trim('/');
+            string targetFull = Path.Combine(texturesRoot, $"{rpRelative}.png");
+            string? targetDir = Path.GetDirectoryName(targetFull);
+            if (!string.IsNullOrEmpty(targetDir))
+                Directory.CreateDirectory(targetDir);
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(source.SourcePath))
+                    CompilerState.Warn(ref dummyWriter, $"entity texture key '{key}' has no source PNG registered");
+                else if (!File.Exists(source.SourcePath))
+                    CompilerState.Warn(ref dummyWriter, $"source entity texture not found for key '{key}': {source.SourcePath}");
+                else
+                    File.Copy(source.SourcePath, targetFull, overwrite: true);
+
+                CompilerState.Info($"({c}/{_entityTextureSources.Count}) registered entity texture '{key}' -> textures/entity/{rpRelative}.png");
+            }
+            catch (Exception ex)
+            {
+                CompilerState.Warn(ref dummyWriter, $"failed to process entity texture key '{key}': {ex.Message}");
+            }
+        }
+
+        CompilerState.Info($"wrote {_entityTextureSources.Count} entity texture(s)");
         CompilerState.Pop();
     }
 
@@ -274,13 +488,65 @@ public class ResourcePack
 
         File.WriteAllText(Path.Combine(dir, "biomes_client.json"), "{\n\t\"biomes\": {}\n}\n");
         File.WriteAllText(Path.Combine(dir, "splashes.json"), "{\n\t\"canMerge\": false,\n\t\"splashes\": []\n}\n");
-        File.WriteAllText(Path.Combine(dir, "sounds.json"), "{}\n");
+        // sounds.json is written by WriteEntitySoundsJson (may include entity_sounds)
         File.WriteAllText(
             Path.Combine(dir, "sounds", "sound_definitions.json"),
             "{\n\t\"format_version\": \"1.14.0\",\n\t\"sound_definitions\": {}\n}\n");
         File.WriteAllText(Path.Combine(dir, "textures", "flipbook_textures.json"), "[]\n");
 
         CompilerState.Info("wrote resource pack stub files");
+        CompilerState.Pop();
+    }
+
+    private void WriteEntitySoundsJson(string dir)
+    {
+        CompilerState.Push("sounds.json");
+
+        Dictionary<string, object> entities = new();
+        foreach (ClientEntity clientEntity in _clientEntities)
+        {
+            ClientEntitySounds? sounds = clientEntity.EntitySounds;
+            if (sounds is null || sounds.Events.Count == 0)
+                continue;
+
+            Dictionary<string, object> entry = new()
+            {
+                ["volume"] = sounds.Volume,
+                ["events"] = sounds.Events,
+            };
+            if (sounds.Pitch is { Length: > 0 })
+                entry["pitch"] = sounds.Pitch.Length == 1 ? sounds.Pitch[0] : sounds.Pitch;
+
+            entities[clientEntity.Identifier.ToString()] = entry;
+        }
+
+        using StringWriter sw = new();
+        JsonTextWriter w = new(sw)
+        {
+            Formatting = Formatting.Indented,
+            Indentation = 4,
+        };
+        JsonHelper json = new(ref w);
+
+        w.WriteStartObject();
+        if (entities.Count > 0)
+        {
+            json.Object("entity_sounds", () =>
+            {
+                json.Object("entities", () =>
+                {
+                    foreach (var kvp in entities)
+                        json.Property(kvp.Key, kvp.Value);
+                });
+            });
+        }
+        w.WriteEndObject();
+
+        File.WriteAllText(Path.Combine(dir, "sounds.json"), sw.ToString());
+        CompilerState.Info(
+            entities.Count > 0
+                ? $"wrote sounds.json with {entities.Count} entity sound mapping(s)"
+                : "wrote empty sounds.json");
         CompilerState.Pop();
     }
 

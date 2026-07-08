@@ -19,8 +19,10 @@ public interface IBreedable : IEntityTrait
 
     /// <summary>
     /// If true, the entities will blend their attributes in the offspring after they breed. For example, horses blend their health, movement, and jump_strength in their offspring.
+    /// Moved/removed on current entity schemas; omitted by default.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual bool BlendAttributes => true;
 
     /// <summary>
@@ -49,8 +51,10 @@ public interface IBreedable : IEntityTrait
 
     /// <summary>
     /// If true and no color mutation occurs, the baby's minecraft:color is set to a blend of the parents' colors (following DyeItem combination rules).
+    /// Omitted by default (not valid on current entity schemas).
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual bool CombineParentColors => false;
 
     /// <summary>
@@ -73,9 +77,11 @@ public interface IBreedable : IEntityTrait
 
     /// <summary>
     /// If true, the babies will be automatically tamed if its parents are.
+    /// Omitted by default (not valid on current entity schemas; use offspring for inheritance).
     /// </summary>
     [TraitProperty]
-    public abstract bool InheritTamed { get; }
+    [IngotExclude]
+    public virtual bool InheritTamed => true;
 
     /// <summary>
     /// The filters to run when attempting to fall in love.

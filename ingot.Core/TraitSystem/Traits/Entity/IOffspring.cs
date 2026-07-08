@@ -36,10 +36,11 @@ public interface IOffspring : IEntityTrait
     public abstract dynamic MutationFactor { get; }
 
     /// <summary>
-    /// The map of entity to offspring definitions that this entity can make offspring with.
+    /// The map of entity to offspring definitions that this entity can make offspring with
+    /// (e.g. <c>{ "minecraft:cow": "minecraft:cow" }</c>).
     /// </summary>
     [TraitProperty]
-    public abstract string[] OffspringPairs { get; }
+    public abstract dynamic OffspringPairs { get; }
 
     /// <summary>
     /// List of attributes that should benefit from parent centric attribute blending. For example, horses blend their health, movement, and jump_strength in their offspring.
@@ -48,10 +49,10 @@ public interface IOffspring : IEntityTrait
     public abstract string[] ParentCentricAttributeBlending { get; }
 
     /// <summary>
-    /// List of Entity Properties that should be inherited from the parent entities and potentially mutated.
+    /// Entity properties that should be inherited from the parent entities (map or list).
     /// </summary>
     [TraitProperty]
-    public abstract string[] PropertyInheritance { get; }
+    public abstract dynamic PropertyInheritance { get; }
 
     /// <summary>
     /// Range used to determine random extra variant.

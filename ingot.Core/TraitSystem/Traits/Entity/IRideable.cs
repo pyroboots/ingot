@@ -60,10 +60,11 @@ public interface IRideable : IEntityTrait
     public virtual float PassengerMaxWidth => 0f;
 
     /// <summary>
-    /// This field may exist in old data but isn't used by "minecraft:rideable".
+    /// Not a valid field on current <c>minecraft:rideable</c> schemas.
     /// </summary>
     [TraitProperty]
-    public abstract int Priority { get; }
+    [IngotExclude]
+    public virtual int Priority => 0;
 
     /// <summary>
     /// If true, this entity will pull entities matching the specified "family_types" into any available seats.
@@ -89,6 +90,10 @@ public interface IRideable : IEntityTrait
     [TraitProperty]
     public abstract dynamic Seats { get; }
 
+    /// <summary>
+    /// Generator typo/duplicate of <see cref="PullInEntities"/>; never emit.
+    /// </summary>
     [TraitProperty]
-    public abstract bool PullsInEntities { get; }
+    [IngotExclude]
+    public virtual bool PullsInEntities => false;
 }

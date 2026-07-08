@@ -25,14 +25,18 @@ public interface ILeashable : IEntityTrait
 
     /// <summary>
     /// Distance in blocks at which the leash stiffens, restricting movement.
+    /// Not valid on all engine/schema versions; opt in via a custom implementation without <see cref="IngotExcludeAttribute"/>.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual int HardDistance => 6;
 
     /// <summary>
-    /// Distance in blocks it which the leash breaks.
+    /// Distance in blocks at which the leash breaks.
+    /// Not valid on all engine/schema versions.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual int MaxDistance => 0;
 
     [TraitProperty]
@@ -55,8 +59,10 @@ public interface ILeashable : IEntityTrait
 
     /// <summary>
     /// Distance in blocks at which the 'spring' effect starts acting to keep this entity close to the entity that leashed it.
+    /// Not valid on all engine/schema versions.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual int SoftDistance => 4;
 
     /// <summary>

@@ -232,6 +232,60 @@ public class Pack
         ResourcePack.AddGeometry(identifier, sourceGeoJsonPath, rpName);
         return this;
     }
+
+    /// <summary>
+    /// Registers an entity texture PNG that will be copied into the resource pack under <c>textures/entity/</c>.
+    /// </summary>
+    public Pack AddEntityTexture(string key, string sourcePngPath, string? rpName = null)
+    {
+        ResourcePack.AddEntityTexture(key, sourcePngPath, rpName);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a client entity (resource-pack entity visuals) to the pack.
+    /// </summary>
+    public Pack AddClientEntity<TClientEntity>() where TClientEntity : ClientEntity, new()
+    {
+        ResourcePack.AddClientEntity<TClientEntity>();
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a client entity (resource-pack entity visuals) to the pack.
+    /// </summary>
+    public Pack AddClientEntity(Type tClientEntity)
+    {
+        ResourcePack.AddClientEntity(tClientEntity);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a render controller to the pack.
+    /// </summary>
+    public Pack AddRenderController<TRenderController>() where TRenderController : RenderController, new()
+    {
+        ResourcePack.AddRenderController<TRenderController>();
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a render controller to the pack.
+    /// </summary>
+    public Pack AddRenderController(Type tRenderController)
+    {
+        ResourcePack.AddRenderController(tRenderController);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a pre-built render controller instance to the pack.
+    /// </summary>
+    public Pack AddRenderController(RenderController controller)
+    {
+        ResourcePack.AddRenderController(controller);
+        return this;
+    }
     
     /// <summary>
     /// Adds a function to the <see cref="BehaviourPack"/>

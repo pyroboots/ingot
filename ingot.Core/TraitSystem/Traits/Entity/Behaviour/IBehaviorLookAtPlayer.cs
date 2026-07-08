@@ -38,11 +38,19 @@ public interface IBehaviorLookAtPlayer : IEntityTrait
     [TraitProperty]
     public virtual dynamic LookTime => null;
 
+    /// <summary>
+    /// Not a Bedrock schema field for this goal; retained only for generator compatibility.
+    /// </summary>
     [TraitProperty]
-    public abstract float MaxLookTime { get; }
+    [IngotExclude]
+    public virtual float MaxLookTime => 0f;
 
+    /// <summary>
+    /// Not a Bedrock schema field for this goal; retained only for generator compatibility.
+    /// </summary>
     [TraitProperty]
-    public abstract float MinLookTime { get; }
+    [IngotExclude]
+    public virtual float MinLookTime => 0f;
 
     /// <summary>
     /// As priority approaches 0, the priority is increased. The higher the priority, the sooner this behavior will be executed as a goal.
@@ -56,6 +64,10 @@ public interface IBehaviorLookAtPlayer : IEntityTrait
     [TraitProperty]
     public virtual float Probability => 0.019999999552965164f;
 
+    /// <summary>
+    /// Not a Bedrock schema field for this goal; retained only for generator compatibility.
+    /// </summary>
     [TraitProperty]
-    public abstract float TargetDistance { get; }
+    [IngotExclude]
+    public virtual float TargetDistance => 0f;
 }

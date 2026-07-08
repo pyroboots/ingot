@@ -12,15 +12,18 @@ using ingot.Core.Behaviour.Entity;
 public interface IInteract : IEntityTrait
 {
     /// <summary>
-    /// Time in seconds before this entity can be interacted with again.
+    /// Per-interaction field; not valid at the root of <c>minecraft:interact</c>.
+    /// Put cooldown on individual entries in <see cref="Interactions"/>.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual float Cooldown => 0f;
 
     /// <summary>
-    /// Time in seconds before this entity can be interacted with after being attacked.
+    /// Per-interaction field; not valid at the root of <c>minecraft:interact</c>.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual float CooldownAfterBeingAttacked => 0f;
 
     /// <summary>
@@ -30,9 +33,10 @@ public interface IInteract : IEntityTrait
     public abstract string DropItemSlot { get; }
 
     /// <summary>
-    /// Will offset the item drop position this amount in the y direction. Requires "drop_item_slot" to be specified.
+    /// Per-interaction field; not valid at the root of <c>minecraft:interact</c>.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual float DropItemYOffset => 0f;
 
     /// <summary>
@@ -42,15 +46,17 @@ public interface IInteract : IEntityTrait
     public abstract string EquipItemSlot { get; }
 
     /// <summary>
-    /// The amount of health this entity will recover or lose when interacting with this item. Negative values will harm the entity.
+    /// Per-interaction field; not valid at the root of <c>minecraft:interact</c>.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual int HealthAmount => 0;
 
     /// <summary>
-    /// The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability.
+    /// Per-interaction field; not valid at the root of <c>minecraft:interact</c>.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual int HurtItem => 0;
 
     /// <summary>

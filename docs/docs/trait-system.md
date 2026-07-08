@@ -70,9 +70,11 @@ public float SaturationModifier => 0.9f;
 2. It enumerates all interfaces implemented by the type.
 3. For each interface that carries a `[Trait("minecraft:xxx", TraitType.Block/Item)]` attribute, a `Trait` entry is created.
 4. Every property on that interface decorated with `[TraitProperty]` (or `[TraitProperty("path")]`) is inspected.
-5. The getter is invoked on a temporary instance of your class to obtain the current value.
-6. Values are written under the component using `PascalToSnakeCase` conversion for the JSON keys (e.g. `SecondsToDestroy` → `seconds_to_destroy`).
-7. The resulting object is emitted inside the `components` section of the generated JSON.
+5. Properties marked `[IngotExclude]` (on the interface or the concrete implementation) are skipped.
+6. Null or empty-string values are skipped (not written).
+7. The getter is invoked on a temporary instance of your class to obtain the current value.
+8. Values are written under the component using `PascalToSnakeCase` conversion for the JSON keys (e.g. `SecondsToDestroy` → `seconds_to_destroy`).
+9. The resulting object is emitted inside the `components` section of the generated JSON.
 
 Example output for a destructible block trait:
 
@@ -91,6 +93,13 @@ Example output for a destructible block trait:
 
 - `[Trait(string identifier, TraitSystem.TraitType constraint)]` - placed on the interface. Declares the Minecraft component name and whether the trait is valid on blocks, items, or entities.
 - `[TraitProperty]` or `[TraitProperty("some.nested.path")]` - placed on properties inside the trait interface. The (optional) path controls where the value is written in the generated component object. Currently most traits use the default `"@=*"` (place directly under the component).
+- `[IngotExclude]` - omit a property when compiling JSON. Put it on the **trait interface** (always skip, e.g. schema-invalid generator leftovers) or on a **concrete implementation** (skip only for that type). Use this when a virtual default would emit a field the current Bedrock schema rejects.
+
+```csharp
+// On an implementation: do not write health "value", only "max"
+[IngotExclude]
+int IHealth.Value => 10;
+```
 
 ## Block vs Item vs Entity Traits
 
@@ -114,16 +123,16 @@ For common mob archetypes, ingot provides **behaviour preset** interfaces in `in
 | Preset | Typical use |
 |--------|-------------|
 | `IBasicEntity` | Core components every mob needs (health, physics, collision, despawn) |
-| `IEntityBehaviourPresetPassive` | Passive land mob (wander, float, walk navigation) |
-| `IEntityBehaviourPresetTimid` | Passive mob that flees threats |
-| `IEntityBehaviourPresetNeutral` | Neutral mob that retaliates when attacked |
-| `IEntityBehaviourPresetHostile` | Hostile mob that seeks and attacks targets |
-| `IEntityBehaviourPresetTameable` | Tameable passive mob |
-| `IEntityBehaviourPresetAquatic` | Aquatic mob |
-| `IEntityBehaviourPresetAmphibious` | Mob that moves between land and water |
-| `IEntityBehaviourPresetFlying` | Flying mob |
-| `IEntityBehaviourPresetFlyingHostile` | Hostile flying mob |
-| `IEntityBehaviourPresetAquaticHostile` | Hostile aquatic mob |
+| `IEntityPresetPassive` | Passive land mob (wander, float, walk navigation) |
+| `IEntityPresetTimid` | Passive mob that flees threats |
+| `IEntityPresetNeutral` | Neutral mob that retaliates when attacked |
+| `IEntityPresetHostile` | Hostile mob that seeks and attacks targets |
+| `IEntityPresetTameable` | Tameable passive mob |
+| `IEntityPresetAquatic` | Aquatic mob |
+| `IEntityPresetAmphibious` | Mob that moves between land and water |
+| `IEntityPresetFlying` | Flying mob |
+| `IEntityPresetFlyingHostile` | Hostile flying mob |
+| `IEntityPresetAquaticHostile` | Hostile aquatic mob |
 
 Implement a preset on your entity class, then provide the required abstract properties via explicit interface implementation:
 
@@ -132,7 +141,7 @@ using ingot.Core.Behaviour.Entity;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Entity;
 
-public class MyFlyingMob : Entity, IEntityBehaviourPresetFlying
+public class MyFlyingMob : Entity, IEntityPresetFlying
 {
     public override Identifier Identifier => new("mynamespace:flying_mob");
 

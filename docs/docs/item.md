@@ -43,7 +43,7 @@ These are written into the `description.menu_category` and `components` sections
 The vast majority of interesting item features come from implementing `IItemTrait` interfaces:
 
 ```csharp
-public class LasagnaItem : Item, IFood, IBlockPlacer
+public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers
 {
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
@@ -54,18 +54,30 @@ public class LasagnaItem : Item, IFood, IBlockPlacer
     float IFood.SaturationModifier => 0.9f;
     string IFood.UsingConvertsTo => "minecraft:bowl";
 
+    // Required with food: non-zero use duration (and usually an eat animation)
+    string IUseAnimation.Value => "eat";
+    float IUseModifiers.UseDuration => 1.6f;
+    float IUseModifiers.MovementModifier => 0.35f;
+    dynamic? IUseModifiers.StartUsing => "always";
+    dynamic? IUseModifiers.StartSound => null;
+
     // IBlockPlacer
     dynamic IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }
 ```
 
+> [!IMPORTANT]
+> `IFood` requires a non-zero **`minecraft:use_modifiers` → `use_duration`**. Implement `IUseModifiers` and set `UseDuration` (e.g. `1.6f` for a normal eat). Without it, the content log warns and eating may not work correctly.
+
 > [!TIP]
 > Because some traits will have common property names, its recommended to implement the properties explicitly to be more readable, less ambiguous and it also looks prettier.
 
 Common item traits include:
 
-- `IFood` - makes the item edible
+- `IFood` - makes the item edible (pair with `IUseModifiers` + usually `IUseAnimation`)
+- `IUseModifiers` - `use_duration`, movement while using, `start_using`
+- `IUseAnimation` - e.g. `"eat"`, `"drink"`
 - `IBlockPlacer` - places a block when used
 - `IDurability` + `IDamage` - tools/weapons
 - `IDigger` - mining speed on different blocks

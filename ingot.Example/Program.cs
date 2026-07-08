@@ -31,7 +31,9 @@ class Program
             // blocks
             .AddBlock<DenseLasagnaBlock>()
             // entities
-            .AddEntity<LasagnaSpiritEntity>()
+            .AddEntity<CowEntity>()
+            .AddClientEntity<CowClientEntity>()
+            .AddRenderController<CowV3RenderController>()
             // recipes
             .AddRecipe<LasagnaRecipe>()
             // loot tables

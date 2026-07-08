@@ -11,9 +11,15 @@ using ingot.Core.Behaviour.Entity;
 [Trait("minecraft:experience_reward", TraitSystem.TraitType.Entity)]
 public interface IExperienceReward : IEntityTrait
 {
+    /// <summary>
+    /// XP amount (or Molang expression) awarded when this entity is bred.
+    /// </summary>
     [TraitProperty]
-    public abstract float OnBred { get; }
+    public abstract dynamic OnBred { get; }
 
+    /// <summary>
+    /// XP amount (or Molang expression) awarded when this entity dies.
+    /// </summary>
     [TraitProperty]
-    public abstract float OnDeath { get; }
+    public abstract dynamic OnDeath { get; }
 }

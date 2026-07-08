@@ -14,7 +14,7 @@
 
 - **Inheritance-Based, Type-Safe API** - Define items, blocks, entities, and more using clean, strongly-typed C# instead of hand-writing JSON
 - **Automatic Manifest Generation** - `manifest.json` files for both behavior packs and resource packs are created automatically
-- **Full BP + RP Support** - Create behavior packs, resource packs, and linked packs with ease
+- **Full BP + RP Support** - Create behavior packs, resource packs, and linked packs with ease (including client entities, render controllers, and entity textures)
 - **Script API Ready** - File-based or inline [block](docs/docs/block-events.md) and [item event](docs/docs/item-events.md) handlers, plus [services](docs/docs/script-services.md) auto-wrapped to run every tick, with compile-time trait validation
 - **CompilerState** - Get clear, helpful compile-time feedback to avoid debugging in the Minecraft content log
 - **Extensible & Maintainable** - Designed for large or complex addons where manual JSON becomes painful
@@ -86,7 +86,7 @@ class Program
 }
 ```
 
-See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, recipes, textures, scripts, and the full resource pack side. The docs use `./output` as a generic compile path; this repo's example compiles to `./artifacts/example/`. See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Block Events](docs/docs/block-events.md), [Item Events](docs/docs/item-events.md), [Script Services](docs/docs/script-services.md), and [Recipes](docs/docs/recipe.md) guides for more detail.
+See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, entities (behaviour + client entity), recipes, textures, scripts, and the full resource pack side. The docs use `./output` as a generic compile path; this repo's example compiles to `./artifacts/example/`. See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Making an Entity](docs/docs/entity.md), [Block Events](docs/docs/block-events.md), [Item Events](docs/docs/item-events.md), [Script Services](docs/docs/script-services.md), and [Recipes](docs/docs/recipe.md) guides for more detail.
 
 ## 🛠️ Project Structure
 

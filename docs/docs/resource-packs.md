@@ -1,27 +1,32 @@
 # Resource Packs & Textures
 
-ingot builds **both** a behaviour pack (`bp/`) and a resource pack (`rp/`) from a single `Pack` object. 
+ingot builds **both** a behaviour pack (`bp/`) and a resource pack (`rp/`) from a single `Pack` object.
 
-- Behaviour definitions (`Block`, `Item`, traits, etc.) describe *what* your content is and how it behaves.
-- Resource assets describe how it *looks* (and eventually sounds, particles, etc.).
+- Behaviour definitions (`Block`, `Item`, `Entity`, traits, etc.) describe *what* your content is and how it behaves.
+- Resource assets describe how it *looks* (textures, client entities, render controllers, geometry, …).
 
-For blocks and items, the primary resource concern today is **textures**.
+Supported on the resource side today:
+
+- **Blocks / items** - texture atlases, optional block geometry
+- **Entities** - client entities, render controllers, entity texture PNGs, entity sound mappings (`sounds.json`)
 
 ## The Pack Class (recommended)
 
-Use `Pack.Create` as the single entry point. Textures declared on your `Block` and `Item` classes are auto-registered during compile:
+Use `Pack.Create` as the single entry point. Textures declared on your `Block` and `Item` classes (and optional `ClientEntity.DefaultTexturePath`) are auto-registered during compile:
 
 ```csharp
 using ingot.Core;
 
 Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Example with resources")
-    .AddBlock<MyBlock>()   // textures declared on the block class
-    .AddItem<MyItem>();    // icon path declared on the item class
+    .AddBlock<MyBlock>()              // textures declared on the block class
+    .AddItem<MyItem>()                // icon path declared on the item class
+    .AddEntity<MyEntity>()
+    .AddClientEntity<MyClientEntity>(); // materials / textures / geometry short-names
 
 pack.Compile("./output");
 ```
 
-On the behaviour side, provide optional source PNG paths:
+On the behaviour / client side, provide optional source PNG paths:
 
 ```csharp
 // MyBlock.cs
@@ -33,13 +38,18 @@ public override MaterialInstances MaterialInstances => new()
 // MyItem.cs
 public override string Texture => "my_item";
 public override string? TexturePath => "assets/my_item.png";
+
+// MyClientEntity.cs
+public override string DefaultTexture => "textures/entity/my_entity";
+public override string? DefaultTexturePath => "assets/my_entity.png";
 ```
 
-Manual texture registration is still available when you need overrides or assets not tied to a specific block/item:
+Manual texture registration is still available when you need overrides or assets not tied to a specific definition:
 
 ```csharp
 pack.AddBlockTexture("custom_key", "assets/custom.png")
     .AddItemTexture("another_key", "assets/another.png")
+    .AddEntityTexture("my_entity", "assets/my_entity.png")
     .AddGeometry("geometry.my_block", "assets/my_block.geo.json");
 ```
 
@@ -51,7 +61,10 @@ Key `Pack` members:
 - `AddBlock<T>()`, `AddItem<T>()`, `AddEntity<T>()`, `AddRecipe<T>()`, `AddLootTable<T>()` - register content (fluent, returns `Pack`).
 - `AddBlockTexture(string key, string sourcePngPath)` - manual block texture override.
 - `AddItemTexture(string key, string sourcePngPath)` - manual item texture override.
+- `AddEntityTexture(string key, string sourcePngPath)` - entity texture under `textures/entity/`.
 - `AddGeometry(string identifier, string sourceGeoJsonPath)` - register a block geometry file (`.geo.json`).
+- `AddClientEntity<T>()` - resource-pack client entity (materials, textures, geometry, spawn egg, …).
+- `AddRenderController<T>()` - custom render controller; simple per-entity controllers are auto-emitted when a client entity lists them.
 - `ScriptsEnabled` - enables Script API script generation during compile.
 - `AddService(sourceFile, name?, intervalTicks?)` - registers a [service](script-services.md) whose tick body is wrapped in `system.runInterval` (default every tick) and written to `bp/scripts/services/`.
 - `ScriptEntry` - script module entry path (defaults to `scripts/main.js`).
@@ -102,7 +115,9 @@ pack.CompileComMojang(
 
 ## Texture Keys - the Bridge Between Behaviour and Resources
 
-The strings you write in behaviour code are **keys**, not file paths:
+### Blocks and items (atlas keys)
+
+The strings you write for blocks and items are **atlas keys**, not file paths:
 
 - `new MaterialInstance("block_of_dense_lasagna", ...)` in a `Block` or `BlockPermutation`
 - `public override string Texture => "lasagna";` on an `Item`
@@ -114,6 +129,21 @@ These keys become real images when you either:
 2. Register them manually with `Pack.AddBlockTexture` / `Pack.AddItemTexture`.
 
 If a key has no source PNG (auto or manual), ingot still emits an atlas entry but warns at compile time. Missing assets show as purple/black textures in Minecraft.
+
+### Entity textures and client entities
+
+Entity textures work differently. Client entity short-names point at **paths** under the resource pack (for example `textures/entity/my_mob`), not entries in `terrain_texture.json` / `item_texture.json`.
+
+| Mechanism | What it does |
+|-----------|----------------|
+| `DefaultTexture` on `ClientEntity` | Path written into `rp/entity/*.json` under the `default` texture short-name |
+| `DefaultTexturePath` | Source PNG auto-copied to `rp/textures/entity/<relative>.png` during pack compile |
+| `Pack.AddEntityTexture(key, pngPath)` | Manual copy to `rp/textures/entity/{key}.png` (nested keys like `spider/cave` are allowed) |
+| `AddClientEntity<T>()` | Writes `rp/entity/{name}.json` and can auto-emit a simple render controller |
+| `AddRenderController<T>()` | Writes `rp/render_controllers/{file}.json` |
+| `ClientEntity.EntitySounds` | Writes `rp/sounds.json` → `entity_sounds.entities` (ambient/hurt/death/step/…) |
+
+Without `EntitySounds`, custom entity ids only get generic damage audio. Full API: [Making an Entity](entity.md#client-entities--render-controllers) (including [entity sounds](entity.md#entity-sounds)).
 
 ## Block Geometry
 
@@ -159,9 +189,13 @@ The identifier inside your `.geo.json` file must match what you reference in beh
 
 When `Pack.Compile` runs, the resource side produces (among other folders):
 
-- `rp/textures/blocks/<key>.png` - your block textures (auto-registered or from `AddBlockTexture`)
-- `rp/textures/items/<key>.png` - your item icons (auto-registered or from `AddItemTexture`)
+- `rp/textures/blocks/<key>.png` - block textures (auto-registered or from `AddBlockTexture`)
+- `rp/textures/items/<key>.png` - item icons (auto-registered or from `AddItemTexture`)
+- `rp/textures/entity/<path>.png` - entity textures (`DefaultTexturePath` or `AddEntityTexture`)
 - `rp/models/blocks/<name>.geo.json` - custom block geometry (from `AddGeometry`)
+- `rp/entity/<name>.json` - client entities (from `AddClientEntity`)
+- `rp/render_controllers/<name>.json` - render controllers (registered or auto-emitted)
+- `rp/sounds.json` - `entity_sounds.entities` when any client entity defines `EntitySounds`
 - `rp/textures/terrain_texture.json` - maps block texture keys for `minecraft:material_instances`
 - `rp/textures/item_texture.json` - maps item icon keys for `minecraft:icon`
 
@@ -179,7 +213,7 @@ A minimal generated `terrain_texture.json` looks like this:
 
 The same shape is used for `item_texture.json`. Note that the path inside `"textures"` does **not** include the `.png` extension (Bedrock convention).
 
-ingot also creates the other standard texture subfolders (`entity`, `particle`, etc.) so you have a complete skeleton for future resource features.
+Entity textures are **not** atlas entries - they are plain PNG files referenced by path from the client entity file.
 
 ## Organizing Assets in Your Project
 
@@ -191,9 +225,13 @@ MyAddon/
 ├── Program.cs
 ├── Data/
 │   ├── block_of_dense_lasagna.png
-│   └── lasagna.png
+│   ├── lasagna.png
+│   └── my_entity.png
 ├── DenseLasagnaBlock.cs
-└── LasagnaItem.cs
+├── LasagnaItem.cs
+└── Entities/
+    ├── MyEntity.cs
+    └── MyClientEntity.cs
 ```
 
 Copy `Data/` into the build output from your `.csproj`:
@@ -210,10 +248,11 @@ Then register textures in `Program.cs` using `AppContext.BaseDirectory`:
 string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
 
 pack.AddBlockTexture("block_of_dense_lasagna", Path.Combine(dataDir, "dense_lasagna.png"))
-    .AddItemTexture("lasagna", Path.Combine(dataDir, "lasagna.png"));
+    .AddItemTexture("lasagna", Path.Combine(dataDir, "lasagna.png"))
+    .AddEntityTexture("my_entity", Path.Combine(dataDir, "my_entity.png"));
 ```
 
-Alternatively, reference paths from your block/item definitions via `MaterialInstance` `SourcePath` or `Item.TexturePath`. Paths are resolved with `Path.GetFullPath` at registration time.
+Alternatively, reference paths from definitions via `MaterialInstance` `SourcePath`, `Item.TexturePath`, or `ClientEntity.DefaultTexturePath`. Paths are resolved with `Path.GetFullPath` at registration time.
 
 You can share the same PNG file under different keys or even register the same key for both a block and an item if that makes sense for your design.
 
@@ -229,11 +268,14 @@ string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
 
 Pack pack = Pack.Create(packUuid, "My Addon", "Example with resources")
     .AddBlock<MyBlock>()
-    .AddItem<MyItem>();
+    .AddItem<MyItem>()
+    .AddEntity<MyEntity>()
+    .AddClientEntity<MyClientEntity>();
 
 pack.PackIcon = Path.Combine(dataDir, "pack_icon.png");
 pack.AddBlockTexture("my_block", Path.Combine(dataDir, "my_block.png"))
     .AddItemTexture("my_item", Path.Combine(dataDir, "my_item.png"))
+    .AddEntityTexture("my_entity", Path.Combine(dataDir, "my_entity.png"))
     .AddGeometry("geometry.my_block", Path.Combine(dataDir, "my_block.geo.json"));
 
 pack.Compile("./output");
@@ -245,25 +287,34 @@ See the [`ingot.Example`](../../ingot.Example) project for a working end-to-end 
 
 ## Current Scope and Limitations
 
-- Texture support is currently limited to simple single-image registrations for blocks (via `terrain_texture.json`) and items (via `item_texture.json`).
-- Geometry support is limited to manual block `.geo.json` registration via `AddGeometry` (no auto-discovery from block classes yet).
-- No built-in support yet for:
-  - Texture variations / random or weighted textures
-  - Flipbook (animated) textures
-  - PBR texture sets
-  - Entity geometry / model files
-  - Sound definitions, particles, music, etc.
-  - Entity resources (models, textures, render controllers, attachables)
-- An empty `ResourcePack` (no textures or geometry registered) is perfectly valid - it simply produces no custom atlas entries while still creating the standard folder skeleton.
+**Supported**
 
-These areas will expand in future releases. The current design (key-based registration + asset copying) is intended to scale to those features.
+- Block textures via `terrain_texture.json` (auto or `AddBlockTexture`)
+- Item textures via `item_texture.json` (auto or `AddItemTexture`)
+- Entity textures as loose PNGs under `textures/entity/` (`DefaultTexturePath` or `AddEntityTexture`)
+- Client entities (`AddClientEntity`) and render controllers (`AddRenderController` / auto-emit)
+- Entity sound mappings via `ClientEntity.EntitySounds` → `rp/sounds.json` (`entity_sounds.entities`)
+- Block geometry via manual `AddGeometry` (`.geo.json` under `models/blocks/`)
+
+**Not yet**
+
+- Texture variations / random or weighted atlas textures
+- Flipbook (animated) textures
+- PBR texture sets
+- Entity / attachable model file registration (copy your own `.geo.json` into `models/entity/` for now, or extend the pack manually)
+- Custom `sound_definitions.json` entries / packing of new audio files (you can still *reference* vanilla definitions from `EntitySounds`)
+- Particles, music, and animation files as first-class C# types
+- Auto-registration of source PNGs for *extra* attributed client-entity textures (only `DefaultTexturePath` auto-registers; use `AddEntityTexture` for the rest)
+
+An empty `ResourcePack` (no textures or client entities) is still valid - it produces the standard folder skeleton without custom content.
 
 ## See Also
 
 - [Making a Block](block.md) and [Block Material Instances](block-mat-instances.md)
 - [Items](item.md) and [Item Events](item-events.md)
+- [Making an Entity](entity.md) (including [client entities & render controllers](entity.md#client-entities--render-controllers))
 - [Block Events](block-events.md) and [Script Services](script-services.md)
 - [Block Permutations](block-permutations.md)
 - API reference for `ResourcePack`
 
-The texture key is the bridge between behaviour definitions and resource assets. Declare the key in your `Block`/`Item` code, optionally provide a source PNG path, and `Pack.Compile` takes care of the rest.
+Declare keys/paths on your content types, optionally provide source PNGs, and `Pack.Compile` writes the resource pack.

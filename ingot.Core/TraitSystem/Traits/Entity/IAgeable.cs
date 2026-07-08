@@ -27,10 +27,13 @@ public interface IAgeable : IEntityTrait
     /// List of items that can be fed to an entity to age them up. Can be a single item string, an array of strings, or an array of objects with item and growth properties.
     /// </summary>
     [TraitProperty]
-    public abstract EntityFeedItem[] FeedItems { get; }
+    public abstract dynamic FeedItems { get; }
 
+    /// <summary>
+    /// Event to fire when the entity grows up. Can be an event name string or an object with <c>event</c> / <c>target</c>.
+    /// </summary>
     [TraitProperty]
-    public abstract string GrowUp { get; }
+    public abstract dynamic GrowUp { get; }
 
     /// <summary>
     /// List of conditions to meet so that the entity can be fed.

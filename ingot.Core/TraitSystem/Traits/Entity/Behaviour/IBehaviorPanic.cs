@@ -12,10 +12,11 @@ using ingot.Core.Behaviour.Entity;
 public interface IBehaviorPanic : IEntityTrait
 {
     /// <summary>
-    /// The list of Entity Damage Sources that will cause this mob to panic
+    /// The list of Entity Damage Sources that will cause this mob to panic.
+    /// Default is null (omit); set explicitly when a custom list is needed.
     /// </summary>
     [TraitProperty]
-    public virtual string[] DamageSources => new[] { "[campfire", "fire", "fire_tick", "freezing", "lava", "lightning", "magma", "soul_campfire", "temperature", "entity_attack", "entity_explosion", "fireworks", "magic", "projectile", "ram_attack", "sonic_boom", "wither", "mace_smash]" };
+    public virtual string[]? DamageSources => null;
 
     /// <summary>
     /// If true, this mob will not stop panicking until it can't move anymore or the goal is removed from it

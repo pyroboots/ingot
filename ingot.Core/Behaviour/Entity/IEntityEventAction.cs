@@ -24,9 +24,10 @@ public class ComponentGroupRemoveEntityEventAction : IEntityEventAction
     public string Name => "remove";
 
     /// <summary>
-    /// Array of <see cref="EntityComponentGroup"/>s to remove
+    /// Array of <see cref="EntityComponentGroup"/>s to remove.
+    /// When empty or null, emits an empty <c>remove</c> object.
     /// </summary>
-    public required Identifier[] ComponentGroups;
+    public Identifier[] ComponentGroups = [];
     
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
@@ -35,7 +36,8 @@ public class ComponentGroupRemoveEntityEventAction : IEntityEventAction
         
         json.Object(Name, () =>
         {
-            json.Property("component_groups", ComponentGroups.Select(i => i.ToString()).ToArray());
+            if (ComponentGroups is { Length: > 0 })
+                json.Property("component_groups", ComponentGroups.Select(i => i.ToString()).ToArray());
         });
     }
 }
@@ -209,6 +211,43 @@ public class SequenceEntityEventAction : IEntityEventAction
         {
             foreach (IEntityEventAction a in EventActions) 
                 json.Object("", () => a.Compile(ref json.Writer));
+        });
+    }
+}
+
+/// <summary>
+/// Triggers another entity event (string form or object with event/target).
+/// </summary>
+public class TriggerEntityEventAction : IEntityEventAction
+{
+    /// <inheritdoc/>
+    public string Name => "trigger";
+
+    /// <summary>
+    /// Event identifier to trigger (e.g. <c>minecraft:spawn_adult</c>).
+    /// </summary>
+    public required string Event;
+
+    /// <summary>
+    /// Optional target. When set, emits <c>{ "event": "...", "target": "..." }</c> instead of a bare string.
+    /// </summary>
+    public Enums.Target? Target;
+
+    /// <inheritdoc/>
+    public void Compile(ref JsonTextWriter writer)
+    {
+        JsonHelper json = new(ref writer);
+
+        if (Target is null)
+        {
+            json.Property(Name, Event);
+            return;
+        }
+
+        json.Object(Name, () =>
+        {
+            json.Property("event", Event);
+            json.Property("target", Enums.Target_AsString(Target.Value));
         });
     }
 }

@@ -43,8 +43,10 @@ public interface IBreathable : IEntityTrait
 
     /// <summary>
     /// If true, entities that only breathe water (for example, fish) will take dehydration damage when out of water. This item requires a format version of at least 1.21.130.
+    /// Omitted by default; older format versions reject this field.
     /// </summary>
     [TraitProperty]
+    [IngotExclude]
     public virtual bool CanDehydrate => false;
 
     /// <summary>
@@ -71,8 +73,12 @@ public interface IBreathable : IEntityTrait
     [TraitProperty]
     public virtual int SuffocateTime => -20;
 
+    /// <summary>
+    /// Generator typo of <see cref="SuffocateTime"/>; never emit.
+    /// </summary>
     [TraitProperty]
-    public abstract float Suffocatetime { get; }
+    [IngotExclude]
+    public virtual float Suffocatetime => 0f;
 
     /// <summary>
     /// Time in seconds the entity can hold its breath.
@@ -80,6 +86,10 @@ public interface IBreathable : IEntityTrait
     [TraitProperty]
     public virtual int TotalSupply => 15;
 
+    /// <summary>
+    /// Generator typo of <see cref="TotalSupply"/>; never emit.
+    /// </summary>
     [TraitProperty]
-    public abstract float Totalsupply { get; }
+    [IngotExclude]
+    public virtual float Totalsupply => 0f;
 }

@@ -119,6 +119,7 @@ public static class TraitSystem
         ref JsonTextWriter? dummyWriter)
     {
         List<TraitProperty> properties = new();
+        Type concreteType = instance.GetType();
 
         foreach (PropertyInfo property in iface.GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
@@ -126,6 +127,12 @@ public static class TraitSystem
 
             TraitPropertyAttribute? propertyAttr = property.GetCustomAttribute<TraitPropertyAttribute>();
             if (propertyAttr == null)
+            {
+                CompilerState.Pop();
+                continue;
+            }
+
+            if (IsIngotExcluded(property, iface, concreteType))
             {
                 CompilerState.Pop();
                 continue;
@@ -150,7 +157,10 @@ public static class TraitSystem
             }
 
             if (value == null || (value is string str && string.IsNullOrEmpty(str)))
-                CompilerState.Warn(ref dummyWriter, "value is null or empty, entry omitted from compiled json");
+            {
+                CompilerState.Pop();
+                continue;
+            }
 
             CompilerState.Pop();
 
@@ -162,6 +172,68 @@ public static class TraitSystem
         }
 
         return properties;
+    }
+
+    /// <summary>
+    /// Whether a trait property should be omitted due to <see cref="IngotExcludeAttribute"/>
+    /// on the interface member and/or the concrete implementation.
+    /// </summary>
+    private static bool IsIngotExcluded(PropertyInfo interfaceProperty, Type iface, Type concreteType)
+    {
+        if (interfaceProperty.GetCustomAttribute<IngotExcludeAttribute>(inherit: true) is not null)
+            return true;
+
+        // Implicit public implementation with the same name
+        PropertyInfo? publicImpl = concreteType.GetProperty(
+            interfaceProperty.Name,
+            BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        if (publicImpl is null)
+        {
+            // Walk base types for public implementations
+            for (Type? t = concreteType; t is not null && t != typeof(object); t = t.BaseType)
+            {
+                publicImpl = t.GetProperty(
+                    interfaceProperty.Name,
+                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                if (publicImpl is not null)
+                    break;
+            }
+        }
+
+        if (publicImpl?.GetCustomAttribute<IngotExcludeAttribute>(inherit: true) is not null)
+            return true;
+
+        // Explicit interface implementation: map interface getter -> target method, then its declaring property
+        if (!iface.IsInterface || !iface.IsAssignableFrom(concreteType))
+            return false;
+
+        InterfaceMapping map = concreteType.GetInterfaceMap(iface);
+        MethodInfo? interfaceGetter = interfaceProperty.GetGetMethod();
+        if (interfaceGetter is null)
+            return false;
+
+        for (int i = 0; i < map.InterfaceMethods.Length; i++)
+        {
+            if (map.InterfaceMethods[i] != interfaceGetter)
+                continue;
+
+            MethodInfo target = map.TargetMethods[i];
+            if (target.GetCustomAttribute<IngotExcludeAttribute>(inherit: true) is not null)
+                return true;
+
+            // Attributes on the explicit property itself (via accessor metadata token / declaring type scan)
+            foreach (PropertyInfo prop in target.DeclaringType!.GetProperties(
+                         BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+            {
+                if (prop.GetGetMethod(nonPublic: true) == target
+                    && prop.GetCustomAttribute<IngotExcludeAttribute>(inherit: true) is not null)
+                    return true;
+            }
+
+            break;
+        }
+
+        return false;
     }
     
     /// <summary>
