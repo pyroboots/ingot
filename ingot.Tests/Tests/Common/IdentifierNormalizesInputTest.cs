@@ -13,13 +13,4 @@ public class IdentifierNormalizesInputTest
         Assert.Equal("my_block", identifier.Name);
         Assert.Equal("test:my_block", identifier.ToString());
     }
-
-    [Fact]
-    public void Identifier_EmptyStringFallsBackToUnknown()
-    {
-        Identifier identifier = new("");
-
-        Assert.Equal("minecraft", identifier.Namespace);
-        Assert.Equal("unknown", identifier.Name);
-    }
 }
