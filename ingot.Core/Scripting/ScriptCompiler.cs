@@ -41,8 +41,19 @@ internal static class ScriptCompiler
         if (!pack.ScriptRegistry.HasEntries)
             return false;
 
+        EnsureDefaultScriptModules(pack);
         WriteScripts(pack, behaviourPackDir);
         return true;
+    }
+
+    /// <summary>
+    /// Guarantees <c>@minecraft/server</c> is listed even if the author replaced
+    /// <see cref="Pack.ScriptApiModules"/> with only optional modules like server-ui.
+    /// </summary>
+    private static void EnsureDefaultScriptModules(Pack pack)
+    {
+        if (!pack.ScriptApiModules.ContainsKey("@minecraft/server"))
+            pack.ScriptApiModules["@minecraft/server"] = new(2, 8, 0);
     }
 
     private static bool CollectEventScripts(Pack pack, ref JsonTextWriter? writer)

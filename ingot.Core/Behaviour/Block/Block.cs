@@ -22,9 +22,10 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
     /// </summary>
     public abstract Identifier Identifier { get; }
     /// <summary>
-    /// Minimum component version
+    /// Block JSON format version. Defaults to <c>1.21.90</c> so custom components
+    /// can be declared as direct entries under <c>components</c> (Custom Components V2).
     /// </summary>
-    public virtual Version FormatVersion => new("1.20.10");
+    public virtual Version FormatVersion => new("1.21.90");
 
     /// <summary>
     /// Dictionary of possible block states. Valid state types are: <see cref="int"/>[], <see cref="float"/>[], <see cref="bool"/>[], <see cref="string"/>[], 
@@ -59,7 +60,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
     /// <summary>
     /// Shortcut for the <c>minecraft:geometry</c> component
     /// </summary>
-    public virtual string? Geometry => null;
+    public virtual string? Geometry => "minecraft:geometry.full_block";
     /// <summary>
     /// Texture key written to <c>blocks.json</c> in the resource pack
     /// </summary>

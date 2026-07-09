@@ -16,9 +16,10 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
     /// <summary>
-    /// Minimum component version
+    /// Item JSON format version. Defaults to <c>1.21.90</c> so custom components
+    /// can be declared as direct entries under <c>components</c> (Custom Components V2).
     /// </summary>
-    public virtual Version FormatVersion => new("1.20.10");
+    public virtual Version FormatVersion => new("1.21.90");
     
     /// <summary>
     /// Which section of the creative inventory the item appears in

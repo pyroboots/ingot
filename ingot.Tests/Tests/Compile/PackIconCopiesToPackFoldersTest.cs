@@ -18,9 +18,9 @@ public class PackIconCopiesToPackFoldersTest
         pack.PackIcon = iconPath;
         pack.Compile(output.Path, verbose: false);
 
-        string iconName = Path.GetFileName(iconPath);
-        string behaviourIcon = Path.Combine(output.Path, "bp", iconName);
-        string resourceIcon = Path.Combine(output.Path, "rp", iconName);
+        // Minecraft requires the pack icon filename to be pack_icon.png
+        string behaviourIcon = Path.Combine(output.Path, "bp", "pack_icon.png");
+        string resourceIcon = Path.Combine(output.Path, "rp", "pack_icon.png");
 
         Assert.True(File.Exists(behaviourIcon));
         Assert.True(File.Exists(resourceIcon));

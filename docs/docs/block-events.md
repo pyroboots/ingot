@@ -142,6 +142,24 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {
 });
 ```
 
+Extra modules in `ScriptApiModules` (for example `@minecraft/server-ui`) are imported as namespaces so handler bodies can use them:
+
+```csharp
+// Keep the default @minecraft/server entry — only *add* extra modules.
+pack.ScriptApiModules["@minecraft/server-ui"] = new(2, 0, 0);
+```
+
+```javascript
+// generated import:
+import * as serverUi from "@minecraft/server-ui";
+
+// in your handler body:
+const form = new serverUi.MessageFormData().title("Hi").body("Hello").button1("OK").button2("Cancel");
+form.show(event.player);
+```
+
+> **Important:** Replacing `ScriptApiModules` with `new() { ... }` drops the default `@minecraft/server` dependency. Prefer indexer assignment so existing modules stay.
+
 ### 3. Updated `main.js` entry point
 
 **ingot** writes `bp/scripts/main.js` with imports for your configured Script API modules, [services](script-services.md), and every generated block/item event script:

@@ -28,7 +28,7 @@ Every block **must** implement:
 
 | Member              | Type                        | Required | Description |
 |---------------------|-----------------------------|----------|-----------|
-| `FormatVersion`     | `Version`                   | No       | Defaults to `"1.20.10"`. Controls the minimum format the block JSON targets. |
+| `FormatVersion`     | `Version`                   | No       | Defaults to `"1.21.90"`. Required for Custom Components V2 (custom components as direct `components` entries). |
 | `States`            | `Dictionary<string, dynamic[]>` | No   | Custom block states (see below). |
 | `Permutations`      | `List<BlockPermutation>`    | No       | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
 | `Tags`              | `string[]`                  | No       | Block tags written as empty `tag:<name>` components. Defaults to an empty array. |

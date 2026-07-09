@@ -11,6 +11,7 @@ public class ItemJsonContainsIconTest
     {
         string json = Item.Compile(typeof(TestItem));
         Assert.Contains("minecraft:icon", json);
-        Assert.Contains("\"texture\": \"test_item\"", json);
+        // format_version 1.21+ uses textures.default rather than the legacy texture field
+        Assert.Contains("\"default\": \"test_item\"", json);
     }
 }

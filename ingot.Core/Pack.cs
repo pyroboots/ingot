@@ -42,9 +42,11 @@ public class Pack
     /// </summary>
     public Version PackVersion = new(1, 0, 0);
     /// <summary>
-    /// Minimum game version required to run this pack
+    /// Minimum game version required to run this pack.
+    /// Defaults to <c>1.21.90</c> to match the default block/item format version
+    /// (required for Custom Components V2).
     /// </summary>
-    public Version MinEngineVersion = new(1, 20, 0);
+    public Version MinEngineVersion = new(1, 21, 90);
     /// <summary>
     /// List of authors who helped with the development of the pack
     /// </summary>
@@ -569,9 +571,8 @@ public class Pack
 
         if (PackIcon is not null)
         {
-            string iconName = Path.GetFileName(PackIcon);
-            File.Copy(PackIcon, Path.Combine(behaviourPackDir, iconName), overwrite: true);
-            File.Copy(PackIcon, Path.Combine(resourcePackDir, iconName), overwrite: true);
+            File.Copy(PackIcon, Path.Combine(behaviourPackDir, "pack_icon.png"), overwrite: true);
+            File.Copy(PackIcon, Path.Combine(resourcePackDir, "pack_icon.png"), overwrite: true);
         }
 
         timer.Stop();
@@ -598,6 +599,8 @@ public class Pack
             .AddItem("loot tables", BehaviourPack.LootTables.Count, Color.Red)
             .AddItem("recipes", BehaviourPack.Recipes.Count, Color.Purple)
             .AddItem("functions", BehaviourPack.Functions.Count, Color.White)
+            .AddItem("scripts", ScriptRegistry.Entries.Count, Color.Aqua)
+            .AddItem("services", Services.Count, Color.Violet)
             .Width(80);
   
         AnsiConsole.Write(chart);

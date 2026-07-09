@@ -26,7 +26,7 @@ Optionally override `TexturePath` to provide the source PNG. When set, ingot aut
 
 | Property            | Type               | Default          | Description |
 |---------------------|--------------------|------------------|-----------|
-| `FormatVersion`     | `Version`          | `"1.20.10"`      | Target format version. |
+| `FormatVersion`     | `Version`          | `"1.21.90"`      | Target format version. Required for Custom Components V2 (custom components as direct `components` entries). |
 | `Category`          | `Item.CatalogueCategory`| `Items`     | Which creative inventory tab the item appears in (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
 | `Group`             | `string?`          | `null`           | Sub-group inside the chosen category (max 256 characters). |
 | `HiddenInCommands`  | `bool`             | `false`          | If true, the item cannot be used in commands that take item arguments. |

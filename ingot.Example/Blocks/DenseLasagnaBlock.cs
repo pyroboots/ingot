@@ -4,13 +4,11 @@ using ingot.Core.Common;
 using ingot.Core.Scripting;
 using ingot.Core.TraitSystem.Traits.Block;
 
-using Version = ingot.Core.Common.Version;
-
 namespace ingot.Example.Blocks;
 
 public class DenseLasagnaBlock : Block, IDestructibleByMining
 {
-    public override Version FormatVersion => new(1, 20, 80);
+    // Use the default 1.21.90+ format so custom components are valid as direct component entries.
     public override Identifier Identifier => new("test:block_of_dense_lasagna");
     public override string DisplayName => "Block of Dense Lasagna";
     public override string? Geometry => "minecraft:geometry.full_block";
