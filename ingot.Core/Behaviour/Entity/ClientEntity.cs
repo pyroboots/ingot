@@ -117,7 +117,7 @@ public class ClientEntitySounds
     /// </summary>
     /// <param name="vanillaMobName">Vanilla mob folder name, e.g. <c>cow</c>, <c>pig</c>.</param>
     /// <param name="includeMilk">When true, adds <c>milk</c> → <c>mob.{name}.milk</c>.</param>
-    /// <param name="pitch">Optional pitch range (default 0.8–1.2).</param>
+    /// <param name="pitch">Optional pitch range (default 0.8-1.2).</param>
     public static ClientEntitySounds FromVanilla(
         string vanillaMobName,
         bool includeMilk = false,
