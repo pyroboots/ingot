@@ -26,10 +26,12 @@ Every entity **must** implement:
 | `IsSpawnable`      | `bool`                                    | `false`     | Whether the entity can spawn naturally in the world. |
 | `IsSummonable`     | `bool`                                    | `true`      | Whether the entity can be summoned with commands. |
 | `IsExperimental`   | `bool`                                    | `false`     | Whether the entity requires experimental gameplay. |
+| `RuntimeIdentifier`| `Identifier?`                             | `null`      | Optional vanilla id to imitate hard-coded engine behavior. |
+| `Properties`       | `Dictionary<Identifier, IEntityProperty>` | `{}`        | Typed entity properties (server-side state, optional client sync). See [Entity Properties](#entity-properties). |
 | `ComponentGroups`  | `EntityComponentGroup[]`                  | `[]`        | Named component sets toggled by events. See [Entity Component Groups](entity-component-groups.md). |
 | `Events`           | `Dictionary<Identifier, IEntityEventAction[]>` | `{}`     | Event definitions and their actions. See [Entity Events](entity-events.md). |
 
-These are written into the `description`, `component_groups`, `components`, and `events` sections of the generated entity JSON.
+These are written into the `description` (including `properties`), `component_groups`, `components`, and `events` sections of the generated entity JSON.
 
 ## Compiled Output
 
@@ -41,6 +43,7 @@ A minimal entity compiles to:
     "minecraft:entity": {
         "description": {
             "identifier": "mynamespace:my_entity",
+            "properties": {},
             "is_spawnable": false,
             "is_summonable": true,
             "is_experimental": false
@@ -53,6 +56,93 @@ A minimal entity compiles to:
 ```
 
 Override `IsSpawnable`, `IsSummonable`, or `IsExperimental` on your entity class when you need different values.
+
+## Entity Properties
+
+Entity properties store typed state on an entity without a full component, similar to block states. They compile into `minecraft:entity` → `description` → `properties`.
+
+Override `Properties` with a dictionary of `Identifier` → `IEntityProperty`. Four implementations are available:
+
+| Class | JSON `type` | Fields | Notes |
+|-------|-------------|--------|--------|
+| `BooleanEntityProperty` | `bool` | `Default` | `true` / `false` |
+| `EnumEntityProperty` | `enum` | `Values`, `Default` | `Default` must be one of `Values` or compile throws |
+| `FloatEntityProperty` | `float` | `Min`, `Max`, `Default` | Emits `"range": [min, max]`; default must be in range |
+| `IntEntityProperty` | `int` | `Min`, `Max`, `Default` | Same range rules as float |
+
+Every property also has `ClientSync` (default `true`), which controls whether clients can read the value.
+
+```csharp
+using ingot.Core.Behaviour.Entity;
+using ingot.Core.Common;
+
+public class MyEntity : Entity
+{
+    public override Identifier Identifier => new("mynamespace:my_entity");
+
+    public override Dictionary<Identifier, IEntityProperty> Properties => new()
+    {
+        [new("mynamespace:is_charged")] = new BooleanEntityProperty
+        {
+            Default = false,
+        },
+        [new("mynamespace:mood")] = new EnumEntityProperty
+        {
+            Values = ["calm", "alert", "angry"],
+            Default = "calm",
+            ClientSync = true,
+        },
+        [new("mynamespace:power")] = new FloatEntityProperty
+        {
+            Min = 0f,
+            Max = 1f,
+            Default = 0.5f,
+        },
+        [new("mynamespace:level")] = new IntEntityProperty
+        {
+            Min = 0,
+            Max = 10,
+            Default = 1,
+            ClientSync = false,
+        },
+    };
+}
+```
+
+Compiles to (property block only):
+
+```json
+"properties": {
+    "mynamespace:is_charged": {
+        "type": "bool",
+        "default": false,
+        "client_sync": true
+    },
+    "mynamespace:mood": {
+        "type": "enum",
+        "values": ["calm", "alert", "angry"],
+        "default": "calm",
+        "client_sync": true
+    },
+    "mynamespace:power": {
+        "type": "float",
+        "range": [0.0, 1.0],
+        "default": 0.5,
+        "client_sync": true
+    },
+    "mynamespace:level": {
+        "type": "int",
+        "range": [0, 10],
+        "default": 1,
+        "client_sync": false
+    }
+}
+```
+
+Validation runs at compile time:
+
+- `EnumEntityProperty`: `Default` not listed in `Values` → `InvalidEnumArgumentException`
+- `FloatEntityProperty` / `IntEntityProperty`: `Default` outside `[Min, Max]` → `ArgumentOutOfRangeException`
 
 ## Component Groups
 

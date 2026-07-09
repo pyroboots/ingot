@@ -1,4 +1,8 @@
+using ingot.Core.Common;
+
 using Newtonsoft.Json;
+
+using Spectre.Console;
 
 namespace ingot.Core;
 
@@ -69,10 +73,8 @@ public static class CompilerState
     {
         string warning = $"/!\\ [{GetTrace()}] {msg}";
         Current.Logs.Add(warning);
-
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine(warning);
-        Console.ResetColor();
+        
+        AnsiConsole.MarkupLine($"[{IngotCommon.SecondaryColor.ToMarkup()} bold blink underline]{warning.EscapeMarkup()}[/]");
 
         if (w is not null)
         {
@@ -90,7 +92,8 @@ public static class CompilerState
         string log = $"(i) [{GetTrace()}] {msg}";
         Current.Logs.Add(log);
 
-        if (ShowInfoLogs) Console.WriteLine(log);
+        if (ShowInfoLogs)
+            AnsiConsole.MarkupLine($"[{IngotCommon.PrimaryColor.ToMarkup()} dim]{log.EscapeMarkup()}[/]");
     }
 
     /// <summary>
