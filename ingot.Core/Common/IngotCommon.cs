@@ -56,11 +56,46 @@ public static class IngotCommon
     /// </summary>
     public static readonly Version IngotVersion = new(1, 1, 0);
 
+    /// <summary>
+    /// Whether the current console can safely render fancy Spectre output (images, charts).
+    /// Test runners and redirected stdout often report width/height of -1.
+    /// </summary>
+    public static bool CanRenderRichUi
+    {
+        get
+        {
+            try
+            {
+                // CanvasImage uses console width as resize target; -1 crashes ImageSharp.
+                return AnsiConsole.Profile.Width > 0 && AnsiConsole.Profile.Height > 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Writes the branded ingot header (icon + version) when the console supports it.
+    /// Falls back to a plain text line when width/height are unavailable (CI, unit tests, Rider).
+    /// </summary>
     public static void WriteHeader()
     {
-        CanvasImage img = new(IconBytes);
-        AnsiConsole.Write(img);
-        AnsiConsole.Write(new Text("ingot compiler ", new Style(PrimaryColor, null, Decoration.Italic)));
-        AnsiConsole.Write(new Text($"{IngotVersion}\n\n", new Style(SecondaryColor, null, Decoration.Bold)));
+        if (CanRenderRichUi)
+        {
+            // Cap width so ImageSharp never resizes to the full console width (or -1).
+            CanvasImage img = new(IconBytes)
+            {
+                MaxWidth = 16,
+            };
+            AnsiConsole.Write(img);
+            AnsiConsole.Write(new Text("ingot compiler ", new Style(PrimaryColor, null, Decoration.Italic)));
+            AnsiConsole.Write(new Text($"{IngotVersion}\n\n", new Style(SecondaryColor, null, Decoration.Bold)));
+            return;
+        }
+
+        AnsiConsole.MarkupLine(
+            $"[{PrimaryColor.ToMarkup()} italic]ingot compiler[/] [{SecondaryColor.ToMarkup()} bold]{IngotVersion}[/]");
     }
 }

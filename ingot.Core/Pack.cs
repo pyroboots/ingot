@@ -529,7 +529,10 @@ public class Pack
         DeleteCompileOutputDirectory(behaviourPackDir);
         DeleteCompileOutputDirectory(resourcePackDir);
 
-        IngotCommon.WriteHeader();
+        // Fancy header/chart only for verbose compiles. Always-on CanvasImage broke unit
+        // tests: test hosts often report console width/height as -1, which crashes ImageSharp.
+        if (verbose)
+            IngotCommon.WriteHeader();
         
         Stopwatch timer = Stopwatch.StartNew();
 
@@ -579,31 +582,30 @@ public class Pack
 
         if (verbose)
         {
-            Console.WriteLine();
-            AnsiConsole.MarkupLine($"[{IngotCommon.PrimaryColor.ToMarkup()}]ingot compilation log available at[/] [{IngotCommon.SecondaryColor.ToMarkup()}]{Path.Combine(cacheDir, "ingot.log")}[/]");
             File.WriteAllText(Path.Combine(cacheDir, "ingot.log"), string.Join('\n', CompilerState.GetLogs()));
-        }
-        AnsiConsole.MarkupLine($"[{IngotCommon.PrimaryColor.ToMarkup()}]pack compiled in[/] [{IngotCommon.SecondaryColor.ToMarkup()}]{timer.ElapsedMilliseconds}ms[/]");
+            AnsiConsole.MarkupLine($"[{IngotCommon.PrimaryColor.ToMarkup()}]ingot compilation log available at[/] [{IngotCommon.SecondaryColor.ToMarkup()}]{Markup.Escape(Path.Combine(cacheDir, "ingot.log"))}[/]");
+            AnsiConsole.MarkupLine($"[{IngotCommon.PrimaryColor.ToMarkup()}]pack compiled in[/] [{IngotCommon.SecondaryColor.ToMarkup()}]{timer.ElapsedMilliseconds}ms[/]");
 
-        // technically blocks are permutations, just default ones
-        int blockPermCount = BehaviourPack.Blocks.Count;
-        foreach (Block b in BehaviourPack.Blocks)
-            blockPermCount += b.Permutations.Count;
-        
-        BreakdownChart chart = new BreakdownChart()
-            .AddItem("entities", BehaviourPack.Entities.Count, Color.Green)
-            .AddItem("render controllers", ResourcePack.RenderControllers.Count, Color.Red)
-            .AddItem("blocks", BehaviourPack.Blocks.Count, Color.Blue)
-            .AddItem("block permutations", blockPermCount, Color.Orange1)
-            .AddItem("items", BehaviourPack.Items.Count, Color.Yellow)
-            .AddItem("loot tables", BehaviourPack.LootTables.Count, Color.Red)
-            .AddItem("recipes", BehaviourPack.Recipes.Count, Color.Purple)
-            .AddItem("functions", BehaviourPack.Functions.Count, Color.White)
-            .AddItem("scripts", ScriptRegistry.Entries.Count, Color.Aqua)
-            .AddItem("services", Services.Count, Color.Violet)
-            .Width(80);
-  
-        AnsiConsole.Write(chart);
+            // technically blocks are permutations, just default ones
+            int blockPermCount = BehaviourPack.Blocks.Count;
+            foreach (Block b in BehaviourPack.Blocks)
+                blockPermCount += b.Permutations.Count;
+
+            BreakdownChart chart = new BreakdownChart()
+                .AddItem("entities", BehaviourPack.Entities.Count, Color.Green)
+                .AddItem("render controllers", ResourcePack.RenderControllers.Count, Color.Red)
+                .AddItem("blocks", BehaviourPack.Blocks.Count, Color.Blue)
+                .AddItem("block permutations", blockPermCount, Color.Orange1)
+                .AddItem("items", BehaviourPack.Items.Count, Color.Yellow)
+                .AddItem("loot tables", BehaviourPack.LootTables.Count, Color.Red)
+                .AddItem("recipes", BehaviourPack.Recipes.Count, Color.Purple)
+                .AddItem("functions", BehaviourPack.Functions.Count, Color.White)
+                .AddItem("scripts", ScriptRegistry.Entries.Count, Color.Aqua)
+                .AddItem("services", Services.Count, Color.Violet)
+                .Width(Math.Clamp(AnsiConsole.Profile.Width > 0 ? AnsiConsole.Profile.Width : 80, 40, 80));
+
+            AnsiConsole.Write(chart);
+        }
         
         if (cache && File.Exists(Path.Combine(cacheDir, ".ingot")) == false)
         {
