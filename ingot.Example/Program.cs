@@ -54,6 +54,6 @@ class Program
             .AddItemTexture("pasta", Path.Combine(dataDir, "pasta.png"))
             .AddItemTexture("spooky_special_sauce", Path.Combine(dataDir, "spooky_special_sauce.png"));
 
-        pack.CompileComMojang("/home/pyro/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang/", false, cache: true);
+        pack.CompileComMojang("/home/pyro/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang/", cache: true);
     }
 }
