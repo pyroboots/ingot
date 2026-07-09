@@ -28,7 +28,8 @@ In your own addon project, reference the core library:
 </ItemGroup>
 ```
 
-> **Future:** ingot will be published to NuGet once the API stabilizes.
+> [!NOTE]
+> ingot will be published to NuGet once the API stabilizes. Until then, use a project reference to `ingot.Core`.
 
 ## Create a Project
 
@@ -40,7 +41,8 @@ cd MyAddon
 # add the ProjectReference to ingot.Core as shown above
 ```
 
-Your project only needs to **run once** to generate the pack files. Keep a small `Program.cs` that registers all content and calls `Pack.Compile(...)`.
+> [!TIP]
+> Your project only needs to **run once** to generate the pack files. Keep a small `Program.cs` that registers all content and calls `Pack.Compile(...)`.
 
 ## Define Your First Item
 
@@ -115,6 +117,9 @@ Pack pack = Pack.Create(packUuid, "My Addon", "My first ingot pack")
 pack.Compile("./output");
 ```
 
+> [!IMPORTANT]
+> Use a **fixed** behaviour-pack UUID in real projects. Generating a new UUID every build makes Minecraft treat each compile as a different pack.
+
 ### Compile targets
 
 `Pack` exposes three compile methods:
@@ -142,16 +147,20 @@ pack.CompileComMojang("/path/to/games/com.mojang");
 | `output/ingot.log` | Compile-time warnings and info (when `verbose` is `true`, the default) |
 | `output/.ingot` | UUID cache so rebuilds keep stable pack IDs |
 
-> [!WARNING]
-> It is recommended that you turn caching off if you use static, pre-generated UUIDs for your packs to avoid using stale caches in the event you need to update the UUID
+> [!CAUTION]
+> If you use static, pre-generated UUIDs, consider `cache: false` (or deleting `.ingot`) when you intentionally change a pack UUID. A stale cache can keep old UUIDs in place.
 
 `CompileMcaddon` stores `.ingot` and `ingot.log` next to the `.mcaddon` file. `CompileComMojang` stores them in the `com.mojang` directory.
 
-All three methods delete prior pack output before compiling. That keeps rebuilds clean when you remove blocks, items, textures, or other content - stale files from an earlier compile are not left behind. Cache files (`.ingot`) and compile logs (`ingot.log`) in the output directory are preserved.
+> [!WARNING]
+> All three compile methods **delete prior pack output** (`bp/`/`rp/`, development pack folders, or an existing `.mcaddon`) before writing. That keeps rebuilds clean when you remove content, but any hand-edited files inside those folders are wiped. Cache files (`.ingot`) and compile logs (`ingot.log`) in the output directory are preserved.
 
 ### Pack UUIDs
 
-Use a **fixed behaviour-pack UUID** in real projects. If you generate a new UUID on every build, Minecraft treats each compile as a completely different pack. The `.ingot` cache file preserves UUIDs across rebuilds when you compile to the same output directory.
+The `.ingot` cache file preserves UUIDs across rebuilds when you compile to the same output directory and leave caching enabled.
+
+> [!TIP]
+> On an interactive terminal, verbose compiles (`verbose: true`, the default) show Spectre.Console progress bars for behaviour pack, scripts, resource pack, and manifests. Full detail still lands in `ingot.log`.
 
 ### Linking Behaviour and Resource Packs
 
@@ -214,6 +223,9 @@ To use block or item event scripts and tick-based services:
 pack.ScriptsEnabled = true;
 pack.AddService("./scripts/services/tick_service.js"); // optional global tick logic
 ```
+
+> [!IMPORTANT]
+> Set `ScriptsEnabled = true` before compiling if you define block/item event handlers or services. Otherwise scripts are skipped and compile-time warnings are emitted.
 
 ingot generates custom components, event handler scripts under `bp/scripts/blocks/` and `bp/scripts/items/`, service scripts under `bp/scripts/services/` (wrapped in `system.runInterval` to run every tick), and a `scripts/main.js` entry point. The manifest script module is only added when at least one script exists.
 

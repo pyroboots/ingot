@@ -118,6 +118,9 @@ public override ItemEvents? ItemEvents => new()
 
 Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes handler scripts to `bp/scripts/items/`, adds the custom component to your item JSON, and imports them from a generated `bp/scripts/main.js`. For global tick logic, use [services](script-services.md) via `pack.AddService(...)`.
 
+> [!IMPORTANT]
+> Event scripts are not generated unless `ScriptsEnabled` is `true`. Without it, ingot warns at compile time and skips script output.
+
 See the dedicated [Item Events](item-events.md) guide for the full event list, trait validation warnings, and compile pipeline details.
 
 ## Compilation & Registration
@@ -134,21 +137,24 @@ public class LasagnaItem : Item
     public override string? TexturePath => "assets/lasagna.png";
 }
 
-Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Items made with ingot")
+const string packUuid = "77f1fef2-bb39-411a-b25c-ae475c21169f";
+
+Pack pack = Pack.Create(packUuid, "My Addon", "Items made with ingot")
     .AddItem<LasagnaItem>()
     .AddItem<FancyTool>();
 
 pack.Compile("./output");
 ```
 
-Use `pack.AddItemTexture(key, path)` only when you need a manual override. Capture identifiers from your item class for cross-references (recipes, loot tables, scripts, etc.) without repeating string literals.
+> [!TIP]
+> Use `pack.AddItemTexture(key, path)` only when you need a manual override. Capture identifiers from your item class for cross-references (recipes, loot tables, scripts, etc.) without repeating string literals.
 
 This produces `bp/items/lasagna.json` (filename is the part after the `:` in the identifier) and the corresponding resources under `rp/textures/items/` plus `rp/textures/item_texture.json`.
 
 See the [Resource Packs & Textures](resource-packs.md) guide for more on supplying assets and the texture key contract.
 
 > [!IMPORTANT]
-> `Guid.NewGuid().ToString()` is for demonstration purposes. You will want to have a static UUID at runtime for your pack otherwise Minecraft will see every new version of your pack as a completely different pack because the UUIDs change.
+> Prefer a static pack UUID at runtime. Regenerating UUIDs every build makes Minecraft treat each compile as a completely different pack.
 
 ## Full Example
 
@@ -162,11 +168,12 @@ See `LasagnaItem.cs` in the [`ingot.Example`](../../ingot.Example) project.
 
 ## Tips & Gotchas
 
-- `Texture` is required and is the only abstract member besides `Identifier`.
-- `DisplayName` defaults to the raw identifier - always override it for player-facing items.
-- Many traits have required (`abstract`) properties. Leaving them unimplemented will result in `null` or empty values and compile-time warnings.
-- Block placer items (`IBlockPlacer`) are a very common pattern when you also have a custom block.
-- For durability items, you usually combine `IDurability`, `IDamage` (or weapon traits), and optionally `IDigger`.
+> [!IMPORTANT]
+> `Texture` is required and is the only abstract member besides `Identifier`. Leaving required (`abstract`) trait properties unimplemented emits null/empty JSON and compile-time warnings.
+
+> [!TIP]
+> `DisplayName` defaults to the raw identifier - always override it for player-facing items. Block placer items (`IBlockPlacer`) are a common pattern when you also have a custom block. Durability items usually combine `IDurability`, `IDamage` (or weapon traits), and optionally `IDigger`.
+
 - Item traits are only discovered on the exact type passed to `AddItem<T>`. You can use a base item class and have derived classes add more traits.
 - The generated item JSON always includes `minecraft:icon`, `minecraft:display_name`, `minecraft:max_stack_size`, and `minecraft:allow_off_hand` even if you left the defaults.
 

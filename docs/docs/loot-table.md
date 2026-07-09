@@ -220,10 +220,12 @@ See `DenseLasagnaLoot.cs` and `DenseLasagnaBlock.cs` in the [`ingot.Example`](..
 
 ## Tips
 
+> [!TIP]
+> An `EmptyLootEntry` is useful when you want a chance of dropping nothing. `Weight` on entries controls relative probability within a pool (higher = more likely).
+
+> [!NOTE]
+> `AddLootTable<T>()` and block auto-registration deduplicate by loot table **type** - registering the same class twice is safe. Loot tables compile after blocks, so auto-registration during block compile still produces the JSON file in the loot compile pass.
+
 - Use `LootTableCategory.Blocks` for block drops, `Items` for item-related tables, and `Entities` for mob loot.
-- `Weight` on entries controls relative probability within a pool. Higher weight = more likely.
-- An `EmptyLootEntry` is useful when you want a chance of dropping nothing.
-- `AddLootTable<T>()` and block auto-registration deduplicate by loot table **type** - registering the same class twice is safe.
-- Loot tables compile after blocks, so auto-registration during block compile still produces the JSON file in the loot compile pass.
 
 Next: see [Making a Block](block.md) for the `Loot` shortcut and [Block Permutations](block-permutations.md) for state-specific loot.

@@ -191,6 +191,10 @@ See `LasagnaRecipe.cs` in the [`ingot.Example`](../../ingot.Example) project, wh
 
 ## Tips
 
-- Recipe identifiers are independent from item identifiers, but they often share the same `namespace:name` when the recipe crafts that item.
-- `null` entries in a shaped `Pattern` row become spaces in the compiled pattern string.
+> [!NOTE]
+> Recipe identifiers are independent from item identifiers, but they often share the same `namespace:name` when the recipe crafts that item.
+
+> [!TIP]
+> `null` entries in a shaped `Pattern` row become spaces in the compiled pattern string.
+
 - Built-in recipe types: `ShapedRecipe`, `ShapelessRecipe`, `FurnaceRecipe`, and `BrewingMixRecipe`. Extend one of these or implement `IRecipe` + `IConcreteCompilable<T>` for custom types.

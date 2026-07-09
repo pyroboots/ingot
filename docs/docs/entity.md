@@ -139,10 +139,11 @@ Compiles to (property block only):
 }
 ```
 
-Validation runs at compile time:
-
-- `EnumEntityProperty`: `Default` not listed in `Values` → `InvalidEnumArgumentException`
-- `FloatEntityProperty` / `IntEntityProperty`: `Default` outside `[Min, Max]` → `ArgumentOutOfRangeException`
+> [!CAUTION]
+> Validation runs at compile time and **throws** on invalid property definitions:
+>
+> - `EnumEntityProperty`: `Default` not listed in `Values` → `InvalidEnumArgumentException`
+> - `FloatEntityProperty` / `IntEntityProperty`: `Default` outside `[Min, Max]` → `ArgumentOutOfRangeException`
 
 ## Component Groups
 
@@ -235,6 +236,9 @@ pack.Compile("./output");
 
 Use `AddEntity<T>(discoverClient: false)` to skip RP discovery. Nested `RenderController` types on the entity are registered when found; top-level controllers still use `AddRenderController<T>()`.
 
+> [!TIP]
+> Prefer a nested `Client` type on the entity (`MyEntity.Client : ClientEntity<MyEntity>`) so `AddEntity` discovers visuals without a separate `AddClientEntity` call.
+
 This writes `bp/entities/my_entity.json` (filename is the part after the `:` in the identifier).
 
 ## Write less: presets, events, groups
@@ -255,7 +259,8 @@ public class CowEntity : Entity, IEntityPresetPassiveLand, IEntityPresetSameSpec
 }
 ```
 
-Optional trait properties default to `null` and are omitted from JSON - you no longer need `=> null!` stubs for unused fields.
+> [!NOTE]
+> Optional trait properties default to `null` and are omitted from JSON - you no longer need `=> null!` stubs for unused fields.
 
 ### Event helpers
 
@@ -344,7 +349,8 @@ To copy a source PNG into the resource pack:
 
 Extra texture short-names (angry, alt, …) are written into JSON only. Register their PNGs with `AddEntityTexture` if you need the files in the pack.
 
-Calling `ClientEntity.Compile(type)` alone does **not** copy files - that runs only under full pack compile when `CompilerState.CurrentPack` is set.
+> [!NOTE]
+> Calling `ClientEntity.Compile(type)` alone does **not** copy texture files. PNG registration runs only under full pack compile when `CompilerState.CurrentPack` is set.
 
 ### Custom short-names (attributes)
 
@@ -363,7 +369,10 @@ public string ChargedGeometry => "geometry.my_entity.charged";
 
 - Pass an id in the attribute for the short-name (`"invisible"`).
 - If the id is omitted, the short-name is derived from the member name (with a `Default…` → `default` special case).
-- Override `DefaultMaterial` / `DefaultTexture` / `DefaultGeometry` to change the built-in `default` short-names - do not re-declare a second `"default"` member.
+- Override `DefaultMaterial` / `DefaultTexture` / `DefaultGeometry` to change the built-in `default` short-names.
+
+> [!CAUTION]
+> Do not re-declare a second `"default"` material, texture, or geometry short-name. Override the built-in `Default*` members instead.
 
 ### Optional description fields
 
@@ -441,11 +450,13 @@ You can also build a simple controller without a subclass:
 pack.AddRenderController(RenderController.CreateSimple("controller.render.my_entity"));
 ```
 
-When reusing a vanilla controller id (e.g. `controller.render.cow`), set `EmitDefaultRenderController` to `false` so ingot does not write a local stub file for it.
+> [!TIP]
+> When reusing a vanilla controller id (e.g. `controller.render.cow`), set `EmitDefaultRenderController` to `false` so ingot does not write a local stub file for it.
 
 ### Entity sounds
 
-Custom entity ids do **not** inherit vanilla sound mappings. Without `EntitySounds`, you typically only hear generic damage audio.
+> [!WARNING]
+> Custom entity ids do **not** inherit vanilla sound mappings. Without `EntitySounds`, you typically only hear generic damage audio.
 
 Override `EntitySounds` on the client entity. ingot writes `rp/sounds.json` under `entity_sounds.entities`:
 
@@ -467,7 +478,8 @@ public override ClientEntitySounds? EntitySounds => new()
 
 Event keys are the gameplay names Bedrock fires (`ambient`, `hurt`, `death`, `step`, `milk`, …). Values are sound definition names from the vanilla (or your) `sound_definitions` (e.g. `mob.cow.hurt`). You can reuse vanilla definitions without re-shipping audio files.
 
-`SoundEffects` on the client entity is separate: those are short-names for **animation** sound hooks, not the `sounds.json` entity map.
+> [!NOTE]
+> `SoundEffects` on the client entity is separate: those are short-names for **animation** sound hooks, not the `sounds.json` entity map.
 
 ### Compiled client entity shape
 

@@ -17,7 +17,9 @@ Use `Pack.Create` as the single entry point. Textures declared on your `Block` a
 ```csharp
 using ingot.Core;
 
-Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Example with resources")
+const string packUuid = "77f1fef2-bb39-411a-b25c-ae475c21169f";
+
+Pack pack = Pack.Create(packUuid, "My Addon", "Example with resources")
     .AddBlock<MyBlock>()              // textures declared on the block class
     .AddItem<MyItem>()                // icon path declared on the item class
     .AddEntity<MyEntity>()
@@ -25,6 +27,9 @@ Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Example with res
 
 pack.Compile("./output");
 ```
+
+> [!IMPORTANT]
+> Use a fixed pack UUID in real projects. Regenerating UUIDs every build makes Minecraft treat each compile as a different pack.
 
 On the behaviour / client side, provide optional source PNG paths:
 
@@ -53,7 +58,8 @@ pack.AddBlockTexture("custom_key", "assets/custom.png")
     .AddGeometry("geometry.my_block", "assets/my_block.geo.json");
 ```
 
-Manual registrations take precedence over auto-discovered paths for the same key.
+> [!NOTE]
+> Manual registrations take precedence over auto-discovered paths for the same key.
 
 Key `Pack` members:
 
@@ -77,7 +83,11 @@ The behaviour pack manifest includes a script module only when block/item events
 - `CompileMcaddon(string outputPath)` - deletes any existing `.mcaddon` file, compiles to a temporary directory, zips a `.mcaddon` with `{Name} BP/` and `{Name} RP/` at the archive root, then deletes the temp files.
 - `CompileComMojang(string comMojangPath)` - deletes any existing development pack folders, then compiles directly into `development_behavior_packs/{Name} BP/` and `development_resource_packs/{Name} RP/` under a `com.mojang` folder.
 
-All three methods remove prior pack output before compiling so stale files are not left behind. `.ingot` cache files and `ingot.log` in the output directory are preserved.
+> [!WARNING]
+> All three compile methods **delete prior pack output** before writing so stale files are not left behind. Hand-edited files inside those output folders are wiped. `.ingot` cache files and `ingot.log` in the output directory are preserved.
+
+> [!TIP]
+> On an interactive terminal, verbose compiles show Spectre.Console progress bars for the major pack stages. Use `verbose: false` in tests or automation when you want silent compiles.
 
 Set a pack icon before compiling:
 
@@ -128,7 +138,8 @@ These keys become real images when you either:
 1. Provide a `SourcePath` on the `MaterialInstance` or `TexturePath` on the `Item` (auto-registered during compile), or
 2. Register them manually with `Pack.AddBlockTexture` / `Pack.AddItemTexture`.
 
-If a key has no source PNG (auto or manual), ingot still emits an atlas entry but warns at compile time. Missing assets show as purple/black textures in Minecraft.
+> [!WARNING]
+> If a key has no source PNG (auto or manual), ingot still emits an atlas entry but warns at compile time. Missing assets show as purple/black textures in Minecraft.
 
 ### Entity textures and client entities
 
@@ -143,7 +154,8 @@ Entity textures work differently. Client entity short-names point at **paths** u
 | `AddRenderController<T>()` | Writes `rp/render_controllers/{file}.json` |
 | `ClientEntity.EntitySounds` | Writes `rp/sounds.json` → `entity_sounds.entities` (ambient/hurt/death/step/…) |
 
-Without `EntitySounds`, custom entity ids only get generic damage audio. Full API: [Making an Entity](entity.md#client-entities--render-controllers) (including [entity sounds](entity.md#entity-sounds)).
+> [!WARNING]
+> Without `EntitySounds`, custom entity ids only get generic damage audio. Full API: [Making an Entity](entity.md#client-entities--render-controllers) (including [entity sounds](entity.md#entity-sounds)).
 
 ## Block Geometry
 
@@ -166,9 +178,11 @@ pack.AddGeometry("geometry.my_block", sourcePath, rpName: "custom_name");
 // -> rp/models/blocks/custom_name.geo.json
 ```
 
-Vanilla geometry identifiers such as `minecraft:geometry.full_block` do not need to be registered - only custom models you author yourself.
+> [!NOTE]
+> Vanilla geometry identifiers such as `minecraft:geometry.full_block` do not need to be registered - only custom models you author yourself.
 
-The identifier inside your `.geo.json` file must match what you reference in behaviour. For example, if your block uses `geometry.my_block`, the geometry description in the JSON should look like:
+> [!IMPORTANT]
+> The identifier inside your `.geo.json` file must match what you reference in behaviour. For example, if your block uses `geometry.my_block`, the geometry description in the JSON should look like:
 
 ```json
 {
@@ -296,15 +310,8 @@ See the [`ingot.Example`](../../ingot.Example) project for a working end-to-end 
 - Entity sound mappings via `ClientEntity.EntitySounds` → `rp/sounds.json` (`entity_sounds.entities`)
 - Block geometry via manual `AddGeometry` (`.geo.json` under `models/blocks/`)
 
-**Not yet**
-
-- Texture variations / random or weighted atlas textures
-- Flipbook (animated) textures
-- PBR texture sets
-- Entity / attachable model file registration (copy your own `.geo.json` into `models/entity/` for now, or extend the pack manually)
-- Custom `sound_definitions.json` entries / packing of new audio files (you can still *reference* vanilla definitions from `EntitySounds`)
-- Particles, music, and animation files as first-class C# types
-- Auto-registration of source PNGs for *extra* attributed client-entity textures (only `DefaultTexturePath` auto-registers; use `AddEntityTexture` for the rest)
+> [!NOTE]
+> **Not yet first-class:** texture variations / weighted atlas textures, flipbook (animated) textures, PBR texture sets, entity/attachable model file registration (copy `.geo.json` into `models/entity/` yourself for now), custom `sound_definitions.json` / packing new audio files (you can still *reference* vanilla definitions from `EntitySounds`), particles/music/animation files as C# types, and auto-registration of source PNGs for *extra* attributed client-entity textures (only `DefaultTexturePath` auto-registers; use `AddEntityTexture` for the rest).
 
 An empty `ResourcePack` (no textures or client entities) is still valid - it produces the standard folder skeleton without custom content.
 

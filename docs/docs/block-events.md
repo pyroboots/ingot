@@ -13,9 +13,11 @@ pack.ScriptsEnabled = true;
 pack.Compile("./output");
 ```
 
-If a block defines handlers but `ScriptsEnabled` is `false`, **ingot** emits a compile-time warning and skips script generation.
+> [!WARNING]
+> If a block defines handlers but `ScriptsEnabled` is `false`, ingot emits a compile-time warning and **skips script generation**.
 
-The behaviour pack only receives a script module in `manifest.json` when there is at least one script to load (block/item events or [services](script-services.md)). Setting `ScriptsEnabled = true` alone does not create an empty script pack.
+> [!NOTE]
+> The behaviour pack only receives a script module in `manifest.json` when there is at least one script to load (block/item events or [services](script-services.md)). Setting `ScriptsEnabled = true` alone does not create an empty script pack.
 
 You can also configure the script entry point and module dependencies on `Pack`:
 
@@ -72,7 +74,8 @@ public override BlockEvents? BlockEvents => new()
 };
 ```
 
-The file should contain only the handler body:
+> [!TIP]
+> The file should contain only the **handler body**, not a full function declaration or `system` registration boilerplate.
 
 ```javascript
 event.dimension.playSound("random.click", event.block.location);
@@ -83,7 +86,9 @@ Register and compile as usual:
 ```csharp
 using ingot.Core;
 
-Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Blocks with script events")
+const string packUuid = "77f1fef2-bb39-411a-b25c-ae475c21169f";
+
+Pack pack = Pack.Create(packUuid, "My Addon", "Blocks with script events")
     .AddBlock<PressurePlateBlock>();
 
 pack.ScriptsEnabled = true;
@@ -145,7 +150,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {
 Extra modules in `ScriptApiModules` (for example `@minecraft/server-ui`) are imported as namespaces so handler bodies can use them:
 
 ```csharp
-// Keep the default @minecraft/server entry — only *add* extra modules.
+// Keep the default @minecraft/server entry - only *add* extra modules.
 pack.ScriptApiModules["@minecraft/server-ui"] = new(2, 0, 0);
 ```
 
@@ -158,7 +163,8 @@ const form = new serverUi.MessageFormData().title("Hi").body("Hello").button1("O
 form.show(event.player);
 ```
 
-> **Important:** Replacing `ScriptApiModules` with `new() { ... }` drops the default `@minecraft/server` dependency. Prefer indexer assignment so existing modules stay.
+> [!CAUTION]
+> Replacing `ScriptApiModules` with `new() { ... }` drops the default `@minecraft/server` dependency. Prefer indexer assignment so existing modules stay.
 
 ### 3. Updated `main.js` entry point
 
@@ -226,7 +232,8 @@ Common pairings:
 | `TickEvent`           | `ITick`                     | `minecraft:tick` |
 | `StepOnEvent` / `StepOffEvent` / `EntityFallOnEvent` | `ICollisionBox` | `minecraft:collision_box` (must be taller than 3.2 pixels on Y) |
 
-**ingot** emits compile-time warnings when an event handler is configured without its recommended trait. It does not auto-add traits. If the required component is missing, the handler will not fire in-game.
+> [!IMPORTANT]
+> ingot emits compile-time warnings when an event handler is configured without its recommended trait. It does **not** auto-add traits. If the required component is missing, the handler will not fire in-game.
 
 ## How Compilation Works
 
@@ -236,7 +243,8 @@ Script generation is a dedicated pass that runs after behaviour-pack JSON is wri
 2. After `BehaviourPack.Compile` finishes, **ingot** scans all registered blocks and items, validates trait pairings, generates per-content scripts, wraps [services](script-services.md) to run every tick, and writes `scripts/main.js`.
 3. The behaviour pack manifest includes a script module only when at least one script file was produced.
 
-Block events require compiling through `Pack.Compile(...)`. Calling `Block.Compile(typeof(MyBlock))` in isolation writes JSON only when pack context is available.
+> [!NOTE]
+> Block events require compiling through `Pack.Compile(...)`. Calling `Block.Compile(typeof(MyBlock))` in isolation writes JSON only when pack context is available.
 
 ## Tips & Gotchas
 
@@ -245,7 +253,9 @@ Block events require compiling through `Pack.Compile(...)`. Calling `Block.Compi
 - Each block with events gets its own `.js` file and its own custom component id.
 - `scripts/main.js` is regenerated on every compile from events, services, and configured module imports.
 - Multi-line handlers work well with C# raw string literals (`""" ... """`) or `ScriptHandler.FromFile(...)`.
-- Enable `pack.Compile("./output", verbose: true)` to see script messages and trait warnings in `ingot.log`.
+
+> [!TIP]
+> Use `pack.Compile("./output", verbose: true)` (the default) to see script messages and trait warnings in `ingot.log`.
 
 ## See Also
 

@@ -79,11 +79,13 @@ public override Dictionary<string, dynamic[]> States => new()
 ```
 
 > [!CAUTION]
-> Although the state dictionary's value type is `dynamic`, Minecraft will only accept `int`, `float`, `bool` and `string`. Make sure your array is one of those types.
+> Although the state dictionary's value type is `dynamic`, Minecraft will only accept `int`, `float`, `bool`, and `string`. Make sure your array is one of those types.
 
-**Important notes**:
-- Minecraft limits a state to have **16** possible states. **ingot** will throw a warning for you if a state exceeds that limit.
-- State names should be fully qualified (`namespace:state_name`) for best compatibility.
+> [!WARNING]
+> Minecraft limits a state to **16** possible values. ingot emits a compile-time warning if a state exceeds that limit.
+
+> [!TIP]
+> State names should be fully qualified (`namespace:state_name`) for best compatibility.
 
 ## Adding Behavior with Traits
 
@@ -141,6 +143,9 @@ public override BlockEvents? BlockEvents => new()
 
 Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes handler scripts to `bp/scripts/blocks/`, adds the custom component to your block JSON, and imports them from a generated `bp/scripts/main.js`. For global tick logic, use [services](script-services.md) via `pack.AddService(...)`.
 
+> [!IMPORTANT]
+> Event scripts are not generated unless `ScriptsEnabled` is `true`. Without it, ingot warns at compile time and skips script output.
+
 See the dedicated [Block Events](block-events.md) guide for the full event list, trait validation warnings, and compile pipeline details.
 
 ## Compilation
@@ -195,12 +200,15 @@ See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project
 
 ## Tips & Gotchas
 
-- Always provide a `MaterialInstances` - it is abstract.
-- Custom blocks need `Geometry` (typically `"minecraft:geometry.full_block"`) to be valid in modern Bedrock versions. For non-vanilla shapes, set `Geometry` to your custom identifier and register the `.geo.json` with `Pack.AddGeometry`.
+> [!IMPORTANT]
+> Always provide `MaterialInstances` (it is abstract). Custom blocks also need `Geometry` (typically `"minecraft:geometry.full_block"`) to be valid in modern Bedrock. For non-vanilla shapes, set `Geometry` to your custom identifier and register the `.geo.json` with `Pack.AddGeometry`.
+
 - Set `ResourceTexture` and `Sound` when you want entries in `rp/blocks.json`.
 - Block state values are serialized verbatim; make sure your Molang conditions in permutations match the exact values and state names.
-- Many traits have a mixture of required (`abstract`) and optional (`virtual`) members - the compiler will happily emit null/empty values for missing abstracts, but you will get warnings.
+- Many traits have a mixture of required (`abstract`) and optional (`virtual`) members - the compiler will emit null/empty values for missing abstracts, but you will get warnings.
 - Traits are discovered only on the concrete type you pass to `AddBlock<T>`. Inheritance of your own block base classes works as long as the interfaces are implemented somewhere in the hierarchy.
-- For complex blocks, prefer many small focused traits over one giant class.
+
+> [!TIP]
+> For complex blocks, prefer many small focused traits over one giant class.
 
 Next: learn about [block events](block-events.md), [script services](script-services.md), [block permutations](block-permutations.md), and [material instances](block-mat-instances.md).

@@ -97,9 +97,9 @@ public class MyBlock : Block
 
 ## How Permutations Work in Minecraft
 
-- Permutations are evaluated in the order they appear in the JSON.
-- The first permutation whose condition is true "wins" for the properties it defines.
-- Properties not mentioned in a matching permutation fall back to the base block definition.
+> [!IMPORTANT]
+> Permutations are evaluated in order. The **first** permutation whose condition is true "wins" for the properties it defines. Properties not mentioned in a matching permutation fall back to the base block definition.
+
 - You can have as many permutations as you like. The compiler warns when any single block state declares more than 16 possible values.
 
 ## Condition Examples
@@ -118,7 +118,8 @@ public class MyBlock : Block
 "query.block_state('test:mode') == 1 && query.block_state('test:powered') == true"
 ```
 
-Use the exact state names (including namespace) that you declared in the block's `States` dictionary.
+> [!TIP]
+> Use the exact state names (including namespace) that you declared in the block's `States` dictionary.
 
 ## Full Example
 
@@ -138,9 +139,15 @@ See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project
 
 ## Tips
 
-- Keep permutations focused. A permutation should only contain the deltas (light level, different geometry, extra destruction particles, etc.).
+> [!TIP]
+> Keep permutations focused. A permutation should only contain the deltas (light level, different geometry, extra destruction particles, etc.).
+
+> [!CAUTION]
+> Material instances defined on a permutation **completely replace** the base block's `minecraft:material_instances` for that condition.
+
 - You can implement traits on permutations that the base block does **not** implement.
-- Material instances defined on a permutation completely replace the base block's `minecraft:material_instances` for that condition.
 - Tags on a permutation only apply while the condition is true - useful for state-dependent tool requirements or mining behaviour.
 - If you need different loot tables only under certain states, override `Loot` on the permutation with a different `LootTable` instance. The `Parent` property must return the owning block.
-- Remember that the base block's components are still present; permutations are additive/override, not a full replacement of the block definition.
+
+> [!NOTE]
+> The base block's components are still present; permutations are additive/override, not a full replacement of the block definition.

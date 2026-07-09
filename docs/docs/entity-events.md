@@ -45,6 +45,9 @@ ingot ships with C# types for common Bedrock event actions:
 
 Each action type can be instantiated directly - create an instance and populate its properties.
 
+> [!TIP]
+> For common patterns (spawn adult/baby, grow up, add/remove/swap groups), use the `EntityEvents` helpers on the entity - see [Write less: presets, events, groups](entity.md#write-less-presets-events-groups).
+
 ## Adding and Removing Component Groups
 
 The most common event actions toggle [component groups](entity-component-groups.md):
@@ -175,8 +178,11 @@ An event with a component group add action compiles to:
 
 ## Current Limitations
 
-- Not all Bedrock event action types are modelled yet (`trigger`, `filters`, `first_valid`, etc.).
-- Duplicate sibling action keys in a single event (e.g. two `add` blocks) are not merged at compile time yet.
+> [!NOTE]
+> Not all Bedrock event action types are modelled yet (`trigger`, `filters`, `first_valid`, etc.).
+
+> [!CAUTION]
+> Duplicate sibling action keys in a single event (e.g. two `add` blocks) are not merged at compile time yet. Prefer a single action instance with multiple component groups, or wrap steps in `SequenceEntityEventAction`.
 
 ## Full Example
 

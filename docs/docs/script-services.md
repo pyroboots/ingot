@@ -10,6 +10,9 @@ pack.AddService("./scripts/services/tick_service.js");
 pack.Compile("./output");
 ```
 
+> [!IMPORTANT]
+> Services require `ScriptsEnabled = true`. Without it, registered services are ignored and ingot emits a compile-time warning.
+
 By default, services run **every tick** (`intervalTicks: 1`). Pass a higher value to run less often:
 
 ```csharp
@@ -18,7 +21,8 @@ pack.AddService("./scripts/services/slow_service.js", intervalTicks: 20);
 
 ## Writing a Service
 
-A service source file contains only the **tick handler body** - the code that should run each interval. You do not write `system.runInterval` yourself; ingot wraps your body automatically:
+> [!TIP]
+> A service source file contains only the **tick handler body** - the code that should run each interval. You do not write `system.runInterval` yourself; ingot wraps your body automatically:
 
 ```javascript
 for (const player of world.getAllPlayers())

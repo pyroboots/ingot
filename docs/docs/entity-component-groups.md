@@ -22,6 +22,9 @@ Every component group **must** implement:
 - `Identifier` - the group name used in events and JSON.
 - `Parent` - the owning `Entity` instance (same pattern as `BlockPermutation.Parent`).
 
+> [!TIP]
+> Prefer `EntityComponentGroup<TParent>` so `Parent` is inferred from the generic argument. Nest the group type under the entity class to keep related definitions co-located.
+
 ## Registering Component Groups
 
 Return groups from the `ComponentGroups` property on your entity:
@@ -70,7 +73,8 @@ A component group is written into the `component_groups` section of the entity J
 }
 ```
 
-Groups are inert until an [entity event](entity-events.md) adds or removes them at runtime.
+> [!IMPORTANT]
+> Groups are **inert** until an [entity event](entity-events.md) adds or removes them at runtime. Defining a group alone does not apply its components on spawn.
 
 ## Full Example
 

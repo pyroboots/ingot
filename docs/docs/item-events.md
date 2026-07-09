@@ -13,9 +13,11 @@ pack.ScriptsEnabled = true;
 pack.Compile("./output");
 ```
 
-If an item defines handlers but `ScriptsEnabled` is `false`, **ingot** emits a compile-time warning and skips script generation.
+> [!WARNING]
+> If an item defines handlers but `ScriptsEnabled` is `false`, ingot emits a compile-time warning and **skips script generation**.
 
-The behaviour pack only receives a script module when at least one script exists (events or [services](script-services.md)).
+> [!NOTE]
+> The behaviour pack only receives a script module when at least one script exists (events or [services](script-services.md)).
 
 You can also configure the script entry point and module dependencies on `Pack`:
 
@@ -64,7 +66,8 @@ public override ItemEvents? ItemEvents => new()
 };
 ```
 
-The file should contain only the handler body:
+> [!TIP]
+> The file should contain only the **handler body**, not a full function declaration or registration boilerplate.
 
 ```javascript
 const player = event.source;
@@ -76,7 +79,9 @@ Register and compile as usual:
 ```csharp
 using ingot.Core;
 
-Pack pack = Pack.Create(Guid.NewGuid().ToString(), "My Addon", "Items with script events")
+const string packUuid = "77f1fef2-bb39-411a-b25c-ae475c21169f";
+
+Pack pack = Pack.Create(packUuid, "My Addon", "Items with script events")
     .AddItem<MagicWandItem>();
 
 pack.ScriptsEnabled = true;
@@ -202,7 +207,8 @@ Common pairings:
 | `CompleteUseEvent`   | `IUseModifiers`      | `minecraft:use_modifiers` |
 | `ConsumeEvent`       | `IFood`, `IUseModifiers` | `minecraft:food`, `minecraft:use_modifiers` |
 
-**ingot** emits compile-time warnings when an event handler is configured without its recommended trait. It does not auto-add traits.
+> [!IMPORTANT]
+> ingot emits compile-time warnings when an event handler is configured without its recommended trait. It does **not** auto-add traits.
 
 ## How Compilation Works
 
