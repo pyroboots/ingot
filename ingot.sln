@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ingot.Generators", "ingot.G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ingot.Tests", "ingot.Tests\ingot.Tests.csproj", "{A1ED99A2-A3A0-43AC-BB8A-8F6CE6151B44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ingot.Example.CombinationCooking", "ingot.Example.CombinationCooking\ingot.Example.CombinationCooking.csproj", "{C56AD1A6-EF96-4BFA-A275-0A2F69330381}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ingot.Example.BricksGalore", "ingot.Example.BricksGalore\ingot.Example.BricksGalore.csproj", "{A176AD86-4819-40EE-B49D-2B3152CAD3A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +36,10 @@ Global
 		{441697AD-EE07-4489-BDCD-DB0EC4249899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{441697AD-EE07-4489-BDCD-DB0EC4249899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{441697AD-EE07-4489-BDCD-DB0EC4249899}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C56AD1A6-EF96-4BFA-A275-0A2F69330381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C56AD1A6-EF96-4BFA-A275-0A2F69330381}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C56AD1A6-EF96-4BFA-A275-0A2F69330381}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C56AD1A6-EF96-4BFA-A275-0A2F69330381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A176AD86-4819-40EE-B49D-2B3152CAD3A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A176AD86-4819-40EE-B49D-2B3152CAD3A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A176AD86-4819-40EE-B49D-2B3152CAD3A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A176AD86-4819-40EE-B49D-2B3152CAD3A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

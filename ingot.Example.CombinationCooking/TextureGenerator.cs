@@ -100,6 +100,9 @@ public class TextureGenerator
     {
         CompilerState.Push("composite");
 
+        string outDir = Path.Combine(AppContext.BaseDirectory, "Textures", "Composites");
+        Directory.CreateDirectory(outDir);
+
         int permutations = bowls.Length * overlays.Length;
         int c = 0;
         foreach (var bowl in bowls)
@@ -107,12 +110,12 @@ public class TextureGenerator
         {
             c++;
             string name = $"{bowl.Item1}_{overlay.Item1}";
-            string outPath = Path.Combine(AppContext.BaseDirectory, "Textures", "Composites", name + ".png");
+            string outPath = Path.Combine(outDir, name + ".png");
             CompositeTextures(bowl.Item2, outPath, overlay);
-            
+
             CompilerState.Info($"({c}/{permutations}) composited texture {name} from bowl {bowl.Item1} and overlay {overlay.Item1}");
         }
-        
+
         CompilerState.Pop();
     }
 
