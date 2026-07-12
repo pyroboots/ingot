@@ -197,24 +197,24 @@ class Program
 
         // patterns (base under textures/..., overlay auto under overlays/)
         // bricks
-        reg.AddPattern("inset_bricks", "Bricks/inset_bricks", "minecraft:mud_bricks")
-           .AddPattern("offset_bricks", "Bricks/offset_bricks", "minecraft:brick")
-           .AddPattern("polished_offset_bricks", "Bricks/polished_offset_bricks", "minecraft:quartz")
-           .AddPattern("polished_small_bricks", "Bricks/polished_small_bricks", "minecraft:polished_blackstone")
-           .AddPattern("sharp_bricks", "Bricks/sharp_bricks", "minecraft:pointed_dripstone")
-           .AddPattern("small_bricks", "Bricks/small_bricks", "minecraft:nether_brick");
+        reg.AddPattern("inset_bricks", "Bricks/inset_bricks", "minecraft:tuff_bricks")
+           .AddPattern("offset_bricks", "Bricks/offset_bricks", "minecraft:clay")
+           .AddPattern("polished_offset_bricks", "Bricks/polished_offset_bricks", "minecraft:wax")
+           .AddPattern("polished_small_bricks", "Bricks/polished_small_bricks", "minecraft:quartz")
+           .AddPattern("sharp_bricks", "Bricks/sharp_bricks", "minecraft:stone_bricks")
+           .AddPattern("small_bricks", "Bricks/small_bricks", "minecraft:brick");
 
         // chiseled
         reg.AddPattern("bee_chiseled", "Chiseled/bee_chiseled", "minecraft:honeycomb")
-           .AddPattern("beveled_bricks", "Chiseled/beveled_bricks", "minecraft:cut_sandstone")
+           .AddPattern("beveled_bricks", "Chiseled/beveled_bricks", "minecraft:sand")
            .AddPattern("breeze_chiseled", "Chiseled/breeze_chiseled", "minecraft:breeze_rod")
            .AddPattern("creaking_chiseled", "Chiseled/creaking_chiseled", "minecraft:resin_clump")
            .AddPattern("creeper_chiseled", "Chiseled/creeper_chiseled", "minecraft:gunpowder")
            .AddPattern("slime_chiseled", "Chiseled/slime_chiseled", "minecraft:slime_ball")
-           .AddPattern("snout_chiseled", "Chiseled/snout_chiseled", "minecraft:gilded_blackstone")
-           .AddPattern("square_chiseled", "Chiseled/square_chiseled", "minecraft:chiseled_stone_bricks")
-           .AddPattern("tectonic_chiseled", "Chiseled/tectonic_chiseled", "minecraft:obsidian")
-           .AddPattern("termite_chiseled", "Chiseled/termite_chiseled", "minecraft:mangrove_propagule")
+           .AddPattern("snout_chiseled", "Chiseled/snout_chiseled", "minecraft:blackstone")
+           .AddPattern("square_chiseled", "Chiseled/square_chiseled", "minecraft:tuff")
+           .AddPattern("tectonic_chiseled", "Chiseled/tectonic_chiseled", "minecraft:deepslate")
+           .AddPattern("termite_chiseled", "Chiseled/termite_chiseled", "minecraft:gravel")
            .AddPattern("wither_chiseled", "Chiseled/wither_chiseled", "minecraft:wither_rose");
 
         // tiles
