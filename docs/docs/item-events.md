@@ -32,7 +32,7 @@ You can also configure the script entry point and module dependencies on `Pack`:
 Override `ItemEvents` on your item class. Each property is a `ScriptHandler` containing the **body** of a JavaScript event handler - the code inside the handler function, not a full function declaration:
 
 ```csharp
-using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 
 public class MagicWandItem : Item
@@ -172,7 +172,7 @@ Handler bodies are inserted verbatim into the generated JavaScript. Use valid Sc
 Some Script API events only fire when the item also has the matching vanilla component. Add the appropriate [trait](trait-system.md) on your item class:
 
 ```csharp
-using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Item;
 

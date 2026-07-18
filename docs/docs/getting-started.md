@@ -49,11 +49,11 @@ cd MyAddon
 Items inherit from `Item` and must provide an `Identifier` and `Texture`. Behaviour beyond that comes from the [trait system](trait-system.md) - C# interfaces that map to Minecraft `minecraft:*` components.
 
 ```csharp
-using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Item;
 
-public class CustomFood : Item, IFood, IUseAnimation
+public class CustomFood : Item, IFood, IUseAnimation, IUseModifiers
 {
     public override Identifier Identifier => new("myaddon", "custom_food");
     public override string Texture => "custom_food";
@@ -64,6 +64,7 @@ public class CustomFood : Item, IFood, IUseAnimation
     bool IFood.CanAlwaysEat => true;
 
     string IUseAnimation.Value => "eat";
+    float IUseModifiers.UseDuration => 1.6f;
 }
 ```
 
@@ -86,7 +87,7 @@ using ingot.Core.Common;
 public class CustomBlock : Block
 {
     public override Identifier Identifier => new("myaddon", "custom_block");
-    public override string? Geometry => "minecraft:geometry.full_block";
+    // Geometry defaults to "minecraft:geometry.full_block"
     public override string? ResourceTexture => "custom_block";
     public override string? Sound => "stone";
 
@@ -99,7 +100,7 @@ public class CustomBlock : Block
 }
 ```
 
-See [Making a Block](block.md) for states, permutations, traits, loot tables, and more.
+See [Making a Block](block.md) for states, permutations, traits, loot tables, creative categories, and more.
 
 ## Compile a Pack
 
@@ -236,14 +237,38 @@ See [Block Events](block-events.md), [Item Events](item-events.md), and [Script 
 | Project | Purpose |
 |---------|---------|
 | [`ingot.Tests`](../../ingot.Tests) | xUnit integration and compile tests covering blocks, items, entities, recipes, loot tables, textures, and scripts |
-| [`ingot.Example`](../../ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts; compiles to `./artifacts/example/` |
+| [`ingot.Example`](../../ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts |
+| [`ingot.Example.BricksGalore`](../../ingot.Example.BricksGalore) | Large procedural brick pack (materials × patterns × optional inlays) |
 
-Build and run the example:
+Build and run the lasagna example:
 
 ```bash
 dotnet run --project ingot.Example
-# output: ./artifacts/example/bp/ and ./artifacts/example/rp/
+# by default the example uses CompileComMojang; switch to Compile("./artifacts/example/") for folder output
 ```
+
+### Bricks Galore
+
+[`ingot.Example.BricksGalore`](../../ingot.Example.BricksGalore) shows how to use ingot at **scale** when hand-writing one class per block is impractical. Instead of defining each brick by hand, it:
+
+1. Registers **materials** (palette + stats + craft ingredient) and **patterns** (base texture + optional mortar/inlay overlay + craft catalyst) in `Program.BuildContent()`.
+2. **Recolours** greyscale templates with GIMP-style `.gpl` palettes and composites body + overlay textures with SkiaSharp.
+3. Emits closed generic `BrickBlock<TToken>` / `BrickRecipe<TToken>` types at runtime (one type per material × pattern × optional overlay combo) and registers them on a `Pack`.
+4. Adds shapeless crafting (body + catalyst + stone, plus inlay upgrade recipes), MC functions to place/clear a gallery, and a tick service that shows material lore on the action bar.
+
+Current content is roughly **8 materials** (amethyst, copper, diamond, emerald, gold, lapis, netherite, resin) × **20 patterns** (bricks, chiseled, tiles) — hundreds of blocks once same-colour and cross-material inlays are included.
+
+```bash
+dotnet run --project ingot.Example.BricksGalore
+```
+
+To extend the pack, edit only the registration block in `Program.cs`:
+
+- New material: drop `Palettes/{id}.gpl`, then `reg.AddMaterial("id", ingredient: "minecraft:...", ...)`.
+- New pattern: add a base PNG under `Textures/{Bricks|Chiseled|Tiles}/`, optional overlay under `Textures/Overlays/`, then `reg.AddPattern("id", "Folder/name", "minecraft:catalyst")`.
+
+> [!TIP]
+> This is the best reference when you need **dynamic types**, bulk texture generation, or hundreds of nearly-identical blocks without copy-pasting C# classes.
 
 ## Project Layout (Recommended)
 

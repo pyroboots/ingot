@@ -38,6 +38,7 @@ ingot ships with C# types for common Bedrock event actions:
 | `ComponentGroupRemoveEntityEventAction` | `remove` | Remove one or more component groups. |
 | `SequenceEntityEventAction` | `sequence` | Run actions in order. |
 | `RandomizeEntityEventAction` | `randomize` | Pick from a weighted pool of action sets. |
+| `TriggerEntityEventAction` | `trigger` | Fire another entity event (optionally targeting a filter). |
 | `DropItemEntityEventAction` | `drop_item` | Drop an item from an inventory slot. |
 | `EmitParticleEntityEventAction` | `emit_particle` | Emit a particle effect. |
 | `EmitVibrationEntityEventAction` | `emit_vibration` | Emit a sculk vibration. |
@@ -179,14 +180,14 @@ An event with a component group add action compiles to:
 ## Current Limitations
 
 > [!NOTE]
-> Not all Bedrock event action types are modelled yet (`trigger`, `filters`, `first_valid`, etc.).
+> Some Bedrock event constructs are not modelled yet (`filters`, `first_valid`, and a few rarer actions). The common set is covered: `add` / `remove` / `sequence` / `randomize` / `trigger` / `drop_item` / `emit_particle` / `emit_vibration` / `queue_command`.
 
 > [!CAUTION]
 > Duplicate sibling action keys in a single event (e.g. two `add` blocks) are not merged at compile time yet. Prefer a single action instance with multiple component groups, or wrap steps in `SequenceEntityEventAction`.
 
 ## Full Example
 
-See `LasagnaSpiritEntity` in the [`ingot.Example`](../../ingot.Example) project - a flying mob with a `minecraft:entity_spawned` event that randomly adds an angry component group.
+See [`CowEntity.cs`](../../ingot.Example/Entities/CowEntity.cs) in the `ingot.Example` project - spawn adult/baby randomization and grow-up events built with the `EntityEvents` helpers.
 
 ## See Also
 

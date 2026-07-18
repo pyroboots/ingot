@@ -5,7 +5,7 @@ Items are defined by deriving from the abstract `Item` class. Like blocks, items
 ## Minimal Item
 
 ```csharp
-using ingot.Core.Behaviour;
+using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 
 public class MyItem : Item
@@ -27,7 +27,7 @@ Optionally override `TexturePath` to provide the source PNG. When set, ingot aut
 | Property            | Type               | Default          | Description |
 |---------------------|--------------------|------------------|-----------|
 | `FormatVersion`     | `Version`          | `"1.21.90"`      | Target format version. Required for Custom Components V2 (custom components as direct `components` entries). |
-| `Category`          | `Item.CatalogueCategory`| `Items`     | Which creative inventory tab the item appears in (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
+| `Category`          | `Enums.CatalogueCategory`| `Items`    | Which creative inventory tab the item appears in (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
 | `Group`             | `string?`          | `null`           | Sub-group inside the chosen category (max 256 characters). |
 | `HiddenInCommands`  | `bool`             | `false`          | If true, the item cannot be used in commands that take item arguments. |
 | `MaxStackSize`      | `int`              | `64`             | Shortcut for `minecraft:max_stack_size`. |
@@ -43,6 +43,10 @@ These are written into the `description.menu_category` and `components` sections
 The vast majority of interesting item features come from implementing `IItemTrait` interfaces:
 
 ```csharp
+using ingot.Core.Behaviour.Item;
+using ingot.Core.Common;
+using ingot.Core.TraitSystem.Traits.Item;
+
 public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers
 {
     public override Identifier Identifier => new("test:lasagna");
@@ -89,17 +93,20 @@ See the [Item Traits API reference](https://pyroboots.github.io/ingot/api/ingot.
 ## Creative Menu Placement
 
 ```csharp
+using ingot.Core.Behaviour.Item;
+using ingot.Core.Common;
+
 public class FancyTool : Item
 {
     public override Identifier Identifier => new("mynamespace:fancy_tool");
     public override string Texture => "fancy_tool";
 
-    public override Item.CatalogueCategory Category => Item.CatalogueCategory.Equipment;
+    public override Enums.CatalogueCategory Category => Enums.CatalogueCategory.Equipment;
     public override string? Group => "itemGroup.name.tools";   // or your own group
 }
 ```
 
-Set `Category = Item.CatalogueCategory.None` (and optionally `HiddenInCommands = true`) for purely technical items that should not appear in the creative inventory or be summonable easily.
+Set `Category = Enums.CatalogueCategory.None` (and optionally `HiddenInCommands = true`) for purely technical items that should not appear in the creative inventory or be summonable easily.
 
 ## Item Events (Script API)
 
@@ -158,10 +165,10 @@ See the [Resource Packs & Textures](resource-packs.md) guide for more on supplyi
 
 ## Full Example
 
-The example project contains a complete item that uses both food and block placer traits:
+The example project contains a complete item that uses food, use modifiers/animation, and block placer traits:
 
 ```csharp
-public class LasagnaItem : Item, IFood, IBlockPlacer { ... }
+public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers { ... }
 ```
 
 See `LasagnaItem.cs` in the [`ingot.Example`](../../ingot.Example) project.

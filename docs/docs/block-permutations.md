@@ -100,7 +100,7 @@ public class MyBlock : Block
 > [!IMPORTANT]
 > Permutations are evaluated in order. The **first** permutation whose condition is true "wins" for the properties it defines. Properties not mentioned in a matching permutation fall back to the base block definition.
 
-- You can have as many permutations as you like. The compiler warns when any single block state declares more than 16 possible values.
+- You can have as many permutations as you like. A block state with more than 16 possible values throws `ArgumentException` at compile time.
 
 ## Condition Examples
 

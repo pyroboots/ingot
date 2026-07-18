@@ -44,6 +44,7 @@ See [Making an Entity](entity.md) for the full entity property reference.
 Any [entity trait](trait-system.md) implemented on the group class is compiled into that group's `components` object - not the entity's root `components` object:
 
 ```csharp
+using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Entity;
 
 public class AngryGroup : EntityComponentGroup, IHealth, IAttack
@@ -52,8 +53,8 @@ public class AngryGroup : EntityComponentGroup, IHealth, IAttack
     public override Entity Parent => new MyEntity();
 
     int IHealth.Max => 30;
-    FloatRange IAttack.Damage => new() { RangeMin = 3, RangeMax = 6 };
-    string IAttack.EffectName => "weakness";
+    FloatRange? IAttack.Damage => new() { RangeMin = 3, RangeMax = 6 };
+    string? IAttack.EffectName => "weakness";
 }
 ```
 
@@ -78,7 +79,7 @@ A component group is written into the `component_groups` section of the entity J
 
 ## Full Example
 
-See `LasagnaSpiritEntityAngry` in `LasagnaSpiritEntity.cs` in the [`ingot.Example`](../../ingot.Example) project - an angry component group with hostile flying preset traits, toggled by a `minecraft:entity_spawned` event.
+See nested `Baby` and `Adult` groups in [`CowEntity.cs`](../../ingot.Example/Entities/CowEntity.cs) in the `ingot.Example` project - component groups toggled by spawn and age events via the `EntityEvents` helpers.
 
 ## See Also
 

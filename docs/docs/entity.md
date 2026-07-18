@@ -478,6 +478,15 @@ public override ClientEntitySounds? EntitySounds => new()
 
 Event keys are the gameplay names Bedrock fires (`ambient`, `hurt`, `death`, `step`, `milk`, …). Values are sound definition names from the vanilla (or your) `sound_definitions` (e.g. `mob.cow.hurt`). You can reuse vanilla definitions without re-shipping audio files.
 
+For common livestock-style mappings, use the helper:
+
+```csharp
+public override ClientEntitySounds? EntitySounds =>
+    ClientEntitySounds.FromVanilla("cow", includeMilk: true);
+```
+
+`FromVanilla` maps `ambient`/`hurt`/`death`/`step` (and optionally `milk`) to `mob.{name}.*` with a default pitch range of `0.8`–`1.2`.
+
 > [!NOTE]
 > `SoundEffects` on the client entity is separate: those are short-names for **animation** sound hooks, not the `sounds.json` entity map.
 

@@ -86,7 +86,7 @@ new ItemLootEntry(new Identifier("test:lasagna"))
     Weight = 3,
     Functions =
     [
-        new SetCountFunction { Count = new IntRange(1, 3) }
+        new SetCount { Count = new IntRange(1, 3) }
     ]
 }
 ```
@@ -106,12 +106,14 @@ new EmptyLootEntry { Weight = 1 }
 
 ## Functions
 
-### `SetCountFunction`
+Loot functions derive from `LootFunction` and are applied when an entry is selected.
+
+### `SetCount`
 
 Sets how many of the dropped item to return:
 
 ```csharp
-new SetCountFunction { Count = new IntRange(2, 5) }
+new SetCount { Count = new IntRange(2, 5) }
 ```
 
 Compiles to:
@@ -123,8 +125,24 @@ Compiles to:
 }
 ```
 
+### All supported functions
+
+| Class | JSON `function` | Key members |
+|-------|-----------------|-------------|
+| `SetCount` | `set_count` | `Count` (`IntRange`) |
+| `SetDamage` | `set_damage` | `Damage` (`IntRange`, durability %) |
+| `SetName` | `set_name` | `Name` |
+| `SetLore` | `set_lore` | `Lore` (`string[]`) |
+| `SetBookContents` | `set_book_contents` | `Author`, `Title`, `Pages` |
+| `SetActorId` | `set_actor_id` | `Identifier` (spawn egg entity id) |
+| `LootingEnchant` | `looting_enchant` | `Count` (bonus when killed with looting) |
+| `RandomAuxiliaryValue` | `random_aux_value` | `Values` (`IntRange`) |
+| `RandomBlockState` | `random_block_state` | `Values`, `BlockState` |
+| `RandomDye` | `random_dye` | *(no parameters)* |
+| `ExplorationMap` | `exploration_map` | `Destination` (`ExplorationMap.ExplorationMapDestination`) |
+
 > [!NOTE]
-> ingot currently supports `item` and `empty` entry types and the `set_count` function. Pool conditions, tag entries, nested loot tables, and additional functions are not yet modeled in C#.
+> Entry types are currently `item` (`ItemLootEntry`) and `empty` (`EmptyLootEntry`). Pool conditions, tag entries, nested loot-table entries, and some Bedrock functions are not yet modeled in C#.
 
 ## Referencing Loot from Blocks
 

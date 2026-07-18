@@ -26,22 +26,25 @@ Every block **must** implement:
 
 ## Other Important Members
 
-| Member              | Type                        | Required | Description |
-|---------------------|-----------------------------|----------|-----------|
-| `FormatVersion`     | `Version`                   | No       | Defaults to `"1.21.90"`. Required for Custom Components V2 (custom components as direct `components` entries). |
-| `States`            | `Dictionary<string, dynamic[]>` | No   | Custom block states (see below). |
-| `Permutations`      | `List<BlockPermutation>`    | No       | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
-| `Tags`              | `string[]`                  | No       | Block tags written as empty `tag:<name>` components. Defaults to an empty array. |
-| `DisplayName`       | `string?`                   | No       | Shortcut for `minecraft:display_name`. |
-| `Geometry`          | `string?`                   | No       | Shortcut for `minecraft:geometry`. Use `"minecraft:geometry.full_block"` for standard cube blocks. |
-| `ResourceTexture`   | `string?`                   | No       | Texture key written to `rp/blocks.json`. |
-| `Sound`             | `string?`                   | No       | Sound identifier written to `rp/blocks.json`. |
-| `Friction`          | `float?`                    | No       | Shortcut for `minecraft:friction`. |
-| `LightEmission`     | `int?`                      | No       | Shortcut for `minecraft:light_emission` (0-15). |
-| `LightDampening`    | `int?`                      | No       | Shortcut for `minecraft:light_dampening`. |
-| `Replaceable`       | `bool?`                     | No       | Shortcut for `minecraft:replaceable`. |
-| `Loot`              | `LootTable?`                | No       | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](loot-table.md). |
-| `BlockEvents`       | `BlockEvents?`              | No       | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Block Events](block-events.md). |
+| Member              | Type                        | Default / Required | Description |
+|---------------------|-----------------------------|--------------------|-----------|
+| `FormatVersion`     | `Version`                   | `"1.21.90"`        | Target format version. Required for Custom Components V2 (custom components as direct `components` entries). |
+| `Category`          | `Enums.CatalogueCategory`   | `Items`            | Creative inventory tab (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
+| `Group`             | `string?`                   | `null`             | Sub-group inside the chosen category (max 256 characters). |
+| `States`            | `Dictionary<string, dynamic[]>` | `{}`           | Custom block states (see below). |
+| `Permutations`      | `List<BlockPermutation>`    | `[]`               | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
+| `Tags`              | `string[]`                  | `[]`               | Block tags written as empty `tag:<name>` components. |
+| `DisplayName`       | `string?`                   | `null`             | Shortcut for `minecraft:display_name`. |
+| `LangName`          | `string?`                   | `DisplayName`      | Localized name written to `texts/en_US.lang`. Defaults to `DisplayName`. |
+| `Geometry`          | `string?`                   | `"minecraft:geometry.full_block"` | Shortcut for `minecraft:geometry`. Override for custom models or `"minecraft:geometry.cross"`. |
+| `ResourceTexture`   | `string?`                   | `null`             | Texture key written to `rp/blocks.json`. |
+| `Sound`             | `string?`                   | `null`             | Sound identifier written to `rp/blocks.json`. |
+| `Friction`          | `float?`                    | `null`             | Shortcut for `minecraft:friction`. |
+| `LightEmission`     | `int?`                      | `null`             | Shortcut for `minecraft:light_emission` (0-15). |
+| `LightDampening`    | `int?`                      | `null`             | Shortcut for `minecraft:light_dampening`. |
+| `Replaceable`       | `bool?`                     | `null`             | Shortcut for `minecraft:replaceable`. |
+| `Loot`              | `LootTable?`                | `null`             | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](loot-table.md). |
+| `BlockEvents`       | `BlockEvents?`              | `null`             | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Block Events](block-events.md). |
 
 All of the shortcut properties are written directly into the `components` object of the generated `minecraft:block` JSON.
 
@@ -82,7 +85,7 @@ public override Dictionary<string, dynamic[]> States => new()
 > Although the state dictionary's value type is `dynamic`, Minecraft will only accept `int`, `float`, `bool`, and `string`. Make sure your array is one of those types.
 
 > [!WARNING]
-> Minecraft limits a state to **16** possible values. ingot emits a compile-time warning if a state exceeds that limit.
+> Minecraft limits a state to **16** possible values. ingot **throws** `ArgumentException` at compile time if a state exceeds that limit.
 
 > [!TIP]
 > State names should be fully qualified (`namespace:state_name`) for best compatibility.
@@ -201,7 +204,7 @@ See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project
 ## Tips & Gotchas
 
 > [!IMPORTANT]
-> Always provide `MaterialInstances` (it is abstract). Custom blocks also need `Geometry` (typically `"minecraft:geometry.full_block"`) to be valid in modern Bedrock. For non-vanilla shapes, set `Geometry` to your custom identifier and register the `.geo.json` with `Pack.AddGeometry`.
+> Always provide `MaterialInstances` (it is abstract). `Geometry` defaults to `"minecraft:geometry.full_block"` for standard cubes. For non-vanilla shapes, set `Geometry` to your custom identifier and register the `.geo.json` with `Pack.AddGeometry`.
 
 - Set `ResourceTexture` and `Sound` when you want entries in `rp/blocks.json`.
 - Block state values are serialized verbatim; make sure your Molang conditions in permutations match the exact values and state names.
