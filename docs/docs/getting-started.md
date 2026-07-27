@@ -255,7 +255,7 @@ dotnet run --project ingot.Example
 
 1. Registers **materials** (palette + stats + craft ingredient) and **patterns** (base texture + optional mortar/inlay overlay + craft catalyst) in `Program.BuildContent()`.
 2. **Recolours** greyscale templates with GIMP-style `.gpl` palettes and composites body + overlay textures with SkiaSharp.
-3. Emits closed generic `BrickBlock<TToken>` / `BrickRecipe<TToken>` types at runtime (one type per material × pattern × optional overlay combo) and registers them on a `Pack`.
+3. Builds configured `BrickBlock` / `BrickRecipe` **instances** (one per material × pattern × optional overlay combo) and registers them with `BehaviourPack.AddBlockFromInstance` / `AddRecipeFromInstance`.
 4. Adds shapeless crafting (body + catalyst + stone, plus inlay upgrade recipes), MC functions to place/clear a gallery, and a tick service that shows material lore on the action bar.
 
 Current content is roughly **8 materials** (amethyst, copper, diamond, emerald, gold, lapis, netherite, resin) × **20 patterns** (bricks, chiseled, tiles) - hundreds of blocks once same-colour and cross-material inlays are included.
@@ -270,7 +270,7 @@ To extend the pack, edit only the registration block in `Program.cs`:
 - New pattern: add a base PNG under `Textures/{Bricks|Chiseled|Tiles}/`, optional overlay under `Textures/Overlays/`, then `reg.AddPattern("id", "Folder/name", "minecraft:catalyst")`.
 
 > [!TIP]
-> This is the best reference when you need **dynamic types**, bulk texture generation, or hundreds of nearly-identical blocks without copy-pasting C# classes.
+> This is the best reference for **instance-based registration**, bulk texture generation, or hundreds of nearly-identical blocks without copy-pasting C# classes. See [Compiling Instances](trait-system.md#compiling-instances).
 
 ## Project Layout (Recommended)
 

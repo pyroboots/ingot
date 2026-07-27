@@ -221,7 +221,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
                 }
 
                 CompilerState.Info("compiling traits...");
-                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tType, TraitSystem.TraitSystem.TraitType.Block);
+                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(inst, TraitSystem.TraitSystem.TraitType.Block);
                 int c = 0;
                 foreach (Trait t in traits)
                 {

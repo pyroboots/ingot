@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using ingot.Core;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
@@ -7,7 +5,7 @@ using ingot.Core.Common;
 namespace ingot.Example.BricksGalore;
 
 /// <summary>
-/// Builds closed <see cref="BrickRecipe{TToken}"/> types (shapeless).
+/// Builds <see cref="BrickRecipe"/> instances (shapeless).
 /// Plain (no inlay): body material + pattern catalyst + stone -> plain block.
 /// Inlay/mortar: plain block + overlay material -> inlay block.
 /// Bulk: 4x body + stone -> 4x plain offset bricks.
@@ -16,7 +14,7 @@ public static class RecipeGenerator
 {
     private static readonly Identifier Stone = new("minecraft:stone");
 
-    public static IEnumerable<Type> GenerateRecipeTypes()
+    public static IEnumerable<BrickRecipe> GenerateRecipes()
     {
         int total = EstimateTotal();
         int c = 0;
@@ -53,7 +51,7 @@ public static class RecipeGenerator
                         },
                     };
 
-                    yield return CreateRecipeType(plain, c, total);
+                    yield return CreateRecipe(plain, c, total);
                 }
 
                 if (!BrickStats.HasOverlay(pattern))
@@ -84,7 +82,7 @@ public static class RecipeGenerator
                         },
                     };
 
-                    yield return CreateRecipeType(inlay, c, total);
+                    yield return CreateRecipe(inlay, c, total);
                 }
             }
         }
@@ -117,7 +115,7 @@ public static class RecipeGenerator
                 },
             };
 
-            yield return CreateRecipeType(bulk, c, total);
+            yield return CreateRecipe(bulk, c, total);
         }
     }
 
@@ -139,17 +137,12 @@ public static class RecipeGenerator
     private static string ShortName(string id) =>
         id.Contains(':') ? id.Split(':')[^1] : id;
 
-    private static Type CreateRecipeType(RecipeSpec spec, int c, int total)
+    private static BrickRecipe CreateRecipe(RecipeSpec spec, int c, int total)
     {
-        Type token = DynamicTypeFactory.CreateToken(spec.Identifier.Name);
-        Type recipeType = typeof(BrickRecipe<>).MakeGenericType(token);
-        recipeType.GetProperty(nameof(BrickRecipe<object>.Spec), BindingFlags.Public | BindingFlags.Static)!
-            .SetValue(null, spec);
-
         CompilerState.Info(
             $"({c}/{total}) prepared recipe {spec.Identifier} -> {spec.Result.Item}" +
             (spec.Result.Count > 1 ? $" x{spec.Result.Count}" : ""));
 
-        return recipeType;
+        return new BrickRecipe { Spec = spec };
     }
 }

@@ -75,7 +75,7 @@ public abstract class BlockPermutation
     public static void Compile(Type tBlockPermutation, ref JsonTextWriter writer)
     {
         BlockPermutation permutation = (Activator.CreateInstance(tBlockPermutation) as BlockPermutation)!;
-        List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tBlockPermutation, TraitSystem.TraitSystem.TraitType.Block);
+        List<Trait> traits = TraitSystem.TraitSystem.GetTraits(permutation, TraitSystem.TraitSystem.TraitType.Block);
 
         if (permutation.MaterialInstances is not null)
         {

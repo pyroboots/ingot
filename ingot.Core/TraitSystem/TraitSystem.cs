@@ -27,16 +27,33 @@ public static class TraitSystem
     /// </summary>
     /// <param name="constraint"><see cref="TraitType"/> to reflect</param>
     /// <typeparam name="T">Content class to reflect</typeparam>
-    public static List<Trait> GetTraits<T>(TraitType constraint) => GetTraits(typeof(T), constraint);
+    public static List<Trait> GetTraits<T>(TraitType constraint) where T : new() =>
+        GetTraits(new T(), constraint);
+
     /// <summary>
-    /// Gets all traits of type <paramref name="t"/>
+    /// Gets all traits of type <paramref name="t"/> by constructing a fresh instance.
+    /// Prefer <see cref="GetTraits(object, TraitType)"/> when compiling a pre-configured instance.
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="constraint"><see cref="Type"/> of content class to reflect</param>
+    /// <param name="t">Content class to reflect</param>
+    /// <param name="constraint"><see cref="TraitType"/> to reflect</param>
     public static List<Trait> GetTraits(Type t, TraitType constraint)
     {
+        object instance = Activator.CreateInstance(t)
+                          ?? throw new ArgumentException($"failed to construct instance of {t.FullName}");
+        return GetTraits(instance, constraint);
+    }
+
+    /// <summary>
+    /// Gets all traits implemented by <paramref name="instance"/>, reading property values from that instance.
+    /// </summary>
+    /// <param name="instance">Content instance to reflect</param>
+    /// <param name="constraint"><see cref="TraitType"/> to reflect</param>
+    public static List<Trait> GetTraits(object instance, TraitType constraint)
+    {
+        ArgumentNullException.ThrowIfNull(instance);
+
         JsonTextWriter? dummyWriter = null;
-        object instance = Activator.CreateInstance(t)!;
+        Type t = instance.GetType();
         List<Trait> traits = new();
 
         foreach (Type iface in t.GetInterfaces())

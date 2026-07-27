@@ -67,13 +67,13 @@ public float SaturationModifier => 0.9f;
 
 ## How the Trait System Works
 
-1. When content is compiled (`Block.Compile(...)`, `Item.Compile(...)`, `Entity.Compile(...)`, `CompileFromInstance(...)`, or full pack compile), `TraitSystem.GetTraits(...)` is called on the concrete type of the instance being compiled.
-2. It enumerates all interfaces implemented by the type.
+1. When content is compiled (`Block.Compile(...)`, `Item.Compile(...)`, `Entity.Compile(...)`, `CompileFromInstance(...)`, or full pack compile), `TraitSystem.GetTraits(instance, ...)` is called on the instance being compiled (type-only helpers construct a fresh instance first).
+2. It enumerates all interfaces implemented by the instance's type.
 3. For each interface that carries a `[Trait("minecraft:xxx", TraitType.Block/Item/Entity)]` attribute, a `Trait` entry is created.
 4. Every property on that interface decorated with `[TraitProperty]` is inspected.
 5. Properties marked `[IngotExclude]` (on the interface or the concrete implementation) are skipped.
 6. Null or empty-string values are skipped (not written).
-7. The getter is invoked on the instance being compiled to obtain the current value.
+7. The getter is invoked on that same instance to obtain the current value (so pre-configured instance data is preserved).
 8. Values are written under the component using `PascalToSnakeCase` conversion for the JSON keys (e.g. `SecondsToDestroy` → `seconds_to_destroy`). Property names are always written as flat keys under the component object.
 9. After reflected traits, any entries from `DynamicTraits` on the content type (or permutation) are compiled into the same `components` object.
 10. The resulting object is emitted inside the `components` section of the generated JSON.

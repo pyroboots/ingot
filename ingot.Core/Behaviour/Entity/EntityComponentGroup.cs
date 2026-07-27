@@ -25,7 +25,7 @@ public abstract class EntityComponentGroup : ICompilableFragment, IIdentifiable
     {
         CompilerState.Push(Identifier.ToString());
         
-        List<Trait> traits = TraitSystem.TraitSystem.GetTraits(GetType(), TraitSystem.TraitSystem.TraitType.Entity);
+        List<Trait> traits = TraitSystem.TraitSystem.GetTraits(this, TraitSystem.TraitSystem.TraitType.Entity);
         
         writer.WriteStartObject();
         int c = 0;

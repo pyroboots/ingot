@@ -5,16 +5,16 @@ using ingot.Core.TraitSystem.Traits.Block;
 namespace ingot.Example.BricksGalore;
 
 /// <summary>
-/// Parameterised brick block. Each closed <typeparamref name="TToken"/> type carries its own
-/// static <see cref="Spec"/> so ingot's type-based compile path yields unique JSON per combo.
+/// Brick block configured by an instance <see cref="Spec"/>. Registered with
+/// <c>BehaviourPack.AddBlockFromInstance</c> so each combo keeps its own data without
+/// per-combo runtime types.
 /// </summary>
-public class BrickBlock<TToken> : Block, IDestructibleByMining, IDestructibleByExplosion
-    where TToken : class
+public class BrickBlock : Block, IDestructibleByMining, IDestructibleByExplosion
 {
     /// <summary>
-    /// Must be assigned on the closed generic type before the pack is compiled.
+    /// Per-combo block data for this instance.
     /// </summary>
-    public static BlockSpec Spec { get; set; } = null!;
+    public required BlockSpec Spec { get; init; }
 
     public override Identifier Identifier => Spec.Identifier;
     public override string DisplayName => Spec.DisplayName;

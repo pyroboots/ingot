@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using ingot.Core;
 using ingot.Core.Common;
 
@@ -8,7 +6,7 @@ using Newtonsoft.Json;
 namespace ingot.Example.BricksGalore;
 
 /// <summary>
-/// Builds one closed <see cref="BrickBlock{TToken}"/> per composite texture
+/// Builds one <see cref="BrickBlock"/> instance per composite texture
 /// (body x pattern x overlay, or body x pattern when no overlay exists).
 /// </summary>
 public static class BlockGenerator
@@ -16,7 +14,7 @@ public static class BlockGenerator
     /// <summary>
     /// Call after composites have been written to disk.
     /// </summary>
-    public static IEnumerable<Type> GenerateBlockTypes()
+    public static IEnumerable<BrickBlock> GenerateBlocks()
     {
         string compositesDir = Path.Combine(AppContext.BaseDirectory, "Textures", "Composite");
         if (!Directory.Exists(compositesDir))
@@ -52,13 +50,8 @@ public static class BlockGenerator
                 Tags = BrickStats.Tags(body),
             };
 
-            Type token = DynamicTypeFactory.CreateToken(name);
-            Type blockType = typeof(BrickBlock<>).MakeGenericType(token);
-            blockType.GetProperty(nameof(BrickBlock<object>.Spec), BindingFlags.Public | BindingFlags.Static)!
-                .SetValue(null, spec);
-
-            CompilerState.Info($"({c}/{files.Length}) prepared block type {spec.Identifier}");
-            yield return blockType;
+            CompilerState.Info($"({c}/{files.Length}) prepared block {spec.Identifier}");
+            yield return new BrickBlock { Spec = spec };
         }
     }
 

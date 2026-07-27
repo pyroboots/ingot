@@ -135,7 +135,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
             json.Object("components", () =>
             {
                 CompilerState.Info("compiling traits...");
-                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tType, TraitSystem.TraitSystem.TraitType.Entity);
+                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(inst, TraitSystem.TraitSystem.TraitType.Entity);
                 int c = 0;
                 foreach (Trait t in traits)
                 {

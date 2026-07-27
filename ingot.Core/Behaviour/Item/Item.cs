@@ -143,7 +143,7 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
                 }
 
                 CompilerState.Info("compiling traits...");
-                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(tType, TraitSystem.TraitSystem.TraitType.Item);
+                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(inst, TraitSystem.TraitSystem.TraitType.Item);
                 int c = 0;
                 foreach (Trait t in traits)
                 {

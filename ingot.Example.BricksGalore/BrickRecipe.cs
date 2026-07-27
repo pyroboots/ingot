@@ -4,13 +4,15 @@ using ingot.Core.Common;
 namespace ingot.Example.BricksGalore;
 
 /// <summary>
-/// Parameterised shapeless recipe. Each closed <typeparamref name="TToken"/> carries its own
-/// static <see cref="Spec"/>.
+/// Shapeless brick recipe configured by an instance <see cref="Spec"/>.
+/// Registered with <c>BehaviourPack.AddRecipeFromInstance</c>.
 /// </summary>
-public class BrickRecipe<TToken> : ShapelessRecipe
-    where TToken : class
+public class BrickRecipe : ShapelessRecipe
 {
-    public static RecipeSpec Spec { get; set; } = null!;
+    /// <summary>
+    /// Per-recipe data for this instance.
+    /// </summary>
+    public required RecipeSpec Spec { get; init; }
 
     public override Identifier Identifier => Spec.Identifier;
     public override RecipeItem[] Ingredients => Spec.Ingredients;

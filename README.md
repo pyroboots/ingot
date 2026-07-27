@@ -94,7 +94,7 @@ See the [`ingot.Example`](./ingot.Example) project for a more complete working e
 
 ### Bricks Galore (large procedural example)
 
-[`ingot.Example.BricksGalore`](./ingot.Example.BricksGalore) generates a full decorative brick pack from data rather than hand-written classes: materials (`.gpl` palettes + stats) × patterns (base + optional mortar/inlay overlays) → composite textures, closed generic `Block`/`Recipe` types, crafting, gallery functions, and a lore service. Edit `Program.BuildContent()` to add materials or patterns; see [Getting Started - Bricks Galore](docs/docs/getting-started.md#bricks-galore) for a short walkthrough.
+[`ingot.Example.BricksGalore`](./ingot.Example.BricksGalore) generates a full decorative brick pack from data rather than hand-written classes: materials (`.gpl` palettes + stats) × patterns (base + optional mortar/inlay overlays) → composite textures, configured `Block`/`Recipe` instances registered via `Add*FromInstance`, crafting, gallery functions, and a lore service. Edit `Program.BuildContent()` to add materials or patterns; see [Getting Started - Bricks Galore](docs/docs/getting-started.md#bricks-galore) for a short walkthrough.
 
 ```bash
 dotnet run --project ingot.Example.BricksGalore

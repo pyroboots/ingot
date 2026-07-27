@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using ingot.Core;
 using ingot.Core.Common;
 
@@ -44,13 +42,13 @@ class Program
 
         // 3. blocks + recipes + functions + lore service
         CompilerState.Push("block generation");
-        List<Type> blockTypes = BlockGenerator.GenerateBlockTypes().ToList();
-        CompilerState.Info($"prepared {blockTypes.Count} block types");
+        List<BrickBlock> blocks = BlockGenerator.GenerateBlocks().ToList();
+        CompilerState.Info($"prepared {blocks.Count} blocks");
         CompilerState.Pop();
 
         CompilerState.Push("recipe generation");
-        List<Type> recipeTypes = RecipeGenerator.GenerateRecipeTypes().ToList();
-        CompilerState.Info($"prepared {recipeTypes.Count} recipe types");
+        List<BrickRecipe> recipes = RecipeGenerator.GenerateRecipes().ToList();
+        CompilerState.Info($"prepared {recipes.Count} recipes");
         CompilerState.Pop();
 
         CompilerState.Push("function generation");
@@ -78,33 +76,23 @@ class Program
         pack.ScriptsEnabled = true;
         pack.LinkPacks = false;
 
-        MethodInfo addBlock = typeof(Pack).GetMethods()
-            .Single(m => m.Name == nameof(Pack.AddBlock)
-                         && m.IsGenericMethodDefinition
-                         && m.GetParameters().Length == 0);
-
-        MethodInfo addRecipe = typeof(Pack).GetMethods()
-            .Single(m => m.Name == nameof(Pack.AddRecipe)
-                         && m.IsGenericMethodDefinition
-                         && m.GetParameters().Length == 0);
-
         CompilerState.Push("pack registration");
         int i = 0;
-        foreach (Type blockType in blockTypes)
+        foreach (BrickBlock block in blocks)
         {
             i++;
-            addBlock.MakeGenericMethod(blockType).Invoke(pack, null);
-            if (i % 50 == 0 || i == blockTypes.Count)
-                CompilerState.Info($"registered {i}/{blockTypes.Count} blocks");
+            pack.BehaviourPack.AddBlockFromInstance(block);
+            if (i % 50 == 0 || i == blocks.Count)
+                CompilerState.Info($"registered {i}/{blocks.Count} blocks");
         }
 
         i = 0;
-        foreach (Type recipeType in recipeTypes)
+        foreach (BrickRecipe recipe in recipes)
         {
             i++;
-            addRecipe.MakeGenericMethod(recipeType).Invoke(pack, null);
-            if (i % 50 == 0 || i == recipeTypes.Count)
-                CompilerState.Info($"registered {i}/{recipeTypes.Count} recipes");
+            pack.BehaviourPack.AddRecipeFromInstance(recipe);
+            if (i % 50 == 0 || i == recipes.Count)
+                CompilerState.Info($"registered {i}/{recipes.Count} recipes");
         }
 
         pack.AddFunction(PlaceAllFunction.PlaceFunctionName, placeAllPath);

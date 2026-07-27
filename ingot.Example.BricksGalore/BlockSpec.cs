@@ -3,7 +3,7 @@ using ingot.Core.Common;
 namespace ingot.Example.BricksGalore;
 
 /// <summary>
-/// Per-combo block data. Closed generic block types read one of these via a type token.
+/// Per-combo block data held on a <see cref="BrickBlock"/> instance.
 /// </summary>
 public sealed class BlockSpec
 {
