@@ -30,17 +30,21 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
     public abstract RecipeItem Result { get; }
 
     /// <inheritdoc/>
-    public string Compile() => Compile(GetType());
+    public string Compile() => CompileFromInstance(this);
 
-    /// <summary>
-    /// Compiles the <see cref="ShapelessRecipe"/> (as <paramref name="tType"/>) to JSON
-    /// </summary>
-    /// <param name="tType">Concrete type of <see cref="ShapelessRecipe"/></param>
-    /// <returns>Compiled JSON</returns>
+    /// <inheritdoc/>
     public static string Compile(Type tType)
     {
         ShapelessRecipe inst = RecipeCompileHelper.CreateInstance<ShapelessRecipe>(tType);
+        return CompileFromInstance(inst);
+    }
+    
+    /// <inheritdoc/>
+    public static string Compile<TConcreteType>() where TConcreteType : ShapelessRecipe, new() => Compile(typeof(TConcreteType));
 
+    /// <inheritdoc/>
+    public static string CompileFromInstance(ShapelessRecipe inst)
+    {
         CompilerState.Push(inst.Identifier.ToString());
 
         (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();

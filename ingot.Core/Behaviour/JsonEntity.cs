@@ -26,7 +26,16 @@ public abstract class JsonEntity : Entity.Entity
     public static new string Compile(Type tType)
     {
         JsonEntity inst = (Activator.CreateInstance(tType) as JsonEntity)!;
+        return CompileFromInstance(inst);
+    }
 
+    /// <summary>
+    /// Compiles a pre-constructed <see cref="JsonEntity"/> instance to JSON.
+    /// </summary>
+    /// <param name="inst">Instance to compile</param>
+    /// <returns>Compiled JSON</returns>
+    public static string CompileFromInstance(JsonEntity inst)
+    {
         CompilerState.Push(inst.Identifier.ToString());
         string json = inst.Json;
         CompilerState.Info("compiled raw entity json");

@@ -100,14 +100,25 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
     public virtual BlockEvents? BlockEvents => null;
 
     /// <summary>
-    /// Compiles the <see cref="Block"/> (as <paramref name="tType"/>) to JSON
+    /// Array of constructed traits to facilitate traits that ingot may not implement
     /// </summary>
-    /// <param name="tType">Concrete type of <see cref="Block"/></param>
-    /// <returns>Compiled JSON</returns>
+    public virtual Trait[] DynamicTraits => [];
+    
+    /// <inheritdoc/>
     public static string Compile(Type tType)
     {
         Block inst = (Activator.CreateInstance(tType) as Block)!;
+        return CompileFromInstance(inst);
+    }
 
+    /// <inheritdoc/>
+    public static string Compile<TConcreteType>() where TConcreteType : Block, new() => Compile(typeof(TConcreteType));
+
+    /// <inheritdoc/>
+    public static string CompileFromInstance(Block inst)
+    {
+        Type tType = inst.GetType();
+        
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
@@ -216,7 +227,15 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
                 {
                     c++;
                     t.Compile(ref w);
-                    CompilerState.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait.Name}");
+                    CompilerState.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait!.Name}");
+                }
+
+                c = 0;
+                foreach (Trait t in inst.DynamicTraits)
+                {
+                    c++;
+                    t.Compile(ref w);
+                    CompilerState.Info($"({c}/{inst.DynamicTraits.Length}) compiled dynamic trait {t.Identifier}");
                 }
             });
         });

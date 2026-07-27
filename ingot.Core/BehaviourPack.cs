@@ -86,7 +86,14 @@ public class BehaviourPack
     public BehaviourPack AddEntity(Type tEntity)
     {
         Entity inst = (Activator.CreateInstance(tEntity) as Entity)!;
-
+        return AddEntityFromInstance(inst);
+    }
+    /// <summary>
+    /// Adds an entity to the pack. Accepts both trait-based entities and <see cref="JsonEntity"/> instances.
+    /// </summary>
+    /// <param name="inst">Entity instance to add</param>
+    public BehaviourPack AddEntityFromInstance(Entity inst)
+    {
         Entities.Add(inst);
         return this;
     }
@@ -104,7 +111,14 @@ public class BehaviourPack
     public BehaviourPack AddBlock(Type tBlock)
     {
         Block inst = (Activator.CreateInstance(tBlock) as Block)!;
-
+        return AddBlockFromInstance(inst);
+    }
+    /// <summary>
+    /// Adds a block to the pack
+    /// </summary>
+    /// <param name="inst">Block instance to add</param>
+    public BehaviourPack AddBlockFromInstance(Block inst)
+    {
         Blocks.Add(inst);
         return this;
     }
@@ -122,7 +136,14 @@ public class BehaviourPack
     public BehaviourPack AddItem(Type tItem)
     {
         Item inst = (Activator.CreateInstance(tItem) as Item)!;
-
+        return AddItemFromInstance(inst);
+    }
+    /// <summary>
+    /// Adds an item to the pack
+    /// </summary>
+    /// <param name="inst">Item instance to add</param>
+    public BehaviourPack AddItemFromInstance(Item inst)
+    {
         Items.Add(inst);
         return this;
     }
@@ -140,7 +161,14 @@ public class BehaviourPack
     public BehaviourPack AddRecipe(Type tRecipe)
     {
         IRecipe inst = (Activator.CreateInstance(tRecipe) as IRecipe)!;
-
+        return AddRecipeFromInstance(inst);
+    }
+    /// <summary>
+    /// Adds a recipe to the pack
+    /// </summary>
+    /// <param name="inst">Recipe instance to add</param>
+    public BehaviourPack AddRecipeFromInstance(IRecipe inst)
+    {
         Recipes.Add(inst);
         return this;
     }
@@ -161,7 +189,14 @@ public class BehaviourPack
             return this;
 
         LootTable inst = (Activator.CreateInstance(tLootTable) as LootTable)!;
-
+        return AddLootTableFromInstance(inst);
+    }
+    /// <summary>
+    /// Adds a loot table to the pack
+    /// </summary>
+    /// <param name="inst">Loot table instance to add</param>
+    public BehaviourPack AddLootTableFromInstance(LootTable inst)
+    {
         LootTables.Add(inst);
         return this;
     }
@@ -172,10 +207,11 @@ public class BehaviourPack
     /// <param name="identifier">The name of the function in game</param>
     /// <param name="sourceFile">The function source file</param>
     /// <param name="service">Whether to run this function every tick</param>
-    public void AddFunction(string identifier, string sourceFile, bool service)
+    public BehaviourPack AddFunction(string identifier, string sourceFile, bool service)
     {
         Functions.Add(identifier, sourceFile);
         if (service) TickFunctions.Add(identifier);
+        return this;
     }
 
     /// <summary>
@@ -199,9 +235,9 @@ public class BehaviourPack
         #endregion
 
         #region identifiable compilation
-        CompileIdentifiableCollection(Entities, dir, "entities", "entity", e => Entity.Compile(e.GetType()));
-        CompileIdentifiableCollection(Blocks, dir, "blocks", "block", b => Block.Compile(b.GetType()));
-        CompileIdentifiableCollection(Items, dir, "items", "item", i => Item.Compile(i.GetType()));
+        CompileIdentifiableCollection(Entities, dir, "entities", "entity", Entity.CompileFromInstance);
+        CompileIdentifiableCollection(Blocks, dir, "blocks", "block", Block.CompileFromInstance);
+        CompileIdentifiableCollection(Items, dir, "items", "item", Item.CompileFromInstance);
         CompileIdentifiableCollection(Recipes, dir, "recipes", "recipe", r => r.Compile());
         #endregion
         
@@ -215,7 +251,7 @@ public class BehaviourPack
             string path = Path.Combine(dir, lootTable.Reference);
             Directory.CreateDirectory(path);
 
-            string file = LootTable.Compile(lootTable.GetType());
+            string file = LootTable.CompileFromInstance(lootTable);
             File.WriteAllText(Path.Combine(path, $"{lootTable.Identifier.Name}.json"), file);
 
             CompilerState.Info($"({c}/{LootTables.Count}) compiled loot table {lootTable.Identifier} -> {Path.Combine(path, $"{lootTable.Identifier.Name}.json")}");

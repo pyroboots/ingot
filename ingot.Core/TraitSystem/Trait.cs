@@ -13,25 +13,19 @@ namespace ingot.Core.TraitSystem;
 /// <summary>
 /// Contains reflected data of a member in a trait interface
 /// </summary>
-public record TraitProperty
+public record TraitProperty : ICompilableFragment
 {
     /// <summary>
     /// Creates a reflected trait property ready for JSON compilation.
     /// </summary>
-    /// <param name="path">Molang or JSON path prefix for the property value.</param>
     /// <param name="name">Property name on the trait interface.</param>
     /// <param name="value">Runtime value of the property.</param>
-    public TraitProperty(string path, string name, dynamic value)
+    public TraitProperty(string name, dynamic value)
     {
-        Path = path;
         Name = name;
         Value = value;
     }
-
-    /// <summary>
-    /// Molang or JSON path prefix for the property value.
-    /// </summary>
-    public string Path = "@=*";
+    
     /// <summary>
     /// Property name on the trait interface.
     /// </summary>
@@ -40,6 +34,9 @@ public record TraitProperty
     /// Runtime value of the property.
     /// </summary>
     public dynamic Value;
+
+    /// <inheritdoc/>
+    public void Compile(ref JsonTextWriter writer) => Property(ref writer, Formatting.PascalToSnakeCase(Name), Value);
 }
 
 /// <summary>
@@ -55,7 +52,7 @@ public class Trait : IIdentifiable, ICompilableFragment
     /// </summary>
     /// <param name="identifier">Bedrock component identifier (e.g. <c>minecraft:food</c>).</param>
     /// <param name="root">Concrete trait interface type implemented by the content class.</param>
-    public Trait(Identifier identifier, Type root)
+    public Trait(Identifier identifier, Type? root = null)
     {
         Identifier = identifier;
         RootTrait = root;
@@ -68,7 +65,7 @@ public class Trait : IIdentifiable, ICompilableFragment
     /// <summary>
     /// The concrete type this trait is derived from
     /// </summary>
-    public Type RootTrait;
+    public Type? RootTrait;
 
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
@@ -79,8 +76,7 @@ public class Trait : IIdentifiable, ICompilableFragment
         {
             foreach (TraitProperty property in Properties)
             {
-                string id = Formatting.PascalToSnakeCase(property.Name);
-                json.Property(id, property.Value);
+                property.Compile(ref json.Writer);
             }
         });
     }

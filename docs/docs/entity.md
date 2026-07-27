@@ -30,6 +30,7 @@ Every entity **must** implement:
 | `Properties`       | `Dictionary<Identifier, IEntityProperty>` | `{}`        | Typed entity properties (server-side state, optional client sync). See [Entity Properties](#entity-properties). |
 | `ComponentGroups`  | `EntityComponentGroup[]`                  | `[]`        | Named component sets toggled by events. See [Entity Component Groups](entity-component-groups.md). |
 | `Events`           | `Dictionary<Identifier, IEntityEventAction[]>` | `{}`     | Event definitions and their actions. See [Entity Events](entity-events.md). |
+| `DynamicTraits`    | `Trait[]`                                 | `[]`        | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](trait-system.md#dynamic-traits). |
 
 These are written into the `description` (including `properties`), `component_groups`, `components`, and `events` sections of the generated entity JSON.
 
@@ -227,6 +228,8 @@ Pack pack = Pack.Create(packUuid, "My Addon", "Entities made with ingot")
 
 pack.Compile("./output");
 ```
+
+To register a pre-configured instance (including `JsonEntity`), use `pack.BehaviourPack.AddEntityFromInstance(inst)`. Direct compile helpers are `Entity.Compile(Type)`, `Entity.Compile<T>()`, and `Entity.CompileFromInstance(inst)` (JsonEntity instances are written as raw JSON).
 
 `AddEntity<T>(discoverClient: true)` (default) looks for a matching client entity:
 
@@ -448,6 +451,8 @@ You can also build a simple controller without a subclass:
 
 ```csharp
 pack.AddRenderController(RenderController.CreateSimple("controller.render.my_entity"));
+// or compile a built instance yourself:
+// string json = RenderController.CompileFromInstance(controller);
 ```
 
 > [!TIP]

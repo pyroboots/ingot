@@ -35,6 +35,7 @@ Optionally override `TexturePath` to provide the source PNG. When set, ingot aut
 | `AllowOffhand`      | `bool`             | `false`          | Shortcut for `minecraft:allow_off_hand`. |
 | `TexturePath`       | `string?`          | `null`           | Optional source PNG for `Texture`. Auto-registered during compile. |
 | `ItemEvents`        | `ItemEvents?`      | `null`           | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Item Events](item-events.md). |
+| `DynamicTraits`     | `Trait[]`          | `[]`             | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](trait-system.md#dynamic-traits). |
 
 These are written into the `description.menu_category` and `components` sections of the generated item JSON.
 
@@ -152,6 +153,8 @@ Pack pack = Pack.Create(packUuid, "My Addon", "Items made with ingot")
 
 pack.Compile("./output");
 ```
+
+To register a pre-configured instance, use `pack.BehaviourPack.AddItemFromInstance(inst)`. Direct compile helpers are `Item.Compile(Type)`, `Item.Compile<T>()`, and `Item.CompileFromInstance(inst)`.
 
 > [!TIP]
 > Use `pack.AddItemTexture(key, path)` only when you need a manual override. Capture identifiers from your item class for cross-references (recipes, loot tables, scripts, etc.) without repeating string literals.

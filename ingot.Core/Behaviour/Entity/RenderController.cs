@@ -105,21 +105,19 @@ public abstract class RenderController : IConcreteCompilable<RenderController>
     public static RenderController CreateSimple(string controllerId) =>
         new SimpleRenderController(controllerId);
 
-    /// <summary>
-    /// Compiles the <see cref="RenderController"/> (as <paramref name="tType"/>) to JSON.
-    /// </summary>
-    /// <param name="tType">Concrete type of <see cref="RenderController"/>.</param>
-    /// <returns>Compiled JSON.</returns>
+    /// <inheritdoc/>
     public static string Compile(Type tType)
     {
         RenderController inst = (Activator.CreateInstance(tType) as RenderController)!;
-        return CompileInstance(inst);
+        return CompileFromInstance(inst);
     }
 
-    /// <summary>
-    /// Compiles an already-constructed <see cref="RenderController"/> instance to JSON.
-    /// </summary>
-    public static string CompileInstance(RenderController inst)
+    /// <inheritdoc/>
+    public static string Compile<TConcreteType>() where TConcreteType : RenderController, new() =>
+        Compile(typeof(TConcreteType));
+
+    /// <inheritdoc/>
+    public static string CompileFromInstance(RenderController inst)
     {
         CompilerState.Push(inst.ControllerId);
 

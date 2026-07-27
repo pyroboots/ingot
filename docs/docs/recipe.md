@@ -127,11 +127,23 @@ All built-in recipe bases implement `IRecipe` and can be registered with `AddRec
 public abstract class SmithingRecipe : IRecipe, IConcreteCompilable<SmithingRecipe>
 {
     public abstract Identifier Identifier { get; }
-    public string Compile() => Compile(GetType());
+
+    // Instance compile used by pack registration
+    public string Compile() => CompileFromInstance(this);
 
     public static string Compile(Type tType)
     {
-        // emit JSON for your recipe type
+        SmithingRecipe inst = /* construct from tType */;
+        return CompileFromInstance(inst);
+    }
+
+    public static string Compile<TConcreteType>() where TConcreteType : SmithingRecipe, new() =>
+        Compile(typeof(TConcreteType));
+
+    public static string CompileFromInstance(SmithingRecipe inst)
+    {
+        // emit JSON for your recipe type from inst
+        throw new NotImplementedException();
     }
 }
 ```
@@ -151,6 +163,8 @@ pack.Compile("./output");
 ```
 
 `AddRecipe<T>()` returns the `Pack` for fluent chaining, the same as `AddItem<T>()`, `AddBlock<T>()`, and `AddLootTable<T>()`. Capture identifiers from your recipe class when you need a single source of truth for cross-references.
+
+For a pre-configured recipe instance, use `pack.BehaviourPack.AddRecipeFromInstance(inst)`.
 
 This writes `bp/recipes/lasagna.json` (filename is the part after the `:` in the identifier). Shaped recipes use `format_version` `"1.12"` and compile to `minecraft:recipe_shaped`; shapeless recipes compile to `minecraft:recipe_shapeless`.
 
@@ -197,4 +211,4 @@ See `LasagnaRecipe.cs` in the [`ingot.Example`](../../ingot.Example) project, wh
 > [!TIP]
 > `null` entries in a shaped `Pattern` row become spaces in the compiled pattern string.
 
-- Built-in recipe types: `ShapedRecipe`, `ShapelessRecipe`, `FurnaceRecipe`, and `BrewingMixRecipe`. Extend one of these or implement `IRecipe` + `IConcreteCompilable<T>` for custom types.
+- Built-in recipe types: `ShapedRecipe`, `ShapelessRecipe`, `FurnaceRecipe`, and `BrewingMixRecipe`. Extend one of these or implement `IRecipe` + `IConcreteCompilable<T>` (with `Compile`, `Compile<TConcrete>()`, and `CompileFromInstance`) for custom types.

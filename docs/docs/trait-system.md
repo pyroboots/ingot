@@ -67,15 +67,16 @@ public float SaturationModifier => 0.9f;
 
 ## How the Trait System Works
 
-1. When `Block.Compile(Type)`, `Item.Compile(Type)`, `Entity.Compile(Type)`, or `BehaviourPack` compilation runs, `TraitSystem.GetTraits(...)` is called on the concrete type.
+1. When content is compiled (`Block.Compile(...)`, `Item.Compile(...)`, `Entity.Compile(...)`, `CompileFromInstance(...)`, or full pack compile), `TraitSystem.GetTraits(...)` is called on the concrete type of the instance being compiled.
 2. It enumerates all interfaces implemented by the type.
-3. For each interface that carries a `[Trait("minecraft:xxx", TraitType.Block/Item)]` attribute, a `Trait` entry is created.
-4. Every property on that interface decorated with `[TraitProperty]` (or `[TraitProperty("path")]`) is inspected.
+3. For each interface that carries a `[Trait("minecraft:xxx", TraitType.Block/Item/Entity)]` attribute, a `Trait` entry is created.
+4. Every property on that interface decorated with `[TraitProperty]` is inspected.
 5. Properties marked `[IngotExclude]` (on the interface or the concrete implementation) are skipped.
 6. Null or empty-string values are skipped (not written).
-7. The getter is invoked on a temporary instance of your class to obtain the current value.
-8. Values are written under the component using `PascalToSnakeCase` conversion for the JSON keys (e.g. `SecondsToDestroy` → `seconds_to_destroy`).
-9. The resulting object is emitted inside the `components` section of the generated JSON.
+7. The getter is invoked on the instance being compiled to obtain the current value.
+8. Values are written under the component using `PascalToSnakeCase` conversion for the JSON keys (e.g. `SecondsToDestroy` → `seconds_to_destroy`). Property names are always written as flat keys under the component object.
+9. After reflected traits, any entries from `DynamicTraits` on the content type (or permutation) are compiled into the same `components` object.
+10. The resulting object is emitted inside the `components` section of the generated JSON.
 
 Example output for a destructible block trait:
 
@@ -92,7 +93,7 @@ Example output for a destructible block trait:
 ## Trait Attributes (Advanced)
 
 - `[Trait(string identifier, TraitSystem.TraitType constraint)]` - placed on the interface. Declares the Minecraft component name and whether the trait is valid on blocks, items, or entities.
-- `[TraitProperty]` or `[TraitProperty("some.nested.path")]` - placed on properties inside the trait interface. The (optional) path controls where the value is written in the generated component object. Currently most traits use the default `"@=*"` (place directly under the component).
+- `[TraitProperty]` - placed on properties inside the trait interface. Marked members are reflected and written as snake_case keys under the component.
 - `[IngotExclude]` - omit a property when compiling JSON. Put it on the **trait interface** (always skip, e.g. schema-invalid generator leftovers) or on a **concrete implementation** (skip only for that type).
 
 > [!TIP]
@@ -103,6 +104,46 @@ Example output for a destructible block trait:
 [IngotExclude]
 int IHealth.Value => 10;
 ```
+
+## Dynamic Traits
+
+When a component is not covered by a generated trait interface (or you need a one-off hand-built component), override `DynamicTraits` on `Block`, `Item`, `Entity`, or `BlockPermutation`:
+
+```csharp
+using ingot.Core.Behaviour.Block;
+using ingot.Core.Common;
+using ingot.Core.TraitSystem;
+
+public class MyBlock : Block
+{
+    public override Identifier Identifier => new("mynamespace:my_block");
+
+    public override MaterialInstances MaterialInstances => new()
+    {
+        All = new MaterialInstance("my_block")
+    };
+
+    public override Trait[] DynamicTraits =>
+    [
+        new Trait(new Identifier("minecraft:destructible_by_mining"))
+        {
+            Properties =
+            [
+                new TraitProperty("SecondsToDestroy", 2.5f),
+            ]
+        },
+        // Empty property list still emits the component object: "minecraft:foo": {}
+        new Trait(new Identifier("minecraft:some_flag_component")),
+    ];
+}
+```
+
+Notes:
+
+- `Trait` takes a component identifier. `RootTrait` is optional and usually left null for dynamic traits (reflected traits set it to the interface type).
+- Each `TraitProperty` name is converted with `PascalToSnakeCase` (so `SecondsToDestroy` becomes `seconds_to_destroy`).
+- Dynamic traits are written **after** reflected interface traits, in the same `components` object.
+- On permutations, dynamic traits only apply when that permutation's condition matches.
 
 ## Block vs Item vs Entity Traits
 
@@ -192,6 +233,40 @@ Optional CLI arguments override the block and item output directories (args 0 an
 
 After adding a hand-written trait, make sure to also handle any special serialization needs inside `Trait.Compile` if the component structure is not a flat set of properties.
 
+## Compiling Instances
+
+Content types that implement `IConcreteCompilable<T>` expose three static entry points:
+
+| Method | Purpose |
+|--------|---------|
+| `Compile(Type)` | Construct a fresh instance with `Activator`, then compile it |
+| `Compile<TConcrete>()` | Generic sugar for `Compile(typeof(TConcrete))` |
+| `CompileFromInstance(inst)` | Compile a pre-constructed instance (runtime config, generators, tests) |
+
+```csharp
+// Type-based (typical for AddBlock<T> / AddItem<T> registration)
+string json = Block.Compile(typeof(MyBlock));
+string same = Block.Compile<MyBlock>();
+
+// Instance-based: configure first, then emit JSON
+MyBlock soft = new MyBlock(); // or a type with mutable members
+// ... mutate soft ...
+string softJson = Block.CompileFromInstance(soft);
+```
+
+`BehaviourPack` also accepts pre-built instances so pack compile uses the same objects you configured:
+
+```csharp
+pack.BehaviourPack
+    .AddBlockFromInstance(soft)
+    .AddItemFromInstance(myItem)
+    .AddEntityFromInstance(myEntity)
+    .AddRecipeFromInstance(myRecipe)
+    .AddLootTableFromInstance(myLoot);
+```
+
+Type-based `Pack.AddBlock<T>()` / `AddItem<T>()` / etc. still construct a default instance and remain the usual path for ordinary content classes.
+
 ## Summary
 
-The trait system lets you compose block, item, and entity behavior using ordinary C# interface inheritance. It keeps your addon code readable, refactorable, and type-safe while still producing the exact JSON format that Minecraft Bedrock expects.
+The trait system lets you compose block, item, and entity behavior using ordinary C# interface inheritance, plus optional `DynamicTraits` for components without a generated interface. It keeps your addon code readable, refactorable, and type-safe while still producing the exact JSON format that Minecraft Bedrock expects.

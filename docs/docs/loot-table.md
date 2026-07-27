@@ -192,6 +192,8 @@ Or register a loot table explicitly (deduplicated by type):
 pack.AddLootTable<DenseLasagnaLoot>();
 ```
 
+For a pre-configured instance, use `pack.BehaviourPack.AddLootTableFromInstance(inst)`. Direct compile helpers are `LootTable.Compile(Type)`, `LootTable.Compile<T>()`, and `LootTable.CompileFromInstance(inst)`.
+
 This writes `bp/loot_tables/blocks/block_of_dense_lasagna.json`. The block's `minecraft:loot` component points at that same relative path.
 
 A compiled loot table looks like this:

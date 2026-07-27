@@ -55,6 +55,11 @@ public abstract class BlockPermutation
     /// Array of block tags that can enable / expand vanilla functionality
     /// </summary>
     public virtual string[] Tags => [];
+    
+    /// <summary>
+    /// Array of constructed traits to facilitate traits that ingot may not implement
+    /// </summary>
+    public virtual Trait[] DynamicTraits => [];
 
     /// <summary>
     /// Compiles the <typeparamref name="TBlockPermutation"/> to JSON
@@ -109,6 +114,8 @@ public abstract class BlockPermutation
                 permutation.MaterialInstances.Value.Compile(ref json.Writer);
 
             foreach (Trait trait in traits)
+                trait.Compile(ref json.Writer);
+            foreach (Trait trait in permutation.DynamicTraits)
                 trait.Compile(ref json.Writer);
         });
 

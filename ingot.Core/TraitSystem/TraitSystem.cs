@@ -142,7 +142,6 @@ public static class TraitSystem
             CompilerState.Pop();
 
             properties.Add(new TraitProperty(
-                path: propertyAttr.Path,
                 name: property.Name,
                 value: value!
             ));

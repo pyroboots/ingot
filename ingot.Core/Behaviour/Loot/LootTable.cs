@@ -48,15 +48,19 @@ public abstract class LootTable : IConcreteCompilable<LootTable>, IIdentifiable
     /// </summary>
     public abstract LootPool[] Pools { get; }
 
-    /// <summary>
-    /// Compiles the <see cref="LootTable"/> (as <paramref name="tType"/>) to JSON
-    /// </summary>
-    /// <param name="tType">Concrete type of <see cref="LootTable"/></param>
-    /// <returns>Compiled JSON</returns>
+    /// <inheritdoc/>
     public static string Compile(Type tType)
     {
         LootTable inst = (Activator.CreateInstance(tType) as LootTable)!;
+        return CompileFromInstance(inst);
+    }
 
+    /// <inheritdoc/>
+    public static string Compile<TConcreteType>() where TConcreteType : LootTable, new() => Compile(typeof(TConcreteType));
+
+    /// <inheritdoc/>
+    public static string CompileFromInstance(LootTable inst)
+    {
         CompilerState.Push(inst.Identifier.ToString());
 
         if (inst.Pools.Length == 0)

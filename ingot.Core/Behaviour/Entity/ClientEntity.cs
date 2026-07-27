@@ -280,19 +280,26 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
 
     /// <summary>
     /// Optional <c>min_engine_version</c> for the client entity description
-    /// (required for player persona skins to stay ≤ 1.13.0).
+    /// (required for player persona skins to stay less than 1.13.0).
     /// </summary>
     public virtual string? MinEngineVersion => null;
 
-    /// <summary>
-    /// Compiles the <see cref="ClientEntity"/> (as <paramref name="tType"/>) to JSON.
-    /// </summary>
-    /// <param name="tType">Concrete type of <see cref="ClientEntity"/>.</param>
-    /// <returns>Compiled JSON.</returns>
+    /// <inheritdoc/>
     public static string Compile(Type tType)
     {
         ClientEntity inst = (Activator.CreateInstance(tType) as ClientEntity)!;
+        return CompileFromInstance(inst);
+    }
 
+    /// <inheritdoc/>
+    public static string Compile<TConcreteType>() where TConcreteType : ClientEntity, new() =>
+        Compile(typeof(TConcreteType));
+
+    /// <inheritdoc/>
+    public static string CompileFromInstance(ClientEntity inst)
+    {
+        Type tType = inst.GetType();
+        
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();

@@ -33,17 +33,21 @@ public abstract class BrewingMixRecipe : IRecipe, IConcreteCompilable<BrewingMix
     public abstract Identifier Output { get; }
 
     /// <inheritdoc/>
-    public string Compile() => Compile(GetType());
+    public string Compile() => CompileFromInstance(this);
 
-    /// <summary>
-    /// Compiles the <see cref="BrewingMixRecipe"/> (as <paramref name="tType"/>) to JSON
-    /// </summary>
-    /// <param name="tType">Concrete type of <see cref="BrewingMixRecipe"/></param>
-    /// <returns>Compiled JSON</returns>
+    /// <inheritdoc/>
     public static string Compile(Type tType)
     {
         BrewingMixRecipe inst = RecipeCompileHelper.CreateInstance<BrewingMixRecipe>(tType);
+        return CompileFromInstance(inst);
+    }
 
+    /// <inheritdoc/>
+    public static string Compile<TConcreteType>() where TConcreteType : BrewingMixRecipe, new() => Compile(typeof(TConcreteType));
+
+    /// <inheritdoc/>
+    public static string CompileFromInstance(BrewingMixRecipe inst)
+    {
         CompilerState.Push(inst.Identifier.ToString());
 
         (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();
@@ -75,6 +79,5 @@ public abstract class BrewingMixRecipe : IRecipe, IConcreteCompilable<BrewingMix
 
         CompilerState.Pop();
         return sw.ToString();
-
     }
 }

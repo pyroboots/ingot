@@ -45,6 +45,7 @@ Every block **must** implement:
 | `Replaceable`       | `bool?`                     | `null`             | Shortcut for `minecraft:replaceable`. |
 | `Loot`              | `LootTable?`                | `null`             | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](loot-table.md). |
 | `BlockEvents`       | `BlockEvents?`              | `null`             | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Block Events](block-events.md). |
+| `DynamicTraits`     | `Trait[]`                   | `[]`               | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](trait-system.md#dynamic-traits). |
 
 All of the shortcut properties are written directly into the `components` object of the generated `minecraft:block` JSON.
 
@@ -153,7 +154,7 @@ See the dedicated [Block Events](block-events.md) guide for the full event list,
 
 ## Compilation
 
-You rarely call `Block.Compile(Type)` directly. Instead register blocks with `Pack.Create` and declare textures on the block class via `MaterialInstance.SourcePath`:
+You rarely call `Block.Compile` directly. Instead register blocks with `Pack.Create` and declare textures on the block class via `MaterialInstance.SourcePath`:
 
 ```csharp
 using ingot.Core;
@@ -169,6 +170,16 @@ pack.AddBlockTexture("block_of_dense_lasagna", Path.Combine(dataDir, "dense_lasa
 
 pack.Compile("./output");
 ```
+
+To register a pre-configured instance (for example after mutating fields at runtime), use the behaviour pack:
+
+```csharp
+DenseLasagnaBlock variant = new DenseLasagnaBlock();
+// ... configure variant ...
+pack.BehaviourPack.AddBlockFromInstance(variant);
+```
+
+`Block.Compile(Type)`, `Block.Compile<T>()`, and `Block.CompileFromInstance(inst)` are available when you need JSON without a full pack compile.
 
 ```csharp
 public override string? Geometry => "minecraft:geometry.full_block";

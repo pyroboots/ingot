@@ -29,17 +29,21 @@ public abstract class FurnaceRecipe : IRecipe, IConcreteCompilable<FurnaceRecipe
     public abstract Identifier Output { get; }
 
     /// <inheritdoc/>
-    public string Compile() => Compile(GetType());
+    public string Compile() => CompileFromInstance(this);
 
-    /// <summary>
-    /// Compiles the <see cref="FurnaceRecipe"/> (as <paramref name="tType"/>) to JSON
-    /// </summary>
-    /// <param name="tType">Concrete type of <see cref="FurnaceRecipe"/></param>
-    /// <returns>Compiled JSON</returns>
+    /// <inheritdoc/>
     public static string Compile(Type tType)
     {
         FurnaceRecipe inst = RecipeCompileHelper.CreateInstance<FurnaceRecipe>(tType);
+        return CompileFromInstance(inst);
+    }
+    
+    /// <inheritdoc/>
+    public static string Compile<TConcreteType>() where TConcreteType : FurnaceRecipe, new() => Compile(typeof(TConcreteType));
 
+    /// <inheritdoc/>
+    public static string CompileFromInstance(FurnaceRecipe inst)
+    {
         CompilerState.Push(inst.Identifier.ToString());
 
         (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();

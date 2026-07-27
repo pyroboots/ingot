@@ -4,7 +4,7 @@ namespace ingot.Core.Common;
 /// Internal use interface to implement concrete type compiling 
 /// </summary>
 /// <typeparam name="TType">Type reference to the inheriting class</typeparam>
-public interface IConcreteCompilable<TType> where TType : IConcreteCompilable<TType>
+public interface IConcreteCompilable<in TType> where TType : IConcreteCompilable<TType>
 {
     /// <summary>
     /// Compiles the concrete type <paramref name="tType"/> to JSON.
@@ -18,5 +18,13 @@ public interface IConcreteCompilable<TType> where TType : IConcreteCompilable<TT
     /// </summary>
     /// <typeparam name="TConcreteType">Concrete type to compile.</typeparam>
     /// <returns>Compiled JSON</returns>
-    static string Compile<TConcreteType>() where TConcreteType : TType, new() => TType.Compile(typeof(TConcreteType));
+    static abstract string Compile<TConcreteType>() where TConcreteType : TType, new();
+
+    /// <summary>
+    /// Compiles a pre-constructed instance of <typeparamref name="TType"/> to JSON.
+    /// Useful for runtime configuration and deriving multiple objects from a single parent concrete type (e.g. having a <c>MasterStone</c> type and changing the explosion resistance at runtime to create a new block)
+    /// </summary>
+    /// <param name="inst">Instance to compile</param>
+    /// <returns>Compiled JSON</returns>
+    static abstract string CompileFromInstance(TType inst);
 }

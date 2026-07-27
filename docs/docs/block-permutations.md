@@ -33,6 +33,7 @@ A permutation can provide its own versions of the same shortcuts available on `B
 - `Loot` (`LootTable?` - see [Loot Tables](loot-table.md))
 - `MaterialInstances` (completely replace the block's materials under this condition)
 - `Tags` (block tags applied only when this condition is true)
+- `DynamicTraits` (hand-built `Trait` components for this permutation only; see [Dynamic Traits](trait-system.md#dynamic-traits))
 
 In addition, any [block trait](trait-system.md) can be implemented directly on the permutation class. The trait components will only be written when the condition matches.
 

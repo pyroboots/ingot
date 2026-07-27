@@ -9,7 +9,7 @@ public class RenderControllerCompileTest
     public void Compile_SimpleRenderControllerHasDefaultBindings()
     {
         RenderController simple = RenderController.CreateSimple("controller.render.cow");
-        string json = RenderController.CompileInstance(simple);
+        string json = RenderController.CompileFromInstance(simple);
 
         Assert.Contains("\"format_version\": \"1.10.0\"", json);
         Assert.Contains("\"controller.render.cow\"", json);

@@ -118,6 +118,8 @@ Pack pack = Pack.Create(packUuid, "My Addon", "My first ingot pack")
 pack.Compile("./output");
 ```
 
+For pre-configured instances (runtime variants, generators), register through the behaviour pack: `pack.BehaviourPack.AddBlockFromInstance(inst)` (and the matching item/entity/recipe/loot helpers). See [Compiling Instances](trait-system.md#compiling-instances).
+
 > [!IMPORTANT]
 > Use a **fixed** behaviour-pack UUID in real projects. Generating a new UUID every build makes Minecraft treat each compile as a different pack.
 
@@ -256,7 +258,7 @@ dotnet run --project ingot.Example
 3. Emits closed generic `BrickBlock<TToken>` / `BrickRecipe<TToken>` types at runtime (one type per material × pattern × optional overlay combo) and registers them on a `Pack`.
 4. Adds shapeless crafting (body + catalyst + stone, plus inlay upgrade recipes), MC functions to place/clear a gallery, and a tick service that shows material lore on the action bar.
 
-Current content is roughly **8 materials** (amethyst, copper, diamond, emerald, gold, lapis, netherite, resin) × **20 patterns** (bricks, chiseled, tiles) — hundreds of blocks once same-colour and cross-material inlays are included.
+Current content is roughly **8 materials** (amethyst, copper, diamond, emerald, gold, lapis, netherite, resin) × **20 patterns** (bricks, chiseled, tiles) - hundreds of blocks once same-colour and cross-material inlays are included.
 
 ```bash
 dotnet run --project ingot.Example.BricksGalore

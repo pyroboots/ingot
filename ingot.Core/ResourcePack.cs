@@ -308,7 +308,7 @@ public class ResourcePack
         foreach (RenderController controller in _renderControllers)
         {
             c++;
-            string json = RenderController.CompileInstance(controller);
+            string json = RenderController.CompileFromInstance(controller);
             string path = Path.Combine(rcDir, $"{controller.FileName}.json");
             File.WriteAllText(path, json);
             CompilerState.Info($"({c}/{_renderControllers.Count}) compiled render controller {controller.ControllerId}");
@@ -335,7 +335,7 @@ public class ResourcePack
                     continue;
 
                 RenderController simple = RenderController.CreateSimple(controllerId);
-                string json = RenderController.CompileInstance(simple);
+                string json = RenderController.CompileFromInstance(simple);
                 string path = Path.Combine(rcDir, $"{simple.FileName}.json");
                 File.WriteAllText(path, json);
                 emittedIds.Add(controllerId);

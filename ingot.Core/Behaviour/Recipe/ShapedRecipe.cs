@@ -34,17 +34,21 @@ public abstract class ShapedRecipe : IConcreteCompilable<ShapedRecipe>, IRecipe
     public virtual int ResultAmount => 1;
 
     /// <inheritdoc/>
-    public string Compile() => Compile(GetType());
+    public string Compile() => CompileFromInstance(this);
 
-    /// <summary>
-    /// Compiles the <see cref="ShapedRecipe"/> (as <paramref name="tType"/>) to JSON
-    /// </summary>
-    /// <param name="tType">Concrete type of <see cref="ShapedRecipe"/></param>
-    /// <returns>Compiled JSON</returns>
+    /// <inheritdoc/>
     public static string Compile(Type tType)
     {
         ShapedRecipe inst = RecipeCompileHelper.CreateInstance<ShapedRecipe>(tType);
+        return CompileFromInstance(inst);
+    }
+    
+    /// <inheritdoc/>
+    public static string Compile<TConcreteType>() where TConcreteType : ShapedRecipe, new() => Compile(typeof(TConcreteType));
 
+    /// <inheritdoc/>
+    public static string CompileFromInstance(ShapedRecipe inst)
+    {
         CompilerState.Push(inst.Identifier.ToString());
 
         (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();
