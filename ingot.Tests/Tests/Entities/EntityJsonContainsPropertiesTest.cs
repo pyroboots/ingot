@@ -8,11 +8,12 @@ namespace ingot.Tests.Entities;
 public class EntityJsonContainsPropertiesTest
 {
     [Fact]
-    public void Compile_EntityJsonContainsEmptyPropertiesWhenNoneDefined()
+    public void Compile_EntityJsonOmitsPropertiesWhenNoneDefined()
     {
         string json = Entity.Compile(typeof(TestEntity));
 
-        Assert.Contains("\"properties\": {}", json);
+        // bedrock rejects description.properties: {} ("actor has no properties listed").
+        Assert.DoesNotContain("\"properties\"", json);
     }
 
     [Fact]

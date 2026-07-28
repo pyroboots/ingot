@@ -284,6 +284,13 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
     /// </summary>
     public virtual string? MinEngineVersion => null;
 
+    /// <summary>
+    /// Extra texture short-name -> path entries merged into the client entity
+    /// <c>textures</c> map (in addition to attributed members / <see cref="DefaultTexture"/>).
+    /// Useful when many block textures must be listed for a render-controller array.
+    /// </summary>
+    public virtual Dictionary<string, string>? ExtraTextures => null;
+
     /// <inheritdoc/>
     public static string Compile(Type tType)
     {
@@ -322,6 +329,16 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         materials["default"] = inst.DefaultMaterial;
         textures["default"] = inst.DefaultTexture;
         geometries["default"] = inst.DefaultGeometry;
+
+        if (inst.ExtraTextures is { Count: > 0 })
+        {
+            foreach (var (shortName, path) in inst.ExtraTextures)
+            {
+                if (string.IsNullOrWhiteSpace(shortName) || string.IsNullOrWhiteSpace(path))
+                    continue;
+                textures[shortName] = path;
+            }
+        }
 
         TryRegisterDefaultTexture(inst, ref w);
 

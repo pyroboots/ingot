@@ -108,11 +108,16 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable
             json.Object("description", () =>
             {
                 json.Property("identifier", inst.Identifier);
-                json.Object("properties", () =>
+                // empty "properties": {} is rejected by ("actor has no properties listed").
+                // only emit the key when at least one entity property is defined.
+                if (inst.Properties.Count > 0)
                 {
-                    foreach (var kvp in inst.Properties)
-                        json.Property(kvp.Key.ToString(), kvp.Value);
-                });
+                    json.Object("properties", () =>
+                    {
+                        foreach (var kvp in inst.Properties)
+                            json.Property(kvp.Key.ToString(), kvp.Value);
+                    });
+                }
                 json.Property("is_spawnable", inst.IsSpawnable);
                 json.Property("is_summonable", inst.IsSummonable);
                 json.Property("is_experimental", inst.IsExperimental);

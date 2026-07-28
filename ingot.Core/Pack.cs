@@ -344,13 +344,59 @@ public class Pack
     }
 
     /// <summary>
-    /// Registers a block geometry file (<c>.geo.json</c>) that will be copied into the resource pack under
-    /// <c>models/blocks/</c>. The <paramref name="identifier"/> must match the geometry referenced from
-    /// behaviour-side <c>minecraft:geometry</c>.
+    /// Registers a geometry file (<c>.geo.json</c>) under <c>models/{modelsSubdir}/</c>
+    /// (default <c>blocks</c>).
     /// </summary>
-    public Pack AddGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null)
+    public Pack AddGeometry(
+        string identifier,
+        string sourceGeoJsonPath,
+        string? rpName = null,
+        string modelsSubdir = "blocks")
     {
-        ResourcePack.AddGeometry(identifier, sourceGeoJsonPath, rpName);
+        ResourcePack.AddGeometry(identifier, sourceGeoJsonPath, rpName, modelsSubdir);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers an entity geometry file under <c>models/entity/</c>.
+    /// </summary>
+    public Pack AddEntityGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null)
+    {
+        ResourcePack.AddEntityGeometry(identifier, sourceGeoJsonPath, rpName);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers an animation JSON file under <c>animations/{rpName}.json</c>.
+    /// </summary>
+    public Pack AddAnimation(string sourceJsonPath, string rpName)
+    {
+        ResourcePack.AddAnimation(sourceJsonPath, rpName);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers a particle effect JSON under <c>particles/{rpName}.json</c>.
+    /// The <paramref name="identifier"/> should match <c>description.identifier</c> in the JSON
+    /// (e.g. <c>mynamespace:sparkle</c>) and is used with Script API <c>spawnParticle</c>.
+    /// </summary>
+    /// <param name="identifier">Particle effect identifier (<c>namespace:name</c>).</param>
+    /// <param name="sourceJsonPath">Path to the source particle effect JSON on disk.</param>
+    /// <param name="rpName">Optional filename (without extension) under <c>particles/</c>.
+    /// Defaults to the name segment of <paramref name="identifier"/>.</param>
+    public Pack AddParticle(string identifier, string sourceJsonPath, string? rpName = null)
+    {
+        ResourcePack.AddParticle(identifier, sourceJsonPath, rpName);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers a particle texture PNG under <c>textures/particles/</c>.
+    /// Reference it from particle JSON as <c>textures/particles/{key}</c> (no extension).
+    /// </summary>
+    public Pack AddParticleTexture(string key, string sourcePngPath, string? rpName = null)
+    {
+        ResourcePack.AddParticleTexture(key, sourcePngPath, rpName);
         return this;
     }
 
@@ -407,7 +453,29 @@ public class Pack
         ResourcePack.AddRenderController(controller);
         return this;
     }
-    
+
+    /// <summary>
+    /// Registers a sound definition written to <c>rp/sounds/sound_definitions.json</c>.
+    /// The <paramref name="soundId"/> is the event name used by gameplay - a plain string,
+    /// not an <see cref="Identifier"/>. Entries with a <see cref="Sound.SourcePath"/> are
+    /// copied into the resource pack at <see cref="Sound.Name"/> (nested dirs under <c>sounds/</c>).
+    /// </summary>
+    /// <param name="soundId">Sound event id (e.g. <c>example.toot</c> or <c>ambient.basalt_deltas.loop</c>).</param>
+    /// <param name="sounds">One or more sound file entries for this event.</param>
+    /// <param name="category">Volume slider category (<c>ambient</c>, <c>hostile</c>, <c>music</c>, …).</param>
+    /// <param name="maxDistance">Distance beyond which the sound can no longer be heard.</param>
+    /// <param name="minDistance">Distance at which attenuation begins.</param>
+    public Pack RegisterSoundDefinition(
+        string soundId,
+        Sound[] sounds,
+        string? category = null,
+        float? maxDistance = null,
+        float? minDistance = null)
+    {
+        ResourcePack.RegisterSoundDefinition(soundId, sounds, category, maxDistance, minDistance);
+        return this;
+    }
+
     /// <summary>
     /// Adds a function to the <see cref="BehaviourPack"/>
     /// </summary>

@@ -17,7 +17,13 @@ using Version = Common.Version;
 public class ResourcePack
 {
     private readonly record struct TextureSource(string SourcePath, string RpName);
-    private readonly record struct GeometrySource(string SourcePath, string RpName);
+    private readonly record struct GeometrySource(string SourcePath, string RpName, string ModelsSubdir);
+    private readonly record struct ParticleSource(string SourcePath, string RpName);
+    private readonly record struct SoundDefinitionSource(
+        string? Category,
+        float? MaxDistance,
+        float? MinDistance,
+        Sound[] Sounds);
 
     /// <summary>
     /// Minecraft UUID to be used at runtime
@@ -48,7 +54,11 @@ public class ResourcePack
     private readonly Dictionary<string, TextureSource> _blockTextureSources = new();
     private readonly Dictionary<string, TextureSource> _itemTextureSources = new();
     private readonly Dictionary<string, TextureSource> _entityTextureSources = new();
+    private readonly Dictionary<string, TextureSource> _particleTextureSources = new();
     private readonly Dictionary<string, GeometrySource> _geometrySources = new();
+    private readonly Dictionary<string, ParticleSource> _particleSources = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, string> _animationSources = new(StringComparer.Ordinal); // rp name -> source path
+    private readonly Dictionary<string, SoundDefinitionSource> _soundDefinitions = new(StringComparer.Ordinal);
     private readonly List<ClientEntity> _clientEntities = new();
     private readonly List<RenderController> _renderControllers = new();
     private readonly HashSet<string> _registeredRenderControllerIds = new(StringComparer.Ordinal);
@@ -62,6 +72,21 @@ public class ResourcePack
     /// Render controllers registered on this pack.
     /// </summary>
     public IReadOnlyList<RenderController> RenderControllers => _renderControllers;
+
+    /// <summary>
+    /// Sound definition ids registered on this pack (keys in <c>sound_definitions.json</c>).
+    /// </summary>
+    public IReadOnlyCollection<string> SoundDefinitionIds => _soundDefinitions.Keys;
+
+    /// <summary>
+    /// Particle effect identifiers registered on this pack (keys used with <see cref="AddParticle"/>).
+    /// </summary>
+    public IReadOnlyCollection<string> ParticleIds => _particleSources.Keys;
+
+    /// <summary>
+    /// Particle texture keys registered on this pack (under <c>textures/particles/</c>).
+    /// </summary>
+    public IReadOnlyCollection<string> ParticleTextureKeys => _particleTextureSources.Keys;
 
     /// <summary>
     /// Registers a texture (PNG on disk) that will be copied into the resource pack under
@@ -107,22 +132,93 @@ public class ResourcePack
         TryRegisterTexture(_itemTextureSources, key, sourcePngPath);
 
     /// <summary>
-    /// Registers a block geometry file (<c>.geo.json</c>) that will be copied into the resource pack under
-    /// <c>models/blocks/</c>. The <paramref name="identifier"/> must match the geometry referenced from
-    /// behaviour-side <c>minecraft:geometry</c> (for example <c>geometry.my_block</c>).
+    /// Registers a geometry file (<c>.geo.json</c>) that will be copied into the resource pack under
+    /// <c>models/{modelsSubdir}/</c> (default <c>blocks</c>). The <paramref name="identifier"/> must match
+    /// the geometry referenced from behaviour/client definitions (for example <c>geometry.my_block</c>).
     /// </summary>
-    /// <param name="identifier">The geometry identifier used in behaviour definitions.</param>
+    /// <param name="identifier">The geometry identifier used in behaviour or client-entity definitions.</param>
     /// <param name="sourceGeoJsonPath">Path to the source <c>.geo.json</c> file on disk (copied as-is).</param>
-    /// <param name="rpName">Optional filename (without extension) under <c>models/blocks/</c>. Defaults to the last segment of <paramref name="identifier"/>.</param>
-    public ResourcePack AddGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null)
+    /// <param name="rpName">Optional filename (without extension) under the models subdir. Defaults to the last segment of <paramref name="identifier"/>.</param>
+    /// <param name="modelsSubdir">Pack folder under <c>models/</c> — use <c>blocks</c> for blocks, <c>entity</c> for client entities.</param>
+    public ResourcePack AddGeometry(
+        string identifier,
+        string sourceGeoJsonPath,
+        string? rpName = null,
+        string modelsSubdir = "blocks")
     {
         if (string.IsNullOrWhiteSpace(identifier))
             throw new ArgumentException("geometry identifier cannot be empty", nameof(identifier));
         if (string.IsNullOrWhiteSpace(sourceGeoJsonPath))
             throw new ArgumentException("source geo json path cannot be empty", nameof(sourceGeoJsonPath));
+        if (string.IsNullOrWhiteSpace(modelsSubdir))
+            throw new ArgumentException("models subdir cannot be empty", nameof(modelsSubdir));
 
         string resolvedRpName = rpName ?? ResolveGeometryRpName(identifier);
-        _geometrySources[identifier] = new GeometrySource(Path.GetFullPath(sourceGeoJsonPath), resolvedRpName);
+        _geometrySources[identifier] = new GeometrySource(
+            Path.GetFullPath(sourceGeoJsonPath),
+            resolvedRpName,
+            modelsSubdir.Trim().Trim('/', '\\'));
+        return this;
+    }
+
+    /// <summary>
+    /// Registers an entity geometry file under <c>models/entity/</c>.
+    /// </summary>
+    public ResourcePack AddEntityGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null) =>
+        AddGeometry(identifier, sourceGeoJsonPath, rpName, modelsSubdir: "entity");
+
+    /// <summary>
+    /// Registers an animation JSON file copied to <c>animations/{rpName}.json</c>.
+    /// </summary>
+    /// <param name="sourceJsonPath">Path to the source animation JSON on disk.</param>
+    /// <param name="rpName">Filename without extension under <c>animations/</c>.</param>
+    public ResourcePack AddAnimation(string sourceJsonPath, string rpName)
+    {
+        if (string.IsNullOrWhiteSpace(sourceJsonPath))
+            throw new ArgumentException("source animation path cannot be empty", nameof(sourceJsonPath));
+        if (string.IsNullOrWhiteSpace(rpName))
+            throw new ArgumentException("animation rp name cannot be empty", nameof(rpName));
+
+        _animationSources[rpName.Trim()] = Path.GetFullPath(sourceJsonPath);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers a particle effect JSON that will be copied into the resource pack under
+    /// <c>particles/{rpName}.json</c>. The <paramref name="identifier"/> should match the
+    /// <c>description.identifier</c> inside the JSON (e.g. <c>mynamespace:sparkle</c>) and is
+    /// the id you pass to Script API <c>dimension.spawnParticle</c>.
+    /// </summary>
+    /// <param name="identifier">Particle effect identifier (<c>namespace:name</c>).</param>
+    /// <param name="sourceJsonPath">Path to the source particle effect <c>.json</c> on disk (copied as-is).</param>
+    /// <param name="rpName">Optional filename (without extension) under <c>particles/</c>.
+    /// Defaults to the name segment of <paramref name="identifier"/> (after <c>:</c>).</param>
+    public ResourcePack AddParticle(string identifier, string sourceJsonPath, string? rpName = null)
+    {
+        if (string.IsNullOrWhiteSpace(identifier))
+            throw new ArgumentException("particle identifier cannot be empty", nameof(identifier));
+        if (string.IsNullOrWhiteSpace(sourceJsonPath))
+            throw new ArgumentException("source particle json path cannot be empty", nameof(sourceJsonPath));
+
+        string resolvedRpName = rpName ?? ResolveParticleRpName(identifier);
+        _particleSources[identifier.Trim()] = new ParticleSource(
+            Path.GetFullPath(sourceJsonPath),
+            resolvedRpName);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers a particle texture (PNG on disk) that will be copied into the resource pack under
+    /// <c>textures/particles/</c>. Reference it from particle JSON as
+    /// <c>textures/particles/{rpName}</c> (no extension).
+    /// </summary>
+    /// <param name="key">Logical key / relative path under <c>textures/particles/</c>
+    /// (e.g. <c>sparkle</c> or <c>effects/sparkle</c>).</param>
+    /// <param name="sourcePngPath">Path to the source .png file on disk (will be copied as-is).</param>
+    /// <param name="rpName">Optional relative path under <c>textures/particles/</c>. Defaults to <paramref name="key"/>.</param>
+    public ResourcePack AddParticleTexture(string key, string sourcePngPath, string? rpName = null)
+    {
+        RegisterTexture(_particleTextureSources, key, sourcePngPath, rpName);
         return this;
     }
 
@@ -188,6 +284,43 @@ public class ResourcePack
         return this;
     }
 
+    /// <summary>
+    /// Registers a sound definition written to <c>rp/sounds/sound_definitions.json</c>.
+    /// The <paramref name="soundId"/> is the event name used by gameplay (e.g. <c>mob.cow.hurt</c>
+    /// or <c>ambient.basalt_deltas.loop</c>) - a plain string, not an <see cref="Identifier"/>.
+    /// Entries with a <see cref="Sound.SourcePath"/> are copied into the resource pack at
+    /// <see cref="Sound.Name"/> (subdirectories under <c>sounds/</c> are created as needed).
+    /// </summary>
+    /// <param name="soundId">Sound event id (e.g. <c>example.toot</c>).</param>
+    /// <param name="sounds">One or more sound file entries for this event.</param>
+    /// <param name="category">Volume slider category (<c>ambient</c>, <c>hostile</c>, <c>music</c>, …).</param>
+    /// <param name="maxDistance">Distance beyond which the sound can no longer be heard.</param>
+    /// <param name="minDistance">Distance at which attenuation begins.</param>
+    public ResourcePack RegisterSoundDefinition(
+        string soundId,
+        Sound[] sounds,
+        string? category = null,
+        float? maxDistance = null,
+        float? minDistance = null)
+    {
+        if (string.IsNullOrWhiteSpace(soundId))
+            throw new ArgumentException("sound id cannot be empty", nameof(soundId));
+        if (sounds is null || sounds.Length == 0)
+            throw new ArgumentException("at least one sound entry is required", nameof(sounds));
+
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            Sound sound = sounds[i] ?? throw new ArgumentException(
+                $"sound entry at index {i} cannot be null", nameof(sounds));
+            if (string.IsNullOrWhiteSpace(sound.Name))
+                throw new ArgumentException(
+                    $"sound entry at index {i} has an empty name/path", nameof(sounds));
+        }
+
+        _soundDefinitions[soundId] = new SoundDefinitionSource(category, maxDistance, minDistance, sounds);
+        return this;
+    }
+
     private void RegisterRenderControllerInstance(RenderController inst)
     {
         _renderControllers.Add(inst);
@@ -241,6 +374,8 @@ public class ResourcePack
         Directory.CreateDirectory(Path.Combine(dir, "textures", "entity"));
         Directory.CreateDirectory(Path.Combine(dir, "textures", "items"));
         Directory.CreateDirectory(Path.Combine(dir, "textures", "particle"));
+        Directory.CreateDirectory(Path.Combine(dir, "textures", "particles"));
+        Directory.CreateDirectory(Path.Combine(dir, "particles"));
         Directory.CreateDirectory(Path.Combine(dir, "sounds"));
         Directory.CreateDirectory(Path.Combine(dir, "texts"));
         CompilerState.Info("created folder structure");
@@ -255,6 +390,15 @@ public class ResourcePack
         if (_geometrySources.Count > 0)
             EmitGeometries(dir);
 
+        if (_animationSources.Count > 0)
+            EmitAnimations(dir);
+
+        if (_particleSources.Count > 0)
+            EmitParticles(dir);
+
+        if (_particleTextureSources.Count > 0)
+            EmitParticleTextures(dir);
+
         // Client entities may auto-register entity textures during compile.
         EmitClientEntities(dir);
 
@@ -266,6 +410,7 @@ public class ResourcePack
         WriteBlocksJson(dir);
         WriteLanguageFiles(dir);
         WriteStubFiles(dir);
+        WriteSoundDefinitionsJson(dir);
         WriteEntitySoundsJson(dir);
 
         CompilerState.Pop();
@@ -483,13 +628,168 @@ public class ResourcePack
         File.WriteAllText(Path.Combine(dir, "biomes_client.json"), "{\n\t\"biomes\": {}\n}\n");
         File.WriteAllText(Path.Combine(dir, "splashes.json"), "{\n\t\"canMerge\": false,\n\t\"splashes\": []\n}\n");
         // sounds.json is written by WriteEntitySoundsJson (may include entity_sounds)
-        File.WriteAllText(
-            Path.Combine(dir, "sounds", "sound_definitions.json"),
-            "{\n\t\"format_version\": \"1.14.0\",\n\t\"sound_definitions\": {}\n}\n");
+        // sound_definitions.json is written by WriteSoundDefinitionsJson
         File.WriteAllText(Path.Combine(dir, "textures", "flipbook_textures.json"), "[]\n");
 
         CompilerState.Info("wrote resource pack stub files");
         CompilerState.Pop();
+    }
+
+    private void WriteSoundDefinitionsJson(string dir)
+    {
+        CompilerState.Push("sound_definitions.json");
+
+        string soundsDir = Path.Combine(dir, "sounds");
+        Directory.CreateDirectory(soundsDir);
+
+        EmitSoundFiles(dir);
+
+        using StringWriter sw = new();
+        JsonTextWriter w = new(sw)
+        {
+            Formatting = Formatting.Indented,
+            Indentation = 4,
+        };
+        JsonHelper json = new(ref w);
+
+        w.WriteStartObject();
+        json.Property("format_version", "1.20.20");
+        json.Object("sound_definitions", () =>
+        {
+            foreach (var (soundId, definition) in _soundDefinitions)
+            {
+                json.Object(soundId, () =>
+                {
+                    json.Property("category", definition.Category);
+
+                    // Match vanilla dumps: always emit distance keys (null when unset).
+                    w.WritePropertyName("max_distance");
+                    if (definition.MaxDistance is null)
+                        w.WriteNull();
+                    else
+                        w.WriteValue(definition.MaxDistance.Value);
+
+                    w.WritePropertyName("min_distance");
+                    if (definition.MinDistance is null)
+                        w.WriteNull();
+                    else
+                        w.WriteValue(definition.MinDistance.Value);
+
+                    json.Array("sounds", () =>
+                    {
+                        foreach (Sound sound in definition.Sounds)
+                        {
+                            w.WriteStartObject();
+                            if (sound.Is3D is not null)
+                            {
+                                w.WritePropertyName("is3D");
+                                w.WriteValue(sound.Is3D.Value);
+                            }
+
+                            json.Property("name", sound.Name);
+                            json.Property("volume", sound.Volume);
+                            json.Property("weight", sound.Weight);
+                            json.Property("stream", sound.Stream);
+                            json.Property("pitch", sound.Pitch);
+                            w.WriteEndObject();
+                        }
+                    });
+                });
+            }
+        });
+        w.WriteEndObject();
+
+        File.WriteAllText(Path.Combine(soundsDir, "sound_definitions.json"), sw.ToString());
+        CompilerState.Info(
+            _soundDefinitions.Count > 0
+                ? $"wrote sound_definitions.json with {_soundDefinitions.Count} definition(s)"
+                : "wrote empty sound_definitions.json");
+        CompilerState.Pop();
+    }
+
+    /// <summary>
+    /// Copies registered sound source files into the resource pack under the path given by
+    /// each entry's <see cref="Sound.Name"/> (preserving subdirectories), using the source file extension.
+    /// </summary>
+    private void EmitSoundFiles(string outputDir)
+    {
+        // Deduplicate by RP relative path so the same file referenced from multiple definitions is copied once.
+        Dictionary<string, string> copies = new(StringComparer.OrdinalIgnoreCase);
+
+        foreach (SoundDefinitionSource definition in _soundDefinitions.Values)
+        {
+            foreach (Sound sound in definition.Sounds)
+            {
+                if (string.IsNullOrWhiteSpace(sound.SourcePath))
+                    continue;
+
+                string sourceFull = Path.GetFullPath(sound.SourcePath);
+                string rpRelative = NormalizeSoundRpPath(sound.Name, sourceFull);
+                if (copies.TryGetValue(rpRelative, out string? existingSource))
+                {
+                    if (!string.Equals(existingSource, sourceFull, StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new InvalidOperationException(
+                            $"sound path '{rpRelative}' is registered from multiple source files: " +
+                            $"'{existingSource}' and '{sourceFull}'");
+                    }
+
+                    continue;
+                }
+
+                copies[rpRelative] = sourceFull;
+            }
+        }
+
+        if (copies.Count == 0)
+            return;
+
+        CompilerState.Push("sound files");
+        int c = 0;
+        foreach (var (rpRelative, sourceFull) in copies)
+        {
+            c++;
+            if (!File.Exists(sourceFull))
+            {
+                throw new FileNotFoundException(
+                    $"source sound file not found for '{rpRelative}': {sourceFull}",
+                    sourceFull);
+            }
+
+            string targetFull = Path.Combine(outputDir, rpRelative.Replace('/', Path.DirectorySeparatorChar));
+            string? targetDir = Path.GetDirectoryName(targetFull);
+            if (!string.IsNullOrEmpty(targetDir))
+                Directory.CreateDirectory(targetDir);
+
+            File.Copy(sourceFull, targetFull, overwrite: true);
+            CompilerState.Info($"({c}/{copies.Count}) copied sound '{rpRelative}'");
+        }
+
+        CompilerState.Info($"wrote {copies.Count} sound file(s)");
+        CompilerState.Pop();
+    }
+
+    /// <summary>
+    /// Builds the RP-relative file path for a sound: <paramref name="name"/> (without extension)
+    /// plus the extension of <paramref name="sourceFullPath"/>.
+    /// </summary>
+    private static string NormalizeSoundRpPath(string name, string sourceFullPath)
+    {
+        string normalized = name.Replace('\\', '/').Trim().TrimStart('/');
+        // Strip a trailing extension from Name if the author included one; JSON name stays without ext.
+        string extension = Path.GetExtension(sourceFullPath);
+        if (string.IsNullOrEmpty(extension))
+            extension = ".ogg";
+
+        string nameWithoutExt = normalized;
+        string nameExt = Path.GetExtension(normalized);
+        if (!string.IsNullOrEmpty(nameExt) &&
+            nameExt.Equals(extension, StringComparison.OrdinalIgnoreCase))
+        {
+            nameWithoutExt = normalized[..^nameExt.Length];
+        }
+
+        return $"{nameWithoutExt}{extension}";
     }
 
     private void WriteEntitySoundsJson(string dir)
@@ -565,13 +865,12 @@ public class ResourcePack
     {
         CompilerState.Push("geometries");
 
-        string targetDir = Path.Combine(outputDir, "models", "blocks");
-        Directory.CreateDirectory(targetDir);
-
         int c = 0;
         foreach (var (identifier, source) in _geometrySources)
         {
             c++;
+            string targetDir = Path.Combine(outputDir, "models", source.ModelsSubdir);
+            Directory.CreateDirectory(targetDir);
             string targetFull = Path.Combine(targetDir, $"{source.RpName}.geo.json");
 
             if (string.IsNullOrWhiteSpace(source.SourcePath))
@@ -582,10 +881,120 @@ public class ResourcePack
                     source.SourcePath);
 
             File.Copy(source.SourcePath, targetFull, overwrite: true);
-            CompilerState.Info($"({c}/{_geometrySources.Count}) registered geometry '{identifier}' -> models/blocks/{source.RpName}.geo.json");
+            CompilerState.Info(
+                $"({c}/{_geometrySources.Count}) registered geometry '{identifier}' -> models/{source.ModelsSubdir}/{source.RpName}.geo.json");
         }
 
         CompilerState.Info($"wrote {_geometrySources.Count} geometry file(s)");
+        CompilerState.Pop();
+    }
+
+    private void EmitAnimations(string outputDir)
+    {
+        CompilerState.Push("animations");
+
+        string targetDir = Path.Combine(outputDir, "animations");
+        Directory.CreateDirectory(targetDir);
+
+        int c = 0;
+        foreach (var (rpName, sourcePath) in _animationSources)
+        {
+            c++;
+            if (!File.Exists(sourcePath))
+                throw new FileNotFoundException(
+                    $"source animation not found for '{rpName}': {sourcePath}",
+                    sourcePath);
+
+            string targetFull = Path.Combine(targetDir, $"{rpName}.json");
+            File.Copy(sourcePath, targetFull, overwrite: true);
+            CompilerState.Info($"({c}/{_animationSources.Count}) registered animation '{rpName}' -> animations/{rpName}.json");
+        }
+
+        CompilerState.Info($"wrote {_animationSources.Count} animation file(s)");
+        CompilerState.Pop();
+    }
+
+    private static string ResolveParticleRpName(string identifier)
+    {
+        string normalized = identifier.Trim().Replace('\\', '/');
+        int colon = normalized.IndexOf(':');
+        if (colon >= 0 && colon < normalized.Length - 1)
+            normalized = normalized[(colon + 1)..];
+
+        // Allow nested logical names like effects/sparkle -> effects_sparkle is NOT applied;
+        // nested paths under particles/ are preserved (effects/sparkle.json).
+        normalized = normalized.Trim().Trim('/');
+        if (string.IsNullOrWhiteSpace(normalized))
+            throw new ArgumentException(
+                $"particle identifier '{identifier}' does not contain a usable file name",
+                nameof(identifier));
+
+        return normalized;
+    }
+
+    private void EmitParticles(string outputDir)
+    {
+        CompilerState.Push("particles");
+
+        string targetRoot = Path.Combine(outputDir, "particles");
+        Directory.CreateDirectory(targetRoot);
+
+        int c = 0;
+        foreach (var (identifier, source) in _particleSources)
+        {
+            c++;
+            if (string.IsNullOrWhiteSpace(source.SourcePath))
+                throw new ArgumentException($"particle identifier '{identifier}' has no source json registered");
+            if (!File.Exists(source.SourcePath))
+                throw new FileNotFoundException(
+                    $"source particle not found for identifier '{identifier}': {source.SourcePath}",
+                    source.SourcePath);
+
+            string rpRelative = source.RpName.Replace('\\', '/').Trim('/');
+            string targetFull = Path.Combine(targetRoot, $"{rpRelative}.json");
+            string? targetDir = Path.GetDirectoryName(targetFull);
+            if (!string.IsNullOrEmpty(targetDir))
+                Directory.CreateDirectory(targetDir);
+
+            File.Copy(source.SourcePath, targetFull, overwrite: true);
+            CompilerState.Info(
+                $"({c}/{_particleSources.Count}) registered particle '{identifier}' -> particles/{rpRelative}.json");
+        }
+
+        CompilerState.Info($"wrote {_particleSources.Count} particle file(s)");
+        CompilerState.Pop();
+    }
+
+    private void EmitParticleTextures(string outputDir)
+    {
+        CompilerState.Push("particle textures");
+
+        string texturesRoot = Path.Combine(outputDir, "textures", "particles");
+        Directory.CreateDirectory(texturesRoot);
+
+        int c = 0;
+        foreach (var (key, source) in _particleTextureSources)
+        {
+            c++;
+            string rpRelative = source.RpName.Replace('\\', '/').Trim('/');
+            string targetFull = Path.Combine(texturesRoot, $"{rpRelative}.png");
+            string? targetDir = Path.GetDirectoryName(targetFull);
+            if (!string.IsNullOrEmpty(targetDir))
+                Directory.CreateDirectory(targetDir);
+
+            if (string.IsNullOrWhiteSpace(source.SourcePath))
+                throw new ArgumentException($"particle texture key '{key}' has no source PNG registered");
+            if (!File.Exists(source.SourcePath))
+                throw new FileNotFoundException(
+                    $"source particle texture not found for key '{key}': {source.SourcePath}",
+                    source.SourcePath);
+
+            File.Copy(source.SourcePath, targetFull, overwrite: true);
+            CompilerState.Info(
+                $"({c}/{_particleTextureSources.Count}) registered particle texture '{key}' -> textures/particles/{rpRelative}.png");
+        }
+
+        CompilerState.Info($"wrote {_particleTextureSources.Count} particle texture(s)");
         CompilerState.Pop();
     }
 

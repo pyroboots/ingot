@@ -9,6 +9,9 @@ Supported on the resource side today:
 
 - **Blocks / items** - texture atlases, optional block geometry
 - **Entities** - client entities, render controllers, entity texture PNGs, entity sound mappings (`sounds.json`)
+- **Particles** - effect JSON via `AddParticle`, particle textures via `AddParticleTexture`
+- **Sounds** - custom definitions via `RegisterSoundDefinition` (optional source audio copy)
+- **Animations** - animation JSON via `AddAnimation`
 
 ## The Pack Class (recommended)
 
@@ -69,6 +72,8 @@ Key `Pack` members:
 - `AddItemTexture(string key, string sourcePngPath)` - manual item texture override.
 - `AddEntityTexture(string key, string sourcePngPath)` - entity texture under `textures/entity/`.
 - `AddGeometry(string identifier, string sourceGeoJsonPath)` - register a block geometry file (`.geo.json`).
+- `AddParticle(string identifier, string sourceJsonPath, string? rpName = null)` - register a particle effect JSON under `particles/`.
+- `AddParticleTexture(string key, string sourcePngPath, string? rpName = null)` - particle texture PNG under `textures/particles/`.
 - `AddClientEntity<T>()` - resource-pack client entity (materials, textures, geometry, spawn egg, …).
 - `AddRenderController<T>()` - custom render controller; simple per-entity controllers are auto-emitted when a client entity lists them.
 - `ScriptsEnabled` - enables Script API script generation during compile.
@@ -157,6 +162,105 @@ Entity textures work differently. Client entity short-names point at **paths** u
 > [!WARNING]
 > Without `EntitySounds`, custom entity ids only get generic damage audio. Full API: [Making an Entity](entity.md#client-entities--render-controllers) (including [entity sounds](entity.md#entity-sounds)).
 
+## Particles
+
+Particle effects are resource-pack JSON files under `rp/particles/`. ingot does not author the effect graph for you: export or write a particle `.json` (for example with [Snowstorm](https://snowstorm.app/)), then register it on the pack so it is copied at compile time.
+
+### Methods
+
+| Method | Output | Description |
+|--------|--------|-------------|
+| `Pack.AddParticle(identifier, sourceJsonPath, rpName?)` | `rp/particles/{rpName}.json` | Registers a particle effect file. |
+| `Pack.AddParticleTexture(key, sourcePngPath, rpName?)` | `rp/textures/particles/{rpName}.png` | Registers a PNG used by particle `basic_render_parameters.texture`. |
+
+Both methods are fluent (return `Pack`) and forward to the same APIs on `ResourcePack`.
+
+**`AddParticle` parameters**
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `identifier` | yes | Effect id (`namespace:name`). Must match `description.identifier` inside the JSON. This is the string you pass to Script API `dimension.spawnParticle` or `/particle`. |
+| `sourceJsonPath` | yes | Path to the source particle JSON on disk. Copied as-is. |
+| `rpName` | no | Filename under `particles/` without extension. Defaults to the segment after `:` in `identifier`. Nested paths are allowed (`effects/sparkle` → `rp/particles/effects/sparkle.json`). |
+
+**`AddParticleTexture` parameters**
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `key` | yes | Logical key / relative path under `textures/particles/` (for example `sparkle` or `effects/sparkle`). |
+| `sourcePngPath` | yes | Path to the source PNG on disk. |
+| `rpName` | no | Output relative path under `textures/particles/`. Defaults to `key`. |
+
+Empty `identifier` / `key` or empty source paths throw `ArgumentException` at registration. Missing source files throw `FileNotFoundException` at compile time.
+
+Registered ids are visible on `ResourcePack.ParticleIds` and `ResourcePack.ParticleTextureKeys`.
+
+### Example
+
+```csharp
+string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
+
+Pack pack = Pack.Create(packUuid, "My Addon", "Particles example");
+
+pack.AddParticle(
+        "mynamespace:sparkle",
+        Path.Combine(dataDir, "particles/sparkle.json"))
+    .AddParticleTexture(
+        "sparkle",
+        Path.Combine(dataDir, "textures/sparkle.png"));
+
+// Custom output names / folders
+pack.AddParticle(
+    "mynamespace:heavy_smoke",
+    Path.Combine(dataDir, "particles/smoke.json"),
+    rpName: "effects/heavy_smoke");
+
+pack.Compile("./output");
+```
+
+Compile output:
+
+- `rp/particles/sparkle.json`
+- `rp/textures/particles/sparkle.png`
+- `rp/particles/effects/heavy_smoke.json`
+
+Wire the texture path inside your particle JSON (no file extension):
+
+```json
+{
+  "format_version": "1.10.0",
+  "particle_effect": {
+    "description": {
+      "identifier": "mynamespace:sparkle",
+      "basic_render_parameters": {
+        "material": "particles_alpha",
+        "texture": "textures/particles/sparkle"
+      }
+    },
+    "components": { }
+  }
+}
+```
+
+### Spawning at runtime
+
+Use the same identifier you registered:
+
+```javascript
+// Script API
+dimension.spawnParticle("mynamespace:sparkle", { x: 0, y: 64, z: 0 });
+```
+
+```
+/particle mynamespace:sparkle ~~~
+```
+
+> [!IMPORTANT]
+> The `identifier` argument to `AddParticle` is only used for registration bookkeeping and default filenames. Minecraft loads the id from `description.identifier` inside the JSON. Keep them identical so Script API, commands, and the pack stay in sync.
+
+> [!NOTE]
+> ingot does not generate particle component graphs (emitters, curves, Molang) as C# types. Author the JSON externally, then register the file and any textures it needs.
+
 ## Block Geometry
 
 Custom block models are `.geo.json` files exported from tools like [Blockbench](https://blockbench.net). Register them with `Pack.AddGeometry` so they are copied into the resource pack at compile time:
@@ -207,6 +311,8 @@ When `Pack.Compile` runs, the resource side produces (among other folders):
 - `rp/textures/items/<key>.png` - item icons (auto-registered or from `AddItemTexture`)
 - `rp/textures/entity/<path>.png` - entity textures (`DefaultTexturePath` or `AddEntityTexture`)
 - `rp/models/blocks/<name>.geo.json` - custom block geometry (from `AddGeometry`)
+- `rp/particles/<name>.json` - particle effects (from `AddParticle`)
+- `rp/textures/particles/<key>.png` - particle textures (from `AddParticleTexture`)
 - `rp/entity/<name>.json` - client entities (from `AddClientEntity`)
 - `rp/render_controllers/<name>.json` - render controllers (registered or auto-emitted)
 - `rp/sounds.json` - `entity_sounds.entities` when any client entity defines `EntitySounds`
@@ -290,7 +396,9 @@ pack.PackIcon = Path.Combine(dataDir, "pack_icon.png");
 pack.AddBlockTexture("my_block", Path.Combine(dataDir, "my_block.png"))
     .AddItemTexture("my_item", Path.Combine(dataDir, "my_item.png"))
     .AddEntityTexture("my_entity", Path.Combine(dataDir, "my_entity.png"))
-    .AddGeometry("geometry.my_block", Path.Combine(dataDir, "my_block.geo.json"));
+    .AddGeometry("geometry.my_block", Path.Combine(dataDir, "my_block.geo.json"))
+    .AddParticle("mynamespace:sparkle", Path.Combine(dataDir, "particles/sparkle.json"))
+    .AddParticleTexture("sparkle", Path.Combine(dataDir, "textures/sparkle.png"));
 
 pack.Compile("./output");
 ```
@@ -306,12 +414,15 @@ See the [`ingot.Example`](../../ingot.Example) project for a working end-to-end 
 - Block textures via `terrain_texture.json` (auto or `AddBlockTexture`)
 - Item textures via `item_texture.json` (auto or `AddItemTexture`)
 - Entity textures as loose PNGs under `textures/entity/` (`DefaultTexturePath` or `AddEntityTexture`)
+- Particle effects via `AddParticle` (JSON under `particles/`) and particle textures via `AddParticleTexture` (`textures/particles/`)
 - Client entities (`AddClientEntity`) and render controllers (`AddRenderController` / auto-emit)
 - Entity sound mappings via `ClientEntity.EntitySounds` → `rp/sounds.json` (`entity_sounds.entities`)
+- Sound definitions via `RegisterSoundDefinition` (`sound_definitions.json` + optional source audio copy)
 - Block geometry via manual `AddGeometry` (`.geo.json` under `models/blocks/`)
+- Animations via `AddAnimation` (JSON under `animations/`)
 
 > [!NOTE]
-> **Not yet first-class:** texture variations / weighted atlas textures, flipbook (animated) textures, PBR texture sets, entity/attachable model file registration (copy `.geo.json` into `models/entity/` yourself for now), custom `sound_definitions.json` / packing new audio files (you can still *reference* vanilla definitions from `EntitySounds`), particles/music/animation files as C# types, and auto-registration of source PNGs for *extra* attributed client-entity textures (only `DefaultTexturePath` auto-registers; use `AddEntityTexture` for the rest).
+> **Not yet first-class:** texture variations / weighted atlas textures, flipbook (animated) textures, PBR texture sets, attachable registration, music discs as C# types, generating particle effect JSON from a C# DSL (register authored `.json` files with `AddParticle` instead), and auto-registration of source PNGs for *extra* attributed client-entity textures (only `DefaultTexturePath` auto-registers; use `AddEntityTexture` for the rest).
 
 An empty `ResourcePack` (no textures or client entities) is still valid - it produces the standard folder skeleton without custom content.
 
@@ -322,6 +433,6 @@ An empty `ResourcePack` (no textures or client entities) is still valid - it pro
 - [Making an Entity](entity.md) (including [client entities & render controllers](entity.md#client-entities--render-controllers))
 - [Block Events](block-events.md) and [Script Services](script-services.md)
 - [Block Permutations](block-permutations.md)
-- API reference for `ResourcePack`
+- API reference for `Pack.AddParticle` / `Pack.AddParticleTexture` and `ResourcePack`
 
 Declare keys/paths on your content types, optionally provide source PNGs, and `Pack.Compile` writes the resource pack.
