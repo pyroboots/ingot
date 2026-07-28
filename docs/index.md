@@ -31,7 +31,7 @@ _description: A C# framework to programmatically create Minecraft Bedrock Editio
   </a>
   <a class="ingot-card" href="docs/resource-packs.html">
     <div class="ingot-card-title">Resource Packs & Textures</div>
-    <p class="ingot-card-desc">Textures, geometry, pack icons, and the behaviour/resource bridge.</p>
+    <p class="ingot-card-desc">Textures, geometry, particles, pack icons, and the behaviour/resource bridge.</p>
   </a>
   <a class="ingot-card" href="docs/script-services.html">
     <div class="ingot-card-title">Script Services</div>
