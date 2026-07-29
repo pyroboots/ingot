@@ -97,6 +97,11 @@ public class Pack
     internal IReadOnlyList<ScriptServiceRegistration> Services => _services;
 
     /// <summary>
+    /// Defines the JavaScript body in the script entrypoint
+    /// </summary>
+    public ScriptHandler? ScriptEntryBody { get; set; }
+
+    /// <summary>
     /// Creates a <see cref="Pack"/> with linked behaviour and resource packs. This is the recommended entry point.
     /// </summary>
     /// <param name="behaviourUuid">Minecraft UUID for the behaviour pack.</param>

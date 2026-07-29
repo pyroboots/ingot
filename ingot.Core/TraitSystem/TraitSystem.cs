@@ -141,13 +141,21 @@ public static class TraitSystem
                 throw new ArgumentException($"property {property.Name} has no getter");
 
             object? value = null;
-            try
+            if (property.GetCustomAttribute<IngotTypeOverrideAttribute>() is not null)
             {
-                value = getter.Invoke(instance, null);
+                IngotTypeOverrideAttribute overrideAttributeAttr = property.GetCustomAttribute<IngotTypeOverrideAttribute>()!;
+                value = overrideAttributeAttr.OverrideValue;
             }
-            catch (Exception ex)
+            else
             {
-                throw new ArgumentException($"failed to get value for property {property.Name}: {ex.Message}");
+                try
+                {
+                    value = getter.Invoke(instance, null);
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"failed to get value for property {property.Name}: {ex.Message}");
+                }
             }
 
             if (value == null || (value is string str && string.IsNullOrEmpty(str)))
