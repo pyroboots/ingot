@@ -1,6 +1,10 @@
 using System.Reflection;
 
+using ingot.Core.Behaviour.Block;
+using ingot.Core.Behaviour.Entity;
+using ingot.Core.Behaviour.Item;
 using Newtonsoft.Json;
+using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core.TraitSystem;
 
@@ -163,6 +167,8 @@ public static class TraitSystem
                 CompilerState.Pop();
                 continue;
             }
+            
+            ValidateProperty(value, property, iface, concreteType);
 
             CompilerState.Pop();
 
@@ -231,6 +237,169 @@ public static class TraitSystem
         }
 
         return null;
+    }
+    
+    private static T[]? GetAttributes<T>(PropertyInfo interfaceProperty, Type iface, Type concreteType) where T : Attribute
+    {
+        if (interfaceProperty.GetCustomAttributes<T>(inherit: true).Any())
+            return interfaceProperty.GetCustomAttributes<T>(inherit: true).ToArray();
+
+        // implicit public implementation with the same name
+        PropertyInfo? publicImpl = concreteType.GetProperty(
+            interfaceProperty.Name,
+            BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        if (publicImpl is null)
+        {
+            // walk base types for public implementations
+            for (Type? t = concreteType; t is not null && t != typeof(object); t = t.BaseType)
+            {
+                publicImpl = t.GetProperty(
+                    interfaceProperty.Name,
+                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                if (publicImpl is not null)
+                    break;
+            }
+        }
+
+        if (publicImpl?.GetCustomAttributes<T>(inherit: true) is not null && (publicImpl?.GetCustomAttributes<T>(inherit: true)!).Any())
+            return publicImpl?.GetCustomAttributes<T>(inherit: true).ToArray();
+
+        // explicit interface implementation: map interface getter -> target method, then its declaring property
+        if (!iface.IsInterface || !iface.IsAssignableFrom(concreteType))
+            return null;
+
+        InterfaceMapping map = concreteType.GetInterfaceMap(iface);
+        MethodInfo? interfaceGetter = interfaceProperty.GetGetMethod();
+        if (interfaceGetter is null)
+            return null;
+
+        for (int i = 0; i < map.InterfaceMethods.Length; i++)
+        {
+            if (map.InterfaceMethods[i] != interfaceGetter)
+                continue;
+
+            MethodInfo target = map.TargetMethods[i];
+            if (target.GetCustomAttributes<T>(inherit: true).Any())
+                return target.GetCustomAttributes<T>(inherit: true).ToArray();
+
+            // attributes on the explicit property itself (via accessor metadata token / declaring type scan)
+            foreach (PropertyInfo prop in target.DeclaringType!.GetProperties(
+                         BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+            {
+                if (prop.GetGetMethod(nonPublic: true) == target
+                    && prop.GetCustomAttributes<T>(inherit: true).Any())
+                    return prop.GetCustomAttributes<T>(inherit: true).ToArray();
+            }
+
+            break;
+        }
+
+        return null;
+    }
+
+    private static void ValidateProperty(object? value, PropertyInfo interfaceProperty, Type iface, Type concreteType)
+    {
+        if (GetAttributes<IngotValueConstraintAttribute>(interfaceProperty, iface, concreteType) is null) return;
+        
+        IngotValueConstraintAttribute[] constraints = GetAttributes<IngotValueConstraintAttribute>(interfaceProperty, iface, concreteType)!;
+        IngotValueWarningAttribute[] warnings = GetAttributes<IngotValueWarningAttribute>(interfaceProperty, iface, concreteType) == null ? [] : GetAttributes<IngotValueWarningAttribute>(interfaceProperty, iface, concreteType)!;
+
+        Exception? validate(IngotValueConstraintAttribute.Operator op, object[] targets)
+        {
+            if (op == IngotValueConstraintAttribute.Operator.NotEqual)
+            {
+                foreach (object target in targets)
+                    if (value == target)
+                        return new ArgumentException($"value ({value}) must not equal {target}");
+            }
+            else if (op == IngotValueConstraintAttribute.Operator.GreaterThan)
+            {
+                if (value is not int or float)
+                    throw new ArgumentException($"value ({value}) type must be a number");
+                
+                float valueAsNum = (float)value;
+                float[] targetsAsNums = targets.Select((v) =>
+                {
+                    if (v is not int or float)
+                        throw new ArgumentException($"valid ({value}) value type must be a number");
+                    return (float)v;
+                }).ToArray();
+                
+                // do the inverse to throw
+                foreach (float target in targetsAsNums) if (valueAsNum < target)
+                    return new ArgumentException($"value ({value}) must be greater than {target}");
+            }
+            else if (op == IngotValueConstraintAttribute.Operator.LessThan)
+            {
+                if (value is not int or float)
+                    throw new ArgumentException($"value ({value}) type must be a number");
+                
+                float valueAsNum = (float)value;
+                float[] targetsAsNums = targets.Select((v) =>
+                {
+                    if (v is not int or float)
+                        throw new ArgumentException($"valid ({value}) value type must be a number");
+                    return (float)v;
+                }).ToArray();
+                
+                // do the inverse to throw
+                foreach (float target in targetsAsNums) if (valueAsNum > target) 
+                    return new ArgumentException($"value ({value}) must be less than {target}");
+            }
+            else if (op == IngotValueConstraintAttribute.Operator.OneOf)
+            {
+                if (targets.Contains(value) == false)
+                    return new ArgumentException($"value ({value}) must be one of: {string.Join(' ', targets.Select((i) => $"'{i}'"))}");
+            }
+            else if (op == IngotValueConstraintAttribute.Operator.MinVer)
+            {
+                if (targets[0] is not Version)
+                    return new ArgumentException($"target must be version");
+                Version targetFmtVer = (Version)targets[0];
+                Version currentFmtVer;
+                object inst = Activator.CreateInstance(concreteType)!;
+                if (inst is Item)
+                {
+                    Item item = (inst as Item)!;
+                    currentFmtVer = item.FormatVersion;
+                }
+                else if (inst is Block)
+                {
+                    Block entity = (inst as Block)!;
+                    currentFmtVer = entity.FormatVersion;
+                }
+                else if (inst is Entity)
+                {
+                    Block block = (inst as Block)!;
+                    currentFmtVer = block.FormatVersion;
+                }
+                else return new Exception($"{concreteType.Name} is not supported");
+                
+                if (targetFmtVer > currentFmtVer)
+                    return new Exception($"{interfaceProperty.Name} requires minimum format version of {targetFmtVer}");
+            }
+
+            return null;
+        }
+        
+        foreach (IngotValueConstraintAttribute constraint in constraints)
+        {
+            IngotValueConstraintAttribute.Operator op = constraint.Operation;
+            object[] targets = constraint.Values;
+            
+            Exception? ex = validate(op, targets);
+            if (ex is not null) throw ex;
+        }
+        
+        foreach (IngotValueWarningAttribute warning in warnings)
+        {
+            IngotValueConstraintAttribute.Operator op = warning.Operation;
+            object[] targets = warning.Values;
+            
+            Exception? ex = validate(op, targets);
+            JsonTextWriter? dummy = null;
+            if (ex is not null) CompilerState.Warn(ref dummy, warning.Warning.Replace("{x}", value!.ToString()));
+        }
     }
     
     /// <summary>

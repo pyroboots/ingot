@@ -2,6 +2,7 @@ using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 using ingot.Core.Scripting;
+using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Block;
 
 namespace ingot.Example.Blocks;

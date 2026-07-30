@@ -5,7 +5,7 @@ namespace ingot.Core.Common;
 /// <summary>
 /// Internal use implementation of a semantic version
 /// </summary>
-public class Version : ICompilableFragment
+public class Version : ICompilableFragment, IComparable<Version>
 {
     /// <summary>
     /// Major version component.
@@ -61,5 +61,65 @@ public class Version : ICompilableFragment
         writer.WriteValue(Minor);
         writer.WriteValue(Patch);
         writer.WriteEndArray();
+    }
+    
+    public static bool operator <(Version left, Version right)
+    {
+        int lMajor = left.Major;
+        int lMinor = left.Minor;
+        int lPatch = left.Patch;
+        
+        int rMajor = right.Major;
+        int rMinor = right.Minor;
+        int rPatch = right.Patch;
+
+        if (lMajor < rMajor) return true;
+        if (lMajor < rMajor && lMinor < rMinor) return true;
+        if (lMajor < rMajor && lMinor < rMinor && lPatch < rPatch) return true;
+        return false;
+    }
+
+    public static bool operator >(Version left, Version right) => !(left < right);
+
+    public static bool operator ==(Version left, Version right)
+    {
+        int lMajor = left.Major;
+        int lMinor = left.Minor;
+        int lPatch = left.Patch;
+        
+        int rMajor = right.Major;
+        int rMinor = right.Minor;
+        int rPatch = right.Patch;
+        return (lMajor == rMajor && lMinor == rMinor && lPatch == rPatch);
+    }
+
+    public static bool operator !=(Version left, Version right) => !(left == right);
+
+    /// <inheritdoc/>
+    public int CompareTo(Version? other)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return 0;
+        }
+
+        if (other is null)
+        {
+            return 1;
+        }
+
+        var majorComparison = Major.CompareTo(other.Major);
+        if (majorComparison != 0)
+        {
+            return majorComparison;
+        }
+
+        var minorComparison = Minor.CompareTo(other.Minor);
+        if (minorComparison != 0)
+        {
+            return minorComparison;
+        }
+
+        return Patch.CompareTo(other.Patch);
     }
 }
