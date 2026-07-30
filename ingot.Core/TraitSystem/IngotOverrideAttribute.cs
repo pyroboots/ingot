@@ -5,7 +5,7 @@ namespace ingot.Core.TraitSystem;
 /// Useful for when certain trait properties accept multiple types
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
-public class IngotTypeOverrideAttribute : Attribute
+public class IngotOverrideAttribute : Attribute
 {
     /// <summary>
     /// The value to set the override the default with
@@ -16,5 +16,5 @@ public class IngotTypeOverrideAttribute : Attribute
     /// Useful for when certain trait properties accept multiple types
     /// <param name="overrideValue">The value to set the override the default with</param>
     /// </summary>
-    public IngotTypeOverrideAttribute(object? overrideValue) => OverrideValue = overrideValue;
+    public IngotOverrideAttribute(object? overrideValue) => OverrideValue = overrideValue;
 }

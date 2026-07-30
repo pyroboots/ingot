@@ -1,6 +1,7 @@
 using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
 using Version = ingot.Core.Common.Version;

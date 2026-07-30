@@ -130,24 +130,24 @@ public static class TraitSystem
                 continue;
             }
 
-            if (IsIngotExcluded(property, iface, concreteType))
+            if (GetAttribute<IngotExcludeAttribute>(property, iface, concreteType) is not null)
             {
                 CompilerState.Pop();
                 continue;
             }
 
-            MethodInfo? getter = property.GetGetMethod();
-            if (getter == null)
-                throw new ArgumentException($"property {property.Name} has no getter");
-
             object? value = null;
-            if (property.GetCustomAttribute<IngotTypeOverrideAttribute>() is not null)
+            if (GetAttribute<IngotOverrideAttribute>(property, iface, concreteType) is not null)
             {
-                IngotTypeOverrideAttribute overrideAttributeAttr = property.GetCustomAttribute<IngotTypeOverrideAttribute>()!;
+                IngotOverrideAttribute overrideAttributeAttr = GetAttribute<IngotOverrideAttribute>(property, iface, concreteType)!;
                 value = overrideAttributeAttr.OverrideValue;
             }
             else
             {
+                MethodInfo? getter = property.GetGetMethod();
+                if (getter == null)
+                    throw new ArgumentException($"property {property.Name} has no getter");
+                
                 try
                 {
                     value = getter.Invoke(instance, null);
@@ -174,23 +174,19 @@ public static class TraitSystem
 
         return properties;
     }
-
-    /// <summary>
-    /// Whether a trait property should be omitted due to <see cref="IngotExcludeAttribute"/>
-    /// on the interface member and/or the concrete implementation.
-    /// </summary>
-    private static bool IsIngotExcluded(PropertyInfo interfaceProperty, Type iface, Type concreteType)
+    
+    private static T? GetAttribute<T>(PropertyInfo interfaceProperty, Type iface, Type concreteType) where T : Attribute
     {
-        if (interfaceProperty.GetCustomAttribute<IngotExcludeAttribute>(inherit: true) is not null)
-            return true;
+        if (interfaceProperty.GetCustomAttribute<T>(inherit: true) is not null)
+            return interfaceProperty.GetCustomAttribute<T>(inherit: true);
 
-        // Implicit public implementation with the same name
+        // implicit public implementation with the same name
         PropertyInfo? publicImpl = concreteType.GetProperty(
             interfaceProperty.Name,
             BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         if (publicImpl is null)
         {
-            // Walk base types for public implementations
+            // walk base types for public implementations
             for (Type? t = concreteType; t is not null && t != typeof(object); t = t.BaseType)
             {
                 publicImpl = t.GetProperty(
@@ -201,17 +197,17 @@ public static class TraitSystem
             }
         }
 
-        if (publicImpl?.GetCustomAttribute<IngotExcludeAttribute>(inherit: true) is not null)
-            return true;
+        if (publicImpl?.GetCustomAttribute<T>(inherit: true) is not null)
+            return publicImpl?.GetCustomAttribute<T>(inherit: true);
 
-        // Explicit interface implementation: map interface getter -> target method, then its declaring property
+        // explicit interface implementation: map interface getter -> target method, then its declaring property
         if (!iface.IsInterface || !iface.IsAssignableFrom(concreteType))
-            return false;
+            return null;
 
         InterfaceMapping map = concreteType.GetInterfaceMap(iface);
         MethodInfo? interfaceGetter = interfaceProperty.GetGetMethod();
         if (interfaceGetter is null)
-            return false;
+            return null;
 
         for (int i = 0; i < map.InterfaceMethods.Length; i++)
         {
@@ -219,22 +215,22 @@ public static class TraitSystem
                 continue;
 
             MethodInfo target = map.TargetMethods[i];
-            if (target.GetCustomAttribute<IngotExcludeAttribute>(inherit: true) is not null)
-                return true;
+            if (target.GetCustomAttribute<T>(inherit: true) is not null)
+                return target.GetCustomAttribute<T>(inherit: true);
 
-            // Attributes on the explicit property itself (via accessor metadata token / declaring type scan)
+            // attributes on the explicit property itself (via accessor metadata token / declaring type scan)
             foreach (PropertyInfo prop in target.DeclaringType!.GetProperties(
                          BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
                 if (prop.GetGetMethod(nonPublic: true) == target
-                    && prop.GetCustomAttribute<IngotExcludeAttribute>(inherit: true) is not null)
-                    return true;
+                    && prop.GetCustomAttribute<T>(inherit: true) is not null)
+                    return prop.GetCustomAttribute<T>(inherit: true);
             }
 
             break;
         }
 
-        return false;
+        return null;
     }
     
     /// <summary>
