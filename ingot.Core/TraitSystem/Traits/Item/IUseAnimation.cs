@@ -12,7 +12,7 @@ public interface IUseAnimation : IItemTrait
     /// Specifies which animation to play when the item is used.
     /// </summary>
     [TraitProperty]
-    [IngotValueConstraint(IngotValueConstraintAttribute.Operator.OneOf, [
+    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.OneOf,
         "eat", 
         "drink",
         "bow", // broken
@@ -23,13 +23,13 @@ public interface IUseAnimation : IItemTrait
         "brush",
         "spear",
         "spyglass"
-    ])]
-    [IngotValueWarning(IngotValueConstraintAttribute.Operator.OneOf, [
+    )]
+    [TraitPropertyWarning("animation '{x}' is broken and will display an incorrect animation", TraitPropertyConstraint.Constraint.OneOf, 
         "bow", // broken
         "block", // broken
         "camera", // broken
         "crossbow", // broken
-        "none", // broken
-    ], "animation '{x}' is broken and will display a broken animation")]
+        "none" // broken
+    )]
     public abstract string Value { get; }
 }

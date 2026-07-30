@@ -9,11 +9,13 @@ using ingot.Core.Common;
 /// Specifies that an item is compostable and provides the chance of creating a composting layer in the composter.
 /// </summary>
 [Trait("minecraft:compostable", TraitSystem.TraitType.Item)]
+[TraitFormatVersion("1.21.60")]
 public interface ICompostable : IItemTrait
 {
     /// <summary>
     /// The chance of this item to create a layer upon composting with the composter. Valid value range is 1 - 100 inclusive Value must be &gt;= 1. Value must be &lt;= 100.
     /// </summary>
     [TraitProperty]
+    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.Range, 0, 100)]
     public abstract int CompostingChance { get; }
 }

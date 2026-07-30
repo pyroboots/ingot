@@ -10,7 +10,7 @@ namespace ingot.Example.Items;
 
 public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers
 {
-    public override Version FormatVersion => new(1, 21, 30);
+    public override Version FormatVersion => new(1, 26, 0);
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "suspicious_stew";
     public override string DisplayName => "Bowl of Lasagna";

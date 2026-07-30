@@ -9,6 +9,7 @@ using ingot.Core.Common;
 /// Sets how much damage the item can take before breaking, and allows the item to be combined at an anvil, grindstone, or crafting table.
 /// </summary>
 [Trait("minecraft:durability", TraitSystem.TraitType.Item)]
+[TraitFormatVersion("1.20.0")]
 public interface IDurability : IItemTrait
 {
     /// <summary>
@@ -21,5 +22,6 @@ public interface IDurability : IItemTrait
     /// Max durability is the amount of damage that this item can take before breaking. This is a required parameter and has a minimum of 0.
     /// </summary>
     [TraitProperty]
+    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.Range, 0, 32767)]
     public abstract int MaxDurability { get; }
 }

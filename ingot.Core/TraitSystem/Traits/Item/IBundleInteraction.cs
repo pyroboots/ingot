@@ -9,11 +9,13 @@ using ingot.Core.Common;
 /// Enables the bundle-specific interaction scheme and tooltip for an item.
 /// </summary>
 [Trait("minecraft:bundle_interaction", TraitSystem.TraitType.Item)]
+[TraitFormatVersion("1.21.40")]
 public interface IBundleInteraction : IItemTrait
 {
     /// <summary>
     /// The maximum number of slots in the bundle viewable by the plater. Can be from 1 to 64. Default is 12. Value must be &gt;= 1. Value must be &lt;= 64.
     /// </summary>
     [TraitProperty]
+    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.Range, 0, 64)]
     public virtual int NumViewableSlots => 12;
 }

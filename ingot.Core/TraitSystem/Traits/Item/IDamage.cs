@@ -9,11 +9,13 @@ using ingot.Core.Common;
 /// The damage component determines how much extra damage the item does on attack.
 /// </summary>
 [Trait("minecraft:damage", TraitSystem.TraitType.Item)]
+[TraitFormatVersion("1.26.0")]
 public interface IDamage : IItemTrait
 {
     /// <summary>
     /// The amount of extra damage this item deals when attacking. This value is added to the base attack damage. Must be a positive integer.
     /// </summary>
     [TraitProperty]
+    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.Range, 0, 32767)]
     public abstract int Value { get; }
 }

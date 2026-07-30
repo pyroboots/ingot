@@ -63,63 +63,61 @@ public class Version : ICompilableFragment, IComparable<Version>
         writer.WriteEndArray();
     }
     
-    public static bool operator <(Version left, Version right)
+    /// <summary>Component-wise less-than comparison.</summary>
+    public static bool operator <(Version? left, Version? right)
     {
-        int lMajor = left.Major;
-        int lMinor = left.Minor;
-        int lPatch = left.Patch;
-        
-        int rMajor = right.Major;
-        int rMinor = right.Minor;
-        int rPatch = right.Patch;
-
-        if (lMajor < rMajor) return true;
-        if (lMajor < rMajor && lMinor < rMinor) return true;
-        if (lMajor < rMajor && lMinor < rMinor && lPatch < rPatch) return true;
-        return false;
+        if (ReferenceEquals(left, right))
+            return false;
+        if (left is null)
+            return true;
+        return left.CompareTo(right) < 0;
     }
 
-    public static bool operator >(Version left, Version right) => !(left < right);
+    /// <summary>Component-wise greater-than comparison.</summary>
+    public static bool operator >(Version? left, Version? right) => right < left;
 
-    public static bool operator ==(Version left, Version right)
+    /// <summary>Component-wise less-than-or-equal comparison.</summary>
+    public static bool operator <=(Version? left, Version? right) => !(right < left);
+
+    /// <summary>Component-wise greater-than-or-equal comparison.</summary>
+    public static bool operator >=(Version? left, Version? right) => !(left < right);
+
+    /// <summary>Component-wise equality.</summary>
+    public static bool operator ==(Version? left, Version? right)
     {
-        int lMajor = left.Major;
-        int lMinor = left.Minor;
-        int lPatch = left.Patch;
-        
-        int rMajor = right.Major;
-        int rMinor = right.Minor;
-        int rPatch = right.Patch;
-        return (lMajor == rMajor && lMinor == rMinor && lPatch == rPatch);
+        if (ReferenceEquals(left, right))
+            return true;
+        if (left is null || right is null)
+            return false;
+        return left.CompareTo(right) == 0;
     }
 
-    public static bool operator !=(Version left, Version right) => !(left == right);
+    /// <summary>Component-wise inequality.</summary>
+    public static bool operator !=(Version? left, Version? right) => !(left == right);
 
     /// <inheritdoc/>
     public int CompareTo(Version? other)
     {
         if (ReferenceEquals(this, other))
-        {
             return 0;
-        }
 
         if (other is null)
-        {
             return 1;
-        }
 
-        var majorComparison = Major.CompareTo(other.Major);
+        int majorComparison = Major.CompareTo(other.Major);
         if (majorComparison != 0)
-        {
             return majorComparison;
-        }
 
-        var minorComparison = Minor.CompareTo(other.Minor);
+        int minorComparison = Minor.CompareTo(other.Minor);
         if (minorComparison != 0)
-        {
             return minorComparison;
-        }
 
         return Patch.CompareTo(other.Patch);
     }
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj) => obj is Version other && CompareTo(other) == 0;
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => HashCode.Combine(Major, Minor, Patch);
 }

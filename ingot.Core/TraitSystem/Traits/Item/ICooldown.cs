@@ -9,6 +9,7 @@ using ingot.Core.Common;
 /// Adds a cooldown to an item, preventing it from being used again for a specified duration. Items sharing the same category will enter cooldown together when any one of them is used.
 /// </summary>
 [Trait("minecraft:cooldown", TraitSystem.TraitType.Item)]
+[TraitFormatVersion("1.20.10")]
 public interface ICooldown : IItemTrait
 {
     /// <summary>
@@ -27,5 +28,6 @@ public interface ICooldown : IItemTrait
     /// The type of action that triggers the cooldown. Use 'use' for items consumed on use, or 'attack' for weapons. Default is 'use'.
     /// </summary>
     [TraitProperty]
+    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.OneOf, "use", "attack")]
     public virtual dynamic? Type => null;
 }

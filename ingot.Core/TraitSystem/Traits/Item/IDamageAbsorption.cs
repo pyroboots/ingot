@@ -9,6 +9,7 @@ using ingot.Core.Common;
 /// It allows an item to absorb damage that would otherwise be dealt to its wearer. For this to happen, the item needs to be equipped in an armor slot. The absorbed damage reduces the item's durability, with any excess damage being ignored. Because of this, the item also needs a minecraft:durability component.
 /// </summary>
 [Trait("minecraft:damage_absorption", TraitSystem.TraitType.Item)]
+[TraitFormatVersion("1.21.20")]
 public interface IDamageAbsorption : IItemTrait
 {
     /// <summary>

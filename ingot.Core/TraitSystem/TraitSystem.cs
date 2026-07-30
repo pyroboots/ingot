@@ -71,6 +71,8 @@ public static class TraitSystem
                 throw new ArgumentException(
                     $"mismatching trait types (expected: {nameof(TraitType)}.{constraint}, got: {nameof(TraitType)}.{traitAttr.Constraint})");
 
+            ValidateTraitFormatVersion(iface, instance);
+
             Trait trait = new(traitAttr.Identifier, iface);
             trait.Properties.AddRange(ReflectTraitProperties(iface, instance, ref dummyWriter));
             traits.Add(trait);
@@ -108,11 +110,32 @@ public static class TraitSystem
         if (!interfaceType.IsAssignableFrom(objectType))
             throw new ArgumentException($"{objectType.Name} does not implement trait interface {interfaceType.Name}");
 
+        ValidateTraitFormatVersion(interfaceType, inst!);
+
         Trait trait = new(traitAttr.Identifier, interfaceType);
         trait.Properties.AddRange(ReflectTraitProperties(interfaceType, inst!, ref dummyWriter));
 
         CompilerState.Pop();
         return trait;
+    }
+
+    /// <summary>
+    /// Enforces <see cref="TraitFormatVersionAttribute"/> on a trait interface against the content instance.
+    /// </summary>
+    private static void ValidateTraitFormatVersion(Type iface, object instance)
+    {
+        TraitFormatVersionAttribute? req = iface.GetCustomAttribute<TraitFormatVersionAttribute>(inherit: true);
+        if (req is null)
+            return;
+
+        Version required = req.GetMinimumVersion();
+        Version current = GetContentFormatVersion(instance);
+        if (current >= required)
+            return;
+
+        string traitName = iface.GetCustomAttribute<TraitAttribute>()?.Identifier.ToString() ?? iface.Name;
+        throw new ArgumentException(
+            $"{traitName} requires minimum format version {required}, but {instance.GetType().Name} has {current}");
     }
 
     private static List<TraitProperty> ReflectTraitProperties(
@@ -297,110 +320,182 @@ public static class TraitSystem
         return null;
     }
 
-    private static void ValidateProperty(object? value, PropertyInfo interfaceProperty, Type iface, Type concreteType)
+    private static void ValidateProperty(
+        object? value,
+        PropertyInfo interfaceProperty,
+        Type iface,
+        Type concreteType)
     {
-        if (GetAttributes<IngotValueConstraintAttribute>(interfaceProperty, iface, concreteType) is null) return;
-        
-        IngotValueConstraintAttribute[] constraints = GetAttributes<IngotValueConstraintAttribute>(interfaceProperty, iface, concreteType)!;
-        IngotValueWarningAttribute[] warnings = GetAttributes<IngotValueWarningAttribute>(interfaceProperty, iface, concreteType) == null ? [] : GetAttributes<IngotValueWarningAttribute>(interfaceProperty, iface, concreteType)!;
+        TraitPropertyConstraint[] constraints =
+            GetAttributes<TraitPropertyConstraint>(interfaceProperty, iface, concreteType) ?? [];
+        TraitPropertyWarningAttribute[] warnings =
+            GetAttributes<TraitPropertyWarningAttribute>(interfaceProperty, iface, concreteType) ?? [];
 
-        Exception? validate(IngotValueConstraintAttribute.Operator op, object[] targets)
-        {
-            if (op == IngotValueConstraintAttribute.Operator.NotEqual)
-            {
-                foreach (object target in targets)
-                    if (value == target)
-                        return new ArgumentException($"value ({value}) must not equal {target}");
-            }
-            else if (op == IngotValueConstraintAttribute.Operator.GreaterThan)
-            {
-                if (value is not int or float)
-                    throw new ArgumentException($"value ({value}) type must be a number");
-                
-                float valueAsNum = (float)value;
-                float[] targetsAsNums = targets.Select((v) =>
-                {
-                    if (v is not int or float)
-                        throw new ArgumentException($"valid ({value}) value type must be a number");
-                    return (float)v;
-                }).ToArray();
-                
-                // do the inverse to throw
-                foreach (float target in targetsAsNums) if (valueAsNum < target)
-                    return new ArgumentException($"value ({value}) must be greater than {target}");
-            }
-            else if (op == IngotValueConstraintAttribute.Operator.LessThan)
-            {
-                if (value is not int or float)
-                    throw new ArgumentException($"value ({value}) type must be a number");
-                
-                float valueAsNum = (float)value;
-                float[] targetsAsNums = targets.Select((v) =>
-                {
-                    if (v is not int or float)
-                        throw new ArgumentException($"valid ({value}) value type must be a number");
-                    return (float)v;
-                }).ToArray();
-                
-                // do the inverse to throw
-                foreach (float target in targetsAsNums) if (valueAsNum > target) 
-                    return new ArgumentException($"value ({value}) must be less than {target}");
-            }
-            else if (op == IngotValueConstraintAttribute.Operator.OneOf)
-            {
-                if (targets.Contains(value) == false)
-                    return new ArgumentException($"value ({value}) must be one of: {string.Join(' ', targets.Select((i) => $"'{i}'"))}");
-            }
-            else if (op == IngotValueConstraintAttribute.Operator.MinVer)
-            {
-                if (targets[0] is not Version)
-                    return new ArgumentException($"target must be version");
-                Version targetFmtVer = (Version)targets[0];
-                Version currentFmtVer;
-                object inst = Activator.CreateInstance(concreteType)!;
-                if (inst is Item)
-                {
-                    Item item = (inst as Item)!;
-                    currentFmtVer = item.FormatVersion;
-                }
-                else if (inst is Block)
-                {
-                    Block entity = (inst as Block)!;
-                    currentFmtVer = entity.FormatVersion;
-                }
-                else if (inst is Entity)
-                {
-                    Block block = (inst as Block)!;
-                    currentFmtVer = block.FormatVersion;
-                }
-                else return new Exception($"{concreteType.Name} is not supported");
-                
-                if (targetFmtVer > currentFmtVer)
-                    return new Exception($"{interfaceProperty.Name} requires minimum format version of {targetFmtVer}");
-            }
+        if (constraints.Length == 0 && warnings.Length == 0)
+            return;
 
-            return null;
-        }
-        
-        foreach (IngotValueConstraintAttribute constraint in constraints)
+        // Constraints require the operator condition to hold; warnings fire when it holds.
+        foreach (TraitPropertyConstraint constraint in constraints)
         {
-            IngotValueConstraintAttribute.Operator op = constraint.Operation;
-            object[] targets = constraint.Values;
-            
-            Exception? ex = validate(op, targets);
-            if (ex is not null) throw ex;
+            if (OperatorMatches(constraint.Operation, constraint.Values, value, interfaceProperty.Name))
+                continue;
+
+            throw BuildConstraintException(constraint.Operation, constraint.Values, value, interfaceProperty.Name);
         }
-        
-        foreach (IngotValueWarningAttribute warning in warnings)
+
+        foreach (TraitPropertyWarningAttribute warning in warnings)
         {
-            IngotValueConstraintAttribute.Operator op = warning.Operation;
-            object[] targets = warning.Values;
-            
-            Exception? ex = validate(op, targets);
+            if (!OperatorMatches(warning.Operation, warning.Values, value, interfaceProperty.Name))
+                continue;
+
             JsonTextWriter? dummy = null;
-            if (ex is not null) CompilerState.Warn(ref dummy, warning.Warning.Replace("{x}", value!.ToString()));
+            string message = warning.Warning.Replace("{x}", value?.ToString() ?? "null");
+            CompilerState.Warn(ref dummy, message);
         }
     }
+    
+    private static bool OperatorMatches(
+        TraitPropertyConstraint.Constraint op,
+        object[] targets,
+        object? value,
+        string propertyName)
+    {
+        targets ??= [];
+
+        switch (op)
+        {
+            case TraitPropertyConstraint.Constraint.NotEqual:
+                foreach (object target in targets)
+                {
+                    if (ValuesEqual(value, target))
+                        return false;
+                }
+                return true;
+
+            case TraitPropertyConstraint.Constraint.GreaterThan:
+            {
+                double valueAsNum = RequireNumber(value, propertyName);
+                foreach (object target in targets)
+                {
+                    double targetAsNum = RequireNumber(target, propertyName, isTarget: true);
+                    if (valueAsNum <= targetAsNum)
+                        return false;
+                }
+                return true;
+            }
+
+            case TraitPropertyConstraint.Constraint.LessThan:
+            {
+                double valueAsNum = RequireNumber(value, propertyName);
+                foreach (object target in targets)
+                {
+                    double targetAsNum = RequireNumber(target, propertyName, isTarget: true);
+                    if (valueAsNum >= targetAsNum)
+                        return false;
+                }
+                return true;
+            }
+
+            case TraitPropertyConstraint.Constraint.OneOf:
+                foreach (object target in targets)
+                {
+                    if (ValuesEqual(value, target))
+                        return true;
+                }
+                return false;
+
+            case TraitPropertyConstraint.Constraint.Range:
+            {
+                double valueAsNum = RequireNumber(value, propertyName);
+                double min = RequireNumber(targets[0], propertyName, isTarget: true);
+                double max = RequireNumber(targets[1], propertyName, isTarget: true);
+                
+                return (valueAsNum >= min && valueAsNum <= max);
+            }
+
+            default:
+                throw new ArgumentException($"{propertyName}: unknown constraint operator {op}");
+        }
+    }
+
+    private static ArgumentException BuildConstraintException(
+        TraitPropertyConstraint.Constraint op,
+        object[] targets,
+        object? value,
+        string propertyName)
+    {
+        string message = op switch
+        {
+            TraitPropertyConstraint.Constraint.NotEqual =>
+                $"{propertyName}: value ({value}) must not equal {string.Join(", ", targets)}",
+            TraitPropertyConstraint.Constraint.GreaterThan =>
+                $"{propertyName}: value ({value}) must be greater than {string.Join(", ", targets)}",
+            TraitPropertyConstraint.Constraint.LessThan =>
+                $"{propertyName}: value ({value}) must be less than {string.Join(", ", targets)}",
+            TraitPropertyConstraint.Constraint.OneOf =>
+                $"{propertyName}: value ({value}) must be one of: {string.Join(", ", targets.Select(t => $"'{t}'"))}",
+            TraitPropertyConstraint.Constraint.Range =>
+                $"{propertyName}: value ({value}) must be between {targets[0]} and {targets[1]}",
+            _ => $"{propertyName}: constraint {op} failed for value ({value})"
+        };
+        return new ArgumentException(message);
+    }
+
+    private static bool ValuesEqual(object? left, object? right)
+    {
+        if (left is null || right is null)
+            return left is null && right is null;
+
+        // Prefer typed equality so boxed numerics and attribute string constants compare correctly.
+        if (left is IConvertible && right is IConvertible
+            && left is not string && right is not string
+            && left is not bool && right is not bool)
+        {
+            try
+            {
+                return Convert.ToDouble(left).Equals(Convert.ToDouble(right));
+            }
+            catch (FormatException) { }
+            catch (InvalidCastException) { }
+        }
+
+        return left.Equals(right) || string.Equals(left.ToString(), right.ToString(), StringComparison.Ordinal);
+    }
+
+    private static double RequireNumber(object? value, string propertyName, bool isTarget = false)
+    {
+        if (value is null)
+            throw new ArgumentException($"{propertyName}: {(isTarget ? "constraint target" : "value")} must be a number");
+
+        if (value is string s)
+        {
+            if (double.TryParse(s, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double parsed))
+                return parsed;
+            throw new ArgumentException(
+                $"{propertyName}: {(isTarget ? "constraint target" : "value")} '{value}' must be a number");
+        }
+
+        try
+        {
+            return Convert.ToDouble(value, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        catch (Exception ex) when (ex is FormatException or InvalidCastException or OverflowException)
+        {
+            throw new ArgumentException(
+                $"{propertyName}: {(isTarget ? "constraint target" : "value")} '{value}' must be a number", ex);
+        }
+    }
+
+    private static Version GetContentFormatVersion(object instance) => instance switch
+    {
+        Item item => item.FormatVersion,
+        Block block => block.FormatVersion,
+        Entity entity => entity.FormatVersion,
+        BlockPermutation permutation => permutation.Parent.FormatVersion,
+        _ => throw new ArgumentException(
+            $"FormatVersion checks are not supported for content type {instance.GetType().Name} (expected Item, Block, Entity, or BlockPermutation)")
+    };
     
     /// <summary>
     /// Returns all properties and fields decorated with the specified attribute.

@@ -9,6 +9,7 @@ using ingot.Core.Common;
 /// Sets the item as a placer item component for blocks. Items with this component will place a block when used.
 /// </summary>
 [Trait("minecraft:block_placer", TraitSystem.TraitType.Item)]
+[TraitFormatVersion("1.26.0")]
 public interface IBlockPlacer : IItemTrait
 {
     /// <summary>
