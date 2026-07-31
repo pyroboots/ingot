@@ -119,9 +119,6 @@ public static class TraitSystem
         return trait;
     }
 
-    /// <summary>
-    /// Enforces <see cref="TraitFormatVersionAttribute"/> on a trait interface against the content instance.
-    /// </summary>
     private static void ValidateTraitFormatVersion(Type iface, object instance)
     {
         TraitFormatVersionAttribute? req = iface.GetCustomAttribute<TraitFormatVersionAttribute>(inherit: true);
@@ -204,7 +201,15 @@ public static class TraitSystem
         return properties;
     }
     
-    private static T? GetAttribute<T>(PropertyInfo interfaceProperty, Type iface, Type concreteType) where T : Attribute
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="interfaceProperty"></param>
+    /// <param name="iface"></param>
+    /// <param name="concreteType"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T? GetAttribute<T>(PropertyInfo interfaceProperty, Type iface, Type concreteType) where T : Attribute
     {
         if (interfaceProperty.GetCustomAttribute<T>(inherit: true) is not null)
             return interfaceProperty.GetCustomAttribute<T>(inherit: true);

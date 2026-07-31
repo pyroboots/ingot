@@ -84,6 +84,16 @@ public static class CompilerState
     }
 
     /// <summary>
+    /// Writes a warning to the console and in the JSON output
+    /// </summary>
+    /// <param name="msg">Message to write</param>
+    public static void Warn(string msg)
+    {
+        JsonTextWriter? dummy = null;
+        Warn(ref dummy, msg);
+    }
+
+    /// <summary>
     /// Logs information in the compilation process
     /// </summary>
     /// <param name="msg">Info</param>

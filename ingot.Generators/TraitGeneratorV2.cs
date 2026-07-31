@@ -48,11 +48,14 @@ public static class TraitGeneratorV2
 
     private static string ConvertType(string type) => TypeMap.ContainsKey(type) ? TypeMap[type] : "dynamic";
     
-    public static string GenerateItemFromSchema(string json)
+    public static string GenerateItemFromSchema(string json, string ns)
     {
+        // get rid of $refs for clean serialization
+        json = JsonResolver.Resolve(json);
+        
         ComponentSchema schema = JsonConvert.DeserializeObject<ComponentSchema>(json);
         TraitInterfaceBuilder iface = new(schema.Description, Formatting.SnakeToPascalCase(schema.Component.Split(':')[1]), new(schema.Component), TraitSystem.TraitType.Item,
-            new(schema.FormatVer), "ingot.Core.TraitSystem.Traits.Item", ["ingot.Core.Common"]);
+            new(schema.FormatVer), ns, ["ingot.Core.Common"]);
 
         List<string> logs = new();
         foreach (var kvp in schema.Properties)

@@ -185,7 +185,7 @@ internal static class Program
                         }
                         """;
         
-        string iface = TraitGeneratorV2.GenerateItemFromSchema(schema);
+        string iface = TraitGeneratorV2.GenerateItemFromSchema(schema, "ingot.Core.TraitSystem.Traits.Item");
         Console.WriteLine(iface);
     }
 }

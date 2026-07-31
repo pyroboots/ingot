@@ -1,3 +1,4 @@
+using ingot.Core;
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
@@ -7,6 +8,13 @@ using ingot.Core.TraitSystem.Traits.Block;
 
 namespace ingot.Example.Blocks;
 
+public class DenseLasagnaBlockHooks : ICompileHooks
+{
+    public void PreCompile(object inst) => CompilerState.Warn("pre compile hooks!");
+    public string? PostCompile(string json) => "// post compile hooks!\n\n" + json;
+}
+
+[CompileHooks(typeof(DenseLasagnaBlockHooks))]
 public class DenseLasagnaBlock : Block, IDestructibleByMining
 {
     // Use the default 1.21.90+ format so custom components are valid as direct component entries.

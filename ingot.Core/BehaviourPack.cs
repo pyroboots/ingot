@@ -1,3 +1,5 @@
+using System.Reflection;
+
 using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Entity;
@@ -5,6 +7,7 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem;
 
 using Newtonsoft.Json;
 
@@ -287,7 +290,7 @@ public class BehaviourPack
         string dir,
         string subfolder,
         string itemLabel,
-        Func<T, string> compile) where T : IIdentifiable
+        Func<T, string> compile) where T : class, IIdentifiable
     {
         CompilerState.Info($"compiling {subfolder}...");
         CompilerState.Push(subfolder);
@@ -296,7 +299,22 @@ public class BehaviourPack
         {
             c++;
             string path = Path.Combine(dir, subfolder, $"{item.Identifier.Name}.json");
-            File.WriteAllText(path, compile(item));
+            bool hasHooks = item.GetType().GetCustomAttribute<CompileHooksAttribute>() != null;
+            if (hasHooks)
+            {
+                CompileHooksAttribute hooks = item.GetType().GetCustomAttribute<CompileHooksAttribute>()!;
+                if (hooks.GetType().IsAssignableTo(typeof(ICompileHooks)))
+                    throw new ArgumentException($"expected type {nameof(ICompileHooks)} to {nameof(CompileHooksAttribute)}");
+                
+                ICompileHooks hookMethods = (Activator.CreateInstance(hooks.HookType) as ICompileHooks)!;
+                
+                hookMethods.PreCompile(item);
+                string json = compile(item);
+                string? newJson = hookMethods.PostCompile(json);
+                
+                File.WriteAllText(path, newJson ?? json);
+            }
+            else File.WriteAllText(path, compile(item));
             CompilerState.Info($"({c}/{items.Count}) compiled {itemLabel} {item.Identifier}");
         }
 
