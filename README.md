@@ -46,9 +46,13 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Item;
 
+using Version = ingot.Core.Common.Version;
+
 // inherit traits to add behaviour
 public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers
 {
+    // IBlockPlacer requires format_version >= 1.26.0 (see TraitFormatVersion)
+    public override Version FormatVersion => new(1, 26, 0);
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
     public override string DisplayName => "Lasagna";
@@ -90,11 +94,11 @@ class Program
 }
 ```
 
-See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, entities (behaviour + client entity), recipes, textures, scripts, and the full resource pack side. A larger procedural sample lives in [`ingot.Example.BricksGalore`](./ingot.Example.BricksGalore). The docs use `./output` as a generic compile path; this repo's lasagna example compiles to `./artifacts/example/` (or directly into `com.mojang` via `CompileComMojang`). See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Making an Entity](docs/docs/entity.md), [Block Events](docs/docs/block-events.md), [Item Events](docs/docs/item-events.md), [Script Services](docs/docs/script-services.md), and [Recipes](docs/docs/recipe.md) guides for more detail.
+See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, entities (behaviour + client entity), recipes, textures, scripts, and the full resource pack side. A larger procedural sample lives in [`ingot.Example.BricksGalore`](./ingot.Example.BricksGalore). The docs use `./output` as a generic compile path; this repo's lasagna example compiles to `./artifacts/example/` (or directly into `com.mojang` via `CompileComMojang`). See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Making an Entity](docs/docs/entity.md), [Client Entities](docs/docs/client-entity.md), [Block Events](docs/docs/block-events.md), [Item Events](docs/docs/item-events.md), [Script Services](docs/docs/script-services.md), and [Recipes](docs/docs/recipe.md) guides for more detail.
 
 ### Bricks Galore (large procedural example)
 
-[`ingot.Example.BricksGalore`](./ingot.Example.BricksGalore) generates a full decorative brick pack from data rather than hand-written classes: materials (`.gpl` palettes + stats) × patterns (base + optional mortar/inlay overlays) → composite textures, configured `Block`/`Recipe` instances registered via `Add*FromInstance`, crafting, gallery functions, and a lore service. Edit `Program.BuildContent()` to add materials or patterns; see [Getting Started - Bricks Galore](docs/docs/getting-started.md#bricks-galore) for a short walkthrough.
+[`ingot.Example.BricksGalore`](./ingot.Example.BricksGalore) generates a full decorative brick pack from data rather than hand-written classes: materials (`.gpl` palettes + stats) x patterns (base + optional mortar/inlay overlays) become composite textures, configured `Block`/`Recipe` instances registered via `Add*FromInstance`, crafting, gallery functions, and a lore service. Edit `Program.BuildContent()` to add materials or patterns; see [Getting Started - Bricks Galore](docs/docs/getting-started.md#bricks-galore) for a short walkthrough.
 
 ```bash
 dotnet run --project ingot.Example.BricksGalore

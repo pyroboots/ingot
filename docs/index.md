@@ -64,6 +64,7 @@ _description: A C# framework to programmatically create Minecraft Bedrock Editio
     <a class="ingot-card-title-link" href="docs/entity.html">Entities</a>
     <p class="ingot-card-desc">Mob traits, behaviour presets, component groups, and events.</p>
     <ul class="ingot-card-sub">
+      <li><a href="docs/client-entity.html">Client Entities</a></li>
       <li><a href="docs/entity-component-groups.html">Component Groups</a></li>
       <li><a href="docs/entity-events.html">Entity Events</a></li>
     </ul>

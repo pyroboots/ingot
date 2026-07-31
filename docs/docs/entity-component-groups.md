@@ -84,6 +84,7 @@ See nested `Baby` and `Adult` groups in [`CowEntity.cs`](../../ingot.Example/Ent
 ## See Also
 
 - [Making an Entity](entity.md) - base entity properties and compilation
+- [Client Entities & Render Controllers](client-entity.md) - resource-pack visuals
 - [Entity Events](entity-events.md) - add and remove groups at runtime
 - [Trait System](trait-system.md) - entity traits and behaviour presets
 - [Block Permutations](block-permutations.md) - the block-side equivalent

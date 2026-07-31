@@ -40,8 +40,11 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Item;
 
+using Version = ingot.Core.Common.Version;
+
 public class LasagnaItem : Item, IFood, IBlockPlacer
 {
+    public override Version FormatVersion => new(1, 26, 0); // IBlockPlacer requires >= 1.26.0
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
 
@@ -74,7 +77,7 @@ public float SaturationModifier => 0.9f;
 5. Properties marked `[IngotExclude]` (on the interface or the concrete implementation) are skipped.
 6. Null or empty-string values are skipped (not written).
 7. The getter is invoked on that same instance to obtain the current value (so pre-configured instance data is preserved).
-8. Values are written under the component using `PascalToSnakeCase` conversion for the JSON keys (e.g. `SecondsToDestroy` → `seconds_to_destroy`). Property names are always written as flat keys under the component object.
+8. Values are written under the component using `PascalToSnakeCase` conversion for the JSON keys (e.g. `SecondsToDestroy` becomes `seconds_to_destroy`). Property names are always written as flat keys under the component object.
 9. After reflected traits, any entries from `DynamicTraits` on the content type (or permutation) are compiled into the same `components` object.
 10. The resulting object is emitted inside the `components` section of the generated JSON.
 
@@ -94,7 +97,12 @@ Example output for a destructible block trait:
 
 - `[Trait(string identifier, TraitSystem.TraitType constraint)]` - placed on the interface. Declares the Minecraft component name and whether the trait is valid on blocks, items, or entities.
 - `[TraitProperty]` - placed on properties inside the trait interface. Marked members are reflected and written as snake_case keys under the component.
+- `[TraitFormatVersion("x.y.z")]` - on a trait **interface**. Reflection **throws** if the content instance's `FormatVersion` is lower than the minimum (see [Format version requirements](#format-version-requirements)).
 - `[IngotExclude]` - omit a property when compiling JSON. Put it on the **trait interface** (always skip, e.g. schema-invalid generator leftovers) or on a **concrete implementation** (skip only for that type).
+- `[IngotOverride(value)]` - force a property value at reflection time (useful when a field accepts multiple types or you need a fixed override without changing the getter).
+- `[TraitPropertyConstraint(...)]` - hard checks on reflected property values; **throws** when the condition fails (e.g. `OneOf`, `Range`, `GreaterThan`).
+- `[TraitPropertyWarning(...)]` - soft checks; emits a compile **warning** when the condition matches (e.g. known-broken animation names). Use `{x}` in the message as a placeholder for the value.
+- `[CompileHooks(typeof(MyHooks))]` - on a content **class**. Runs `ICompileHooks.PreCompile` / `PostCompile` around JSON generation (see [Compile hooks](#compile-hooks)).
 
 > [!TIP]
 > Use `[IngotExclude]` when a virtual default would emit a field the current Bedrock schema rejects.
@@ -104,6 +112,47 @@ Example output for a destructible block trait:
 [IngotExclude]
 int IHealth.Value => 10;
 ```
+
+### Format version requirements
+
+Some generated traits require a minimum content `format_version`. When a trait interface carries `[TraitFormatVersion("...")]`, compiling content that implements it with a lower `FormatVersion` throws `ArgumentException`.
+
+Examples (item traits):
+
+| Trait | Minimum `FormatVersion` |
+|-------|-------------------------|
+| `IBlockPlacer`, `IDamage` | `1.26.0` |
+| `ICompostable` | `1.21.60` |
+| `IBundleInteraction` | `1.21.40` |
+| `IDamageAbsorption` | `1.21.20` |
+| `IDigger` | `1.20.20` |
+| `ICanDestroyInCreative`, `ICooldown` | `1.20.10` |
+| `IDurability` | `1.20.0` |
+
+`Block` / `Item` default to `1.21.90` (Custom Components V2). Raise `FormatVersion` on the content class when you use a higher-requirement trait:
+
+```csharp
+public override Version FormatVersion => new(1, 26, 0);
+```
+
+### Compile hooks
+
+To run custom logic before/after a content type is written during pack compile, implement `ICompileHooks` and attach it with `[CompileHooks]`:
+
+```csharp
+using ingot.Core.TraitSystem;
+
+public class MyBlockHooks : ICompileHooks
+{
+    public void PreCompile(object inst) { /* e.g. log or mutate */ }
+    public string? PostCompile(string json) => json; // return null to keep original
+}
+
+[CompileHooks(typeof(MyBlockHooks))]
+public class MyBlock : Block { /* ... */ }
+```
+
+Hooks run for types registered on the behaviour pack (blocks, items, entities, recipes). `PostCompile` may return modified JSON; `null` keeps the compiler output.
 
 ## Dynamic Traits
 
@@ -207,7 +256,7 @@ public class MyFlyingMob : Entity, IEntityPresetFlying
 > [!TIP]
 > Presets compose many individual traits. You can still implement additional `IEntityTrait` interfaces beyond what a preset provides, or skip presets entirely and implement traits one at a time.
 
-See [Making an Entity](entity.md), [Entity Component Groups](entity-component-groups.md), and [Entity Events](entity-events.md) for a full example.
+See [Making an Entity](entity.md), [Client Entities](client-entity.md), [Entity Component Groups](entity-component-groups.md), and [Entity Events](entity-events.md) for a full example.
 
 ## Creating New Traits
 

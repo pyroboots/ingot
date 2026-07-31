@@ -172,6 +172,18 @@ By default, `Pack.Create` sets `LinkPacks = true`, which adds cross-dependencies
 > [!NOTE]
 > `Pack.CompileMcaddon` does **not** require `LinkPacks` to be true.
 
+### Engine and format versions
+
+`Pack.MinEngineVersion` defaults to **`1.21.90`**, matching the default `FormatVersion` on `Block` and `Item` (required for Custom Components V2). Override when your content needs a different floor:
+
+```csharp
+using Version = ingot.Core.Common.Version;
+
+pack.MinEngineVersion = new Version(1, 21, 0);
+```
+
+Some traits also require a higher content `FormatVersion` on the class itself (for example `IBlockPlacer` needs `1.26.0`). See [Trait System - Format version requirements](trait-system.md#format-version-requirements).
+
 ## Add Textures
 
 Textures declared on your content classes are auto-registered during compile:
@@ -215,7 +227,7 @@ See [Resource Packs & Textures](resource-packs.md) for the full texture pipeline
    - **`CompileMcaddon`** - import the generated `.mcaddon` file (behaviour and resource packs are bundled with the correct zip layout).
    - **`CompileComMojang`** - compile straight into `development_behavior_packs/` and `development_resource_packs/` under your `com.mojang` folder (for example MCPelauncher on Linux: `~/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang`).
    - **`Compile`** - copy `output/bp/` and `output/rp/` into the development pack folders manually, or zip each folder as a `.mcpack`.
-3. Create or open a world, go to **Settings → Behavior Packs** and **Resource Packs**, and activate both packs.
+3. Create or open a world, go to **Settings > Behavior Packs** and **Resource Packs**, and activate both packs.
 4. If content does not appear, check the in-game **Content Log** and your compile log (`ingot.log`) for warnings.
 
 ## Enable Script API (Optional)

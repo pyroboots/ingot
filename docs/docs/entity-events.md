@@ -47,7 +47,36 @@ ingot ships with C# types for common Bedrock event actions:
 Each action type can be instantiated directly - create an instance and populate its properties.
 
 > [!TIP]
-> For common patterns (spawn adult/baby, grow up, add/remove/swap groups), use the `EntityEvents` helpers on the entity - see [Write less: presets, events, groups](entity.md#write-less-presets-events-groups).
+> For common patterns (spawn adult/baby, grow up, add/remove/swap groups), prefer the `EntityEvents` helpers below instead of hand-building nested action types.
+
+## `EntityEvents` helpers
+
+`EntityEvents` is a static factory for the usual action graphs:
+
+| Helper | Builds |
+|--------|--------|
+| `Add(groups...)` | `ComponentGroupAddEntityEventAction` |
+| `Remove(groups...)` | `ComponentGroupRemoveEntityEventAction` (empty args emit an empty `remove` object) |
+| `Swap(remove, add)` | remove then add (array or single-id overloads) |
+| `Trigger(eventId, target?)` | `TriggerEntityEventAction` |
+| `Sequence(steps...)` | `SequenceEntityEventAction` |
+| `Randomize((weight, actions)...)` | `RandomizeEntityEventAction` |
+| `SpawnedAdultOrBaby(adultW, babyW, spawnAdultEvent, babyGroup)` | common spawn randomize + trigger adult |
+| `GrowUp(baby, adult)` | `Swap` baby to adult |
+| `Map((id, actions)...)` | `Dictionary<Identifier, IEntityEventAction[]>` for `Entity.Events` |
+
+```csharp
+public override Dictionary<Identifier, IEntityEventAction[]> Events => EntityEvents.Map(
+    (Identifier.Vanilla("entity_spawned"),
+        EntityEvents.SpawnedAdultOrBaby(95f, 5f, "test:spawn_adult", Baby.Id)),
+    (Identifier.Vanilla("ageable_grow_up"), EntityEvents.GrowUp(Baby.Id, Adult.Id)),
+    (new Identifier("test", "spawn_adult"), [EntityEvents.Add(Adult.Id)])
+);
+```
+
+For ageable `grow_up` object fields, use `EntityEventTargets.GrowUpSelf("minecraft:ageable_grow_up")`, which produces `{ "event": "...", "target": "self" }`.
+
+See also [Write less: presets, events, groups](entity.md#write-less-presets-events-groups).
 
 ## Adding and Removing Component Groups
 
@@ -192,5 +221,6 @@ See [`CowEntity.cs`](../../ingot.Example/Entities/CowEntity.cs) in the `ingot.Ex
 ## See Also
 
 - [Making an Entity](entity.md) - base entity properties and compilation
+- [Client Entities & Render Controllers](client-entity.md) - resource-pack visuals
 - [Entity Component Groups](entity-component-groups.md) - named component sets toggled by events
 - [Trait System](trait-system.md) - entity traits and behaviour presets

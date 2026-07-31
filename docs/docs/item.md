@@ -48,8 +48,12 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Item;
 
+using Version = ingot.Core.Common.Version;
+
 public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers
 {
+    // IBlockPlacer is marked [TraitFormatVersion("1.26.0")]; raise FormatVersion accordingly
+    public override Version FormatVersion => new(1, 26, 0);
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
     public override string DisplayName => "Lasagna";
@@ -73,7 +77,10 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
 ```
 
 > [!IMPORTANT]
-> `IFood` requires a non-zero **`minecraft:use_modifiers` → `use_duration`**. Implement `IUseModifiers` and set `UseDuration` (e.g. `1.6f` for a normal eat). Without it, the content log warns and eating may not work correctly.
+> `IFood` requires a non-zero **`minecraft:use_modifiers` / `use_duration`**. Implement `IUseModifiers` and set `UseDuration` (e.g. `1.6f` for a normal eat). Without it, the content log warns and eating may not work correctly.
+
+> [!IMPORTANT]
+> Some item traits declare a minimum content `format_version` via `[TraitFormatVersion]`. Reflection **throws** if your item's `FormatVersion` is lower. Notable examples: `IBlockPlacer` and `IDamage` require `1.26.0`; `ICompostable` requires `1.21.60`. Default `Item.FormatVersion` is `1.21.90`.
 
 > [!TIP]
 > Because some traits will have common property names, its recommended to implement the properties explicitly to be more readable, less ambiguous and it also looks prettier.

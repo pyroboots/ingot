@@ -167,7 +167,7 @@ pack.Compile("./output");
 You can provide a `SourcePath` on the `MaterialInstance` instead of calling `AddBlockTexture`. Manual registrations take precedence over auto-discovered paths.
 
 When you compile, ingot will:
-- Copy `Data/dense_lasagna.png` → `rp/textures/blocks/block_of_dense_lasagna.png`
+- Copy `Data/dense_lasagna.png` to `rp/textures/blocks/block_of_dense_lasagna.png`
 - Generate (or update) `rp/textures/terrain_texture.json` containing the mapping:
 
 ```json
@@ -193,6 +193,6 @@ See the dedicated [Resource Packs & Textures](resource-packs.md) guide for recom
 > Changing material instances on a permutation is a cheap way to have "lit" vs "unlit" appearances without duplicating the whole block.
 
 - Per-face materials are useful for things like logs (bark on sides, cut ends on top/bottom), furnaces, etc.
-- `RenderMethod` names are converted to snake_case (`AlphaTest` → `alpha_test`).
+- `RenderMethod` names are converted to snake_case (`AlphaTest` becomes `alpha_test`).
 
 See also: [Making a Block](block.md), [Resource Packs & Textures](resource-packs.md), and the example `DenseLasagnaBlock`.

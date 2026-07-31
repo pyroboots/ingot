@@ -66,6 +66,24 @@ The generated file is imported from `bp/scripts/main.js`.
 | Output path | `bp/scripts/blocks/` or `bp/scripts/items/` | `bp/scripts/services/` |
 | Code generation | Component registration boilerplate + your body | Tick loop wrapper + your body |
 
+## Appending to `main.js`
+
+For one-off startup code (not a recurring service and not a custom component event), set `Pack.ScriptEntryBody`. The resolved body is written at the end of generated `bp/scripts/main.js` **after** event and service imports:
+
+```csharp
+using ingot.Core.Scripting;
+
+pack.ScriptsEnabled = true;
+pack.AddService("./scripts/services/tick_service.js"); // or any event-bearing content
+pack.ScriptEntryBody = """
+    console.log("pack scripts loaded");
+    """;
+// or: pack.ScriptEntryBody = ScriptHandler.FromFile("./scripts/bootstrap.js");
+```
+
+> [!NOTE]
+> `ScriptEntryBody` is only written when `ScriptsEnabled` is `true` **and** the script registry already has entries (block/item events and/or services). It does not create a script pack by itself.
+
 ## See Also
 
 - [Block Events](block-events.md)

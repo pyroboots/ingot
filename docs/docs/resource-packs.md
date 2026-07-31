@@ -66,22 +66,29 @@ pack.AddBlockTexture("custom_key", "assets/custom.png")
 
 Key `Pack` members:
 
-- `Create(string behaviourUuid, string name, string description, ...)` - creates linked behaviour and resource packs.
+- `Create(string behaviourUuid, string name, string description, ...)` - creates behaviour and resource packs with `LinkPacks = true`.
 - `AddBlock<T>()`, `AddItem<T>()`, `AddEntity<T>()`, `AddRecipe<T>()`, `AddLootTable<T>()` - register content (fluent, returns `Pack`).
 - `AddBlockTexture(string key, string sourcePngPath)` - manual block texture override.
 - `AddItemTexture(string key, string sourcePngPath)` - manual item texture override.
 - `AddEntityTexture(string key, string sourcePngPath)` - entity texture under `textures/entity/`.
-- `AddGeometry(string identifier, string sourceGeoJsonPath)` - register a block geometry file (`.geo.json`).
+- `AddGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null, string modelsSubdir = "blocks")` - register a geometry file (`.geo.json`) under `models/{modelsSubdir}/`.
+- `AddEntityGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null)` - entity geometry under `models/entity/` (shorthand for `AddGeometry(..., modelsSubdir: "entity")`).
+- `AddAnimation(string sourceJsonPath, string rpName)` - animation JSON under `animations/{rpName}.json`.
 - `AddParticle(string identifier, string sourceJsonPath, string? rpName = null)` - register a particle effect JSON under `particles/`.
 - `AddParticleTexture(string key, string sourcePngPath, string? rpName = null)` - particle texture PNG under `textures/particles/`.
 - `AddClientEntity<T>()` - resource-pack client entity (materials, textures, geometry, spawn egg, …).
 - `AddRenderController<T>()` - custom render controller; simple per-entity controllers are auto-emitted when a client entity lists them.
+- `RegisterSoundDefinition(soundId, sounds, category?, maxDistance?, minDistance?)` - sound definitions written to `sounds/sound_definitions.json` (optional source audio copy via `Sound.SourcePath`).
+- `AddFunction(identifier, sourceFile, service = false)` - copies a `.mcfunction` into `bp/functions/`; when `service` is true, also lists it in `functions/tick.json`.
 - `ScriptsEnabled` - enables Script API script generation during compile.
 - `AddService(sourceFile, name?, intervalTicks?)` - registers a [service](script-services.md) whose tick body is wrapped in `system.runInterval` (default every tick) and written to `bp/scripts/services/`.
 - `ScriptEntry` - script module entry path (defaults to `scripts/main.js`).
 - `ScriptApiModules` - Script API module dependencies (defaults to `@minecraft/server` 2.8.0).
+- `ScriptEntryBody` - optional `ScriptHandler` whose body is appended to generated `scripts/main.js` after event/service imports (only when at least one event script or service is registered).
+- `MinEngineVersion` - minimum game version in pack manifests (defaults to `1.21.90`, matching default block/item format versions for Custom Components V2).
+- `PackVersion`, `Authors`, `OmitMetadata`, `LinkPacks` - pack metadata and cross-dependencies.
 
-The behaviour pack manifest includes a script module only when block/item events or services produce at least one script file.
+The behaviour pack manifest includes a script module only when block/item events or services produce at least one script registry entry.
 
 - `PackIcon` - optional path to a PNG copied into both `bp/` and `rp/` using the source filename (e.g. `pack_icon.png`).
 - `Compile(string outputDir)` - deletes any existing `bp/` and `rp/` subfolders, then compiles fresh ones under the output directory.
@@ -157,10 +164,10 @@ Entity textures work differently. Client entity short-names point at **paths** u
 | `Pack.AddEntityTexture(key, pngPath)` | Manual copy to `rp/textures/entity/{key}.png` (nested keys like `spider/cave` are allowed) |
 | `AddClientEntity<T>()` | Writes `rp/entity/{name}.json` and can auto-emit a simple render controller |
 | `AddRenderController<T>()` | Writes `rp/render_controllers/{file}.json` |
-| `ClientEntity.EntitySounds` | Writes `rp/sounds.json` → `entity_sounds.entities` (ambient/hurt/death/step/…) |
+| `ClientEntity.EntitySounds` | Writes `rp/sounds.json` under `entity_sounds.entities` (ambient/hurt/death/step/...) |
 
 > [!WARNING]
-> Without `EntitySounds`, custom entity ids only get generic damage audio. Full API: [Making an Entity](entity.md#client-entities--render-controllers) (including [entity sounds](entity.md#entity-sounds)).
+> Without `EntitySounds`, custom entity ids only get generic damage audio. Full API: [Client Entities & Render Controllers](client-entity.md) (including [entity sounds](client-entity.md#entity-sounds)).
 
 ## Particles
 
@@ -181,7 +188,7 @@ Both methods are fluent (return `Pack`) and forward to the same APIs on `Resourc
 |-----------|----------|-------------|
 | `identifier` | yes | Effect id (`namespace:name`). Must match `description.identifier` inside the JSON. This is the string you pass to Script API `dimension.spawnParticle` or `/particle`. |
 | `sourceJsonPath` | yes | Path to the source particle JSON on disk. Copied as-is. |
-| `rpName` | no | Filename under `particles/` without extension. Defaults to the segment after `:` in `identifier`. Nested paths are allowed (`effects/sparkle` → `rp/particles/effects/sparkle.json`). |
+| `rpName` | no | Filename under `particles/` without extension. Defaults to the segment after `:` in `identifier`. Nested paths are allowed (`effects/sparkle` becomes `rp/particles/effects/sparkle.json`). |
 
 **`AddParticleTexture` parameters**
 
@@ -282,6 +289,13 @@ pack.AddGeometry("geometry.my_block", sourcePath, rpName: "custom_name");
 // -> rp/models/blocks/custom_name.geo.json
 ```
 
+The fourth parameter `modelsSubdir` defaults to `"blocks"`. Use `"entity"` (or `AddEntityGeometry`) for client-entity models:
+
+```csharp
+pack.AddEntityGeometry("geometry.my_mob", Path.Combine(dataDir, "my_mob.geo.json"));
+// -> rp/models/entity/my_mob.geo.json
+```
+
 > [!NOTE]
 > Vanilla geometry identifiers such as `minecraft:geometry.full_block` do not need to be registered - only custom models you author yourself.
 
@@ -303,6 +317,29 @@ pack.AddGeometry("geometry.my_block", sourcePath, rpName: "custom_name");
 }
 ```
 
+## Animations
+
+Register authored animation (or animation controller) JSON files:
+
+```csharp
+pack.AddAnimation(Path.Combine(dataDir, "my_entity.animation.json"), "my_entity");
+// -> rp/animations/my_entity.json
+```
+
+Reference the animation ids from `ClientEntity.Animations` and drive them via `Scripts`. ingot copies the file as-is; it does not author animation graphs.
+
+## Behaviour Pack Functions
+
+MC functions live on the behaviour side:
+
+```csharp
+pack.AddFunction("place_gallery", Path.Combine(dataDir, "place_gallery.mcfunction"));
+// -> bp/functions/place_gallery.mcfunction
+
+// Also list in functions/tick.json so it runs every tick:
+pack.AddFunction("every_tick", Path.Combine(dataDir, "every_tick.mcfunction"), service: true);
+```
+
 ## What Gets Generated in the Resource Pack
 
 When `Pack.Compile` runs, the resource side produces (among other folders):
@@ -311,13 +348,18 @@ When `Pack.Compile` runs, the resource side produces (among other folders):
 - `rp/textures/items/<key>.png` - item icons (auto-registered or from `AddItemTexture`)
 - `rp/textures/entity/<path>.png` - entity textures (`DefaultTexturePath` or `AddEntityTexture`)
 - `rp/models/blocks/<name>.geo.json` - custom block geometry (from `AddGeometry`)
+- `rp/models/entity/<name>.geo.json` - entity geometry (from `AddEntityGeometry`)
+- `rp/animations/<name>.json` - animations (from `AddAnimation`)
 - `rp/particles/<name>.json` - particle effects (from `AddParticle`)
 - `rp/textures/particles/<key>.png` - particle textures (from `AddParticleTexture`)
 - `rp/entity/<name>.json` - client entities (from `AddClientEntity`)
 - `rp/render_controllers/<name>.json` - render controllers (registered or auto-emitted)
 - `rp/sounds.json` - `entity_sounds.entities` when any client entity defines `EntitySounds`
+- `rp/sounds/sound_definitions.json` - custom sound events from `RegisterSoundDefinition`
 - `rp/textures/terrain_texture.json` - maps block texture keys for `minecraft:material_instances`
 - `rp/textures/item_texture.json` - maps item icon keys for `minecraft:icon`
+
+On the behaviour pack side, `AddFunction` also writes `bp/functions/*.mcfunction` and optional `bp/functions/tick.json`.
 
 A minimal generated `terrain_texture.json` looks like this:
 
@@ -414,15 +456,17 @@ See the [`ingot.Example`](../../ingot.Example) project for a working end-to-end 
 - Block textures via `terrain_texture.json` (auto or `AddBlockTexture`)
 - Item textures via `item_texture.json` (auto or `AddItemTexture`)
 - Entity textures as loose PNGs under `textures/entity/` (`DefaultTexturePath` or `AddEntityTexture`)
+- Extra client-entity texture short-names via `ClientEntity.ExtraTextures` (JSON paths only; register PNGs with `AddEntityTexture` as needed)
 - Particle effects via `AddParticle` (JSON under `particles/`) and particle textures via `AddParticleTexture` (`textures/particles/`)
 - Client entities (`AddClientEntity`) and render controllers (`AddRenderController` / auto-emit)
-- Entity sound mappings via `ClientEntity.EntitySounds` → `rp/sounds.json` (`entity_sounds.entities`)
+- Entity sound mappings via `ClientEntity.EntitySounds` into `rp/sounds.json` (`entity_sounds.entities`)
 - Sound definitions via `RegisterSoundDefinition` (`sound_definitions.json` + optional source audio copy)
-- Block geometry via manual `AddGeometry` (`.geo.json` under `models/blocks/`)
+- Block geometry via `AddGeometry` (`.geo.json` under `models/blocks/`) and entity geometry via `AddEntityGeometry` (`models/entity/`)
 - Animations via `AddAnimation` (JSON under `animations/`)
+- MC functions via `AddFunction` (`bp/functions/`, optional tick listing)
 
 > [!NOTE]
-> **Not yet first-class:** texture variations / weighted atlas textures, flipbook (animated) textures, PBR texture sets, attachable registration, music discs as C# types, generating particle effect JSON from a C# DSL (register authored `.json` files with `AddParticle` instead), and auto-registration of source PNGs for *extra* attributed client-entity textures (only `DefaultTexturePath` auto-registers; use `AddEntityTexture` for the rest).
+> **Not yet first-class:** texture variations / weighted atlas textures, flipbook (animated) textures, PBR texture sets, attachable registration, music discs as C# types, generating particle effect JSON from a C# DSL (register authored `.json` files with `AddParticle` instead), and auto-registration of source PNGs for *extra* attributed client-entity textures (only `DefaultTexturePath` auto-registers; use `AddEntityTexture` for the rest, including keys listed in `ExtraTextures`).
 
 An empty `ResourcePack` (no textures or client entities) is still valid - it produces the standard folder skeleton without custom content.
 
@@ -430,7 +474,7 @@ An empty `ResourcePack` (no textures or client entities) is still valid - it pro
 
 - [Making a Block](block.md) and [Block Material Instances](block-mat-instances.md)
 - [Items](item.md) and [Item Events](item-events.md)
-- [Making an Entity](entity.md) (including [client entities & render controllers](entity.md#client-entities--render-controllers))
+- [Making an Entity](entity.md) and [Client Entities & Render Controllers](client-entity.md)
 - [Block Events](block-events.md) and [Script Services](script-services.md)
 - [Block Permutations](block-permutations.md)
 - API reference for `Pack.AddParticle` / `Pack.AddParticleTexture` and `ResourcePack`
