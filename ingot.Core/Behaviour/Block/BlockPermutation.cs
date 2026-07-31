@@ -11,7 +11,7 @@ namespace ingot.Core.Behaviour.Block;
 /// <summary>
 /// C# representation of a block permutation
 /// </summary>
-public abstract class BlockPermutation
+public abstract class BlockPermutation : ITraitable
 {
     /// <summary>
     /// Molang condition that determines when this permutation is active
@@ -56,10 +56,11 @@ public abstract class BlockPermutation
     /// </summary>
     public virtual string[] Tags => [];
     
-    /// <summary>
-    /// Array of constructed traits to facilitate traits that ingot may not implement
-    /// </summary>
+    /// <inheritdoc/>
     public virtual Trait[] DynamicTraits => [];
+
+    /// <inheritdoc/>
+    public virtual Dictionary<Identifier, object> Singles => new();
 
     /// <summary>
     /// Compiles the <typeparamref name="TBlockPermutation"/> to JSON
@@ -113,10 +114,7 @@ public abstract class BlockPermutation
             if (permutation.MaterialInstances is not null)
                 permutation.MaterialInstances.Value.Compile(ref json.Writer);
 
-            foreach (Trait trait in traits)
-                trait.Compile(ref json.Writer);
-            foreach (Trait trait in permutation.DynamicTraits)
-                trait.Compile(ref json.Writer);
+            ITraitable.CompileTraits(permutation, ref json.Writer, TraitSystem.TraitSystem.TraitType.Block);
         });
 
         writer.WriteEndObject();

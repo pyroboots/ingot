@@ -15,7 +15,7 @@ namespace ingot.Core.Behaviour.Block;
 /// <summary>
 /// Implements basic properties of a block
 /// </summary>
-public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
+public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraitable
 {
     /// <summary>
     /// Block identifier used in the game
@@ -99,10 +99,11 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
     /// </summary>
     public virtual BlockEvents? BlockEvents => null;
 
-    /// <summary>
-    /// Array of constructed traits to facilitate traits that ingot may not implement
-    /// </summary>
+    /// <inheritdoc/>
     public virtual Trait[] DynamicTraits => [];
+    
+    /// <inheritdoc/>
+    public virtual Dictionary<Identifier, object> Singles => new();
     
     /// <inheritdoc/>
     public static string Compile(Type tType)
@@ -220,23 +221,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable
                     }
                 }
 
-                CompilerState.Info("compiling traits...");
-                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(inst, TraitSystem.TraitSystem.TraitType.Block);
-                int c = 0;
-                foreach (Trait t in traits)
-                {
-                    c++;
-                    t.Compile(ref w);
-                    CompilerState.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait!.Name}");
-                }
-
-                c = 0;
-                foreach (Trait t in inst.DynamicTraits)
-                {
-                    c++;
-                    t.Compile(ref w);
-                    CompilerState.Info($"({c}/{inst.DynamicTraits.Length}) compiled dynamic trait {t.Identifier}");
-                }
+                ITraitable.CompileTraits(inst, ref w, TraitSystem.TraitSystem.TraitType.Block);
             });
         });
 

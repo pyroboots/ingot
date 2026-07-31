@@ -11,7 +11,7 @@ namespace ingot.Core.Behaviour.Item;
 /// <summary>
 /// Implements basic properties of an item
 /// </summary>
-public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
+public abstract class Item : IConcreteCompilable<Item>, IIdentifiable, ITraitable
 {
     /// <inheritdoc/>
     public abstract Identifier Identifier { get; }
@@ -61,10 +61,11 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
     /// </summary>
     public virtual ItemEvents? ItemEvents => null;
     
-    /// <summary>
-    /// Array of constructed traits to facilitate traits that ingot may not implement
-    /// </summary>
+    /// <inheritdoc/>
     public virtual Trait[] DynamicTraits => [];
+    
+    /// <inheritdoc/>
+    public virtual Dictionary<Identifier, object> Singles => new();
     
     /// <inheritdoc/>
     public static string Compile(Type tType)
@@ -142,22 +143,7 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable
                     }
                 }
 
-                CompilerState.Info("compiling traits...");
-                List<Trait> traits = TraitSystem.TraitSystem.GetTraits(inst, TraitSystem.TraitSystem.TraitType.Item);
-                int c = 0;
-                foreach (Trait t in traits)
-                {
-                    c++;
-                    t.Compile(ref w);
-                    CompilerState.Info($"({c}/{traits.Count}) compiled trait {t.RootTrait!.Name}");
-                }
-                c = 0;
-                foreach (Trait t in inst.DynamicTraits)
-                {
-                    c++;
-                    t.Compile(ref w);
-                    CompilerState.Info($"({c}/{inst.DynamicTraits.Length}) compiled dynamic trait {t.Identifier}");
-                }
+                ITraitable.CompileTraits(inst, ref w, TraitSystem.TraitSystem.TraitType.Item);
             });
         });
 
