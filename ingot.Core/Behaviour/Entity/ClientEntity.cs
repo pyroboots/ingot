@@ -91,7 +91,7 @@ public class ClientEntitySpawnEgg
 
 /// <summary>
 /// Entity sound mapping written to <c>rp/sounds.json</c> under <c>entity_sounds.entities</c>.
-/// Maps gameplay sound events (ambient, hurt, death, step, milk, …) to sound definition names.
+/// Maps gameplay sound events (ambient, hurt, death, step, milk, ...) to sound definition names.
 /// </summary>
 public class ClientEntitySounds
 {

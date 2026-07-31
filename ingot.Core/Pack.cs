@@ -467,7 +467,7 @@ public class Pack
     /// </summary>
     /// <param name="soundId">Sound event id (e.g. <c>example.toot</c> or <c>ambient.basalt_deltas.loop</c>).</param>
     /// <param name="sounds">One or more sound file entries for this event.</param>
-    /// <param name="category">Volume slider category (<c>ambient</c>, <c>hostile</c>, <c>music</c>, …).</param>
+    /// <param name="category">Volume slider category (<c>ambient</c>, <c>hostile</c>, <c>music</c>, ...).</param>
     /// <param name="maxDistance">Distance beyond which the sound can no longer be heard.</param>
     /// <param name="minDistance">Distance at which attenuation begins.</param>
     public Pack RegisterSoundDefinition(
