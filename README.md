@@ -110,8 +110,8 @@ dotnet run --project ingot.Example.BricksGalore
 |--------|---------|
 | `ingot.Core` | Core API |
 | `ingot.Example` | Full small example (lasagna content, cow entity, scripts) |
-| `ingot.Example.BricksGalore` | Large procedural brick pack (materials × patterns × inlays) |
-| `ingot.Generators` | Automatic trait generation from MS Docs |
+| `ingot.Example.BricksGalore` | Large procedural brick pack (materials x patterns x inlays) |
+| `ingot.Generators` | Trait generation library (MS Docs HTML + JSON Schema); see [Creating New Traits](docs/docs/trait-system.md#creating-new-traits) |
 | `ingot.Tests` | xUnit integration and compile tests |
 
 **Made with ❤️ for the Minecraft Bedrock addon community.**

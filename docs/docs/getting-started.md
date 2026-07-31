@@ -163,7 +163,7 @@ pack.CompileComMojang("/path/to/games/com.mojang");
 The `.ingot` cache file preserves UUIDs across rebuilds when you compile to the same output directory and leave caching enabled.
 
 > [!TIP]
-> On an interactive terminal, verbose compiles (`verbose: true`, the default) show Spectre.Console progress bars for behaviour pack, scripts, resource pack, and manifests. Full detail still lands in `ingot.log`.
+> With `verbose: true` (the default), info lines print to the console during compile and a short summary (warning/info counts, log path, elapsed time) is written at the end. Full detail is always written to `ingot.log` in the output/cache directory. Pass `verbose: false` in tests or automation for quieter compiles.
 
 ### Linking Behaviour and Resource Packs
 
@@ -252,7 +252,7 @@ See [Block Events](block-events.md), [Item Events](item-events.md), and [Script 
 |---------|---------|
 | [`ingot.Tests`](../../ingot.Tests) | xUnit integration and compile tests covering blocks, items, entities, recipes, loot tables, textures, and scripts |
 | [`ingot.Example`](../../ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts |
-| [`ingot.Example.BricksGalore`](../../ingot.Example.BricksGalore) | Large procedural brick pack (materials × patterns × optional inlays) |
+| [`ingot.Example.BricksGalore`](../../ingot.Example.BricksGalore) | Large procedural brick pack (materials x patterns x optional inlays) |
 
 Build and run the lasagna example:
 
@@ -267,10 +267,10 @@ dotnet run --project ingot.Example
 
 1. Registers **materials** (palette + stats + craft ingredient) and **patterns** (base texture + optional mortar/inlay overlay + craft catalyst) in `Program.BuildContent()`.
 2. **Recolours** greyscale templates with GIMP-style `.gpl` palettes and composites body + overlay textures with SkiaSharp.
-3. Builds configured `BrickBlock` / `BrickRecipe` **instances** (one per material × pattern × optional overlay combo) and registers them with `BehaviourPack.AddBlockFromInstance` / `AddRecipeFromInstance`.
+3. Builds configured `BrickBlock` / `BrickRecipe` **instances** (one per material x pattern x optional overlay combo) and registers them with `BehaviourPack.AddBlockFromInstance` / `AddRecipeFromInstance`.
 4. Adds shapeless crafting (body + catalyst + stone, plus inlay upgrade recipes), MC functions to place/clear a gallery, and a tick service that shows material lore on the action bar.
 
-Current content is roughly **8 materials** (amethyst, copper, diamond, emerald, gold, lapis, netherite, resin) × **20 patterns** (bricks, chiseled, tiles) - hundreds of blocks once same-colour and cross-material inlays are included.
+Current content is roughly **8 materials** (amethyst, copper, diamond, emerald, gold, lapis, netherite, resin) x **20 patterns** (bricks, chiseled, tiles) - hundreds of blocks once same-colour and cross-material inlays are included.
 
 ```bash
 dotnet run --project ingot.Example.BricksGalore
@@ -290,19 +290,19 @@ A typical ingot addon solution looks like this:
 
 ```
 MyAddon/
-├── MyAddon.csproj          # references ingot.Core
-├── Program.cs              # Pack.Create + Compile
-├── Content/
-│   ├── Items/
-│   ├── Blocks/
-│   ├── Recipes/
-│   └── Entities/
-├── Data/                   # PNG textures (copy to output via .csproj)
-├── scripts/                # Script API sources (optional)
-│   ├── blocks/             # handler bodies for BlockEvents.FromFile
-│   ├── items/              # handler bodies for ItemEvents.FromFile
-│   └── services/           # tick handler bodies registered with AddService
-└── output/                 # generated bp/ + rp/ (gitignored)
+  MyAddon.csproj          # references ingot.Core
+  Program.cs              # Pack.Create + Compile
+  Content/
+    Items/
+    Blocks/
+    Recipes/
+    Entities/
+  Data/                   # PNG textures (copy to output via .csproj)
+  scripts/                # Script API sources (optional)
+    blocks/               # handler bodies for BlockEvents.FromFile
+    items/                # handler bodies for ItemEvents.FromFile
+    services/             # tick handler bodies registered with AddService
+  output/                 # generated bp/ + rp/ (gitignored)
 ```
 
 Keep identifiers, traits, and cross-references in C# - recipes can reference item classes, blocks can auto-register loot tables, and refactors stay type-safe.

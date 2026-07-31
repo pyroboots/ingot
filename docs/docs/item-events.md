@@ -150,6 +150,8 @@ import {world, system} from "@minecraft/server";
 import "./items/mynamespace_magic_wand_events.js";
 ```
 
+Extra modules in `ScriptApiModules` (for example `@minecraft/server-ui`) are namespace-imported in the per-item event script so handler bodies can use them (`import * as serverUi from "@minecraft/server-ui"`). In `main.js` they are bare-imported only. If you replace the whole `ScriptApiModules` dictionary and omit `@minecraft/server`, ingot re-adds `@minecraft/server` 2.8.0 when writing scripts. Prefer indexer assignment so existing modules stay. See [Block Events - script modules](block-events.md) for a full example.
+
 The behaviour pack manifest references `scripts/main.js` as the script module entry when scripts are present.
 
 ## Available Events

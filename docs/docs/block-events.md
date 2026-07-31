@@ -148,15 +148,18 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {
 });
 ```
 
-Extra modules in `ScriptApiModules` (for example `@minecraft/server-ui`) are imported as namespaces so handler bodies can use them:
+Extra modules in `ScriptApiModules` (for example `@minecraft/server-ui`) appear in two places:
+
+1. **Event component scripts** (`bp/scripts/blocks/*.js`, `bp/scripts/items/*.js`) import them as namespaces so handler bodies can use them (alias from the module path: `@minecraft/server-ui` -> `serverUi`).
+2. **`main.js`** bare-imports extra modules (`import "@minecraft/server-ui";`) so they load with the pack; only `@minecraft/server` gets a named import (`world`, `system`). Manifest module dependencies use the same dictionary.
 
 ```csharp
-// Keep the default @minecraft/server entry - only *add* extra modules.
+// Prefer adding modules with the indexer so existing entries stay.
 pack.ScriptApiModules["@minecraft/server-ui"] = new(2, 0, 0);
 ```
 
 ```javascript
-// generated import:
+// in a generated block/item event script:
 import * as serverUi from "@minecraft/server-ui";
 
 // in your handler body:
@@ -164,8 +167,8 @@ const form = new serverUi.MessageFormData().title("Hi").body("Hello").button1("O
 form.show(event.player);
 ```
 
-> [!CAUTION]
-> Replacing `ScriptApiModules` with `new() { ... }` drops the default `@minecraft/server` dependency. Prefer indexer assignment so existing modules stay.
+> [!NOTE]
+> If you replace `ScriptApiModules` with a new dictionary that omits `@minecraft/server`, ingot still re-adds `@minecraft/server` 2.8.0 when writing scripts (so event wrappers and the default import keep working). Prefer indexer assignment so any version overrides and extra modules you already set are not wiped.
 
 ### 3. Updated `main.js` entry point
 

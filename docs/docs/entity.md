@@ -223,7 +223,7 @@ using ingot.Core;
 const string packUuid = "77f1fef2-bb39-411a-b25c-ae475c21169f";
 
 Pack pack = Pack.Create(packUuid, "My Addon", "Entities made with ingot")
-    .AddEntity<MyEntity>(); // also discovers nested Client / ClientEntity by default
+    .AddEntity<MyEntity>(); // discovers ClientEntityType / nested Client / matching ClientEntity
 
 pack.Compile("./output");
 ```

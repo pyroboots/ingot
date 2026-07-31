@@ -3,7 +3,7 @@
 ingot builds **both** a behaviour pack (`bp/`) and a resource pack (`rp/`) from a single `Pack` object.
 
 - Behaviour definitions (`Block`, `Item`, `Entity`, traits, etc.) describe *what* your content is and how it behaves.
-- Resource assets describe how it *looks* (textures, client entities, render controllers, geometry, …).
+- Resource assets describe how it *looks* (textures, client entities, render controllers, geometry, and related files).
 
 Supported on the resource side today:
 
@@ -76,7 +76,7 @@ Key `Pack` members:
 - `AddAnimation(string sourceJsonPath, string rpName)` - animation JSON under `animations/{rpName}.json`.
 - `AddParticle(string identifier, string sourceJsonPath, string? rpName = null)` - register a particle effect JSON under `particles/`.
 - `AddParticleTexture(string key, string sourcePngPath, string? rpName = null)` - particle texture PNG under `textures/particles/`.
-- `AddClientEntity<T>()` - resource-pack client entity (materials, textures, geometry, spawn egg, …).
+- `AddClientEntity<T>()` - resource-pack client entity (materials, textures, geometry, spawn egg, and related fields).
 - `AddRenderController<T>()` - custom render controller; simple per-entity controllers are auto-emitted when a client entity lists them.
 - `RegisterSoundDefinition(soundId, sounds, category?, maxDistance?, minDistance?)` - sound definitions written to `sounds/sound_definitions.json` (optional source audio copy via `Sound.SourcePath`).
 - `AddFunction(identifier, sourceFile, service = false)` - copies a `.mcfunction` into `bp/functions/`; when `service` is true, also lists it in `functions/tick.json`.
@@ -90,7 +90,7 @@ Key `Pack` members:
 
 The behaviour pack manifest includes a script module only when block/item events or services produce at least one script registry entry.
 
-- `PackIcon` - optional path to a PNG copied into both `bp/` and `rp/` using the source filename (e.g. `pack_icon.png`).
+- `PackIcon` - optional path to a source PNG. On compile, ingot always copies it to `bp/pack_icon.png` and `rp/pack_icon.png` (Bedrock requires that exact filename; the source path name does not matter).
 - `Compile(string outputDir)` - deletes any existing `bp/` and `rp/` subfolders, then compiles fresh ones under the output directory.
 - `CompileMcaddon(string outputPath)` - deletes any existing `.mcaddon` file, compiles to a temporary directory, zips a `.mcaddon` with `{Name} BP/` and `{Name} RP/` at the archive root, then deletes the temp files.
 - `CompileComMojang(string comMojangPath)` - deletes any existing development pack folders, then compiles directly into `development_behavior_packs/{Name} BP/` and `development_resource_packs/{Name} RP/` under a `com.mojang` folder.
@@ -99,13 +99,14 @@ The behaviour pack manifest includes a script module only when block/item events
 > All three compile methods **delete prior pack output** before writing so stale files are not left behind. Hand-edited files inside those output folders are wiped. `.ingot` cache files and `ingot.log` in the output directory are preserved.
 
 > [!TIP]
-> On an interactive terminal, verbose compiles show Spectre.Console progress bars for the major pack stages. Use `verbose: false` in tests or automation when you want silent compiles.
+> With `verbose: true` (the default), info lines print to the console and a short summary is written at the end. Full detail lands in `ingot.log`. Pass `verbose: false` in tests or automation for quieter compiles.
 
 Set a pack icon before compiling:
 
 ```csharp
 string dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
-pack.PackIcon = Path.Combine(dataDir, "pack_icon.png");
+// Source can be any PNG path; output is always pack_icon.png
+pack.PackIcon = Path.Combine(dataDir, "icon.png");
 pack.Compile("./output");
 ```
 
@@ -383,17 +384,17 @@ A common layout is to keep your source art next to your C# code:
 
 ```
 MyAddon/
-├── MyAddon.csproj
-├── Program.cs
-├── Data/
-│   ├── block_of_dense_lasagna.png
-│   ├── lasagna.png
-│   └── my_entity.png
-├── DenseLasagnaBlock.cs
-├── LasagnaItem.cs
-└── Entities/
-    ├── MyEntity.cs
-    └── MyClientEntity.cs
+  MyAddon.csproj
+  Program.cs
+  Data/
+    block_of_dense_lasagna.png
+    lasagna.png
+    my_entity.png
+  DenseLasagnaBlock.cs
+  LasagnaItem.cs
+  Entities/
+    MyEntity.cs
+    MyClientEntity.cs
 ```
 
 Copy `Data/` into the build output from your `.csproj`:

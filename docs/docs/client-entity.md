@@ -49,16 +49,20 @@ This writes:
 
 ### Auto-discovery from the behaviour entity
 
-`Pack.AddEntity<T>(discoverClient: true)` (the default) looks for a matching client entity without a separate `AddClientEntity` call:
+`Pack.AddEntity<T>(discoverClient: true)` (the default) looks for a matching client entity without a separate `AddClientEntity` call. Resolution order:
 
-1. Nested type `MyEntity.Client : ClientEntity<MyEntity>`
-2. Or a type named `MyClientEntity` in the same assembly
-3. Or `Entity.ClientEntityType` when set explicitly
+1. **`Entity.ClientEntityType`** - when the behaviour entity overrides this property, that type is used and the search stops.
+2. **Nested type named `Client`** - `MyEntity.Client : ClientEntity<MyEntity>` (public or non-public).
+3. **Assembly scan** for non-abstract `ClientEntity<MyEntity>` types:
+   - If exactly one match exists, it is used.
+   - If several match, prefer the conventional name (`MyEntity` -> `MyClientEntity`, or `Foo` -> `FooClientEntity`).
+   - Else prefer a same-namespace type whose name ends with `ClientEntity` (shortest name wins).
+   - Else the first match is used.
 
-Use `AddEntity<T>(discoverClient: false)` to skip RP discovery. Nested `RenderController` types on the entity are registered when found; top-level controllers still use `AddRenderController<T>()`.
+Use `AddEntity<T>(discoverClient: false)` to skip RP discovery. Nested `RenderController` types on the behaviour entity and on the discovered client type are registered when found; top-level controllers still use `AddRenderController<T>()`.
 
 > [!TIP]
-> Prefer a nested `Client` type on the entity (`MyEntity.Client : ClientEntity<MyEntity>`) so `AddEntity` discovers visuals without a separate `AddClientEntity` call.
+> Prefer either `override Type? ClientEntityType => typeof(Client)` or a nested `Client` type (`MyEntity.Client : ClientEntity<MyEntity>`) so `AddEntity` discovers visuals without a separate `AddClientEntity` call.
 
 ## Entity Textures (PNG Files)
 
