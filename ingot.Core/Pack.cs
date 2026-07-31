@@ -13,8 +13,6 @@ using ingot.Core.Scripting;
 
 using Newtonsoft.Json;
 
-using Spectre.Console;
-
 using Formatting = Newtonsoft.Json.Formatting;
 using Version = ingot.Core.Common.Version;
 
@@ -656,28 +654,21 @@ public class Pack
         if (verbose)
         {
             File.WriteAllText(Path.Combine(cacheDir, "ingot.log"), string.Join('\n', CompilerState.GetLogs()));
-            AnsiConsole.MarkupLine($"[{IngotCommon.PrimaryColor.ToMarkup()}]ingot compilation log available at[/] [{IngotCommon.SecondaryColor.ToMarkup()}]{Markup.Escape(Path.Combine(cacheDir, "ingot.log"))}[/]");
-            AnsiConsole.MarkupLine($"[{IngotCommon.PrimaryColor.ToMarkup()}]pack compiled in[/] [{IngotCommon.SecondaryColor.ToMarkup()}]{timer.ElapsedMilliseconds}ms[/]");
+
+            Console.ForegroundColor = CompilerState.WarningCount == 0 ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine($"warning count: {CompilerState.WarningCount}");
+            Console.ResetColor();
+            
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"info count: {CompilerState.InfoCount}");
+            Console.WriteLine($"ingot compilation log available at {Path.Combine(cacheDir, "ingot.log")}");
+            Console.WriteLine($"pack compiled in {timer.ElapsedMilliseconds}ms");
+            Console.ResetColor();
 
             // technically blocks are permutations, just default ones
             int blockPermCount = BehaviourPack.Blocks.Count;
             foreach (Block b in BehaviourPack.Blocks)
                 blockPermCount += b.Permutations.Count;
-
-            BreakdownChart chart = new BreakdownChart()
-                .AddItem("entities", BehaviourPack.Entities.Count, Color.Green)
-                .AddItem("render controllers", ResourcePack.RenderControllers.Count, Color.Red)
-                .AddItem("blocks", BehaviourPack.Blocks.Count, Color.Blue)
-                .AddItem("block permutations", blockPermCount, Color.Orange1)
-                .AddItem("items", BehaviourPack.Items.Count, Color.Yellow)
-                .AddItem("loot tables", BehaviourPack.LootTables.Count, Color.Red)
-                .AddItem("recipes", BehaviourPack.Recipes.Count, Color.Purple)
-                .AddItem("functions", BehaviourPack.Functions.Count, Color.White)
-                .AddItem("scripts", ScriptRegistry.Entries.Count, Color.Aqua)
-                .AddItem("services", Services.Count, Color.Violet)
-                .Width(Math.Clamp(AnsiConsole.Profile.Width > 0 ? AnsiConsole.Profile.Width : 80, 40, 80));
-
-            AnsiConsole.Write(chart);
         }
         
         if (cache && File.Exists(Path.Combine(cacheDir, ".ingot")) == false)

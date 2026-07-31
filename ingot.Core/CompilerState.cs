@@ -1,8 +1,5 @@
 using ingot.Core.Common;
-
 using Newtonsoft.Json;
-
-using Spectre.Console;
 
 namespace ingot.Core;
 
@@ -23,6 +20,16 @@ public static class CompilerState
         get => Current.ShowInfoLogs;
         set => Current.ShowInfoLogs = value;
     }
+
+    /// <summary>
+    /// Number of warning emitted during compilation
+    /// </summary>
+    public static int WarningCount { get; private set; } = 0;
+    
+    /// <summary>
+    /// Number of info messages emitted during compilation
+    /// </summary>
+    public static int InfoCount { get; private set; } = 0;
 
     /// <summary>
     /// Current pack being compiled. Useful for <see cref="BehaviourPack"/> to generate content for <see cref="ResourcePack"/> and vice versa
@@ -71,10 +78,13 @@ public static class CompilerState
     /// <param name="msg">Message to write</param>
     public static void Warn(ref JsonTextWriter? w, string msg)
     {
+        WarningCount++;
         string warning = $"/!\\ [{GetTrace()}] {msg}";
         Current.Logs.Add(warning);
         
-        AnsiConsole.MarkupLine($"[{IngotCommon.SecondaryColor.ToMarkup()} bold blink underline]{warning.EscapeMarkup()}[/]");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(warning);
+        Console.ResetColor();
 
         if (w is not null)
         {
@@ -99,11 +109,16 @@ public static class CompilerState
     /// <param name="msg">Info</param>
     public static void Info(string msg)
     {
+        InfoCount++;
         string log = $"(i) [{GetTrace()}] {msg}";
         Current.Logs.Add(log);
 
         if (ShowInfoLogs)
-            AnsiConsole.MarkupLine($"[{IngotCommon.PrimaryColor.ToMarkup()} dim]{log.EscapeMarkup()}[/]");
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine(log);
+            Console.ResetColor();
+        }
     }
 
     /// <summary>

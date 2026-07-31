@@ -6,11 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
+      <ProjectReference Include="..\ingot.Core\ingot.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ingot.Core\ingot.Core.csproj" />
+      <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
     </ItemGroup>
 
 </Project>

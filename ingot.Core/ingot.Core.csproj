@@ -7,8 +7,6 @@
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-      <PackageReference Include="Spectre.Console" Version="0.57.2" />
-      <PackageReference Include="Spectre.Console.ImageSharp" Version="0.57.2" />
     </ItemGroup>
 
     <ItemGroup>
