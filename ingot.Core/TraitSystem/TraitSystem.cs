@@ -326,8 +326,8 @@ public static class TraitSystem
         Type iface,
         Type concreteType)
     {
-        TraitPropertyConstraint[] constraints =
-            GetAttributes<TraitPropertyConstraint>(interfaceProperty, iface, concreteType) ?? [];
+        TraitPropertyConstraintAttribute[] constraints =
+            GetAttributes<TraitPropertyConstraintAttribute>(interfaceProperty, iface, concreteType) ?? [];
         TraitPropertyWarningAttribute[] warnings =
             GetAttributes<TraitPropertyWarningAttribute>(interfaceProperty, iface, concreteType) ?? [];
 
@@ -335,7 +335,7 @@ public static class TraitSystem
             return;
 
         // Constraints require the operator condition to hold; warnings fire when it holds.
-        foreach (TraitPropertyConstraint constraint in constraints)
+        foreach (TraitPropertyConstraintAttribute constraint in constraints)
         {
             if (OperatorMatches(constraint.Operation, constraint.Values, value, interfaceProperty.Name))
                 continue;
@@ -355,7 +355,7 @@ public static class TraitSystem
     }
     
     private static bool OperatorMatches(
-        TraitPropertyConstraint.Constraint op,
+        TraitPropertyConstraintAttribute.Constraint op,
         object[] targets,
         object? value,
         string propertyName)
@@ -364,7 +364,7 @@ public static class TraitSystem
 
         switch (op)
         {
-            case TraitPropertyConstraint.Constraint.NotEqual:
+            case TraitPropertyConstraintAttribute.Constraint.NotEqual:
                 foreach (object target in targets)
                 {
                     if (ValuesEqual(value, target))
@@ -372,7 +372,7 @@ public static class TraitSystem
                 }
                 return true;
 
-            case TraitPropertyConstraint.Constraint.GreaterThan:
+            case TraitPropertyConstraintAttribute.Constraint.GreaterThan:
             {
                 double valueAsNum = RequireNumber(value, propertyName);
                 foreach (object target in targets)
@@ -384,7 +384,7 @@ public static class TraitSystem
                 return true;
             }
 
-            case TraitPropertyConstraint.Constraint.LessThan:
+            case TraitPropertyConstraintAttribute.Constraint.LessThan:
             {
                 double valueAsNum = RequireNumber(value, propertyName);
                 foreach (object target in targets)
@@ -396,7 +396,7 @@ public static class TraitSystem
                 return true;
             }
 
-            case TraitPropertyConstraint.Constraint.OneOf:
+            case TraitPropertyConstraintAttribute.Constraint.OneOf:
                 foreach (object target in targets)
                 {
                     if (ValuesEqual(value, target))
@@ -404,7 +404,7 @@ public static class TraitSystem
                 }
                 return false;
 
-            case TraitPropertyConstraint.Constraint.Range:
+            case TraitPropertyConstraintAttribute.Constraint.Range:
             {
                 double valueAsNum = RequireNumber(value, propertyName);
                 double min = RequireNumber(targets[0], propertyName, isTarget: true);
@@ -413,28 +413,46 @@ public static class TraitSystem
                 return (valueAsNum >= min && valueAsNum <= max);
             }
 
+            case TraitPropertyConstraintAttribute.Constraint.GreaterThanEq:
+            {
+                double valueAsNum = RequireNumber(value, propertyName);
+                double targetAsNum = RequireNumber(targets[0], propertyName, isTarget: true);
+                return (valueAsNum >= targetAsNum);
+            }
+            
+            case TraitPropertyConstraintAttribute.Constraint.LessThanEq:
+            {
+                double valueAsNum = RequireNumber(value, propertyName);
+                double targetAsNum = RequireNumber(targets[0], propertyName, isTarget: true);
+                return (valueAsNum <= targetAsNum);
+            }
+
             default:
                 throw new ArgumentException($"{propertyName}: unknown constraint operator {op}");
         }
     }
 
     private static ArgumentException BuildConstraintException(
-        TraitPropertyConstraint.Constraint op,
+        TraitPropertyConstraintAttribute.Constraint op,
         object[] targets,
         object? value,
         string propertyName)
     {
         string message = op switch
         {
-            TraitPropertyConstraint.Constraint.NotEqual =>
+            TraitPropertyConstraintAttribute.Constraint.NotEqual =>
                 $"{propertyName}: value ({value}) must not equal {string.Join(", ", targets)}",
-            TraitPropertyConstraint.Constraint.GreaterThan =>
+            TraitPropertyConstraintAttribute.Constraint.GreaterThan =>
                 $"{propertyName}: value ({value}) must be greater than {string.Join(", ", targets)}",
-            TraitPropertyConstraint.Constraint.LessThan =>
+            TraitPropertyConstraintAttribute.Constraint.GreaterThanEq =>
+                $"{propertyName}: value ({value}) must be greater than or equal to {targets[0]}",
+            TraitPropertyConstraintAttribute.Constraint.LessThan =>
                 $"{propertyName}: value ({value}) must be less than {string.Join(", ", targets)}",
-            TraitPropertyConstraint.Constraint.OneOf =>
+            TraitPropertyConstraintAttribute.Constraint.LessThanEq =>
+                $"{propertyName}: value ({value}) must be less than or equal to {targets[0]}",
+            TraitPropertyConstraintAttribute.Constraint.OneOf =>
                 $"{propertyName}: value ({value}) must be one of: {string.Join(", ", targets.Select(t => $"'{t}'"))}",
-            TraitPropertyConstraint.Constraint.Range =>
+            TraitPropertyConstraintAttribute.Constraint.Range =>
                 $"{propertyName}: value ({value}) must be between {targets[0]} and {targets[1]}",
             _ => $"{propertyName}: constraint {op} failed for value ({value})"
         };

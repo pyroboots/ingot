@@ -16,6 +16,6 @@ public interface ICompostable : IItemTrait
     /// The chance of this item to create a layer upon composting with the composter. Valid value range is 1 - 100 inclusive Value must be &gt;= 1. Value must be &lt;= 100.
     /// </summary>
     [TraitProperty]
-    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.Range, 0, 100)]
+    [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.Range, 0, 100)]
     public abstract int CompostingChance { get; }
 }

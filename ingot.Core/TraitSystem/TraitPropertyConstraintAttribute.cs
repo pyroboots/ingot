@@ -15,7 +15,7 @@ namespace ingot.Core.TraitSystem;
 /// For component-level minimum format versions, use <see cref="TraitFormatVersionAttribute"/> on the trait interface.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = true)]
-public class TraitPropertyConstraint : Attribute
+public class TraitPropertyConstraintAttribute : Attribute
 {
     /// <summary>Comparison / membership operator applied to the reflected property value.</summary>
     public Constraint Operation { get; }
@@ -31,9 +31,13 @@ public class TraitPropertyConstraint : Attribute
 
         /// <summary>Numeric value must be strictly greater than every entry in <see cref="Values"/>.</summary>
         GreaterThan,
+        /// <summary>Numeric value must be strictly greater or equal to the first entry in <see cref="Values"/>.</summary>
+        GreaterThanEq,
 
         /// <summary>Numeric value must be strictly less than every entry in <see cref="Values"/>.</summary>
         LessThan,
+        /// <summary>Numeric value must be strictly less or equal to the first entry in <see cref="Values"/>.</summary>
+        LessThanEq,
 
         /// <summary>Value must be one of <see cref="Values"/>.</summary>
         OneOf,
@@ -47,7 +51,7 @@ public class TraitPropertyConstraint : Attribute
     /// </summary>
     /// <param name="op">Operator that must hold for the property value.</param>
     /// <param name="values">Operands for the operator.</param>
-    public TraitPropertyConstraint(Constraint op, params object[] values)
+    public TraitPropertyConstraintAttribute(Constraint op, params object[] values)
     {
         Operation = op;
         Values = values ?? [];

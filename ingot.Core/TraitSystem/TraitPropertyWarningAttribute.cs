@@ -1,13 +1,13 @@
 namespace ingot.Core.TraitSystem;
 
-using static TraitPropertyConstraint;
+using static TraitPropertyConstraintAttribute;
 
 /// <summary>
 /// Soft check on a trait property value. Reflection emits a compile warning when the value
 /// <em>matches</em> <see cref="Operation"/> against <see cref="Values"/> (does not throw).
 /// </summary>
 /// <remarks>
-/// Unlike <see cref="TraitPropertyConstraint"/> (which requires the condition to hold),
+/// Unlike <see cref="TraitPropertyConstraintAttribute"/> (which requires the condition to hold),
 /// a warning fires when the condition holds. Example: <see cref="Constraint.OneOf"/> with a list of
 /// broken animation names warns if the property is one of those names.
 /// Use <c>{x}</c> in <see cref="Warning"/> as a placeholder for the property value.

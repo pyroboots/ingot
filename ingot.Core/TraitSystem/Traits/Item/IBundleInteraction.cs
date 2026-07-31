@@ -16,6 +16,6 @@ public interface IBundleInteraction : IItemTrait
     /// The maximum number of slots in the bundle viewable by the plater. Can be from 1 to 64. Default is 12. Value must be &gt;= 1. Value must be &lt;= 64.
     /// </summary>
     [TraitProperty]
-    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.Range, 0, 64)]
+    [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.Range, 0, 64)]
     public virtual int NumViewableSlots => 12;
 }

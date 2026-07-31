@@ -28,6 +28,6 @@ public interface ICooldown : IItemTrait
     /// The type of action that triggers the cooldown. Use 'use' for items consumed on use, or 'attack' for weapons. Default is 'use'.
     /// </summary>
     [TraitProperty]
-    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.OneOf, "use", "attack")]
+    [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.OneOf, "use", "attack")]
     public virtual dynamic? Type => null;
 }

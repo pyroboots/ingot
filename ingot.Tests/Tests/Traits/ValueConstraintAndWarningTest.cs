@@ -158,7 +158,7 @@ public class ValueConstraintAndWarningTest
     private interface IConstrainedMining : IBlockTrait
     {
         [TraitProperty]
-        [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.GreaterThan, 0)]
+        [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.GreaterThan, 0)]
         float SecondsToDestroy { get; }
     }
 
@@ -178,7 +178,7 @@ public class ValueConstraintAndWarningTest
     private interface IConstrainedStack : IItemTrait
     {
         [TraitProperty]
-        [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.NotEqual, 0)]
+        [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.NotEqual, 0)]
         int Value { get; }
     }
 
@@ -193,7 +193,7 @@ public class ValueConstraintAndWarningTest
     private interface IFormatGatedTrait : IItemTrait
     {
         [TraitProperty]
-        [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.OneOf, "eat", "drink")]
+        [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.OneOf, "eat", "drink")]
         string Value { get; }
     }
 

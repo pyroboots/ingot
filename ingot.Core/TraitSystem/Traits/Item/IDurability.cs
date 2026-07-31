@@ -22,6 +22,6 @@ public interface IDurability : IItemTrait
     /// Max durability is the amount of damage that this item can take before breaking. This is a required parameter and has a minimum of 0.
     /// </summary>
     [TraitProperty]
-    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.Range, 0, 32767)]
+    [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.Range, 0, 32767)]
     public abstract int MaxDurability { get; }
 }

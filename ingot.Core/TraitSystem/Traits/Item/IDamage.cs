@@ -16,6 +16,6 @@ public interface IDamage : IItemTrait
     /// The amount of extra damage this item deals when attacking. This value is added to the base attack damage. Must be a positive integer.
     /// </summary>
     [TraitProperty]
-    [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.Range, 0, 32767)]
+    [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.Range, 0, 32767)]
     public abstract int Value { get; }
 }
