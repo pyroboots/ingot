@@ -182,7 +182,7 @@ When you compile, ingot will:
 
 The same workflow applies to permutations - set `SourcePath` on the permutation's `MaterialInstances`, or use `Pack.AddBlockTexture` for manual overrides.
 
-See the dedicated [Resource Packs & Textures](resource-packs.md) guide for recommended project layout for your PNGs, how item textures work, limitations, and more.
+See the dedicated [Resource Packs & Textures](../resource-packs.md) guide for recommended project layout for your PNGs, how item textures work, limitations, and more.
 
 ## Tips
 
@@ -195,4 +195,4 @@ See the dedicated [Resource Packs & Textures](resource-packs.md) guide for recom
 - Per-face materials are useful for things like logs (bark on sides, cut ends on top/bottom), furnaces, etc.
 - `RenderMethod` names are converted to snake_case (`AlphaTest` becomes `alpha_test`).
 
-See also: [Making a Block](block.md), [Resource Packs & Textures](resource-packs.md), and the example `DenseLasagnaBlock`.
+See also: [Making a Block](block.md), [Resource Packs & Textures](../resource-packs.md), and the example `DenseLasagnaBlock`.

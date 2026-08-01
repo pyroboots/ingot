@@ -28,7 +28,7 @@ public class MyItem : Item, IFood, IDurability
 }
 ```
 
-Traits can also be applied to [block permutations](block-permutations.md) and [entity component groups](entity-component-groups.md) so that certain components only appear under specific conditions.
+Traits can also be applied to [block permutations](block/block-permutations.md) and [entity component groups](entity/entity-component-groups.md) so that certain components only appear under specific conditions.
 
 ## Implementing Trait Properties
 
@@ -256,7 +256,7 @@ public class MyFlyingMob : Entity, IEntityPresetFlying
 > [!TIP]
 > Presets compose many individual traits. You can still implement additional `IEntityTrait` interfaces beyond what a preset provides, or skip presets entirely and implement traits one at a time.
 
-See [Making an Entity](entity.md), [Client Entities](client-entity.md), [Entity Component Groups](entity-component-groups.md), and [Entity Events](entity-events.md) for a full example.
+See [Making an Entity](entity/entity.md), [Client Entities](entity/client-entity.md), [Entity Component Groups](entity/entity-component-groups.md), and [Entity Events](entity/entity-events.md) for a full example.
 
 ## Creating New Traits
 

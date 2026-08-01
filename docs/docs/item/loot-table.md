@@ -172,7 +172,7 @@ During `Pack.Compile`, ingot:
 
 You do **not** need a separate `AddLootTable<T>()` call when the block already references the loot table. Explicit registration is still supported for standalone loot tables (e.g. entity drops added later).
 
-Permutations can also override `Loot` for state-specific drops. Permutations that reference loot require a `Parent` block - see [Block Permutations](block-permutations.md).
+Permutations can also override `Loot` for state-specific drops. Permutations that reference loot require a `Parent` block - see [Block Permutations](../block/block-permutations.md).
 
 ## Compilation & Registration
 
@@ -236,7 +236,7 @@ And the block reference:
 
 ## Full Example
 
-See `DenseLasagnaLoot.cs` and `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project. The block's `Loot` property auto-registers the table during compile - `Program.cs` does not call `AddLootTable<DenseLasagnaLoot>()` explicitly.
+See `DenseLasagnaLoot.cs` and `DenseLasagnaBlock.cs` in the [`ingot.Example`](https://github.com/pyroboots/ingot/tree/master/ingot.Example) project. The block's `Loot` property auto-registers the table during compile - `Program.cs` does not call `AddLootTable<DenseLasagnaLoot>()` explicitly.
 
 ## Tips
 
@@ -248,4 +248,4 @@ See `DenseLasagnaLoot.cs` and `DenseLasagnaBlock.cs` in the [`ingot.Example`](..
 
 - Use `LootTableCategory.Blocks` for block drops, `Items` for item-related tables, and `Entities` for mob loot.
 
-Next: see [Making a Block](block.md) for the `Loot` shortcut and [Block Permutations](block-permutations.md) for state-specific loot.
+Next: see [Making a Block](../block/block.md) for the `Loot` shortcut and [Block Permutations](../block/block-permutations.md) for state-specific loot.

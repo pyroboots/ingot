@@ -86,6 +86,6 @@ pack.ScriptEntryBody = """
 
 ## See Also
 
-- [Block Events](block-events.md)
-- [Item Events](item-events.md)
+- [Block Events](block/block-events.md)
+- [Item Events](item/item-events.md)
 - [Resource Packs & Textures](resource-packs.md)

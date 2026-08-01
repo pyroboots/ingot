@@ -2,7 +2,7 @@
 
 Behaviour entities only define gameplay. **Visuals** live in the resource pack via a separate `ClientEntity` (or `ClientEntity<TParent>`) class, which compiles to `minecraft:client_entity`. Render controllers decide how those short-names are drawn.
 
-For the behaviour side (traits, groups, events), see [Making an Entity](entity.md). For texture and pack layout details, see [Resource Packs & Textures](resource-packs.md#entity-textures-and-client-entities).
+For the behaviour side (traits, groups, events), see [Making an Entity](entity.md). For texture and pack layout details, see [Resource Packs & Textures](../resource-packs.md#entity-textures-and-client-entities).
 
 ## Minimal Client Entity
 
@@ -253,10 +253,10 @@ public override ClientEntitySounds? EntitySounds =>
 
 ## Full Example
 
-See [`CowEntity.cs`](../../ingot.Example/Entities/CowEntity.cs) in `ingot.Example`: nested `Client`, `EntitySounds.FromVanilla("cow")`, and `CowV3RenderController`.
+See [`CowEntity.cs`](https://github.com/pyroboots/ingot/blob/master/ingot.Example/Entities/CowEntity.cs) in `ingot.Example`: nested `Client`, `EntitySounds.FromVanilla("cow")`, and `CowV3RenderController`.
 
 ## See Also
 
 - [Making an Entity](entity.md) - behaviour entities, traits, properties, registration
 - [Entity Component Groups](entity-component-groups.md) and [Entity Events](entity-events.md)
-- [Resource Packs & Textures](resource-packs.md) - entity textures, geometry, animations, sounds
+- [Resource Packs & Textures](../resource-packs.md) - entity textures, geometry, animations, sounds

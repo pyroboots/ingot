@@ -1,6 +1,6 @@
 # Making an Entity
 
-Entities are defined by deriving from the abstract `Entity` class in `ingot.Core.Behaviour.Entity`. Like blocks and items, entities use the [trait system](trait-system.md) for component definitions. ingot also provides C# types for [component groups](entity-component-groups.md) and [events](entity-events.md).
+Entities are defined by deriving from the abstract `Entity` class in `ingot.Core.Behaviour.Entity`. Like blocks and items, entities use the [trait system](../trait-system.md) for component definitions. ingot also provides C# types for [component groups](entity-component-groups.md) and [events](entity-events.md).
 
 ## Minimal Entity
 
@@ -30,7 +30,7 @@ Every entity **must** implement:
 | `Properties`       | `Dictionary<Identifier, IEntityProperty>` | `{}`        | Typed entity properties (server-side state, optional client sync). See [Entity Properties](#entity-properties). |
 | `ComponentGroups`  | `EntityComponentGroup[]`                  | `[]`        | Named component sets toggled by events. See [Entity Component Groups](entity-component-groups.md). |
 | `Events`           | `Dictionary<Identifier, IEntityEventAction[]>` | `{}`     | Event definitions and their actions. See [Entity Events](entity-events.md). |
-| `DynamicTraits`    | `Trait[]`                                 | `[]`        | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](trait-system.md#dynamic-traits). |
+| `DynamicTraits`    | `Trait[]`                                 | `[]`        | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../trait-system.md#dynamic-traits). |
 
 These are written into the `description` (including `properties`), `component_groups`, `components`, and `events` sections of the generated entity JSON.
 
@@ -173,7 +173,7 @@ public class MyEntity : Entity, IHealth, ITypeFamily
 
 ### Behaviour Presets
 
-For common mob archetypes, ingot provides preset interfaces that bundle the typical components for a mob type. See the [Trait System - Entity Traits and Behaviour Presets](trait-system.md#entity-traits-and-behaviour-presets) section for the full list.
+For common mob archetypes, ingot provides preset interfaces that bundle the typical components for a mob type. See the [Trait System - Entity Traits and Behaviour Presets](../trait-system.md#entity-traits-and-behaviour-presets) section for the full list.
 
 ```csharp
 public class LasagnaSpiritEntity : Entity, IEntityPresetFlying
@@ -290,6 +290,6 @@ See the dedicated [Client Entities & Render Controllers](client-entity.md) guide
 
 ## Full Example
 
-See [`CowEntity.cs`](../../ingot.Example/Entities/CowEntity.cs) in `ingot.Example`: presets + event DSL + nested `Baby`/`Adult`/`Client`, `EntitySounds.FromVanilla("cow")`, and `CowV3RenderController`.
+See [`CowEntity.cs`](https://github.com/pyroboots/ingot/blob/master/ingot.Example/Entities/CowEntity.cs) in `ingot.Example`: presets + event DSL + nested `Baby`/`Adult`/`Client`, `EntitySounds.FromVanilla("cow")`, and `CowV3RenderController`.
 
 Next: [entity component groups](entity-component-groups.md), [entity events](entity-events.md), and [client entities](client-entity.md).

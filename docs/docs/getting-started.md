@@ -74,7 +74,7 @@ Key points:
 - `Texture` is the icon key referenced in `minecraft:icon` and `item_texture.json`.
 - Implement trait interfaces (`IFood`, `IDurability`, etc.) and provide their properties via [explicit interface implementation](trait-system.md#implementing-trait-properties).
 
-See [Making an Item](item.md) for the full property reference.
+See [Making an Item](item/item.md) for the full property reference.
 
 ## Define Your First Block
 
@@ -100,7 +100,7 @@ public class CustomBlock : Block
 }
 ```
 
-See [Making a Block](block.md) for states, permutations, traits, loot tables, creative categories, and more.
+See [Making a Block](block/block.md) for states, permutations, traits, loot tables, creative categories, and more.
 
 ## Compile a Pack
 
@@ -244,15 +244,15 @@ pack.AddService("./scripts/services/tick_service.js"); // optional global tick l
 
 ingot generates custom components, event handler scripts under `bp/scripts/blocks/` and `bp/scripts/items/`, service scripts under `bp/scripts/services/` (wrapped in `system.runInterval` to run every tick), and a `scripts/main.js` entry point. The manifest script module is only added when at least one script exists.
 
-See [Block Events](block-events.md), [Item Events](item-events.md), and [Script Services](script-services.md).
+See [Block Events](block/block-events.md), [Item Events](item/item-events.md), and [Script Services](script-services.md).
 
 ## Example Projects in This Repo
 
 | Project | Purpose |
 |---------|---------|
-| [`ingot.Tests`](../../ingot.Tests) | xUnit integration and compile tests covering blocks, items, entities, recipes, loot tables, textures, and scripts |
-| [`ingot.Example`](../../ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts |
-| [`ingot.Example.BricksGalore`](../../ingot.Example.BricksGalore) | Large procedural brick pack (materials x patterns x optional inlays) |
+| [`ingot.Tests`](https://github.com/pyroboots/ingot/tree/master/ingot.Tests) | xUnit integration and compile tests covering blocks, items, entities, recipes, loot tables, textures, and scripts |
+| [`ingot.Example`](https://github.com/pyroboots/ingot/tree/master/ingot.Example) | Full example with blocks, items, entities, recipes, loot tables, textures, and scripts |
+| [`ingot.Example.BricksGalore`](https://github.com/pyroboots/ingot/tree/master/ingot.Example.BricksGalore) | Large procedural brick pack (materials x patterns x optional inlays) |
 
 Build and run the lasagna example:
 
@@ -263,7 +263,7 @@ dotnet run --project ingot.Example
 
 ### Bricks Galore
 
-[`ingot.Example.BricksGalore`](../../ingot.Example.BricksGalore) shows how to use ingot at **scale** when hand-writing one class per block is impractical. Instead of defining each brick by hand, it:
+[`ingot.Example.BricksGalore`](https://github.com/pyroboots/ingot/tree/master/ingot.Example.BricksGalore) shows how to use ingot at **scale** when hand-writing one class per block is impractical. Instead of defining each brick by hand, it:
 
 1. Registers **materials** (palette + stats + craft ingredient) and **patterns** (base texture + optional mortar/inlay overlay + craft catalyst) in `Program.BuildContent()`.
 2. **Recolours** greyscale templates with GIMP-style `.gpl` palettes and composites body + overlay textures with SkiaSharp.
@@ -310,8 +310,8 @@ Keep identifiers, traits, and cross-references in C# - recipes can reference ite
 ## Next Steps
 
 - [Trait System](trait-system.md) - how behaviours are composed from interfaces
-- [Making a Block](block.md) / [Making an Item](item.md) - full content guides
-- [Block Events](block-events.md), [Item Events](item-events.md), and [Script Services](script-services.md)
-- [Recipes](recipe.md) and [Loot Tables](loot-table.md)
+- [Making a Block](block/block.md) / [Making an Item](item/item.md) - full content guides
+- [Block Events](block/block-events.md), [Item Events](item/item-events.md), and [Script Services](script-services.md)
+- [Recipes](item/recipe.md) and [Loot Tables](item/loot-table.md)
 - [Trait System - Creating New Traits](trait-system.md#creating-new-traits) - add custom traits or regenerate from MS docs
 - [API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html)

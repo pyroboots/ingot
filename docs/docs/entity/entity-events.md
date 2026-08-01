@@ -216,11 +216,11 @@ An event with a component group add action compiles to:
 
 ## Full Example
 
-See [`CowEntity.cs`](../../ingot.Example/Entities/CowEntity.cs) in the `ingot.Example` project - spawn adult/baby randomization and grow-up events built with the `EntityEvents` helpers.
+See [`CowEntity.cs`](https://github.com/pyroboots/ingot/blob/master/ingot.Example/Entities/CowEntity.cs) in the `ingot.Example` project - spawn adult/baby randomization and grow-up events built with the `EntityEvents` helpers.
 
 ## See Also
 
 - [Making an Entity](entity.md) - base entity properties and compilation
 - [Client Entities & Render Controllers](client-entity.md) - resource-pack visuals
 - [Entity Component Groups](entity-component-groups.md) - named component sets toggled by events
-- [Trait System](trait-system.md) - entity traits and behaviour presets
+- [Trait System](../trait-system.md) - entity traits and behaviour presets

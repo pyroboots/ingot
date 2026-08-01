@@ -1,6 +1,6 @@
 # Entity Component Groups
 
-Component groups are the entity equivalent of [block permutations](block-permutations.md). Each group is a named set of components that can be added or removed at runtime through [entity events](entity-events.md).
+Component groups are the entity equivalent of [block permutations](../block/block-permutations.md). Each group is a named set of components that can be added or removed at runtime through [entity events](entity-events.md).
 
 ## Creating a Component Group
 
@@ -41,7 +41,7 @@ See [Making an Entity](entity.md) for the full entity property reference.
 
 ## Adding Traits to Groups
 
-Any [entity trait](trait-system.md) implemented on the group class is compiled into that group's `components` object - not the entity's root `components` object:
+Any [entity trait](../trait-system.md) implemented on the group class is compiled into that group's `components` object - not the entity's root `components` object:
 
 ```csharp
 using ingot.Core.Common;
@@ -79,12 +79,12 @@ A component group is written into the `component_groups` section of the entity J
 
 ## Full Example
 
-See nested `Baby` and `Adult` groups in [`CowEntity.cs`](../../ingot.Example/Entities/CowEntity.cs) in the `ingot.Example` project - component groups toggled by spawn and age events via the `EntityEvents` helpers.
+See nested `Baby` and `Adult` groups in [`CowEntity.cs`](https://github.com/pyroboots/ingot/blob/master/ingot.Example/Entities/CowEntity.cs) in the `ingot.Example` project - component groups toggled by spawn and age events via the `EntityEvents` helpers.
 
 ## See Also
 
 - [Making an Entity](entity.md) - base entity properties and compilation
 - [Client Entities & Render Controllers](client-entity.md) - resource-pack visuals
 - [Entity Events](entity-events.md) - add and remove groups at runtime
-- [Trait System](trait-system.md) - entity traits and behaviour presets
-- [Block Permutations](block-permutations.md) - the block-side equivalent
+- [Trait System](../trait-system.md) - entity traits and behaviour presets
+- [Block Permutations](../block/block-permutations.md) - the block-side equivalent

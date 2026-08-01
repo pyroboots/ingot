@@ -114,7 +114,7 @@ This copies the file to `{outputDir}/bp/pack_icon.png` and `{outputDir}/rp/pack_
 
 When `ScriptsEnabled` is `true`, **ingot** writes:
 
-- per-content event scripts under `bp/scripts/blocks/` and `bp/scripts/items/` ([Block Events](block-events.md), [Item Events](item-events.md))
+- per-content event scripts under `bp/scripts/blocks/` and `bp/scripts/items/` ([Block Events](block/block-events.md), [Item Events](item/item-events.md))
 - [service](script-services.md) scripts under `bp/scripts/services/` (via `AddService`, wrapped to run every tick)
 - a generated `bp/scripts/main.js` entry that imports all of the above
 
@@ -168,7 +168,7 @@ Entity textures work differently. Client entity short-names point at **paths** u
 | `ClientEntity.EntitySounds` | Writes `rp/sounds.json` under `entity_sounds.entities` (ambient/hurt/death/step/...) |
 
 > [!WARNING]
-> Without `EntitySounds`, custom entity ids only get generic damage audio. Full API: [Client Entities & Render Controllers](client-entity.md) (including [entity sounds](client-entity.md#entity-sounds)).
+> Without `EntitySounds`, custom entity ids only get generic damage audio. Full API: [Client Entities & Render Controllers](entity/client-entity.md) (including [entity sounds](entity/client-entity.md#entity-sounds)).
 
 ## Particles
 
@@ -448,7 +448,7 @@ pack.Compile("./output");
 
 After compilation you will have a ready-to-use `bp/` folder and `rp/` folder (plus `manifest.json` files that cross-link them when `LinkPacks` is true). Use `CompileMcaddon` or `CompileComMojang` when you want to skip the manual copy step.
 
-See the [`ingot.Example`](../../ingot.Example) project for a working end-to-end sample that registers textures from `Data/`, includes blocks, items, entities, recipes, states, permutations, and scripts. This repo's example compiles to `./artifacts/example/`.
+See the [`ingot.Example`](https://github.com/pyroboots/ingot/tree/master/ingot.Example) project for a working end-to-end sample that registers textures from `Data/`, includes blocks, items, entities, recipes, states, permutations, and scripts. This repo's example compiles to `./artifacts/example/`.
 
 ## Current Scope and Limitations
 
@@ -473,11 +473,11 @@ An empty `ResourcePack` (no textures or client entities) is still valid - it pro
 
 ## See Also
 
-- [Making a Block](block.md) and [Block Material Instances](block-mat-instances.md)
-- [Items](item.md) and [Item Events](item-events.md)
-- [Making an Entity](entity.md) and [Client Entities & Render Controllers](client-entity.md)
-- [Block Events](block-events.md) and [Script Services](script-services.md)
-- [Block Permutations](block-permutations.md)
+- [Making a Block](block/block.md) and [Block Material Instances](block/block-mat-instances.md)
+- [Items](item/item.md) and [Item Events](item/item-events.md)
+- [Making an Entity](entity/entity.md) and [Client Entities & Render Controllers](entity/client-entity.md)
+- [Block Events](block/block-events.md) and [Script Services](script-services.md)
+- [Block Permutations](block/block-permutations.md)
 - API reference for `Pack.AddParticle` / `Pack.AddParticleTexture` and `ResourcePack`
 
 Declare keys/paths on your content types, optionally provide source PNGs, and `Pack.Compile` writes the resource pack.

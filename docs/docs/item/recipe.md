@@ -201,7 +201,7 @@ A compiled shaped recipe looks like this:
 
 ## Full Example
 
-See `LasagnaRecipe.cs` in the [`ingot.Example`](../../ingot.Example) project, which is registered alongside the lasagna block and item in `Program.cs`.
+See `LasagnaRecipe.cs` in the [`ingot.Example`](https://github.com/pyroboots/ingot/tree/master/ingot.Example) project, which is registered alongside the lasagna block and item in `Program.cs`.
 
 ## Tips
 

@@ -1,6 +1,6 @@
 # Making a Block
 
-Blocks in ingot are created by deriving from the abstract `Block` class in `ingot.Core.Behaviour.Block`. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the [trait system](trait-system.md).
+Blocks in ingot are created by deriving from the abstract `Block` class in `ingot.Core.Behaviour.Block`. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the [trait system](../trait-system.md).
 
 ## Minimal Block
 
@@ -43,9 +43,9 @@ Every block **must** implement:
 | `LightEmission`     | `int?`                      | `null`             | Shortcut for `minecraft:light_emission` (0-15). |
 | `LightDampening`    | `int?`                      | `null`             | Shortcut for `minecraft:light_dampening`. |
 | `Replaceable`       | `bool?`                     | `null`             | Shortcut for `minecraft:replaceable`. |
-| `Loot`              | `LootTable?`                | `null`             | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](loot-table.md). |
+| `Loot`              | `LootTable?`                | `null`             | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](../item/loot-table.md). |
 | `BlockEvents`       | `BlockEvents?`              | `null`             | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Block Events](block-events.md). |
-| `DynamicTraits`     | `Trait[]`                   | `[]`               | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](trait-system.md#dynamic-traits). |
+| `DynamicTraits`     | `Trait[]`                   | `[]`               | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../trait-system.md#dynamic-traits). |
 
 All of the shortcut properties are written directly into the `components` object of the generated `minecraft:block` JSON.
 
@@ -93,7 +93,7 @@ public override Dictionary<string, dynamic[]> States => new()
 
 ## Adding Behavior with Traits
 
-Most block functionality comes from implementing [traits](trait-system.md):
+Most block functionality comes from implementing [traits](../trait-system.md):
 
 ```csharp
 using ingot.Core.Behaviour.Block;
@@ -145,7 +145,7 @@ public override BlockEvents? BlockEvents => new()
 };
 ```
 
-Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes handler scripts to `bp/scripts/blocks/`, adds the custom component to your block JSON, and imports them from a generated `bp/scripts/main.js`. For global tick logic, use [services](script-services.md) via `pack.AddService(...)`.
+Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes handler scripts to `bp/scripts/blocks/`, adds the custom component to your block JSON, and imports them from a generated `bp/scripts/main.js`. For global tick logic, use [services](../script-services.md) via `pack.AddService(...)`.
 
 > [!IMPORTANT]
 > Event scripts are not generated unless `ScriptsEnabled` is `true`. Without it, ingot warns at compile time and skips script output.
@@ -206,11 +206,11 @@ public override string? Geometry => "geometry.my_block";
 
 This writes the full behaviour pack under `bp/` (including `bp/blocks/block_of_dense_lasagna.json` - the filename is the part after the `:` in the identifier) and the resource pack under `rp/` (including copied textures, geometry files, and the generated `terrain_texture.json` that maps your texture keys).
 
-See the [Resource Packs & Textures](resource-packs.md) guide for details on asset organization, the generated atlas files, and how texture keys bridge behaviour and resources.
+See the [Resource Packs & Textures](../resource-packs.md) guide for details on asset organization, the generated atlas files, and how texture keys bridge behaviour and resources.
 
 ## Full Example
 
-See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project for a working block that combines states, permutations, material instances, and a [loot table](loot-table.md).
+See `DenseLasagnaBlock.cs` in the [`ingot.Example`](https://github.com/pyroboots/ingot/tree/master/ingot.Example) project for a working block that combines states, permutations, material instances, and a [loot table](../item/loot-table.md).
 
 ## Tips & Gotchas
 
@@ -225,4 +225,4 @@ See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project
 > [!TIP]
 > For complex blocks, prefer many small focused traits over one giant class.
 
-Next: learn about [block events](block-events.md), [script services](script-services.md), [block permutations](block-permutations.md), and [material instances](block-mat-instances.md).
+Next: learn about [block events](block-events.md), [script services](../script-services.md), [block permutations](block-permutations.md), and [material instances](block-mat-instances.md).

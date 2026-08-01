@@ -1,6 +1,6 @@
 # Making an Item
 
-Items are defined by deriving from the abstract `Item` class. Like blocks, items use a combination of simple virtual properties and the [trait system](trait-system.md) to describe their behavior.
+Items are defined by deriving from the abstract `Item` class. Like blocks, items use a combination of simple virtual properties and the [trait system](../trait-system.md) to describe their behavior.
 
 ## Minimal Item
 
@@ -35,7 +35,7 @@ Optionally override `TexturePath` to provide the source PNG. When set, ingot aut
 | `AllowOffhand`      | `bool`             | `false`          | Shortcut for `minecraft:allow_off_hand`. |
 | `TexturePath`       | `string?`          | `null`           | Optional source PNG for `Texture`. Auto-registered during compile. |
 | `ItemEvents`        | `ItemEvents?`      | `null`           | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Item Events](item-events.md). |
-| `DynamicTraits`     | `Trait[]`          | `[]`             | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](trait-system.md#dynamic-traits). |
+| `DynamicTraits`     | `Trait[]`          | `[]`             | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../trait-system.md#dynamic-traits). |
 
 These are written into the `description.menu_category` and `components` sections of the generated item JSON.
 
@@ -131,7 +131,7 @@ public override ItemEvents? ItemEvents => new()
 };
 ```
 
-Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes handler scripts to `bp/scripts/items/`, adds the custom component to your item JSON, and imports them from a generated `bp/scripts/main.js`. For global tick logic, use [services](script-services.md) via `pack.AddService(...)`.
+Set `pack.ScriptsEnabled = true` before compiling. **ingot** writes handler scripts to `bp/scripts/items/`, adds the custom component to your item JSON, and imports them from a generated `bp/scripts/main.js`. For global tick logic, use [services](../script-services.md) via `pack.AddService(...)`.
 
 > [!IMPORTANT]
 > Event scripts are not generated unless `ScriptsEnabled` is `true`. Without it, ingot warns at compile time and skips script output.
@@ -168,7 +168,7 @@ To register a pre-configured instance, use `pack.BehaviourPack.AddItemFromInstan
 
 This produces `bp/items/lasagna.json` (filename is the part after the `:` in the identifier) and the corresponding resources under `rp/textures/items/` plus `rp/textures/item_texture.json`.
 
-See the [Resource Packs & Textures](resource-packs.md) guide for more on supplying assets and the texture key contract.
+See the [Resource Packs & Textures](../resource-packs.md) guide for more on supplying assets and the texture key contract.
 
 > [!IMPORTANT]
 > Prefer a static pack UUID at runtime. Regenerating UUIDs every build makes Minecraft treat each compile as a completely different pack.
@@ -181,7 +181,7 @@ The example project contains a complete item that uses food, use modifiers/anima
 public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers { ... }
 ```
 
-See `LasagnaItem.cs` in the [`ingot.Example`](../../ingot.Example) project.
+See `LasagnaItem.cs` in the [`ingot.Example`](https://github.com/pyroboots/ingot/tree/master/ingot.Example) project.
 
 ## Tips & Gotchas
 
@@ -194,4 +194,4 @@ See `LasagnaItem.cs` in the [`ingot.Example`](../../ingot.Example) project.
 - Item traits are only discovered on the exact type passed to `AddItem<T>`. You can use a base item class and have derived classes add more traits.
 - The generated item JSON always includes `minecraft:icon`, `minecraft:display_name`, `minecraft:max_stack_size`, and `minecraft:allow_off_hand` even if you left the defaults.
 
-For blocks that these items place, see the [Blocks documentation](block.md). To craft items in a crafting table, see [Recipes](recipe.md). For Script API event handlers and services, see [Item Events](item-events.md) and [Script Services](script-services.md).
+For blocks that these items place, see the [Blocks documentation](../block/block.md). To craft items in a crafting table, see [Recipes](recipe.md). For Script API event handlers and services, see [Item Events](item-events.md) and [Script Services](../script-services.md).

@@ -1,7 +1,5 @@
 - name: Getting Started
   href: getting-started.md
-- name: Trait System
-  href: trait-system.md
 - name: Resource Packs & Textures
   href: resource-packs.md
 - name: Script Services
@@ -9,23 +7,26 @@
   tag: Scripts
 
 - name: 1. Blocks
-- href: block.md
-- href: block-permutations.md
-- href: block-mat-instances.md
+- href: block/block.md
+- href: block/block-permutations.md
+- href: block/block-mat-instances.md
 - name: Block Events
-  href: block-events.md
+  href: block/block-events.md
   tag: Scripts
 
 - name: 2. Items
-- href: item.md
+- href: item/item.md
 - name: Item Events
-  href: item-events.md
+  href: item/item-events.md
   tag: Scripts
-- href: recipe.md
-- href: loot-table.md
+- href: item/recipe.md
+- href: item/loot-table.md
 
 - name: 3. Entities
-- href: entity.md
-- href: client-entity.md
-- href: entity-component-groups.md
-- href: entity-events.md
+- href: entity/entity.md
+- href: entity/client-entity.md
+- href: entity/entity-component-groups.md
+- href: entity/entity-events.md
+
+- name: Advanced
+- href: trait-system.md

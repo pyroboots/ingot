@@ -30,12 +30,12 @@ A permutation can provide its own versions of the same shortcuts available on `B
 - `LightEmission`
 - `LightDampening`
 - `Replaceable`
-- `Loot` (`LootTable?` - see [Loot Tables](loot-table.md))
+- `Loot` (`LootTable?` - see [Loot Tables](../item/loot-table.md))
 - `MaterialInstances` (completely replace the block's materials under this condition)
 - `Tags` (block tags applied only when this condition is true)
-- `DynamicTraits` (hand-built `Trait` components for this permutation only; see [Dynamic Traits](trait-system.md#dynamic-traits))
+- `DynamicTraits` (hand-built `Trait` components for this permutation only; see [Dynamic Traits](../trait-system.md#dynamic-traits))
 
-In addition, any [block trait](trait-system.md) can be implemented directly on the permutation class. The trait components will only be written when the condition matches.
+In addition, any [block trait](../trait-system.md) can be implemented directly on the permutation class. The trait components will only be written when the condition matches.
 
 ```csharp
 using ingot.Core.Behaviour.Block;
@@ -136,7 +136,7 @@ public class DenseLasagnaGlowyPermutation : BlockPermutation
 }
 ```
 
-See `DenseLasagnaBlock.cs` in the [`ingot.Example`](../../ingot.Example) project (`DenseLasagnaGlowyPermutation` is defined in the same file).
+See `DenseLasagnaBlock.cs` in the [`ingot.Example`](https://github.com/pyroboots/ingot/tree/master/ingot.Example) project (`DenseLasagnaGlowyPermutation` is defined in the same file).
 
 ## Tips
 
