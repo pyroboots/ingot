@@ -177,13 +177,13 @@ There are multiple different operators that can be used to define constraints:
 - `OneOf` - Value must be one of the values in the `values` array.
 - `Range` - Value must be between the first and second item in the `values` array.
 
-The same operators apply yo yhe `TraitPropertyWarning` attribute.
+The same operators apply to the `TraitPropertyWarning` attribute.
 
 ## `TraitPropertyWarning` Attribute
 
 The `TraitPropertyWarning` attribute is placed on properties inside a trait interface. It specifies certain conditions, that if met, will emit a warning to the compilation log.
 
-**Format:** `[TraitPropertyWarning(string warning, TraitPropertyConstraintAttribute.Constraint operator, params object[] values]`
+**Format:** `[TraitPropertyWarning(string warning, TraitPropertyConstraintAttribute.Constraint operator, params object[] values)]`
 
 ```csharp
 [Trait("minecraft:use_animation", TraitSystem.TraitType.Item)]

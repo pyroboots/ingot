@@ -30,7 +30,9 @@ Every entity **must** implement:
 | `Properties`       | `Dictionary<Identifier, IEntityProperty>` | `{}`        | Typed entity properties (server-side state, optional client sync). See [Entity Properties](#entity-properties). |
 | `ComponentGroups`  | `EntityComponentGroup[]`                  | `[]`        | Named component sets toggled by events. See [Entity Component Groups](entity-component-groups.md). |
 | `Events`           | `Dictionary<Identifier, IEntityEventAction[]>` | `{}`     | Event definitions and their actions. See [Entity Events](entity-events.md). |
+| `ClientEntityType` | `Type?`                                   | `null`      | Optional explicit client-entity type for resource-pack visuals. When null, `Pack.AddEntity` may discover a nested `Client` type or matching `ClientEntity<T>` in the same assembly. See [Client Entities](client-entity.md). |
 | `DynamicTraits`    | `Trait[]`                                 | `[]`        | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../advanced/trait-system.md#dynamic-traits). |
+| `Singles`          | `Dictionary<Identifier, object>`          | `{}`        | Components written as a single scalar value instead of an object body (`"namespace:comp": value`). See [Singles](../advanced/trait-system.md#singles). |
 
 These are written into the `description` (including `properties`), `component_groups`, `components`, and `events` sections of the generated entity JSON.
 

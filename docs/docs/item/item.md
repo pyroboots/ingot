@@ -36,6 +36,7 @@ Optionally override `TexturePath` to provide the source PNG. When set, ingot aut
 | `TexturePath`       | `string?`          | `null`           | Optional source PNG for `Texture`. Auto-registered during compile. |
 | `ItemEvents`        | `ItemEvents?`      | `null`           | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Item Events](item-events.md). |
 | `DynamicTraits`     | `Trait[]`          | `[]`             | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../advanced/trait-system.md#dynamic-traits). |
+| `Singles`           | `Dictionary<Identifier, object>` | `{}`       | Components written as a single scalar value instead of an object body (`"namespace:comp": value`). See [Singles](../advanced/trait-system.md#singles). |
 
 These are written into the `description.menu_category` and `components` sections of the generated item JSON.
 
@@ -194,4 +195,4 @@ See `LasagnaItem.cs` in the [`ingot.Example`](https://github.com/pyroboots/ingot
 - Item traits are only discovered on the exact type passed to `AddItem<T>`. You can use a base item class and have derived classes add more traits.
 - The generated item JSON always includes `minecraft:icon`, `minecraft:display_name`, `minecraft:max_stack_size`, and `minecraft:allow_off_hand` even if you left the defaults.
 
-For blocks that these items place, see the [Blocks documentation](../block/block.md). To craft items in a crafting table, see [Recipes](recipe.md). For Script API event handlers and services, see [Item Events](item-events.md) and [Script Services](../script-services.md).
+For blocks that these items place, see the [Blocks documentation](../block/block.md). To craft items in a crafting table, see [Recipes](recipe.md). For Script API event handlers, services, and `/scriptevent` handlers, see [Item Events](item-events.md) and [Script Services and Events](../script-services.md).

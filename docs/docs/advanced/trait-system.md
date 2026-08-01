@@ -79,7 +79,8 @@ public float SaturationModifier => 0.9f;
 7. The getter is invoked on that same instance to obtain the current value (so pre-configured instance data is preserved).
 8. Values are written under the component using `PascalToSnakeCase` conversion for the JSON keys (e.g. `SecondsToDestroy` becomes `seconds_to_destroy`). Property names are always written as flat keys under the component object.
 9. After reflected traits, any entries from `DynamicTraits` on the content type (or permutation) are compiled into the same `components` object.
-10. The resulting object is emitted inside the `components` section of the generated JSON.
+10. Any entries from `Singles` are written as flat key/value components (`"namespace:comp": value`) rather than object bodies.
+11. The resulting object is emitted inside the `components` section of the generated JSON.
 
 Example output for a destructible block trait:
 
@@ -154,6 +155,45 @@ Notes:
 - Each `TraitProperty` name is converted with `PascalToSnakeCase` (so `SecondsToDestroy` becomes `seconds_to_destroy`).
 - Dynamic traits are written **after** reflected interface traits, in the same `components` object.
 - On permutations, dynamic traits only apply when that permutation's condition matches.
+
+## Singles
+
+Some Bedrock components are not objects. They are written as a single scalar next to the component id:
+
+```json
+"minecraft:some_flag": true,
+"minecraft:display_name": "My Block"
+```
+
+Most of those are already covered by base-class shortcuts (`DisplayName`, `Replaceable`, and similar). When you need a one-off single-value component that ingot does not expose, override `Singles` on `Block`, `Item`, `Entity`, or `BlockPermutation`:
+
+```csharp
+using ingot.Core.Behaviour.Block;
+using ingot.Core.Common;
+
+public class MyBlock : Block
+{
+    public override Identifier Identifier => new("mynamespace:my_block");
+
+    public override MaterialInstances MaterialInstances => new()
+    {
+        All = new MaterialInstance("my_block")
+    };
+
+    public override Dictionary<Identifier, object> Singles => new()
+    {
+        [new Identifier("minecraft:some_scalar_component")] = "value",
+        [new Identifier("minecraft:some_flag")] = true,
+    };
+}
+```
+
+Notes:
+
+- Keys are full component identifiers. Values are serialized with the same helpers used for ordinary JSON properties (strings, numbers, booleans, and other supported types).
+- Singles are written **after** reflected traits and `DynamicTraits`.
+- Prefer a generated trait or a base-class shortcut when one exists. Use `Singles` for rare or experimental components that do not need a full object body.
+- On permutations, singles only apply when that permutation's condition matches.
 
 ## Block vs Item vs Entity Traits
 
@@ -299,4 +339,4 @@ Type-based `Pack.AddBlock<T>()` / `AddItem<T>()` / etc. still construct a defaul
 
 ## Summary
 
-The trait system lets you compose block, item, and entity behavior using ordinary C# interface inheritance, plus optional `DynamicTraits` for components without a generated interface. It keeps your addon code readable, refactorable, and type-safe while still producing the exact JSON format that Minecraft Bedrock expects.
+The trait system lets you compose block, item, and entity behavior using ordinary C# interface inheritance, plus optional `DynamicTraits` for object components without a generated interface and `Singles` for scalar single-value components. It keeps your addon code readable, refactorable, and type-safe while still producing the exact JSON format that Minecraft Bedrock expects.

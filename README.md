@@ -10,17 +10,17 @@
 
 [API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html) | [Project Todo List](https://github.com/users/pyroboots/projects/4)
 
-## ✨ Features
+## Features
 
 - **Inheritance-Based, Type-Safe API** - Define items, blocks, entities, and more using clean, strongly-typed C# instead of hand-writing JSON
 - **Automatic Manifest Generation** - `manifest.json` files for both behavior packs and resource packs are created automatically
 - **Full BP + RP Support** - Create behavior packs, resource packs, and linked packs with ease (including client entities, render controllers, and entity textures)
-- **Script API Ready** - File-based or inline [block](docs/docs/block-events.md) and [item event](docs/docs/item-events.md) handlers, plus [services](docs/docs/script-services.md) auto-wrapped to run every tick, with compile-time trait validation
+- **Script API Ready** - File-based or inline [block](docs/docs/block/block-events.md) and [item event](docs/docs/item/item-events.md) handlers, [services](docs/docs/script-services.md) auto-wrapped to run every tick, and [`/scriptevent`](docs/docs/script-services.md#script-events) handlers, with compile-time trait validation
 - **CompilerState** - Get clear, helpful compile-time feedback to avoid debugging in the Minecraft content log
 - **Extensible & Maintainable** - Designed for large or complex addons where manual JSON becomes painful
 - **Iterable & Reusable** - Because its code, you can define variable and easily change things project-wide
 
-## 📦 Installation
+## Installation
 
 **ingot** is currently distributed via source. The easiest way to get started is:
 
@@ -38,7 +38,7 @@ dotnet build ingot.sln
 
 > **Future**: **ingot** will be published to NuGet once it reaches a stable API.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```csharp
 using ingot.Core;
@@ -94,7 +94,7 @@ class Program
 }
 ```
 
-See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, entities (behaviour + client entity), recipes, textures, scripts, and the full resource pack side. A larger procedural sample lives in [`ingot.Example.BricksGalore`](./ingot.Example.BricksGalore). The docs use `./output` as a generic compile path; this repo's lasagna example compiles to `./artifacts/example/` (or directly into `com.mojang` via `CompileComMojang`). See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Making an Entity](docs/docs/entity.md), [Client Entities](docs/docs/client-entity.md), [Block Events](docs/docs/block-events.md), [Item Events](docs/docs/item-events.md), [Script Services](docs/docs/script-services.md), and [Recipes](docs/docs/recipe.md) guides for more detail.
+See the [`ingot.Example`](./ingot.Example) project for a more complete working example that includes blocks, items, entities (behaviour + client entity), recipes, textures, scripts, and the full resource pack side. A larger procedural sample lives in [`ingot.Example.BricksGalore`](./ingot.Example.BricksGalore). The docs use `./output` as a generic compile path; this repo's lasagna example compiles to `./artifacts/example/` (or directly into `com.mojang` via `CompileComMojang`). See the [Resource Packs & Textures](docs/docs/resource-packs.md), [Making an Entity](docs/docs/entity/entity.md), [Client Entities](docs/docs/entity/client-entity.md), [Block Events](docs/docs/block/block-events.md), [Item Events](docs/docs/item/item-events.md), [Script Services and Events](docs/docs/script-services.md), and [Recipes](docs/docs/item/recipe.md) guides for more detail.
 
 ### Bricks Galore (large procedural example)
 
@@ -104,14 +104,14 @@ See the [`ingot.Example`](./ingot.Example) project for a more complete working e
 dotnet run --project ingot.Example.BricksGalore
 ```
 
-## 🛠️ Project Structure
+## Project Structure
 
 | Folder | Purpose |
 |--------|---------|
 | `ingot.Core` | Core API |
 | `ingot.Example` | Full small example (lasagna content, cow entity, scripts) |
 | `ingot.Example.BricksGalore` | Large procedural brick pack (materials x patterns x inlays) |
-| `ingot.Generators` | Trait generation library (MS Docs HTML + JSON Schema); see [Creating New Traits](docs/docs/trait-system.md#creating-new-traits) |
+| `ingot.Generators` | Trait generation library (MS Docs HTML + JSON Schema); see [Creating New Traits](docs/docs/advanced/trait-system.md#creating-new-traits) |
 | `ingot.Tests` | xUnit integration and compile tests |
 
-**Made with ❤️ for the Minecraft Bedrock addon community.**
+**Made with love for the Minecraft Bedrock addon community.**

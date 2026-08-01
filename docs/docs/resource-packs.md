@@ -82,13 +82,14 @@ Key `Pack` members:
 - `AddFunction(identifier, sourceFile, service = false)` - copies a `.mcfunction` into `bp/functions/`; when `service` is true, also lists it in `functions/tick.json`.
 - `ScriptsEnabled` - enables Script API script generation during compile.
 - `AddService(sourceFile, name?, intervalTicks?)` - registers a [service](script-services.md) whose tick body is wrapped in `system.runInterval` (default every tick) and written to `bp/scripts/services/`.
+- `AddScriptEvent(eventId, handler, name?)` - registers a [script event](script-services.md#script-events) handler for `/scriptevent` ids; written to `bp/scripts/events/` and subscribed via `system.afterEvents.scriptEventReceive`.
 - `ScriptEntry` - script module entry path (defaults to `scripts/main.js`).
 - `ScriptApiModules` - Script API module dependencies (defaults to `@minecraft/server` 2.8.0).
-- `ScriptEntryBody` - optional `ScriptHandler` whose body is appended to generated `scripts/main.js` after event/service imports (only when at least one event script or service is registered).
+- `ScriptEntryBody` - optional `ScriptHandler` whose body is appended to generated `scripts/main.js` after block/item event, service, and script-event imports (only when at least one script registry entry exists).
 - `MinEngineVersion` - minimum game version in pack manifests (defaults to `1.21.90`, matching default block/item format versions for Custom Components V2).
 - `PackVersion`, `Authors`, `OmitMetadata`, `LinkPacks` - pack metadata and cross-dependencies.
 
-The behaviour pack manifest includes a script module only when block/item events or services produce at least one script registry entry.
+The behaviour pack manifest includes a script module only when block/item events, services, or script events produce at least one script registry entry.
 
 - `PackIcon` - optional path to a source PNG. On compile, ingot always copies it to `bp/pack_icon.png` and `rp/pack_icon.png` (Bedrock requires that exact filename; the source path name does not matter).
 - `Compile(string outputDir)` - deletes any existing `bp/` and `rp/` subfolders, then compiles fresh ones under the output directory.
@@ -476,7 +477,7 @@ An empty `ResourcePack` (no textures or client entities) is still valid - it pro
 - [Making a Block](block/block.md) and [Block Material Instances](block/block-mat-instances.md)
 - [Items](item/item.md) and [Item Events](item/item-events.md)
 - [Making an Entity](entity/entity.md) and [Client Entities & Render Controllers](entity/client-entity.md)
-- [Block Events](block/block-events.md) and [Script Services](script-services.md)
+- [Block Events](block/block-events.md) and [Script Services and Events](script-services.md)
 - [Block Permutations](block/block-permutations.md)
 - API reference for `Pack.AddParticle` / `Pack.AddParticleTexture` and `ResourcePack`
 

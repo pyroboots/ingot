@@ -2,7 +2,7 @@
   href: getting-started.md
 - name: Resource Packs & Textures
   href: resource-packs.md
-- name: Script Services
+- name: Script Services and Events
   href: script-services.md
   tag: Scripts
 

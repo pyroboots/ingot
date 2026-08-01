@@ -232,19 +232,24 @@ See [Resource Packs & Textures](resource-packs.md) for the full texture pipeline
 
 ## Enable Script API (Optional)
 
-To use block or item event scripts and tick-based services:
+To use block or item event scripts, tick-based services, or `/scriptevent` handlers:
 
 ```csharp
+using ingot.Core.Scripting;
+
 pack.ScriptsEnabled = true;
 pack.AddService("./scripts/services/tick_service.js"); // optional global tick logic
+pack.AddScriptEvent("myaddon:hello", """
+    world.sendMessage(event.message);
+    """); // optional /scriptevent handlers
 ```
 
 > [!IMPORTANT]
-> Set `ScriptsEnabled = true` before compiling if you define block/item event handlers or services. Otherwise scripts are skipped and compile-time warnings are emitted.
+> Set `ScriptsEnabled = true` before compiling if you define block/item event handlers, services, or script events. Otherwise scripts are skipped and compile-time warnings are emitted.
 
-ingot generates custom components, event handler scripts under `bp/scripts/blocks/` and `bp/scripts/items/`, service scripts under `bp/scripts/services/` (wrapped in `system.runInterval` to run every tick), and a `scripts/main.js` entry point. The manifest script module is only added when at least one script exists.
+ingot generates custom components, event handler scripts under `bp/scripts/blocks/` and `bp/scripts/items/`, service scripts under `bp/scripts/services/` (wrapped in `system.runInterval`), script-event handlers under `bp/scripts/events/` (`scriptEventReceive` subscriptions), and a `scripts/main.js` entry point. The manifest script module is only added when at least one script exists.
 
-See [Block Events](block/block-events.md), [Item Events](item/item-events.md), and [Script Services](script-services.md).
+See [Block Events](block/block-events.md), [Item Events](item/item-events.md), and [Script Services and Events](script-services.md).
 
 ## Example Projects in This Repo
 
@@ -302,6 +307,7 @@ MyAddon/
     blocks/               # handler bodies for BlockEvents.FromFile
     items/                # handler bodies for ItemEvents.FromFile
     services/             # tick handler bodies registered with AddService
+    events/               # /scriptevent handler bodies for AddScriptEvent
   output/                 # generated bp/ + rp/ (gitignored)
 ```
 
@@ -311,7 +317,7 @@ Keep identifiers, traits, and cross-references in C# - recipes can reference ite
 
 - [Trait System](advanced/trait-system.md) - how behaviours are composed from interfaces
 - [Making a Block](block/block.md) / [Making an Item](item/item.md) - full content guides
-- [Block Events](block/block-events.md), [Item Events](item/item-events.md), and [Script Services](script-services.md)
+- [Block Events](block/block-events.md), [Item Events](item/item-events.md), and [Script Services and Events](script-services.md)
 - [Recipes](item/recipe.md) and [Loot Tables](item/loot-table.md)
 - [Trait System - Creating New Traits](advanced/trait-system.md#creating-new-traits) - add custom traits or regenerate from MS docs
 - [API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html)

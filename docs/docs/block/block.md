@@ -46,6 +46,7 @@ Every block **must** implement:
 | `Loot`              | `LootTable?`                | `null`             | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](../item/loot-table.md). |
 | `BlockEvents`       | `BlockEvents?`              | `null`             | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Block Events](block-events.md). |
 | `DynamicTraits`     | `Trait[]`                   | `[]`               | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../advanced/trait-system.md#dynamic-traits). |
+| `Singles`           | `Dictionary<Identifier, object>` | `{}`          | Components written as a single scalar value instead of an object body (`"namespace:comp": value`). See [Singles](../advanced/trait-system.md#singles). |
 
 All of the shortcut properties are written directly into the `components` object of the generated `minecraft:block` JSON.
 
