@@ -1,4 +1,5 @@
 using ingot.Core;
+using ingot.Core.Scripting;
 using ingot.Tests.Content;
 using ingot.Tests.Content.Blocks;
 using ingot.Tests.Support;
@@ -42,6 +43,65 @@ public class ScriptServicesAndFromFileTest
 
             string mainJs = File.ReadAllText(Path.Combine(output.Path, "bp", "scripts", "main.js"));
             Assert.Contains("./services/tick_service.js", mainJs);
+        }
+    }
+
+    [Fact]
+    public void Compile_ScriptEvent_WritesSubscriptionAndImportsInMainJs()
+    {
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
+        {
+            Pack pack = PackTestBuilder.Create();
+            pack.ScriptsEnabled = true;
+            pack.AddScriptEvent("test:hello", """
+                world.sendMessage(event.message);
+                """);
+            pack.Compile(output.Path, verbose: false);
+
+            string eventPath = Path.Combine(output.Path, "bp", "scripts", "events", "test_hello.js");
+            Assert.True(File.Exists(eventPath));
+            string script = File.ReadAllText(eventPath);
+            Assert.Contains("system.afterEvents.scriptEventReceive.subscribe((event) => {", script);
+            Assert.Contains("if (event.id !== \"test:hello\") return;", script);
+            Assert.Contains("world.sendMessage(event.message);", script);
+
+            string mainJs = File.ReadAllText(Path.Combine(output.Path, "bp", "scripts", "main.js"));
+            Assert.Contains("./events/test_hello.js", mainJs);
+        }
+    }
+
+    [Fact]
+    public void Compile_ScriptEventFromFile_WritesHandlerBodyFromFile()
+    {
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
+        {
+            Pack pack = PackTestBuilder.Create();
+            pack.ScriptsEnabled = true;
+            pack.AddScriptEvent(
+                "test:hello_file",
+                ScriptHandler.FromFile(FixturePaths.Resolve("scripts/hello_event.js")));
+            pack.Compile(output.Path, verbose: false);
+
+            string script = File.ReadAllText(Path.Combine(output.Path, "bp", "scripts", "events", "hello_event.js"));
+            Assert.Contains("if (event.id !== \"test:hello_file\") return;", script);
+            Assert.Contains("script event body marker", script);
+            Assert.Contains("world.sendMessage(event.message);", script);
+        }
+    }
+
+    [Fact]
+    public void Compile_ScriptEventWithoutScriptsEnabled_WritesWarningToLog()
+    {
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
+        {
+            Pack pack = PackTestBuilder.Create();
+            pack.ScriptsEnabled = false;
+            pack.AddScriptEvent("test:ignored", "world.sendMessage(\"nope\");");
+            pack.Compile(output.Path, verbose: true);
+
+            string log = File.ReadAllText(Path.Combine(output.Path, "ingot.log"));
+            Assert.Contains("script events are registered but ScriptsEnabled is false", log);
+            Assert.False(Directory.Exists(Path.Combine(output.Path, "bp", "scripts", "events")));
         }
     }
 

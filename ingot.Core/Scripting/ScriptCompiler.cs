@@ -23,6 +23,7 @@ internal static class ScriptCompiler
         bool hasEventBindings = CollectEventScripts(pack, ref writer);
 
         bool hasServices = pack.Services.Count > 0;
+        bool hasScriptEvents = pack.ScriptEvents.Count > 0;
 
         if (!pack.ScriptsEnabled)
         {
@@ -32,11 +33,22 @@ internal static class ScriptCompiler
             if (hasServices)
                 CompilerState.Warn(ref writer, "services are registered but ScriptsEnabled is false; services will not be compiled");
 
+            if (hasScriptEvents)
+                CompilerState.Warn(ref writer, "script events are registered but ScriptsEnabled is false; script events will not be compiled");
+
             return false;
         }
 
         foreach (ScriptServiceRegistration service in pack.Services)
             pack.ScriptRegistry.RegisterService(service.SourceFile, service.RelativePath, service.IntervalTicks);
+
+        foreach (ScriptEventRegistration scriptEvent in pack.ScriptEvents)
+        {
+            string body = scriptEvent.Handler.ResolveBody();
+            string code = ScriptEventGenerator.Generate(scriptEvent.EventId, body);
+            pack.ScriptRegistry.RegisterGenerated(scriptEvent.RelativePath, code);
+            CompilerState.Info($"registered script event {scriptEvent.EventId}");
+        }
 
         if (!pack.ScriptRegistry.HasEntries)
             return false;

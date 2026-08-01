@@ -85,6 +85,7 @@ public class Pack
 
     internal readonly ScriptRegistry ScriptRegistry = new();
     private readonly List<ScriptServiceRegistration> _services = new();
+    private readonly List<ScriptEventRegistration> _scriptEvents = new();
 
     /// <summary>
     /// Whether the compiled behaviour pack requires a Script API module in the manifest.
@@ -93,6 +94,9 @@ public class Pack
 
     /// <summary>Registered Script API services.</summary>
     internal IReadOnlyList<ScriptServiceRegistration> Services => _services;
+
+    /// <summary>Registered Script API <c>/scriptevent</c> handlers.</summary>
+    internal IReadOnlyList<ScriptEventRegistration> ScriptEvents => _scriptEvents;
 
     /// <summary>
     /// Defines the JavaScript body in the script entrypoint
@@ -506,6 +510,41 @@ public class Pack
 
         string fileName = name ?? Path.GetFileName(sourceFile);
         _services.Add(new ScriptServiceRegistration(sourceFile, $"scripts/services/{fileName}", intervalTicks));
+        return this;
+    }
+
+    /// <summary>
+    /// Registers a Script API handler for a <c>/scriptevent</c> id. The handler body runs when
+    /// <c>system.afterEvents.scriptEventReceive</c> fires for that id. Generated scripts are written
+    /// to <c>bp/scripts/events/</c> and imported from <c>scripts/main.js</c>.
+    /// </summary>
+    /// <param name="eventId">Script event id in <c>namespace:name</c> form (e.g. <c>mypack:hello</c>).</param>
+    /// <param name="handler">
+    /// Handler body (inline JavaScript or <see cref="ScriptHandler.FromFile"/>). The <c>event</c>
+    /// parameter is in scope (<c>event.id</c>, <c>event.message</c>, <c>event.sourceEntity</c>, etc.).
+    /// </param>
+    /// <param name="name">
+    /// Optional output file name under <c>bp/scripts/events/</c>. Defaults to
+    /// <c>{namespace}_{name}.js</c> derived from <paramref name="eventId"/>, or the source file name
+    /// when the handler is file-based.
+    /// </param>
+    public Pack AddScriptEvent(string eventId, ScriptHandler handler, string? name = null)
+    {
+        if (!handler.IsConfigured)
+            throw new ArgumentException("script event handler has no content configured", nameof(handler));
+
+        Identifier id = Identifier.Parse(eventId);
+        string resolvedId = id.ToString();
+
+        string fileName = name
+            ?? (handler.FilePath is not null
+                ? Path.GetFileName(handler.FilePath)
+                : $"{id.Namespace}_{id.Name}.js");
+
+        if (!fileName.EndsWith(".js", StringComparison.OrdinalIgnoreCase))
+            fileName += ".js";
+
+        _scriptEvents.Add(new ScriptEventRegistration(resolvedId, $"scripts/events/{fileName}", handler));
         return this;
     }
 

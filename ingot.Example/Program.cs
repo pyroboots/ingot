@@ -11,7 +11,7 @@ namespace ingot.Example;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         const string bpUuid = "a8f3c2e1-4b5d-6e7f-8091-a2b3c4d5e6f7";
         const string rpUuid = "b9e4d3c2-5a6b-7c8d-9e0f-b1c2d3e4f5a6";
@@ -53,7 +53,7 @@ class Program
             .AddItemTexture("cheese", Path.Combine(dataDir, "cheese.png"))
             .AddItemTexture("pasta", Path.Combine(dataDir, "pasta.png"))
             .AddItemTexture("spooky_special_sauce", Path.Combine(dataDir, "spooky_special_sauce.png"));
-
+        
         pack.CompileComMojang("/home/pyro/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang/", cache: true);
     }
 }

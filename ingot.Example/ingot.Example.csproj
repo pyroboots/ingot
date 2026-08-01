@@ -7,6 +7,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ingot.Core\ingot.Core.csproj" />
+      <ProjectReference Include="..\ingot.ForgeRt\ingot.ForgeRt.csproj" />
     </ItemGroup>
 
     <ItemGroup>
