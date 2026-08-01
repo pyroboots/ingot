@@ -1,6 +1,6 @@
 # Making an Item
 
-Items are defined by deriving from the abstract `Item` class. Like blocks, items use a combination of simple virtual properties and the [trait system](../trait-system.md) to describe their behavior.
+Items are defined by deriving from the abstract `Item` class. Like blocks, items use a combination of simple virtual properties and the [trait system](../advanced/trait-system.md) to describe their behavior.
 
 ## Minimal Item
 
@@ -35,7 +35,7 @@ Optionally override `TexturePath` to provide the source PNG. When set, ingot aut
 | `AllowOffhand`      | `bool`             | `false`          | Shortcut for `minecraft:allow_off_hand`. |
 | `TexturePath`       | `string?`          | `null`           | Optional source PNG for `Texture`. Auto-registered during compile. |
 | `ItemEvents`        | `ItemEvents?`      | `null`           | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Item Events](item-events.md). |
-| `DynamicTraits`     | `Trait[]`          | `[]`             | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../trait-system.md#dynamic-traits). |
+| `DynamicTraits`     | `Trait[]`          | `[]`             | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../advanced/trait-system.md#dynamic-traits). |
 
 These are written into the `description.menu_category` and `components` sections of the generated item JSON.
 

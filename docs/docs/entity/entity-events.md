@@ -223,4 +223,4 @@ See [`CowEntity.cs`](https://github.com/pyroboots/ingot/blob/master/ingot.Exampl
 - [Making an Entity](entity.md) - base entity properties and compilation
 - [Client Entities & Render Controllers](client-entity.md) - resource-pack visuals
 - [Entity Component Groups](entity-component-groups.md) - named component sets toggled by events
-- [Trait System](../trait-system.md) - entity traits and behaviour presets
+- [Trait System](../advanced/trait-system.md) - entity traits and behaviour presets

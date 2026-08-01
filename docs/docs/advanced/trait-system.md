@@ -28,7 +28,7 @@ public class MyItem : Item, IFood, IDurability
 }
 ```
 
-Traits can also be applied to [block permutations](block/block-permutations.md) and [entity component groups](entity/entity-component-groups.md) so that certain components only appear under specific conditions.
+Traits can also be applied to [block permutations](../block/block-permutations.md) and [entity component groups](../entity/entity-component-groups.md) so that certain components only appear under specific conditions.
 
 ## Implementing Trait Properties
 
@@ -93,26 +93,6 @@ Example output for a destructible block trait:
 > [!NOTE]
 > The `CompilerState` system emits warnings when values are null/empty, when a trait is used on the wrong content type, and similar author mistakes. Block states with more than 16 values throw at compile time. A full log is written to `{outputDir}/ingot.log` when using `Pack.Compile(..., verbose: true)` (the default).
 
-## Trait Attributes (Advanced)
-
-- `[Trait(string identifier, TraitSystem.TraitType constraint)]` - placed on the interface. Declares the Minecraft component name and whether the trait is valid on blocks, items, or entities.
-- `[TraitProperty]` - placed on properties inside the trait interface. Marked members are reflected and written as snake_case keys under the component.
-- `[TraitFormatVersion("x.y.z")]` - on a trait **interface**. Reflection **throws** if the content instance's `FormatVersion` is lower than the minimum (see [Format version requirements](#format-version-requirements)).
-- `[IngotExclude]` - omit a property when compiling JSON. Put it on the **trait interface** (always skip, e.g. schema-invalid generator leftovers) or on a **concrete implementation** (skip only for that type).
-- `[IngotOverride(value)]` - force a property value at reflection time (useful when a field accepts multiple types or you need a fixed override without changing the getter).
-- `[TraitPropertyConstraint(...)]` - hard checks on reflected property values; **throws** when the condition fails (e.g. `OneOf`, `Range`, `GreaterThan`).
-- `[TraitPropertyWarning(...)]` - soft checks; emits a compile **warning** when the condition matches (e.g. known-broken animation names). Use `{x}` in the message as a placeholder for the value.
-- `[CompileHooks(typeof(MyHooks))]` - on a content **class**. Runs `ICompileHooks.PreCompile` / `PostCompile` around JSON generation (see [Compile hooks](#compile-hooks)).
-
-> [!TIP]
-> Use `[IngotExclude]` when a virtual default would emit a field the current Bedrock schema rejects.
-
-```csharp
-// On an implementation: do not write health "value", only "max"
-[IngotExclude]
-int IHealth.Value => 10;
-```
-
 ### Format version requirements
 
 Some generated traits require a minimum content `format_version`. When a trait interface carries `[TraitFormatVersion("...")]`, compiling content that implements it with a lower `FormatVersion` throws `ArgumentException`.
@@ -134,25 +114,6 @@ Examples (item traits):
 ```csharp
 public override Version FormatVersion => new(1, 26, 0);
 ```
-
-### Compile hooks
-
-To run custom logic before/after a content type is written during pack compile, implement `ICompileHooks` and attach it with `[CompileHooks]`:
-
-```csharp
-using ingot.Core.TraitSystem;
-
-public class MyBlockHooks : ICompileHooks
-{
-    public void PreCompile(object inst) { /* e.g. log or mutate */ }
-    public string? PostCompile(string json) => json; // return null to keep original
-}
-
-[CompileHooks(typeof(MyBlockHooks))]
-public class MyBlock : Block { /* ... */ }
-```
-
-Hooks run for types registered on the behaviour pack (blocks, items, entities, recipes). `PostCompile` may return modified JSON; `null` keeps the compiler output.
 
 ## Dynamic Traits
 
@@ -256,7 +217,7 @@ public class MyFlyingMob : Entity, IEntityPresetFlying
 > [!TIP]
 > Presets compose many individual traits. You can still implement additional `IEntityTrait` interfaces beyond what a preset provides, or skip presets entirely and implement traits one at a time.
 
-See [Making an Entity](entity/entity.md), [Client Entities](entity/client-entity.md), [Entity Component Groups](entity/entity-component-groups.md), and [Entity Events](entity/entity-events.md) for a full example.
+See [Making an Entity](../entity/entity.md), [Client Entities](../entity/client-entity.md), [Entity Component Groups](../entity/entity-component-groups.md), and [Entity Events](../entity/entity-events.md) for a full example.
 
 ## Creating New Traits
 

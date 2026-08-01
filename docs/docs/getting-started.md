@@ -46,7 +46,7 @@ cd MyAddon
 
 ## Define Your First Item
 
-Items inherit from `Item` and must provide an `Identifier` and `Texture`. Behaviour beyond that comes from the [trait system](trait-system.md) - C# interfaces that map to Minecraft `minecraft:*` components.
+Items inherit from `Item` and must provide an `Identifier` and `Texture`. Behaviour beyond that comes from the [trait system](advanced/trait-system.md) - C# interfaces that map to Minecraft `minecraft:*` components.
 
 ```csharp
 using ingot.Core.Behaviour.Item;
@@ -72,7 +72,7 @@ Key points:
 
 - `Identifier` uses a `namespace` and `name` (compiled to `namespace:name` in JSON).
 - `Texture` is the icon key referenced in `minecraft:icon` and `item_texture.json`.
-- Implement trait interfaces (`IFood`, `IDurability`, etc.) and provide their properties via [explicit interface implementation](trait-system.md#implementing-trait-properties).
+- Implement trait interfaces (`IFood`, `IDurability`, etc.) and provide their properties via [explicit interface implementation](advanced/trait-system.md#implementing-trait-properties).
 
 See [Making an Item](item/item.md) for the full property reference.
 
@@ -118,7 +118,7 @@ Pack pack = Pack.Create(packUuid, "My Addon", "My first ingot pack")
 pack.Compile("./output");
 ```
 
-For pre-configured instances (runtime variants, generators), register through the behaviour pack: `pack.BehaviourPack.AddBlockFromInstance(inst)` (and the matching item/entity/recipe/loot helpers). See [Compiling Instances](trait-system.md#compiling-instances).
+For pre-configured instances (runtime variants, generators), register through the behaviour pack: `pack.BehaviourPack.AddBlockFromInstance(inst)` (and the matching item/entity/recipe/loot helpers). See [Compiling Instances](advanced/trait-system.md#compiling-instances).
 
 > [!IMPORTANT]
 > Use a **fixed** behaviour-pack UUID in real projects. Generating a new UUID every build makes Minecraft treat each compile as a different pack.
@@ -182,7 +182,7 @@ using Version = ingot.Core.Common.Version;
 pack.MinEngineVersion = new Version(1, 21, 0);
 ```
 
-Some traits also require a higher content `FormatVersion` on the class itself (for example `IBlockPlacer` needs `1.26.0`). See [Trait System - Format version requirements](trait-system.md#format-version-requirements).
+Some traits also require a higher content `FormatVersion` on the class itself (for example `IBlockPlacer` needs `1.26.0`). See [Trait System - Format version requirements](advanced/trait-system.md#format-version-requirements).
 
 ## Add Textures
 
@@ -282,7 +282,7 @@ To extend the pack, edit only the registration block in `Program.cs`:
 - New pattern: add a base PNG under `Textures/{Bricks|Chiseled|Tiles}/`, optional overlay under `Textures/Overlays/`, then `reg.AddPattern("id", "Folder/name", "minecraft:catalyst")`.
 
 > [!TIP]
-> This is the best reference for **instance-based registration**, bulk texture generation, or hundreds of nearly-identical blocks without copy-pasting C# classes. See [Compiling Instances](trait-system.md#compiling-instances).
+> This is the best reference for **instance-based registration**, bulk texture generation, or hundreds of nearly-identical blocks without copy-pasting C# classes. See [Compiling Instances](advanced/trait-system.md#compiling-instances).
 
 ## Project Layout (Recommended)
 
@@ -309,9 +309,9 @@ Keep identifiers, traits, and cross-references in C# - recipes can reference ite
 
 ## Next Steps
 
-- [Trait System](trait-system.md) - how behaviours are composed from interfaces
+- [Trait System](advanced/trait-system.md) - how behaviours are composed from interfaces
 - [Making a Block](block/block.md) / [Making an Item](item/item.md) - full content guides
 - [Block Events](block/block-events.md), [Item Events](item/item-events.md), and [Script Services](script-services.md)
 - [Recipes](item/recipe.md) and [Loot Tables](item/loot-table.md)
-- [Trait System - Creating New Traits](trait-system.md#creating-new-traits) - add custom traits or regenerate from MS docs
+- [Trait System - Creating New Traits](advanced/trait-system.md#creating-new-traits) - add custom traits or regenerate from MS docs
 - [API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html)

@@ -29,4 +29,11 @@
 - href: entity/entity-events.md
 
 - name: Advanced
-- href: trait-system.md
+- name: Trait System
+  href: advanced/trait-system.md
+- name: Trait Attributes
+  href: advanced/trait-attributes.md
+  tag: C#
+- name: Compile Hooks
+  href: advanced/compile-hooks.md
+  tag: C#

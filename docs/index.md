@@ -25,7 +25,7 @@ _description: A C# framework to programmatically create Minecraft Bedrock Editio
     <div class="ingot-card-title">Getting Started</div>
     <p class="ingot-card-desc">Install ingot, define your first content, compile a pack, and load it in-game.</p>
   </a>
-  <a class="ingot-card" href="docs/trait-system.md">
+  <a class="ingot-card" href="docs/advanced/trait-system.md">
     <div class="ingot-card-title">Trait System</div>
     <p class="ingot-card-desc">Compose block, item, and entity behaviour from strongly-typed C# interfaces.</p>
   </a>

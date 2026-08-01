@@ -1,6 +1,6 @@
 # Making a Block
 
-Blocks in ingot are created by deriving from the abstract `Block` class in `ingot.Core.Behaviour.Block`. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the [trait system](../trait-system.md).
+Blocks in ingot are created by deriving from the abstract `Block` class in `ingot.Core.Behaviour.Block`. Your derived class provides an identifier, material configuration, optional block states, permutations, and behavior via the [trait system](../advanced/trait-system.md).
 
 ## Minimal Block
 
@@ -45,7 +45,7 @@ Every block **must** implement:
 | `Replaceable`       | `bool?`                     | `null`             | Shortcut for `minecraft:replaceable`. |
 | `Loot`              | `LootTable?`                | `null`             | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](../item/loot-table.md). |
 | `BlockEvents`       | `BlockEvents?`              | `null`             | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Block Events](block-events.md). |
-| `DynamicTraits`     | `Trait[]`                   | `[]`               | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../trait-system.md#dynamic-traits). |
+| `DynamicTraits`     | `Trait[]`                   | `[]`               | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../advanced/trait-system.md#dynamic-traits). |
 
 All of the shortcut properties are written directly into the `components` object of the generated `minecraft:block` JSON.
 
@@ -93,7 +93,7 @@ public override Dictionary<string, dynamic[]> States => new()
 
 ## Adding Behavior with Traits
 
-Most block functionality comes from implementing [traits](../trait-system.md):
+Most block functionality comes from implementing [traits](../advanced/trait-system.md):
 
 ```csharp
 using ingot.Core.Behaviour.Block;

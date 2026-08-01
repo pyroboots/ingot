@@ -205,7 +205,7 @@ Handler bodies are inserted verbatim into the generated JavaScript. Use valid Sc
 
 ## Pairing Events with Traits
 
-Some Script API events only fire when the block also has the matching vanilla component. Add the appropriate [trait](../trait-system.md) on your block class:
+Some Script API events only fire when the block also has the matching vanilla component. Add the appropriate [trait](../advanced/trait-system.md) on your block class:
 
 ```csharp
 using System.Numerics;
@@ -266,5 +266,5 @@ Script generation is a dedicated pass that runs after behaviour-pack JSON is wri
 - [Making a Block](block.md) - base block properties including `BlockEvents`
 - [Item Events](../item/item-events.md) - the same Script API pattern for items
 - [Script Services](../script-services.md) - tick-based Script API modules
-- [Trait System](../trait-system.md) - vanilla components that pair with certain events
+- [Trait System](../advanced/trait-system.md) - vanilla components that pair with certain events
 - [Resource Packs & Textures](../resource-packs.md) - `Pack` compile workflow
