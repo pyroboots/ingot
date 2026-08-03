@@ -30,7 +30,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
     /// <summary>
     /// Dictionary of possible block states. Valid state types are: <see cref="int"/>[], <see cref="float"/>[], <see cref="bool"/>[], <see cref="string"/>[], 
     /// </summary>
-    public virtual Dictionary<string, dynamic[]> States => new();
+    public virtual Dictionary<string, object[]> States => new();
     /// <summary>
     /// List of possible block permutations
     /// </summary>

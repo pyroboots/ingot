@@ -173,4 +173,13 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
     public static bool operator !=(Identifier? left, Identifier? right) => !(left == right);
 
     private static JsonTextWriter? _dummyWriter;
+    
+    /// <summary>
+    /// <see cref="Identifier"/> -> <see cref="string"/>
+    /// </summary>
+    public static implicit operator string(Identifier id) => id.ToString();
+    /// <summary>
+    /// <see cref="string"/> -> <see cref="Identifier"/>
+    /// </summary>
+    public static implicit operator Identifier(string id) => new(id);
 }
