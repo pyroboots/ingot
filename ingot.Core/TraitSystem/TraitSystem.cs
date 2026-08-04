@@ -409,6 +409,22 @@ public static class TraitSystem
                 }
                 return false;
 
+            case TraitPropertyConstraintAttribute.Constraint.Type:
+            {
+                if (value is null)
+                    return false;
+
+                foreach (object target in targets)
+                {
+                    if (target is null)
+                        continue;
+                    if (ValueMatchesTypeName(value, target.ToString()!))
+                        return true;
+                }
+
+                return false;
+            }
+
             case TraitPropertyConstraintAttribute.Constraint.Range:
             {
                 double valueAsNum = RequireNumber(value, propertyName);
@@ -443,6 +459,7 @@ public static class TraitSystem
         object? value,
         string propertyName)
     {
+        string runtimeType = value?.GetType().Name ?? "null";
         string message = op switch
         {
             TraitPropertyConstraintAttribute.Constraint.NotEqual =>
@@ -459,10 +476,44 @@ public static class TraitSystem
                 $"{propertyName}: value ({value}) must be one of: {string.Join(", ", targets.Select(t => $"'{t}'"))}",
             TraitPropertyConstraintAttribute.Constraint.Range =>
                 $"{propertyName}: value ({value}) must be between {targets[0]} and {targets[1]}",
+            TraitPropertyConstraintAttribute.Constraint.Type =>
+                $"{propertyName}: value type ({runtimeType}) must be one of: {string.Join(", ", targets.Select(t => $"'{t}'"))}",
             _ => $"{propertyName}: constraint {op} failed for value ({value})"
         };
         return new ArgumentException(message);
     }
+
+    /// <summary>
+    /// Whether <paramref name="value"/>'s runtime type satisfies a schema/C# type name
+    /// (e.g. <c>boolean</c>, <c>string</c>, <c>integer</c>, <c>number</c>).
+    /// </summary>
+    private static bool ValueMatchesTypeName(object value, string typeName)
+    {
+        string name = typeName.Trim().ToLowerInvariant();
+        Type t = value.GetType();
+
+        return name switch
+        {
+            "boolean" or "bool" => t == typeof(bool),
+            "string" => t == typeof(string),
+            "integer" or "int" => IsIntegralType(t),
+            // json "number" accepts both floating and integral values
+            "number" or "float" or "double" => IsFloatingType(t) || IsIntegralType(t),
+            "array" => t.IsArray || (value is System.Collections.IList && value is not string),
+            "object" => t.IsClass && t != typeof(string) && !t.IsArray,
+            _ => string.Equals(t.Name, typeName, StringComparison.OrdinalIgnoreCase)
+                 || string.Equals(t.FullName, typeName, StringComparison.OrdinalIgnoreCase)
+        };
+    }
+
+    private static bool IsIntegralType(Type t) =>
+        t == typeof(byte) || t == typeof(sbyte)
+        || t == typeof(short) || t == typeof(ushort)
+        || t == typeof(int) || t == typeof(uint)
+        || t == typeof(long) || t == typeof(ulong);
+
+    private static bool IsFloatingType(Type t) =>
+        t == typeof(float) || t == typeof(double) || t == typeof(decimal);
 
     private static bool ValuesEqual(object? left, object? right)
     {

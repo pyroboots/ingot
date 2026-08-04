@@ -2,6 +2,7 @@
 
 namespace ingot.Core.TraitSystem.Traits.Item;
 using ingot.Core.Common;
+using ingot.Core.Common.SharedConstructs;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
@@ -16,15 +17,15 @@ public interface IEntityPlacer : IItemTrait
     /// List of block descriptors of the blocks that this item can be dispensed on. If left empty, all blocks will be allowed.
     /// </summary>
     [TraitProperty]
-    public virtual string[] DispenseOn => [];
+    public virtual BlockTypeDescriptor[] DispenseOn => [];
     /// <summary>
     /// The entity to be placed in the world.
     /// </summary>
     [TraitProperty]
-    public abstract string Entity { get; }
+    public abstract Identifier Entity { get; }
     /// <summary>
     /// List of block descriptors of the blocks that this item can be used on. If left empty, all blocks will be allowed.
     /// </summary>
     [TraitProperty]
-    public virtual string[] UseOn => [];
+    public virtual BlockTypeDescriptor[] UseOn => [];
 }

@@ -1,6 +1,7 @@
 using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
+using ingot.Core.Common.SharedConstructs;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
@@ -18,7 +19,7 @@ internal class FoodTestItem : Item, IFood, IUseAnimation, IUseModifiers
 
     int IFood.Nutrition => 4;
     float IFood.SaturationModifier => 0.5f;
-    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
+    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
 
     string IUseAnimation.Value => "eat";
     float IUseModifiers.UseDuration => 1.6f;

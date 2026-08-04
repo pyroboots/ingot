@@ -87,6 +87,34 @@ public class ValueConstraintAndWarningTest
     }
 
     [Fact]
+    public void Type_AcceptsAllowedBoolean()
+    {
+        List<Trait> traits = TraitSystem.GetTraits(new InteractButtonBoolItem(), TraitSystem.TraitType.Item);
+        Trait trait = Assert.Single(traits, t => t.Identifier.ToString() == "test:typed_value");
+        Assert.Equal(true, Assert.Single(trait.Properties).Value);
+    }
+
+    [Fact]
+    public void Type_AcceptsAllowedString()
+    {
+        List<Trait> traits = TraitSystem.GetTraits(new InteractButtonStringItem(), TraitSystem.TraitType.Item);
+        Trait trait = Assert.Single(traits, t => t.Identifier.ToString() == "test:typed_value");
+        Assert.Equal("Use Item", Assert.Single(trait.Properties).Value);
+    }
+
+    [Fact]
+    public void Type_RejectsDisallowedRuntimeType()
+    {
+        ArgumentException ex = Assert.Throws<ArgumentException>(() =>
+            TraitSystem.GetTraits(new InteractButtonIntItem(), TraitSystem.TraitType.Item));
+
+        Assert.Contains("value type", ex.Message);
+        Assert.Contains("must be one of", ex.Message);
+        Assert.Contains("boolean", ex.Message);
+        Assert.Contains("string", ex.Message);
+    }
+
+    [Fact]
     public void FormatVersionAttribute_RejectsWhenContentVersionTooLow()
     {
         ArgumentException ex = Assert.Throws<ArgumentException>(() =>
@@ -183,6 +211,33 @@ public class ValueConstraintAndWarningTest
     {
         public override Identifier Identifier => new("test:forbidden_stack");
         int IConstrainedStack.Value => 0;
+    }
+
+    // mirrors multi-primitive oneOf schemas (e.g. minecraft:interact_button)
+    [TraitAttr("test:typed_value", TraitSystem.TraitType.Item)]
+    private interface ITypedValue : IItemTrait
+    {
+        [TraitProperty]
+        [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.Type, "boolean", "string")]
+        object Value { get; }
+    }
+
+    private sealed class InteractButtonBoolItem : TestItem, ITypedValue
+    {
+        public override Identifier Identifier => new("test:typed_bool");
+        object ITypedValue.Value => true;
+    }
+
+    private sealed class InteractButtonStringItem : TestItem, ITypedValue
+    {
+        public override Identifier Identifier => new("test:typed_string");
+        object ITypedValue.Value => "Use Item";
+    }
+
+    private sealed class InteractButtonIntItem : TestItem, ITypedValue
+    {
+        public override Identifier Identifier => new("test:typed_int");
+        object ITypedValue.Value => 42;
     }
 
     [TraitAttr("test:format_gated_trait", TraitSystem.TraitType.Item)]

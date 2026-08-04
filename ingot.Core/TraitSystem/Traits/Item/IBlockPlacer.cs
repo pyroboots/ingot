@@ -2,11 +2,12 @@
 
 namespace ingot.Core.TraitSystem.Traits.Item;
 using ingot.Core.Common;
+using ingot.Core.Common.SharedConstructs;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
 /// <summary>
-/// Items with the block_placer component will place a block when used. This component can also be used instead of the "minecraft:icon" component to render the referenced block as the item icon.
+/// Items with the block_placer component will place a block when used.  This component can also be used instead of the &quot;minecraft:icon&quot; component to render the referenced block as the item icon.
 /// </summary>
 [Trait("minecraft:block_placer", TraitSystem.TraitType.Item)]
 [TraitFormatVersion("1.26.0")]
@@ -21,9 +22,9 @@ public interface IBlockPlacer : IItemTrait
     /// Defines the block that will be placed.
     /// </summary>
     [TraitProperty]
-    public abstract string Block { get; }
+    public abstract BlockTypeDescriptor Block { get; }
     /// <summary>
-    /// If true, the item will be registered as the item for this block. This item will be returned by default when the block is broken/picked. Note: the identifier for this item must match the block's identifier for this field to be valid. Defaults to false.
+    /// If true, the item will be registered as the item for this block. This item will be returned by default when the block is broken/picked. Note: the identifier for this item must match the block&apos;s identifier for this field to be valid. Defaults to false.
     /// </summary>
     [TraitProperty]
     public virtual bool ReplaceBlockItem => false;
@@ -31,5 +32,5 @@ public interface IBlockPlacer : IItemTrait
     /// List of block descriptors of the blocks that this item can be used on. If left empty, all blocks will be allowed.
     /// </summary>
     [TraitProperty]
-    public virtual string[] UseOn => [];
+    public virtual BlockTypeDescriptor[] UseOn => [];
 }

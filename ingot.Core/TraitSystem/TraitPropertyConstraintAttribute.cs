@@ -7,10 +7,11 @@ namespace ingot.Core.TraitSystem;
 /// <remarks>
 /// Operator meaning (condition that must hold):
 /// <list type="bullet">
-/// <item><see cref="Constraint.NotEqual"/> — value must not equal any entry in <see cref="Values"/></item>
-/// <item><see cref="Constraint.GreaterThan"/> — value must be strictly greater than every numeric entry</item>
-/// <item><see cref="Constraint.LessThan"/> — value must be strictly less than every numeric entry</item>
-/// <item><see cref="Constraint.OneOf"/> — value must equal one of the entries</item>
+/// <item><see cref="Constraint.NotEqual"/> - value must not equal any entry in <see cref="Values"/></item>
+/// <item><see cref="Constraint.GreaterThan"/> - value must be strictly greater than every numeric entry</item>
+/// <item><see cref="Constraint.LessThan"/> - value must be strictly less than every numeric entry</item>
+/// <item><see cref="Constraint.OneOf"/> - value must equal one of the entries</item>
+/// <item><see cref="Constraint.Type"/> - runtime type of the value must match one of the type names in <see cref="Values"/></item>
 /// </list>
 /// For component-level minimum format versions, use <see cref="TraitFormatVersionAttribute"/> on the trait interface.
 /// </remarks>
@@ -44,6 +45,14 @@ public class TraitPropertyConstraintAttribute : Attribute
         
         /// <summary>Value must be between <see cref="Values"/>[0] and <see cref="Values"/>[1].</summary>
         Range,
+
+        /// <summary>
+        /// Runtime type of the value must match one of the type names in <see cref="Values"/>.
+        /// Accepts JSON schema names (<c>boolean</c>, <c>string</c>, <c>integer</c>, <c>number</c>,
+        /// <c>array</c>, <c>object</c>) and common C# aliases (<c>bool</c>, <c>int</c>, <c>float</c>).
+        /// Used for multi-primitive <c>oneOf</c> properties typed as <c>object?</c>.
+        /// </summary>
+        Type,
     }
 
     /// <summary>

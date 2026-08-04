@@ -17,11 +17,8 @@ public class BlockTypeDescriptor : ICompilableFragment
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
     {
-        JsonHelper json = new(ref writer);
-        json.Object("", () =>
-        {
-            json.Property("name", Name);
-        });
+        // name-only block descriptors compile as a bare identifier string
+        writer.WriteValue(Name.ToString());
     }
 
     /// <summary>

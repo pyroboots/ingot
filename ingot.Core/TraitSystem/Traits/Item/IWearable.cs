@@ -27,7 +27,7 @@ public interface IWearable : IItemTrait
     /// <summary>Equivalent to <c>slot_armor_body</c></summary>
     public const string EquipmentSlot_SlotArmorBody = "slot_armor_body";
     /// <summary>
-    /// Determines whether the Player's location is hidden on Locator Maps and the Locator Bar when the wearable item is worn. Default is false.
+    /// Determines whether the Player&apos;s location is hidden on Locator Maps and the Locator Bar when the wearable item is worn. Default is false.
     /// </summary>
     [TraitProperty]
     public virtual bool HidesPlayerLocation => false;

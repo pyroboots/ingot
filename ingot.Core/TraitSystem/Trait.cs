@@ -20,7 +20,7 @@ public record TraitProperty : ICompilableFragment
     /// </summary>
     /// <param name="name">Property name on the trait interface.</param>
     /// <param name="value">Runtime value of the property.</param>
-    public TraitProperty(string name, dynamic value)
+    public TraitProperty(string name, object? value)
     {
         Name = name;
         Value = value;
@@ -33,7 +33,7 @@ public record TraitProperty : ICompilableFragment
     /// <summary>
     /// Runtime value of the property.
     /// </summary>
-    public dynamic Value;
+    public object? Value;
 
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer) => Property(ref writer, Formatting.PascalToSnakeCase(Name), Value);

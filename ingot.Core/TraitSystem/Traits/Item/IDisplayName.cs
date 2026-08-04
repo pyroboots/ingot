@@ -6,7 +6,7 @@ using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
 /// <summary>
-/// The display_name item component specifies the text shown whenever an item's name is displayed, like in hover text.
+/// The display_name item component specifies the text shown whenever an item&apos;s name is displayed, like in hover text.
 /// </summary>
 [Trait("minecraft:display_name", TraitSystem.TraitType.Item)]
 [TraitFormatVersion("1.20.50")]

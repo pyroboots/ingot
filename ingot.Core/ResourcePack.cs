@@ -139,7 +139,7 @@ public class ResourcePack
     /// <param name="identifier">The geometry identifier used in behaviour or client-entity definitions.</param>
     /// <param name="sourceGeoJsonPath">Path to the source <c>.geo.json</c> file on disk (copied as-is).</param>
     /// <param name="rpName">Optional filename (without extension) under the models subdir. Defaults to the last segment of <paramref name="identifier"/>.</param>
-    /// <param name="modelsSubdir">Pack folder under <c>models/</c> — use <c>blocks</c> for blocks, <c>entity</c> for client entities.</param>
+    /// <param name="modelsSubdir">Pack folder under <c>models/</c> - use <c>blocks</c> for blocks, <c>entity</c> for client entities.</param>
     public ResourcePack AddGeometry(
         string identifier,
         string sourceGeoJsonPath,

@@ -6,7 +6,7 @@ using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
 /// <summary>
-/// [EXPERIMENTAL] Adds bundle-specific interactions and tooltip to the item. Requires a "minecraft:storage_item" component.
+/// [EXPERIMENTAL] Adds bundle-specific interactions and tooltip to the item. Requires a &quot;minecraft:storage_item&quot; component.
 /// </summary>
 [Trait("minecraft:bundle_interaction", TraitSystem.TraitType.Item)]
 [TraitFormatVersion("1.21.30")]

@@ -17,11 +17,8 @@ public class ItemTypeDescriptor : ICompilableFragment
     /// <inheritdoc/>
     public void Compile(ref JsonTextWriter writer)
     {
-        JsonHelper json = new(ref writer);
-        json.Object("", () =>
-        {
-            json.Property("name", Name);
-        });
+        // name-only item descriptors compile as a bare identifier string
+        writer.WriteValue(Name.ToString());
     }
 
     /// <summary>
