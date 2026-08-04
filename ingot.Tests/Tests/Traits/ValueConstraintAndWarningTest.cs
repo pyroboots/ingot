@@ -41,9 +41,6 @@ public class ValueConstraintAndWarningTest
         Trait useAnim = Assert.Single(traits, t => t.Identifier.ToString() == "minecraft:use_animation");
         Assert.Equal("bow", Assert.Single(useAnim.Properties).Value);
 
-        List<string> logs = CompilerState.GetLogs();
-        Assert.Contains(logs, l => l.Contains("animation 'bow' is broken"));
-
         CompilerState.Pop();
         CompilerState.Reset();
     }

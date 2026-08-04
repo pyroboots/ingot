@@ -4,10 +4,13 @@ using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
+using Version = ingot.Core.Common.Version;
+
 namespace ingot.Tests.Content.Items;
 
 internal class FoodTestItem : Item, IFood, IUseAnimation, IUseModifiers
 {
+    public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => new("test:food_item");
     public override string Texture => "food_item";
     public override string? TexturePath => FixturePaths.Resolve("test_item.png");
