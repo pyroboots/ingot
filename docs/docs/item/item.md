@@ -47,6 +47,8 @@ The vast majority of interesting item features come from implementing `IItemTrai
 ```csharp
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
+using ingot.Core.Common.SharedConstructs;
+using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
 using Version = ingot.Core.Common.Version;
@@ -62,26 +64,31 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     // IFood
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    string IFood.UsingConvertsTo => "minecraft:bowl";
+    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
 
     // Required with food: non-zero use duration (and usually an eat animation)
     string IUseAnimation.Value => "eat";
     float IUseModifiers.UseDuration => 1.6f;
     float IUseModifiers.MovementModifier => 0.35f;
-    dynamic? IUseModifiers.StartUsing => "always";
-    dynamic? IUseModifiers.StartSound => null;
+    string IUseModifiers.StartUsing => IUseModifiers.StartUsing_Always;
+    // StartSound is abstract; exclude when you have no start sound
+    [IngotExclude]
+    string IUseModifiers.StartSound => null!;
 
     // IBlockPlacer
-    dynamic IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    BlockTypeDescriptor IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }
 ```
 
 > [!IMPORTANT]
-> `IFood` requires a non-zero **`minecraft:use_modifiers` / `use_duration`**. Implement `IUseModifiers` and set `UseDuration` (e.g. `1.6f` for a normal eat). Without it, the content log warns and eating may not work correctly.
+> `IFood` requires a non-zero **`minecraft:use_modifiers` / `use_duration`**. Implement `IUseModifiers` and set `UseDuration` (e.g. `1.6f` for a normal eat). Without it, the content log warns and eating may not work correctly. `IUseModifiers` also has abstract `MovementModifier` and `StartSound` - implement them, or mark unused ones with `[IngotExclude]`.
 
 > [!IMPORTANT]
-> Some item traits declare a minimum content `format_version` via `[TraitFormatVersion]`. Reflection **throws** if your item's `FormatVersion` is lower. Notable examples: `IBlockPlacer` and `IDamage` require `1.26.0`; `ICompostable` requires `1.21.60`. Default `Item.FormatVersion` is `1.21.90`.
+> Some item traits declare a minimum content `format_version` via `[TraitFormatVersion]`. Reflection **throws** if your item's `FormatVersion` is lower. Notable examples: `IBlockPlacer` and `IDamage` require `1.26.0`; `ICompostable` requires `1.21.50`. Default `Item.FormatVersion` is `1.21.90`.
+
+> [!NOTE]
+> Schema-generated item traits use [shared constructs](../advanced/trait-system.md#shared-constructs) such as `ItemTypeDescriptor` and `BlockTypeDescriptor`. Strings convert implicitly, so `=> "minecraft:bowl"` is valid.
 
 > [!TIP]
 > Because some traits will have common property names, its recommended to implement the properties explicitly to be more readable, less ambiguous and it also looks prettier.

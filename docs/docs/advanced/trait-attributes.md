@@ -61,7 +61,7 @@ The `TraitFormatVersion` attribute is placed on a trait **interface** to declare
 
 ```csharp
 [Trait("minecraft:bundle_interaction", TraitSystem.TraitType.Item)]
-[TraitFormatVersion("1.21.40")]
+[TraitFormatVersion("1.21.30")]
 public interface IBundleInteraction : IItemTrait
 {
     [TraitProperty]
@@ -71,7 +71,7 @@ public interface IBundleInteraction : IItemTrait
 public class CustomBundle : Item, IBundleInteraction
 {
     // ...
-    public override FormatVersion => new Version(1,20,0);
+    public override Version FormatVersion => new(1, 20, 0);
     // ...
 }
 ```
@@ -85,7 +85,8 @@ The `IngotExclude` attribute is used on content declaration properties to skip s
 **Format:** `[IngotExclude]`
 
 ```csharp
-// minified version of example projects LasagnaItem for sake of demonstration
+// minified version of example project's LasagnaItem for demonstration
+// (add: using ingot.Core.Common.SharedConstructs;)
 public class LasagnaItem : Item, IFood
 {
     public override Version FormatVersion => new(1, 26, 0);
@@ -100,7 +101,7 @@ public class LasagnaItem : Item, IFood
 
     // NOT serialised
     [IngotExclude]
-    string IFood.UsingConvertsTo => "minecraft:bowl";
+    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
 }
 ```
 

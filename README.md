@@ -44,6 +44,8 @@ dotnet build ingot.sln
 using ingot.Core;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
+using ingot.Core.Common.SharedConstructs;
+using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
 using Version = ingot.Core.Common.Version;
@@ -60,13 +62,16 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     // food requires use_modifiers (use duration) and usually an eat animation
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    string IFood.UsingConvertsTo => "minecraft:bowl";
+    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
 
     string IUseAnimation.Value => "eat";
     float IUseModifiers.UseDuration => 1.6f;
     float IUseModifiers.MovementModifier => 0.35f;
+    string IUseModifiers.StartUsing => IUseModifiers.StartUsing_Always;
+    [IngotExclude]
+    string IUseModifiers.StartSound => null!;
 
-    dynamic IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    BlockTypeDescriptor IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }
 
@@ -111,7 +116,7 @@ dotnet run --project ingot.Example.BricksGalore
 | `ingot.Core` | Core API |
 | `ingot.Example` | Full small example (lasagna content, cow entity, scripts) |
 | `ingot.Example.BricksGalore` | Large procedural brick pack (materials x patterns x inlays) |
-| `ingot.Generators` | Trait generation library (MS Docs HTML + JSON Schema); see [Creating New Traits](docs/docs/advanced/trait-system.md#creating-new-traits) |
+| `ingot.Generators` | Schema-driven trait generation (`TraitGeneratorV2` from bedrock-samples JSON schemas); see [Creating New Traits](docs/docs/advanced/trait-system.md#creating-new-traits) |
 | `ingot.Tests` | xUnit integration and compile tests |
 
 **Made with love for the Minecraft Bedrock addon community.**

@@ -116,8 +116,9 @@ This copies the file to `{outputDir}/bp/pack_icon.png` and `{outputDir}/rp/pack_
 When `ScriptsEnabled` is `true`, **ingot** writes:
 
 - per-content event scripts under `bp/scripts/blocks/` and `bp/scripts/items/` ([Block Events](block/block-events.md), [Item Events](item/item-events.md))
-- [service](script-services.md) scripts under `bp/scripts/services/` (via `AddService`, wrapped to run every tick)
-- a generated `bp/scripts/main.js` entry that imports all of the above
+- [service](script-services.md) scripts under `bp/scripts/services/` (via `AddService`, wrapped in `system.runInterval`)
+- [script event](script-services.md#script-events) handlers under `bp/scripts/events/` (via `AddScriptEvent`, subscribed on `scriptEventReceive`)
+- a generated `bp/scripts/main.js` entry that imports all of the above (plus optional `ScriptEntryBody`)
 
 ## Deploying to Minecraft
 

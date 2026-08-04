@@ -51,6 +51,7 @@ Items inherit from `Item` and must provide an `Identifier` and `Texture`. Behavi
 ```csharp
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
 public class CustomFood : Item, IFood, IUseAnimation, IUseModifiers
@@ -65,6 +66,10 @@ public class CustomFood : Item, IFood, IUseAnimation, IUseModifiers
 
     string IUseAnimation.Value => "eat";
     float IUseModifiers.UseDuration => 1.6f;
+    float IUseModifiers.MovementModifier => 0.35f;
+    // StartSound is abstract on IUseModifiers; exclude when unused
+    [IngotExclude]
+    string IUseModifiers.StartSound => null!;
 }
 ```
 
@@ -319,5 +324,5 @@ Keep identifiers, traits, and cross-references in C# - recipes can reference ite
 - [Making a Block](block/block.md) / [Making an Item](item/item.md) - full content guides
 - [Block Events](block/block-events.md), [Item Events](item/item-events.md), and [Script Services and Events](script-services.md)
 - [Recipes](item/recipe.md) and [Loot Tables](item/loot-table.md)
-- [Trait System - Creating New Traits](advanced/trait-system.md#creating-new-traits) - add custom traits or regenerate from MS docs
+- [Trait System - Creating New Traits](advanced/trait-system.md#creating-new-traits) - add custom traits or regenerate from Bedrock JSON schemas
 - [API Reference](https://pyroboots.github.io/ingot/api/ingot.Core.html)

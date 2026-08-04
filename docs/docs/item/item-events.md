@@ -198,9 +198,9 @@ public class HealingBerryItem : Item, IFood, IUseModifiers
     int IFood.Nutrition => 4;
     float IFood.SaturationModifier => 0.6f;
 
-    // IUseModifiers
+    // IUseModifiers (MovementModifier and StartSound are abstract)
     float IUseModifiers.MovementModifier => 0.35f;
-    dynamic? IUseModifiers.StartSound => "random.eat";
+    string IUseModifiers.StartSound => "random.eat";
     float IUseModifiers.UseDuration => 1.6f;
 }
 ```

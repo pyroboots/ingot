@@ -31,7 +31,7 @@ Every block **must** implement:
 | `FormatVersion`     | `Version`                   | `"1.21.90"`        | Target format version. Required for Custom Components V2 (custom components as direct `components` entries). |
 | `Category`          | `Enums.CatalogueCategory`   | `Items`            | Creative inventory tab (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
 | `Group`             | `string?`                   | `null`             | Sub-group inside the chosen category (max 256 characters). |
-| `States`            | `Dictionary<string, dynamic[]>` | `{}`           | Custom block states (see below). |
+| `States`            | `Dictionary<string, object[]>` | `{}`           | Custom block states (see below). |
 | `Permutations`      | `List<BlockPermutation>`    | `[]`               | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
 | `Tags`              | `string[]`                  | `[]`               | Block tags written as empty `tag:<name>` components. |
 | `DisplayName`       | `string?`                   | `null`             | Shortcut for `minecraft:display_name`. |
@@ -76,7 +76,7 @@ Permutations can also declare their own `Tags` - see [Block Permutations](block-
 Custom states let you drive permutations and Molang queries. Declare them by overriding `States`:
 
 ```csharp
-public override Dictionary<string, dynamic[]> States => new()
+public override Dictionary<string, object[]> States => new()
 {
     { "mynamespace:power_level", [0, 1, 2, 3, 4] },
     { "mynamespace:is_active", [true, false] }
@@ -84,7 +84,7 @@ public override Dictionary<string, dynamic[]> States => new()
 ```
 
 > [!CAUTION]
-> Although the state dictionary's value type is `dynamic`, Minecraft will only accept `int`, `float`, `bool`, and `string`. Make sure your array is one of those types.
+> Although the state dictionary's value type is `object[]`, Minecraft will only accept `int`, `float`, `bool`, and `string` values. Keep each array homogeneous and limited to those types.
 
 > [!WARNING]
 > Minecraft limits a state to **16** possible values. ingot **throws** `ArgumentException` at compile time if a state exceeds that limit.
