@@ -6,14 +6,14 @@ using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
 /// <summary>
-/// The hover_text_color component specifies the color of the item name when the players hovers the cursor over the item.
+/// The display_name item component specifies the text shown whenever an item's name is displayed, like in hover text.
 /// </summary>
-[Trait("minecraft:hover_text_color", TraitSystem.TraitType.Item)]
+[Trait("minecraft:display_name", TraitSystem.TraitType.Item)]
 [TraitFormatVersion("1.20.50")]
-public interface IHoverTextColor : IItemTrait
+public interface IDisplayName : IItemTrait
 {
     /// <summary>
-    /// Specifies the color of the item's hover text.
+    /// Name shown for an item.
     /// </summary>
     [TraitProperty]
     public abstract string Value { get; }

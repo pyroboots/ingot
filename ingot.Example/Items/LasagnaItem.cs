@@ -17,14 +17,15 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
 
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    string IFood.UsingConvertsTo => "minecraft:bowl";
+    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
     
     string IUseAnimation.Value => "eat";
     float IUseModifiers.MovementModifier => 0.35f;
     float IUseModifiers.UseDuration => 1.6f;
-    dynamic? IUseModifiers.StartUsing => "always";
-    dynamic? IUseModifiers.StartSound => null;
+    string IUseModifiers.StartUsing => IUseModifiers.StartUsing_Always;
+    [IngotExclude]
+    string IUseModifiers.StartSound => null;
     
-    dynamic IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    string IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }

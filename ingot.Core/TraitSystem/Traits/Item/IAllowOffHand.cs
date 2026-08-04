@@ -6,14 +6,14 @@ using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
 /// <summary>
-/// The hand_equipped component determines if an item is rendered like a tool while it is in a player's hand.
+/// The allow_off_hand component determines whether the item can be placed in the off hand slot of the inventory.
 /// </summary>
-[Trait("minecraft:hand_equipped", TraitSystem.TraitType.Item)]
+[Trait("minecraft:allow_off_hand", TraitSystem.TraitType.Item)]
 [TraitFormatVersion("1.20.50")]
-public interface IHandEquipped : IItemTrait
+public interface IAllowOffHand : IItemTrait
 {
     /// <summary>
-    /// Determines whether the item is rendered like a tool while in the player's hand.
+    /// Determines whether the item can be placed in the off hand slot.
     /// </summary>
     [TraitProperty]
     public virtual bool Value => false;

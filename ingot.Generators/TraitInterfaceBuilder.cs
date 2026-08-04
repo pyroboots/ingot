@@ -1,6 +1,8 @@
 using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 
+using Newtonsoft.Json.Linq;
+
 using Version = System.Version;
 
 namespace ingot.Generators;
@@ -45,7 +47,13 @@ public class TraitInterfaceBuilder
         TraitPropertyConstraintAttribute[]? constraints = null, TraitPropertyWarningAttribute[]? warnings = null) 
         => _properties.Add(new(desc, name, required, type, defaultValue, constraints ?? [], warnings ?? []));
 
-    public void Enum(string name, params string[] values) => _enums.Add(name, values);
+    public void Enum(string name, params string[] values)
+    {
+        if (_enums.ContainsKey(name)) return;
+
+        string[] sanitisedValues = values.Select((v) => v.Replace(".", "_")).ToArray();
+        _enums.Add(name, sanitisedValues);
+    }
     
     // in case things ever get renamed, generator stays up to date
     private static string TraitAttribute => nameof(Core.TraitSystem.TraitAttribute);
@@ -54,6 +62,23 @@ public class TraitInterfaceBuilder
     private static string TraitPropertyAttribute => nameof(Core.TraitSystem.TraitPropertyAttribute);
     private static string TraitPropertyConstraintAttribute => nameof(Core.TraitSystem.TraitPropertyConstraintAttribute);
     private static string TraitPropertyWarningAttribute => nameof(Core.TraitSystem.TraitPropertyConstraintAttribute);
+
+    private string FormatValue(object? value, string type)
+    {
+        if (value == null) return "null";
+        if (type == "dynamic") return "null";
+        
+        Type t = value.GetType();
+        if (t == typeof(float)) return $"{value}f";
+        if (t == typeof(double)) return $"{value}f";
+        if (t == typeof(string)) return $"\"{value.ToString()!.ToLower()}\"";
+        if (t == typeof(bool)) return value.ToString()!.ToLower();
+        if (t == typeof(Int64)) return value.ToString()!;
+        if (t == typeof(JArray)) return "[]";
+        if (t == typeof(JObject)) return "null";
+
+        throw new Exception($"could not evaluate type {t.FullName}");
+    }
     
     public string Generate()
     {
@@ -63,39 +88,38 @@ public class TraitInterfaceBuilder
         foreach (string header in ExtraHeaders)
             sw.WriteLine($"// {header}");
         sw.WriteLine();
-        sw.WriteLine(Namespace);
+        sw.WriteLine($"namespace {Namespace};");
         foreach (string import in _usings)
             sw.WriteLine($"using {import};");
         sw.WriteLine();
         sw.WriteLine("/// <summary>");
-        sw.WriteLine($"/// {Description}");
+        sw.WriteLine($"/// {(Description is null ? "" : Description.Replace("\n", ""))}");
         sw.WriteLine("/// </summary>");
-        sw.WriteLine($"[{TraitAttribute}(\"{Component}\", TraitSystem.TraitType.{System.Enum.GetName(Type)})]");
-        sw.WriteLine($"[{FmtVerAttribute}(\"{FormatVersion}\")]");
+        sw.WriteLine($"[{TraitAttribute.Replace("Attribute", "")}(\"{Component}\", TraitSystem.TraitType.{System.Enum.GetName(Type)})]");
+        sw.WriteLine($"[{FmtVerAttribute.Replace("Attribute", "")}(\"{FormatVersion}\")]");
         sw.WriteLine($"public interface I{Name} : {ItemTraitInterface}");
         sw.WriteLine("{");
-
-        foreach (var enumeration in _enums) foreach (string enumerations in enumeration.Value)
-            sw.WriteLine($"    public const string {enumeration.Key}_{Formatting.SnakeToPascalCase(enumerations)} = \"{enumerations}\";");
+        
+        foreach (var enumName in _enums) foreach (string enumValue in enumName.Value)
+        {
+            sw.WriteLine($"    /// <summary>Equivalent to <c>{enumValue}</c></summary>");
+            sw.WriteLine($"    public const string {enumName.Key}_{Formatting.SnakeToPascalCase(enumValue)} = \"{enumValue}\";");
+        }
         
         foreach (InterfaceProperty prop in _properties)
         {
             sw.WriteLine("    /// <summary>");
-            sw.WriteLine($"    /// {prop.Description}");
+            sw.WriteLine($"    /// {(prop.Description is null ? "" : prop.Description.Replace("\n", ""))}");
             sw.WriteLine("    /// </summary>");
-
-            string sanitisedDefaultValue;
-            if (prop.DefaultValue is null) sanitisedDefaultValue = "null";
-            else sanitisedDefaultValue = prop.DefaultValue is string ? $"\"{prop.DefaultValue.ToString().Replace("\"", "\\\"")}\"" : prop.DefaultValue.ToString();
             
-            sw.WriteLine($"    [{TraitPropertyAttribute}]");
+            sw.WriteLine($"    [{TraitPropertyAttribute.Replace("Attribute", "")}]");
             foreach (TraitPropertyConstraintAttribute constraint in prop.Constraints)
             {
                 string values = string.Join(',',
                     constraint.Values.Select((v) => v is string ? $"\"{v}\"" : v.ToString()));
                 
                 // [TraitPropertyConstraint(TraitPropertyConstraint.Constraint.OneOf, "use", "attack")]
-                sw.WriteLine($"    [{TraitPropertyConstraintAttribute}(TraitPropertyConstraint.Constraint.{System.Enum.GetName(constraint.Operation)}, {values})]");
+                sw.WriteLine($"    [{TraitPropertyConstraintAttribute.Replace("Attribute", "")}({TraitPropertyConstraintAttribute}.Constraint.{System.Enum.GetName(constraint.Operation)}, {values})]");
             }
             foreach (TraitPropertyWarningAttribute warning in prop.Warnings)
             {
@@ -103,13 +127,13 @@ public class TraitInterfaceBuilder
                     warning.Values.Select((v) => v is string ? $"\"{v}\"" : v.ToString()));
                 
                 // [TraitPropertyWarning("warning", TraitPropertyConstraint.Constraint.Equal, 1)]
-                sw.WriteLine($"    [{TraitPropertyWarningAttribute}(\"{warning.Warning}\", TraitPropertyConstraint.Constraint.{System.Enum.GetName(warning.Operation)}, {values})]");
+                sw.WriteLine($"    [{TraitPropertyWarningAttribute.Replace("Attribute", "")}(\"{warning.Warning}\", {TraitPropertyConstraintAttribute}.Constraint.{System.Enum.GetName(warning.Operation)}, {values})]");
             }
             
             // public abstract float Duration { get; }
             if (prop.Required) sw.WriteLine($"    public abstract {prop.Type} {prop.Name} {{ get; }}");
             // public virtual dynamic? Type => null;
-            else sw.WriteLine($"    public virtual {prop.Type} {prop.Name} => {sanitisedDefaultValue};");
+            else sw.WriteLine($"    public virtual {prop.Type} {prop.Name} => {FormatValue(prop.DefaultValue, prop.Type)};");
             
         }
         

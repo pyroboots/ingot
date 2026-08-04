@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <Folder Include="TraitSystem\Traits\Entity\Behaviour\" />
+      <Folder Include="TraitSystem\Traits\Item\" />
     </ItemGroup>
 
 </Project>
