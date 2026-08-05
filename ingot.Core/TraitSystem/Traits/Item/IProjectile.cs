@@ -2,7 +2,6 @@
 
 namespace ingot.Core.TraitSystem.Traits.Item;
 using ingot.Core.Common;
-using ingot.Core.Common.SharedConstructs;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
@@ -17,10 +16,10 @@ public interface IProjectile : IItemTrait
     /// Specifies how long a player must charge a projectile for it to critically hit.
     /// </summary>
     [TraitProperty]
-    public virtual float MinimumCriticalPower => 0f;
+    public virtual float MinimumCriticalPower => 0;
     /// <summary>
     /// Which entity is to be fired as a projectile.
     /// </summary>
     [TraitProperty]
-    public abstract Identifier ProjectileEntity { get; }
+    public abstract string ProjectileEntity { get; }
 }

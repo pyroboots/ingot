@@ -6,12 +6,1146 @@ using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
 /// <summary>
-/// Modifies use behavior, including how long the item takes to use and the player&apos;s movement speed.
+/// Modifies use behavior, including how long the item takes to use and the player's movement speed.
 /// </summary>
 [Trait("minecraft:use_modifiers", TraitSystem.TraitType.Item)]
-[TraitFormatVersion("1.21.0")]
+[TraitFormatVersion("1.26.30")]
 public interface IUseModifiers : IItemTrait
 {
+    /// <summary>Equivalent to <c>item_use_on</c></summary>
+    public const string LevelSoundEvent_ItemUseOn = "item_use_on";
+    /// <summary>Equivalent to <c>hit</c></summary>
+    public const string LevelSoundEvent_Hit = "hit";
+    /// <summary>Equivalent to <c>step</c></summary>
+    public const string LevelSoundEvent_Step = "step";
+    /// <summary>Equivalent to <c>step_baby</c></summary>
+    public const string LevelSoundEvent_StepBaby = "step_baby";
+    /// <summary>Equivalent to <c>fly</c></summary>
+    public const string LevelSoundEvent_Fly = "fly";
+    /// <summary>Equivalent to <c>jump</c></summary>
+    public const string LevelSoundEvent_Jump = "jump";
+    /// <summary>Equivalent to <c>jump_prevent</c></summary>
+    public const string LevelSoundEvent_JumpPrevent = "jump_prevent";
+    /// <summary>Equivalent to <c>break</c></summary>
+    public const string LevelSoundEvent_Break = "break";
+    /// <summary>Equivalent to <c>place</c></summary>
+    public const string LevelSoundEvent_Place = "place";
+    /// <summary>Equivalent to <c>heavy_step</c></summary>
+    public const string LevelSoundEvent_HeavyStep = "heavy_step";
+    /// <summary>Equivalent to <c>gallop</c></summary>
+    public const string LevelSoundEvent_Gallop = "gallop";
+    /// <summary>Equivalent to <c>fall</c></summary>
+    public const string LevelSoundEvent_Fall = "fall";
+    /// <summary>Equivalent to <c>hurt</c></summary>
+    public const string LevelSoundEvent_Hurt = "hurt";
+    /// <summary>Equivalent to <c>hurt_baby</c></summary>
+    public const string LevelSoundEvent_HurtBaby = "hurt_baby";
+    /// <summary>Equivalent to <c>hurt_in_water</c></summary>
+    public const string LevelSoundEvent_HurtInWater = "hurt_in_water";
+    /// <summary>Equivalent to <c>death</c></summary>
+    public const string LevelSoundEvent_Death = "death";
+    /// <summary>Equivalent to <c>death_baby</c></summary>
+    public const string LevelSoundEvent_DeathBaby = "death_baby";
+    /// <summary>Equivalent to <c>death_in_water</c></summary>
+    public const string LevelSoundEvent_DeathInWater = "death_in_water";
+    /// <summary>Equivalent to <c>death_to_zombie</c></summary>
+    public const string LevelSoundEvent_DeathToZombie = "death_to_zombie";
+    /// <summary>Equivalent to <c>ambient</c></summary>
+    public const string LevelSoundEvent_Ambient = "ambient";
+    /// <summary>Equivalent to <c>ambient_baby</c></summary>
+    public const string LevelSoundEvent_AmbientBaby = "ambient_baby";
+    /// <summary>Equivalent to <c>ambient_in_water</c></summary>
+    public const string LevelSoundEvent_AmbientInWater = "ambient_in_water";
+    /// <summary>Equivalent to <c>ambient_in_air</c></summary>
+    public const string LevelSoundEvent_AmbientInAir = "ambient_in_air";
+    /// <summary>Equivalent to <c>ambient_tame</c></summary>
+    public const string LevelSoundEvent_AmbientTame = "ambient_tame";
+    /// <summary>Equivalent to <c>ambient_pollinate</c></summary>
+    public const string LevelSoundEvent_AmbientPollinate = "ambient_pollinate";
+    /// <summary>Equivalent to <c>breathe</c></summary>
+    public const string LevelSoundEvent_Breathe = "breathe";
+    /// <summary>Equivalent to <c>mad</c></summary>
+    public const string LevelSoundEvent_Mad = "mad";
+    /// <summary>Equivalent to <c>boost</c></summary>
+    public const string LevelSoundEvent_Boost = "boost";
+    /// <summary>Equivalent to <c>bow</c></summary>
+    public const string LevelSoundEvent_Bow = "bow";
+    /// <summary>Equivalent to <c>squish_big</c></summary>
+    public const string LevelSoundEvent_SquishBig = "squish_big";
+    /// <summary>Equivalent to <c>squish_small</c></summary>
+    public const string LevelSoundEvent_SquishSmall = "squish_small";
+    /// <summary>Equivalent to <c>fall_big</c></summary>
+    public const string LevelSoundEvent_FallBig = "fall_big";
+    /// <summary>Equivalent to <c>fall_small</c></summary>
+    public const string LevelSoundEvent_FallSmall = "fall_small";
+    /// <summary>Equivalent to <c>splash</c></summary>
+    public const string LevelSoundEvent_Splash = "splash";
+    /// <summary>Equivalent to <c>fizz</c></summary>
+    public const string LevelSoundEvent_Fizz = "fizz";
+    /// <summary>Equivalent to <c>flap</c></summary>
+    public const string LevelSoundEvent_Flap = "flap";
+    /// <summary>Equivalent to <c>swim</c></summary>
+    public const string LevelSoundEvent_Swim = "swim";
+    /// <summary>Equivalent to <c>drink</c></summary>
+    public const string LevelSoundEvent_Drink = "drink";
+    /// <summary>Equivalent to <c>drink_honey</c></summary>
+    public const string LevelSoundEvent_DrinkHoney = "drink_honey";
+    /// <summary>Equivalent to <c>drink_milk</c></summary>
+    public const string LevelSoundEvent_DrinkMilk = "drink_milk";
+    /// <summary>Equivalent to <c>eat</c></summary>
+    public const string LevelSoundEvent_Eat = "eat";
+    /// <summary>Equivalent to <c>takeoff</c></summary>
+    public const string LevelSoundEvent_Takeoff = "takeoff";
+    /// <summary>Equivalent to <c>shake</c></summary>
+    public const string LevelSoundEvent_Shake = "shake";
+    /// <summary>Equivalent to <c>plop</c></summary>
+    public const string LevelSoundEvent_Plop = "plop";
+    /// <summary>Equivalent to <c>land</c></summary>
+    public const string LevelSoundEvent_Land = "land";
+    /// <summary>Equivalent to <c>saddle</c></summary>
+    public const string LevelSoundEvent_Saddle = "saddle";
+    /// <summary>Equivalent to <c>armor</c></summary>
+    public const string LevelSoundEvent_Armor = "armor";
+    /// <summary>Equivalent to <c>mob_armor_stand_place</c></summary>
+    public const string LevelSoundEvent_MobArmorStandPlace = "mob_armor_stand_place";
+    /// <summary>Equivalent to <c>add_chest</c></summary>
+    public const string LevelSoundEvent_AddChest = "add_chest";
+    /// <summary>Equivalent to <c>throw</c></summary>
+    public const string LevelSoundEvent_Throw = "throw";
+    /// <summary>Equivalent to <c>attack</c></summary>
+    public const string LevelSoundEvent_Attack = "attack";
+    /// <summary>Equivalent to <c>attack_nodamage</c></summary>
+    public const string LevelSoundEvent_AttackNodamage = "attack_nodamage";
+    /// <summary>Equivalent to <c>attack_strong</c></summary>
+    public const string LevelSoundEvent_AttackStrong = "attack_strong";
+    /// <summary>Equivalent to <c>warn</c></summary>
+    public const string LevelSoundEvent_Warn = "warn";
+    /// <summary>Equivalent to <c>shear</c></summary>
+    public const string LevelSoundEvent_Shear = "shear";
+    /// <summary>Equivalent to <c>milk</c></summary>
+    public const string LevelSoundEvent_Milk = "milk";
+    /// <summary>Equivalent to <c>thunder</c></summary>
+    public const string LevelSoundEvent_Thunder = "thunder";
+    /// <summary>Equivalent to <c>explode</c></summary>
+    public const string LevelSoundEvent_Explode = "explode";
+    /// <summary>Equivalent to <c>fire</c></summary>
+    public const string LevelSoundEvent_Fire = "fire";
+    /// <summary>Equivalent to <c>ignite</c></summary>
+    public const string LevelSoundEvent_Ignite = "ignite";
+    /// <summary>Equivalent to <c>fuse</c></summary>
+    public const string LevelSoundEvent_Fuse = "fuse";
+    /// <summary>Equivalent to <c>stare</c></summary>
+    public const string LevelSoundEvent_Stare = "stare";
+    /// <summary>Equivalent to <c>spawn</c></summary>
+    public const string LevelSoundEvent_Spawn = "spawn";
+    /// <summary>Equivalent to <c>born</c></summary>
+    public const string LevelSoundEvent_Born = "born";
+    /// <summary>Equivalent to <c>shoot</c></summary>
+    public const string LevelSoundEvent_Shoot = "shoot";
+    /// <summary>Equivalent to <c>break_block</c></summary>
+    public const string LevelSoundEvent_BreakBlock = "break_block";
+    /// <summary>Equivalent to <c>launch</c></summary>
+    public const string LevelSoundEvent_Launch = "launch";
+    /// <summary>Equivalent to <c>blast</c></summary>
+    public const string LevelSoundEvent_Blast = "blast";
+    /// <summary>Equivalent to <c>large_blast</c></summary>
+    public const string LevelSoundEvent_LargeBlast = "large_blast";
+    /// <summary>Equivalent to <c>twinkle</c></summary>
+    public const string LevelSoundEvent_Twinkle = "twinkle";
+    /// <summary>Equivalent to <c>remedy</c></summary>
+    public const string LevelSoundEvent_Remedy = "remedy";
+    /// <summary>Equivalent to <c>unfect</c></summary>
+    public const string LevelSoundEvent_Unfect = "unfect";
+    /// <summary>Equivalent to <c>convert_to_drowned</c></summary>
+    public const string LevelSoundEvent_ConvertToDrowned = "convert_to_drowned";
+    /// <summary>Equivalent to <c>levelup</c></summary>
+    public const string LevelSoundEvent_Levelup = "levelup";
+    /// <summary>Equivalent to <c>bow_hit</c></summary>
+    public const string LevelSoundEvent_BowHit = "bow_hit";
+    /// <summary>Equivalent to <c>bullet_hit</c></summary>
+    public const string LevelSoundEvent_BulletHit = "bullet_hit";
+    /// <summary>Equivalent to <c>extinguish_fire</c></summary>
+    public const string LevelSoundEvent_ExtinguishFire = "extinguish_fire";
+    /// <summary>Equivalent to <c>item_fizz</c></summary>
+    public const string LevelSoundEvent_ItemFizz = "item_fizz";
+    /// <summary>Equivalent to <c>chest_open</c></summary>
+    public const string LevelSoundEvent_ChestOpen = "chest_open";
+    /// <summary>Equivalent to <c>chest_closed</c></summary>
+    public const string LevelSoundEvent_ChestClosed = "chest_closed";
+    /// <summary>Equivalent to <c>shulkerbox_open</c></summary>
+    public const string LevelSoundEvent_ShulkerboxOpen = "shulkerbox_open";
+    /// <summary>Equivalent to <c>shulkerbox_closed</c></summary>
+    public const string LevelSoundEvent_ShulkerboxClosed = "shulkerbox_closed";
+    /// <summary>Equivalent to <c>enderchest_open</c></summary>
+    public const string LevelSoundEvent_EnderchestOpen = "enderchest_open";
+    /// <summary>Equivalent to <c>enderchest_closed</c></summary>
+    public const string LevelSoundEvent_EnderchestClosed = "enderchest_closed";
+    /// <summary>Equivalent to <c>power_on</c></summary>
+    public const string LevelSoundEvent_PowerOn = "power_on";
+    /// <summary>Equivalent to <c>power_off</c></summary>
+    public const string LevelSoundEvent_PowerOff = "power_off";
+    /// <summary>Equivalent to <c>attach</c></summary>
+    public const string LevelSoundEvent_Attach = "attach";
+    /// <summary>Equivalent to <c>detach</c></summary>
+    public const string LevelSoundEvent_Detach = "detach";
+    /// <summary>Equivalent to <c>deny</c></summary>
+    public const string LevelSoundEvent_Deny = "deny";
+    /// <summary>Equivalent to <c>tripod</c></summary>
+    public const string LevelSoundEvent_Tripod = "tripod";
+    /// <summary>Equivalent to <c>pop</c></summary>
+    public const string LevelSoundEvent_Pop = "pop";
+    /// <summary>Equivalent to <c>drop_slot</c></summary>
+    public const string LevelSoundEvent_DropSlot = "drop_slot";
+    /// <summary>Equivalent to <c>note</c></summary>
+    public const string LevelSoundEvent_Note = "note";
+    /// <summary>Equivalent to <c>thorns</c></summary>
+    public const string LevelSoundEvent_Thorns = "thorns";
+    /// <summary>Equivalent to <c>piston_in</c></summary>
+    public const string LevelSoundEvent_PistonIn = "piston_in";
+    /// <summary>Equivalent to <c>piston_out</c></summary>
+    public const string LevelSoundEvent_PistonOut = "piston_out";
+    /// <summary>Equivalent to <c>portal</c></summary>
+    public const string LevelSoundEvent_Portal = "portal";
+    /// <summary>Equivalent to <c>water</c></summary>
+    public const string LevelSoundEvent_Water = "water";
+    /// <summary>Equivalent to <c>lava_pop</c></summary>
+    public const string LevelSoundEvent_LavaPop = "lava_pop";
+    /// <summary>Equivalent to <c>lava</c></summary>
+    public const string LevelSoundEvent_Lava = "lava";
+    /// <summary>Equivalent to <c>beacon_activate</c></summary>
+    public const string LevelSoundEvent_BeaconActivate = "beacon_activate";
+    /// <summary>Equivalent to <c>beacon_ambient</c></summary>
+    public const string LevelSoundEvent_BeaconAmbient = "beacon_ambient";
+    /// <summary>Equivalent to <c>beacon_deactivate</c></summary>
+    public const string LevelSoundEvent_BeaconDeactivate = "beacon_deactivate";
+    /// <summary>Equivalent to <c>beacon_power</c></summary>
+    public const string LevelSoundEvent_BeaconPower = "beacon_power";
+    /// <summary>Equivalent to <c>conduit_activate</c></summary>
+    public const string LevelSoundEvent_ConduitActivate = "conduit_activate";
+    /// <summary>Equivalent to <c>conduit_ambient</c></summary>
+    public const string LevelSoundEvent_ConduitAmbient = "conduit_ambient";
+    /// <summary>Equivalent to <c>conduit_attack</c></summary>
+    public const string LevelSoundEvent_ConduitAttack = "conduit_attack";
+    /// <summary>Equivalent to <c>conduit_deactivate</c></summary>
+    public const string LevelSoundEvent_ConduitDeactivate = "conduit_deactivate";
+    /// <summary>Equivalent to <c>conduit_short</c></summary>
+    public const string LevelSoundEvent_ConduitShort = "conduit_short";
+    /// <summary>Equivalent to <c>bubble_pop</c></summary>
+    public const string LevelSoundEvent_BubblePop = "bubble_pop";
+    /// <summary>Equivalent to <c>bubble_up</c></summary>
+    public const string LevelSoundEvent_BubbleUp = "bubble_up";
+    /// <summary>Equivalent to <c>bubble_upinside</c></summary>
+    public const string LevelSoundEvent_BubbleUpinside = "bubble_upinside";
+    /// <summary>Equivalent to <c>bubble_down</c></summary>
+    public const string LevelSoundEvent_BubbleDown = "bubble_down";
+    /// <summary>Equivalent to <c>bubble_downinside</c></summary>
+    public const string LevelSoundEvent_BubbleDowninside = "bubble_downinside";
+    /// <summary>Equivalent to <c>burp</c></summary>
+    public const string LevelSoundEvent_Burp = "burp";
+    /// <summary>Equivalent to <c>bucket_fill_water</c></summary>
+    public const string LevelSoundEvent_BucketFillWater = "bucket_fill_water";
+    /// <summary>Equivalent to <c>bucket_empty_water</c></summary>
+    public const string LevelSoundEvent_BucketEmptyWater = "bucket_empty_water";
+    /// <summary>Equivalent to <c>bucket_fill_lava</c></summary>
+    public const string LevelSoundEvent_BucketFillLava = "bucket_fill_lava";
+    /// <summary>Equivalent to <c>bucket_empty_lava</c></summary>
+    public const string LevelSoundEvent_BucketEmptyLava = "bucket_empty_lava";
+    /// <summary>Equivalent to <c>bucket_fill_fish</c></summary>
+    public const string LevelSoundEvent_BucketFillFish = "bucket_fill_fish";
+    /// <summary>Equivalent to <c>bucket_empty_fish</c></summary>
+    public const string LevelSoundEvent_BucketEmptyFish = "bucket_empty_fish";
+    /// <summary>Equivalent to <c>armor_equip_chain</c></summary>
+    public const string LevelSoundEvent_ArmorEquipChain = "armor_equip_chain";
+    /// <summary>Equivalent to <c>armor_equip_diamond</c></summary>
+    public const string LevelSoundEvent_ArmorEquipDiamond = "armor_equip_diamond";
+    /// <summary>Equivalent to <c>armor_equip_elytra</c></summary>
+    public const string LevelSoundEvent_ArmorEquipElytra = "armor_equip_elytra";
+    /// <summary>Equivalent to <c>armor_equip_generic</c></summary>
+    public const string LevelSoundEvent_ArmorEquipGeneric = "armor_equip_generic";
+    /// <summary>Equivalent to <c>armor_equip_gold</c></summary>
+    public const string LevelSoundEvent_ArmorEquipGold = "armor_equip_gold";
+    /// <summary>Equivalent to <c>armor_equip_iron</c></summary>
+    public const string LevelSoundEvent_ArmorEquipIron = "armor_equip_iron";
+    /// <summary>Equivalent to <c>armor_equip_leather</c></summary>
+    public const string LevelSoundEvent_ArmorEquipLeather = "armor_equip_leather";
+    /// <summary>Equivalent to <c>armor_equip_netherite</c></summary>
+    public const string LevelSoundEvent_ArmorEquipNetherite = "armor_equip_netherite";
+    /// <summary>Equivalent to <c>record_13</c></summary>
+    public const string LevelSoundEvent_Record13 = "record_13";
+    /// <summary>Equivalent to <c>record_cat</c></summary>
+    public const string LevelSoundEvent_RecordCat = "record_cat";
+    /// <summary>Equivalent to <c>record_blocks</c></summary>
+    public const string LevelSoundEvent_RecordBlocks = "record_blocks";
+    /// <summary>Equivalent to <c>record_chirp</c></summary>
+    public const string LevelSoundEvent_RecordChirp = "record_chirp";
+    /// <summary>Equivalent to <c>record_creator</c></summary>
+    public const string LevelSoundEvent_RecordCreator = "record_creator";
+    /// <summary>Equivalent to <c>record_creator_music_box</c></summary>
+    public const string LevelSoundEvent_RecordCreatorMusicBox = "record_creator_music_box";
+    /// <summary>Equivalent to <c>record_far</c></summary>
+    public const string LevelSoundEvent_RecordFar = "record_far";
+    /// <summary>Equivalent to <c>record_mall</c></summary>
+    public const string LevelSoundEvent_RecordMall = "record_mall";
+    /// <summary>Equivalent to <c>record_mellohi</c></summary>
+    public const string LevelSoundEvent_RecordMellohi = "record_mellohi";
+    /// <summary>Equivalent to <c>record_stal</c></summary>
+    public const string LevelSoundEvent_RecordStal = "record_stal";
+    /// <summary>Equivalent to <c>record_strad</c></summary>
+    public const string LevelSoundEvent_RecordStrad = "record_strad";
+    /// <summary>Equivalent to <c>record_ward</c></summary>
+    public const string LevelSoundEvent_RecordWard = "record_ward";
+    /// <summary>Equivalent to <c>record_11</c></summary>
+    public const string LevelSoundEvent_Record11 = "record_11";
+    /// <summary>Equivalent to <c>record_wait</c></summary>
+    public const string LevelSoundEvent_RecordWait = "record_wait";
+    /// <summary>Equivalent to <c>record_null</c></summary>
+    public const string LevelSoundEvent_RecordNull = "record_null";
+    /// <summary>Equivalent to <c>record_pigstep</c></summary>
+    public const string LevelSoundEvent_RecordPigstep = "record_pigstep";
+    /// <summary>Equivalent to <c>record_precipice</c></summary>
+    public const string LevelSoundEvent_RecordPrecipice = "record_precipice";
+    /// <summary>Equivalent to <c>record_relic</c></summary>
+    public const string LevelSoundEvent_RecordRelic = "record_relic";
+    /// <summary>Equivalent to <c>record_otherside</c></summary>
+    public const string LevelSoundEvent_RecordOtherside = "record_otherside";
+    /// <summary>Equivalent to <c>record_5</c></summary>
+    public const string LevelSoundEvent_Record5 = "record_5";
+    /// <summary>Equivalent to <c>record_tears</c></summary>
+    public const string LevelSoundEvent_RecordTears = "record_tears";
+    /// <summary>Equivalent to <c>record_lava_chicken</c></summary>
+    public const string LevelSoundEvent_RecordLavaChicken = "record_lava_chicken";
+    /// <summary>Equivalent to <c>flop</c></summary>
+    public const string LevelSoundEvent_Flop = "flop";
+    /// <summary>Equivalent to <c>elderguardian_curse</c></summary>
+    public const string LevelSoundEvent_ElderguardianCurse = "elderguardian_curse";
+    /// <summary>Equivalent to <c>teleport</c></summary>
+    public const string LevelSoundEvent_Teleport = "teleport";
+    /// <summary>Equivalent to <c>shulker_open</c></summary>
+    public const string LevelSoundEvent_ShulkerOpen = "shulker_open";
+    /// <summary>Equivalent to <c>shulker_close</c></summary>
+    public const string LevelSoundEvent_ShulkerClose = "shulker_close";
+    /// <summary>Equivalent to <c>mob_warning</c></summary>
+    public const string LevelSoundEvent_MobWarning = "mob_warning";
+    /// <summary>Equivalent to <c>mob_warning_baby</c></summary>
+    public const string LevelSoundEvent_MobWarningBaby = "mob_warning_baby";
+    /// <summary>Equivalent to <c>haggle</c></summary>
+    public const string LevelSoundEvent_Haggle = "haggle";
+    /// <summary>Equivalent to <c>haggle_yes</c></summary>
+    public const string LevelSoundEvent_HaggleYes = "haggle_yes";
+    /// <summary>Equivalent to <c>haggle_no</c></summary>
+    public const string LevelSoundEvent_HaggleNo = "haggle_no";
+    /// <summary>Equivalent to <c>haggle_idle</c></summary>
+    public const string LevelSoundEvent_HaggleIdle = "haggle_idle";
+    /// <summary>Equivalent to <c>disappeared</c></summary>
+    public const string LevelSoundEvent_Disappeared = "disappeared";
+    /// <summary>Equivalent to <c>reappeared</c></summary>
+    public const string LevelSoundEvent_Reappeared = "reappeared";
+    /// <summary>Equivalent to <c>chorusgrow</c></summary>
+    public const string LevelSoundEvent_Chorusgrow = "chorusgrow";
+    /// <summary>Equivalent to <c>chorusdeath</c></summary>
+    public const string LevelSoundEvent_Chorusdeath = "chorusdeath";
+    /// <summary>Equivalent to <c>glass</c></summary>
+    public const string LevelSoundEvent_Glass = "glass";
+    /// <summary>Equivalent to <c>potion_brewed</c></summary>
+    public const string LevelSoundEvent_PotionBrewed = "potion_brewed";
+    /// <summary>Equivalent to <c>cast_spell</c></summary>
+    public const string LevelSoundEvent_CastSpell = "cast_spell";
+    /// <summary>Equivalent to <c>prepare_attack</c></summary>
+    public const string LevelSoundEvent_PrepareAttack = "prepare_attack";
+    /// <summary>Equivalent to <c>prepare_summon</c></summary>
+    public const string LevelSoundEvent_PrepareSummon = "prepare_summon";
+    /// <summary>Equivalent to <c>prepare_wololo</c></summary>
+    public const string LevelSoundEvent_PrepareWololo = "prepare_wololo";
+    /// <summary>Equivalent to <c>fang</c></summary>
+    public const string LevelSoundEvent_Fang = "fang";
+    /// <summary>Equivalent to <c>charge</c></summary>
+    public const string LevelSoundEvent_Charge = "charge";
+    /// <summary>Equivalent to <c>camera_take_picture</c></summary>
+    public const string LevelSoundEvent_CameraTakePicture = "camera_take_picture";
+    /// <summary>Equivalent to <c>leashknot_break</c></summary>
+    public const string LevelSoundEvent_LeashknotBreak = "leashknot_break";
+    /// <summary>Equivalent to <c>leashknot_place</c></summary>
+    public const string LevelSoundEvent_LeashknotPlace = "leashknot_place";
+    /// <summary>Equivalent to <c>growl</c></summary>
+    public const string LevelSoundEvent_Growl = "growl";
+    /// <summary>Equivalent to <c>whine</c></summary>
+    public const string LevelSoundEvent_Whine = "whine";
+    /// <summary>Equivalent to <c>pant</c></summary>
+    public const string LevelSoundEvent_Pant = "pant";
+    /// <summary>Equivalent to <c>purr</c></summary>
+    public const string LevelSoundEvent_Purr = "purr";
+    /// <summary>Equivalent to <c>purreow</c></summary>
+    public const string LevelSoundEvent_Purreow = "purreow";
+    /// <summary>Equivalent to <c>death_min_volume</c></summary>
+    public const string LevelSoundEvent_DeathMinVolume = "death_min_volume";
+    /// <summary>Equivalent to <c>death_mid_volume</c></summary>
+    public const string LevelSoundEvent_DeathMidVolume = "death_mid_volume";
+    /// <summary>Equivalent to <c>imitate_blaze</c></summary>
+    public const string LevelSoundEvent_ImitateBlaze = "imitate_blaze";
+    /// <summary>Equivalent to <c>imitate_cave_spider</c></summary>
+    public const string LevelSoundEvent_ImitateCaveSpider = "imitate_cave_spider";
+    /// <summary>Equivalent to <c>imitate_creeper</c></summary>
+    public const string LevelSoundEvent_ImitateCreeper = "imitate_creeper";
+    /// <summary>Equivalent to <c>imitate_elder_guardian</c></summary>
+    public const string LevelSoundEvent_ImitateElderGuardian = "imitate_elder_guardian";
+    /// <summary>Equivalent to <c>imitate_ender_dragon</c></summary>
+    public const string LevelSoundEvent_ImitateEnderDragon = "imitate_ender_dragon";
+    /// <summary>Equivalent to <c>imitate_enderman</c></summary>
+    public const string LevelSoundEvent_ImitateEnderman = "imitate_enderman";
+    /// <summary>Equivalent to <c>imitate_endermite</c></summary>
+    public const string LevelSoundEvent_ImitateEndermite = "imitate_endermite";
+    /// <summary>Equivalent to <c>imitate_evocation_illager</c></summary>
+    public const string LevelSoundEvent_ImitateEvocationIllager = "imitate_evocation_illager";
+    /// <summary>Equivalent to <c>imitate_ghast</c></summary>
+    public const string LevelSoundEvent_ImitateGhast = "imitate_ghast";
+    /// <summary>Equivalent to <c>imitate_husk</c></summary>
+    public const string LevelSoundEvent_ImitateHusk = "imitate_husk";
+    /// <summary>Equivalent to <c>imitate_magma_cube</c></summary>
+    public const string LevelSoundEvent_ImitateMagmaCube = "imitate_magma_cube";
+    /// <summary>Equivalent to <c>imitate_polar_bear</c></summary>
+    public const string LevelSoundEvent_ImitatePolarBear = "imitate_polar_bear";
+    /// <summary>Equivalent to <c>imitate_shulker</c></summary>
+    public const string LevelSoundEvent_ImitateShulker = "imitate_shulker";
+    /// <summary>Equivalent to <c>imitate_silverfish</c></summary>
+    public const string LevelSoundEvent_ImitateSilverfish = "imitate_silverfish";
+    /// <summary>Equivalent to <c>imitate_skeleton</c></summary>
+    public const string LevelSoundEvent_ImitateSkeleton = "imitate_skeleton";
+    /// <summary>Equivalent to <c>imitate_slime</c></summary>
+    public const string LevelSoundEvent_ImitateSlime = "imitate_slime";
+    /// <summary>Equivalent to <c>imitate_spider</c></summary>
+    public const string LevelSoundEvent_ImitateSpider = "imitate_spider";
+    /// <summary>Equivalent to <c>imitate_stray</c></summary>
+    public const string LevelSoundEvent_ImitateStray = "imitate_stray";
+    /// <summary>Equivalent to <c>imitate_vex</c></summary>
+    public const string LevelSoundEvent_ImitateVex = "imitate_vex";
+    /// <summary>Equivalent to <c>imitate_vindication_illager</c></summary>
+    public const string LevelSoundEvent_ImitateVindicationIllager = "imitate_vindication_illager";
+    /// <summary>Equivalent to <c>imitate_witch</c></summary>
+    public const string LevelSoundEvent_ImitateWitch = "imitate_witch";
+    /// <summary>Equivalent to <c>imitate_wither</c></summary>
+    public const string LevelSoundEvent_ImitateWither = "imitate_wither";
+    /// <summary>Equivalent to <c>imitate_wither_skeleton</c></summary>
+    public const string LevelSoundEvent_ImitateWitherSkeleton = "imitate_wither_skeleton";
+    /// <summary>Equivalent to <c>imitate_wolf</c></summary>
+    public const string LevelSoundEvent_ImitateWolf = "imitate_wolf";
+    /// <summary>Equivalent to <c>imitate_zombie</c></summary>
+    public const string LevelSoundEvent_ImitateZombie = "imitate_zombie";
+    /// <summary>Equivalent to <c>imitate_zombie_pigman</c></summary>
+    public const string LevelSoundEvent_ImitateZombiePigman = "imitate_zombie_pigman";
+    /// <summary>Equivalent to <c>imitate_zombie_villager</c></summary>
+    public const string LevelSoundEvent_ImitateZombieVillager = "imitate_zombie_villager";
+    /// <summary>Equivalent to <c>block_end_portal_frame_fill</c></summary>
+    public const string LevelSoundEvent_BlockEndPortalFrameFill = "block_end_portal_frame_fill";
+    /// <summary>Equivalent to <c>block_end_portal_spawn</c></summary>
+    public const string LevelSoundEvent_BlockEndPortalSpawn = "block_end_portal_spawn";
+    /// <summary>Equivalent to <c>random_anvil_use</c></summary>
+    public const string LevelSoundEvent_RandomAnvilUse = "random_anvil_use";
+    /// <summary>Equivalent to <c>bottle_dragonbreath</c></summary>
+    public const string LevelSoundEvent_BottleDragonbreath = "bottle_dragonbreath";
+    /// <summary>Equivalent to <c>balloonpop</c></summary>
+    public const string LevelSoundEvent_Balloonpop = "balloonpop";
+    /// <summary>Equivalent to <c>sparkler_active</c></summary>
+    public const string LevelSoundEvent_SparklerActive = "sparkler_active";
+    /// <summary>Equivalent to <c>item_trident_hit</c></summary>
+    public const string LevelSoundEvent_ItemTridentHit = "item_trident_hit";
+    /// <summary>Equivalent to <c>item_trident_hit_ground</c></summary>
+    public const string LevelSoundEvent_ItemTridentHitGround = "item_trident_hit_ground";
+    /// <summary>Equivalent to <c>item_trident_return</c></summary>
+    public const string LevelSoundEvent_ItemTridentReturn = "item_trident_return";
+    /// <summary>Equivalent to <c>item_trident_riptide_1</c></summary>
+    public const string LevelSoundEvent_ItemTridentRiptide1 = "item_trident_riptide_1";
+    /// <summary>Equivalent to <c>item_trident_riptide_2</c></summary>
+    public const string LevelSoundEvent_ItemTridentRiptide2 = "item_trident_riptide_2";
+    /// <summary>Equivalent to <c>item_trident_riptide_3</c></summary>
+    public const string LevelSoundEvent_ItemTridentRiptide3 = "item_trident_riptide_3";
+    /// <summary>Equivalent to <c>item_trident_throw</c></summary>
+    public const string LevelSoundEvent_ItemTridentThrow = "item_trident_throw";
+    /// <summary>Equivalent to <c>item_trident_thunder</c></summary>
+    public const string LevelSoundEvent_ItemTridentThunder = "item_trident_thunder";
+    /// <summary>Equivalent to <c>block_fletching_table_use</c></summary>
+    public const string LevelSoundEvent_BlockFletchingTableUse = "block_fletching_table_use";
+    /// <summary>Equivalent to <c>elemconstruct_open</c></summary>
+    public const string LevelSoundEvent_ElemconstructOpen = "elemconstruct_open";
+    /// <summary>Equivalent to <c>icebomb_hit</c></summary>
+    public const string LevelSoundEvent_IcebombHit = "icebomb_hit";
+    /// <summary>Equivalent to <c>lt_reaction_icebomb</c></summary>
+    public const string LevelSoundEvent_LtReactionIcebomb = "lt_reaction_icebomb";
+    /// <summary>Equivalent to <c>lt_reaction_bleach</c></summary>
+    public const string LevelSoundEvent_LtReactionBleach = "lt_reaction_bleach";
+    /// <summary>Equivalent to <c>lt_reaction_epaste</c></summary>
+    public const string LevelSoundEvent_LtReactionEpaste = "lt_reaction_epaste";
+    /// <summary>Equivalent to <c>lt_reaction_epaste2</c></summary>
+    public const string LevelSoundEvent_LtReactionEpaste2 = "lt_reaction_epaste2";
+    /// <summary>Equivalent to <c>lt_reaction_fertilizer</c></summary>
+    public const string LevelSoundEvent_LtReactionFertilizer = "lt_reaction_fertilizer";
+    /// <summary>Equivalent to <c>lt_reaction_fireball</c></summary>
+    public const string LevelSoundEvent_LtReactionFireball = "lt_reaction_fireball";
+    /// <summary>Equivalent to <c>lt_reaction_mgsalt</c></summary>
+    public const string LevelSoundEvent_LtReactionMgsalt = "lt_reaction_mgsalt";
+    /// <summary>Equivalent to <c>lt_reaction_miscfire</c></summary>
+    public const string LevelSoundEvent_LtReactionMiscfire = "lt_reaction_miscfire";
+    /// <summary>Equivalent to <c>lt_reaction_fire</c></summary>
+    public const string LevelSoundEvent_LtReactionFire = "lt_reaction_fire";
+    /// <summary>Equivalent to <c>lt_reaction_miscexplosion</c></summary>
+    public const string LevelSoundEvent_LtReactionMiscexplosion = "lt_reaction_miscexplosion";
+    /// <summary>Equivalent to <c>lt_reaction_miscmystical</c></summary>
+    public const string LevelSoundEvent_LtReactionMiscmystical = "lt_reaction_miscmystical";
+    /// <summary>Equivalent to <c>lt_reaction_miscmystical2</c></summary>
+    public const string LevelSoundEvent_LtReactionMiscmystical2 = "lt_reaction_miscmystical2";
+    /// <summary>Equivalent to <c>lt_reaction_product</c></summary>
+    public const string LevelSoundEvent_LtReactionProduct = "lt_reaction_product";
+    /// <summary>Equivalent to <c>sparkler_use</c></summary>
+    public const string LevelSoundEvent_SparklerUse = "sparkler_use";
+    /// <summary>Equivalent to <c>glowstick_use</c></summary>
+    public const string LevelSoundEvent_GlowstickUse = "glowstick_use";
+    /// <summary>Equivalent to <c>block_turtle_egg_break</c></summary>
+    public const string LevelSoundEvent_BlockTurtleEggBreak = "block_turtle_egg_break";
+    /// <summary>Equivalent to <c>block_turtle_egg_crack</c></summary>
+    public const string LevelSoundEvent_BlockTurtleEggCrack = "block_turtle_egg_crack";
+    /// <summary>Equivalent to <c>block_turtle_egg_hatch</c></summary>
+    public const string LevelSoundEvent_BlockTurtleEggHatch = "block_turtle_egg_hatch";
+    /// <summary>Equivalent to <c>block_turtle_egg_attack</c></summary>
+    public const string LevelSoundEvent_BlockTurtleEggAttack = "block_turtle_egg_attack";
+    /// <summary>Equivalent to <c>block_sniffer_egg_crack</c></summary>
+    public const string LevelSoundEvent_BlockSnifferEggCrack = "block_sniffer_egg_crack";
+    /// <summary>Equivalent to <c>block_sniffer_egg_hatch</c></summary>
+    public const string LevelSoundEvent_BlockSnifferEggHatch = "block_sniffer_egg_hatch";
+    /// <summary>Equivalent to <c>block_frog_spawn_hatch</c></summary>
+    public const string LevelSoundEvent_BlockFrogSpawnHatch = "block_frog_spawn_hatch";
+    /// <summary>Equivalent to <c>block_frog_spawn_break</c></summary>
+    public const string LevelSoundEvent_BlockFrogSpawnBreak = "block_frog_spawn_break";
+    /// <summary>Equivalent to <c>swoop</c></summary>
+    public const string LevelSoundEvent_Swoop = "swoop";
+    /// <summary>Equivalent to <c>presneeze</c></summary>
+    public const string LevelSoundEvent_Presneeze = "presneeze";
+    /// <summary>Equivalent to <c>sneeze</c></summary>
+    public const string LevelSoundEvent_Sneeze = "sneeze";
+    /// <summary>Equivalent to <c>scared</c></summary>
+    public const string LevelSoundEvent_Scared = "scared";
+    /// <summary>Equivalent to <c>ambient_aggressive</c></summary>
+    public const string LevelSoundEvent_AmbientAggressive = "ambient_aggressive";
+    /// <summary>Equivalent to <c>ambient_worried</c></summary>
+    public const string LevelSoundEvent_AmbientWorried = "ambient_worried";
+    /// <summary>Equivalent to <c>cant_breed</c></summary>
+    public const string LevelSoundEvent_CantBreed = "cant_breed";
+    /// <summary>Equivalent to <c>block_scaffolding_climb</c></summary>
+    public const string LevelSoundEvent_BlockScaffoldingClimb = "block_scaffolding_climb";
+    /// <summary>Equivalent to <c>block_bamboo_sapling_place</c></summary>
+    public const string LevelSoundEvent_BlockBambooSaplingPlace = "block_bamboo_sapling_place";
+    /// <summary>Equivalent to <c>crossbow_loading_start</c></summary>
+    public const string LevelSoundEvent_CrossbowLoadingStart = "crossbow_loading_start";
+    /// <summary>Equivalent to <c>crossbow_loading_middle</c></summary>
+    public const string LevelSoundEvent_CrossbowLoadingMiddle = "crossbow_loading_middle";
+    /// <summary>Equivalent to <c>crossbow_loading_end</c></summary>
+    public const string LevelSoundEvent_CrossbowLoadingEnd = "crossbow_loading_end";
+    /// <summary>Equivalent to <c>crossbow_shoot</c></summary>
+    public const string LevelSoundEvent_CrossbowShoot = "crossbow_shoot";
+    /// <summary>Equivalent to <c>crossbow_quick_charge_start</c></summary>
+    public const string LevelSoundEvent_CrossbowQuickChargeStart = "crossbow_quick_charge_start";
+    /// <summary>Equivalent to <c>crossbow_quick_charge_middle</c></summary>
+    public const string LevelSoundEvent_CrossbowQuickChargeMiddle = "crossbow_quick_charge_middle";
+    /// <summary>Equivalent to <c>crossbow_quick_charge_end</c></summary>
+    public const string LevelSoundEvent_CrossbowQuickChargeEnd = "crossbow_quick_charge_end";
+    /// <summary>Equivalent to <c>item_shield_block</c></summary>
+    public const string LevelSoundEvent_ItemShieldBlock = "item_shield_block";
+    /// <summary>Equivalent to <c>portal_travel</c></summary>
+    public const string LevelSoundEvent_PortalTravel = "portal_travel";
+    /// <summary>Equivalent to <c>item_book_put</c></summary>
+    public const string LevelSoundEvent_ItemBookPut = "item_book_put";
+    /// <summary>Equivalent to <c>block_grindstone_use</c></summary>
+    public const string LevelSoundEvent_BlockGrindstoneUse = "block_grindstone_use";
+    /// <summary>Equivalent to <c>block_bell_hit</c></summary>
+    public const string LevelSoundEvent_BlockBellHit = "block_bell_hit";
+    /// <summary>Equivalent to <c>block_campfire_crackle</c></summary>
+    public const string LevelSoundEvent_BlockCampfireCrackle = "block_campfire_crackle";
+    /// <summary>Equivalent to <c>block_sweet_berry_bush_hurt</c></summary>
+    public const string LevelSoundEvent_BlockSweetBerryBushHurt = "block_sweet_berry_bush_hurt";
+    /// <summary>Equivalent to <c>block_sweet_berry_bush_pick</c></summary>
+    public const string LevelSoundEvent_BlockSweetBerryBushPick = "block_sweet_berry_bush_pick";
+    /// <summary>Equivalent to <c>block_stonecutter_use</c></summary>
+    public const string LevelSoundEvent_BlockStonecutterUse = "block_stonecutter_use";
+    /// <summary>Equivalent to <c>block_cartography_table_use</c></summary>
+    public const string LevelSoundEvent_BlockCartographyTableUse = "block_cartography_table_use";
+    /// <summary>Equivalent to <c>block_composter_empty</c></summary>
+    public const string LevelSoundEvent_BlockComposterEmpty = "block_composter_empty";
+    /// <summary>Equivalent to <c>block_composter_fill</c></summary>
+    public const string LevelSoundEvent_BlockComposterFill = "block_composter_fill";
+    /// <summary>Equivalent to <c>block_composter_fill_success</c></summary>
+    public const string LevelSoundEvent_BlockComposterFillSuccess = "block_composter_fill_success";
+    /// <summary>Equivalent to <c>block_composter_ready</c></summary>
+    public const string LevelSoundEvent_BlockComposterReady = "block_composter_ready";
+    /// <summary>Equivalent to <c>roar</c></summary>
+    public const string LevelSoundEvent_Roar = "roar";
+    /// <summary>Equivalent to <c>stun</c></summary>
+    public const string LevelSoundEvent_Stun = "stun";
+    /// <summary>Equivalent to <c>block_barrel_open</c></summary>
+    public const string LevelSoundEvent_BlockBarrelOpen = "block_barrel_open";
+    /// <summary>Equivalent to <c>block_barrel_close</c></summary>
+    public const string LevelSoundEvent_BlockBarrelClose = "block_barrel_close";
+    /// <summary>Equivalent to <c>raid_horn</c></summary>
+    public const string LevelSoundEvent_RaidHorn = "raid_horn";
+    /// <summary>Equivalent to <c>ui_stonecutter_take_result</c></summary>
+    public const string LevelSoundEvent_UiStonecutterTakeResult = "ui_stonecutter_take_result";
+    /// <summary>Equivalent to <c>ui_cartography_table_take_result</c></summary>
+    public const string LevelSoundEvent_UiCartographyTableTakeResult = "ui_cartography_table_take_result";
+    /// <summary>Equivalent to <c>ui_loom_take_result</c></summary>
+    public const string LevelSoundEvent_UiLoomTakeResult = "ui_loom_take_result";
+    /// <summary>Equivalent to <c>block_smoker_smoke</c></summary>
+    public const string LevelSoundEvent_BlockSmokerSmoke = "block_smoker_smoke";
+    /// <summary>Equivalent to <c>block_blastfurnace_fire_crackle</c></summary>
+    public const string LevelSoundEvent_BlockBlastfurnaceFireCrackle = "block_blastfurnace_fire_crackle";
+    /// <summary>Equivalent to <c>block_smithing_table_use</c></summary>
+    public const string LevelSoundEvent_BlockSmithingTableUse = "block_smithing_table_use";
+    /// <summary>Equivalent to <c>block_loom_use</c></summary>
+    public const string LevelSoundEvent_BlockLoomUse = "block_loom_use";
+    /// <summary>Equivalent to <c>ambient_in_raid</c></summary>
+    public const string LevelSoundEvent_AmbientInRaid = "ambient_in_raid";
+    /// <summary>Equivalent to <c>screech</c></summary>
+    public const string LevelSoundEvent_Screech = "screech";
+    /// <summary>Equivalent to <c>sleep</c></summary>
+    public const string LevelSoundEvent_Sleep = "sleep";
+    /// <summary>Equivalent to <c>block_furnace_lit</c></summary>
+    public const string LevelSoundEvent_BlockFurnaceLit = "block_furnace_lit";
+    /// <summary>Equivalent to <c>convert_mooshroom</c></summary>
+    public const string LevelSoundEvent_ConvertMooshroom = "convert_mooshroom";
+    /// <summary>Equivalent to <c>milk_suspiciously</c></summary>
+    public const string LevelSoundEvent_MilkSuspiciously = "milk_suspiciously";
+    /// <summary>Equivalent to <c>celebrate</c></summary>
+    public const string LevelSoundEvent_Celebrate = "celebrate";
+    /// <summary>Equivalent to <c>block_beehive_enter</c></summary>
+    public const string LevelSoundEvent_BlockBeehiveEnter = "block_beehive_enter";
+    /// <summary>Equivalent to <c>block_beehive_exit</c></summary>
+    public const string LevelSoundEvent_BlockBeehiveExit = "block_beehive_exit";
+    /// <summary>Equivalent to <c>block_beehive_shear</c></summary>
+    public const string LevelSoundEvent_BlockBeehiveShear = "block_beehive_shear";
+    /// <summary>Equivalent to <c>block_beehive_work</c></summary>
+    public const string LevelSoundEvent_BlockBeehiveWork = "block_beehive_work";
+    /// <summary>Equivalent to <c>block_beehive_drip</c></summary>
+    public const string LevelSoundEvent_BlockBeehiveDrip = "block_beehive_drip";
+    /// <summary>Equivalent to <c>ambient_cave</c></summary>
+    public const string LevelSoundEvent_AmbientCave = "ambient_cave";
+    /// <summary>Equivalent to <c>angry</c></summary>
+    public const string LevelSoundEvent_Angry = "angry";
+    /// <summary>Equivalent to <c>retreat</c></summary>
+    public const string LevelSoundEvent_Retreat = "retreat";
+    /// <summary>Equivalent to <c>converted_to_zombified</c></summary>
+    public const string LevelSoundEvent_ConvertedToZombified = "converted_to_zombified";
+    /// <summary>Equivalent to <c>step_lava</c></summary>
+    public const string LevelSoundEvent_StepLava = "step_lava";
+    /// <summary>Equivalent to <c>tempt</c></summary>
+    public const string LevelSoundEvent_Tempt = "tempt";
+    /// <summary>Equivalent to <c>panic</c></summary>
+    public const string LevelSoundEvent_Panic = "panic";
+    /// <summary>Equivalent to <c>admire</c></summary>
+    public const string LevelSoundEvent_Admire = "admire";
+    /// <summary>Equivalent to <c>particle_soul_escape_quiet</c></summary>
+    public const string LevelSoundEvent_ParticleSoulEscapeQuiet = "particle_soul_escape_quiet";
+    /// <summary>Equivalent to <c>particle_soul_escape_loud</c></summary>
+    public const string LevelSoundEvent_ParticleSoulEscapeLoud = "particle_soul_escape_loud";
+    /// <summary>Equivalent to <c>respawn_anchor_charge</c></summary>
+    public const string LevelSoundEvent_RespawnAnchorCharge = "respawn_anchor_charge";
+    /// <summary>Equivalent to <c>respawn_anchor_deplete</c></summary>
+    public const string LevelSoundEvent_RespawnAnchorDeplete = "respawn_anchor_deplete";
+    /// <summary>Equivalent to <c>respawn_anchor_set_spawn</c></summary>
+    public const string LevelSoundEvent_RespawnAnchorSetSpawn = "respawn_anchor_set_spawn";
+    /// <summary>Equivalent to <c>respawn_anchor_ambient</c></summary>
+    public const string LevelSoundEvent_RespawnAnchorAmbient = "respawn_anchor_ambient";
+    /// <summary>Equivalent to <c>ambient_crimson_forest_mood</c></summary>
+    public const string LevelSoundEvent_AmbientCrimsonForestMood = "ambient_crimson_forest_mood";
+    /// <summary>Equivalent to <c>ambient_warped_forest_mood</c></summary>
+    public const string LevelSoundEvent_AmbientWarpedForestMood = "ambient_warped_forest_mood";
+    /// <summary>Equivalent to <c>ambient_soulsand_valley_mood</c></summary>
+    public const string LevelSoundEvent_AmbientSoulsandValleyMood = "ambient_soulsand_valley_mood";
+    /// <summary>Equivalent to <c>ambient_nether_wastes_mood</c></summary>
+    public const string LevelSoundEvent_AmbientNetherWastesMood = "ambient_nether_wastes_mood";
+    /// <summary>Equivalent to <c>ambient_crimson_forest_additions</c></summary>
+    public const string LevelSoundEvent_AmbientCrimsonForestAdditions = "ambient_crimson_forest_additions";
+    /// <summary>Equivalent to <c>ambient_warped_forest_additions</c></summary>
+    public const string LevelSoundEvent_AmbientWarpedForestAdditions = "ambient_warped_forest_additions";
+    /// <summary>Equivalent to <c>ambient_soulsand_valley_additions</c></summary>
+    public const string LevelSoundEvent_AmbientSoulsandValleyAdditions = "ambient_soulsand_valley_additions";
+    /// <summary>Equivalent to <c>ambient_nether_wastes_additions</c></summary>
+    public const string LevelSoundEvent_AmbientNetherWastesAdditions = "ambient_nether_wastes_additions";
+    /// <summary>Equivalent to <c>ambient_basalt_deltas_additions</c></summary>
+    public const string LevelSoundEvent_AmbientBasaltDeltasAdditions = "ambient_basalt_deltas_additions";
+    /// <summary>Equivalent to <c>ambient_crimson_forest_loop</c></summary>
+    public const string LevelSoundEvent_AmbientCrimsonForestLoop = "ambient_crimson_forest_loop";
+    /// <summary>Equivalent to <c>ambient_warped_forest_loop</c></summary>
+    public const string LevelSoundEvent_AmbientWarpedForestLoop = "ambient_warped_forest_loop";
+    /// <summary>Equivalent to <c>ambient_soulsand_valley_loop</c></summary>
+    public const string LevelSoundEvent_AmbientSoulsandValleyLoop = "ambient_soulsand_valley_loop";
+    /// <summary>Equivalent to <c>ambient_nether_wastes_loop</c></summary>
+    public const string LevelSoundEvent_AmbientNetherWastesLoop = "ambient_nether_wastes_loop";
+    /// <summary>Equivalent to <c>ambient_basalt_deltas_loop</c></summary>
+    public const string LevelSoundEvent_AmbientBasaltDeltasLoop = "ambient_basalt_deltas_loop";
+    /// <summary>Equivalent to <c>lodestone_compass_link_compass_to_lodestone</c></summary>
+    public const string LevelSoundEvent_LodestoneCompassLinkCompassToLodestone = "lodestone_compass_link_compass_to_lodestone";
+    /// <summary>Equivalent to <c>ambient_basalt_deltas_mood</c></summary>
+    public const string LevelSoundEvent_AmbientBasaltDeltasMood = "ambient_basalt_deltas_mood";
+    /// <summary>Equivalent to <c>power_on_sculk_sensor</c></summary>
+    public const string LevelSoundEvent_PowerOnSculkSensor = "power_on_sculk_sensor";
+    /// <summary>Equivalent to <c>power_off_sculk_sensor</c></summary>
+    public const string LevelSoundEvent_PowerOffSculkSensor = "power_off_sculk_sensor";
+    /// <summary>Equivalent to <c>smithing_table_use</c></summary>
+    public const string LevelSoundEvent_SmithingTableUse = "smithing_table_use";
+    /// <summary>Equivalent to <c>default</c></summary>
+    public const string LevelSoundEvent_Default = "default";
+    /// <summary>Equivalent to <c>lay_egg</c></summary>
+    public const string LevelSoundEvent_LayEgg = "lay_egg";
+    /// <summary>Equivalent to <c>lay_spawn</c></summary>
+    public const string LevelSoundEvent_LaySpawn = "lay_spawn";
+    /// <summary>Equivalent to <c>bucket_fill_powder_snow</c></summary>
+    public const string LevelSoundEvent_BucketFillPowderSnow = "bucket_fill_powder_snow";
+    /// <summary>Equivalent to <c>bucket_empty_powder_snow</c></summary>
+    public const string LevelSoundEvent_BucketEmptyPowderSnow = "bucket_empty_powder_snow";
+    /// <summary>Equivalent to <c>cauldron_drip_water_pointed_dripstone</c></summary>
+    public const string LevelSoundEvent_CauldronDripWaterPointedDripstone = "cauldron_drip_water_pointed_dripstone";
+    /// <summary>Equivalent to <c>cauldron_drip_lava_pointed_dripstone</c></summary>
+    public const string LevelSoundEvent_CauldronDripLavaPointedDripstone = "cauldron_drip_lava_pointed_dripstone";
+    /// <summary>Equivalent to <c>tilt_down_big_dripleaf</c></summary>
+    public const string LevelSoundEvent_TiltDownBigDripleaf = "tilt_down_big_dripleaf";
+    /// <summary>Equivalent to <c>tilt_up_big_dripleaf</c></summary>
+    public const string LevelSoundEvent_TiltUpBigDripleaf = "tilt_up_big_dripleaf";
+    /// <summary>Equivalent to <c>drip_water_pointed_dripstone</c></summary>
+    public const string LevelSoundEvent_DripWaterPointedDripstone = "drip_water_pointed_dripstone";
+    /// <summary>Equivalent to <c>pick_berries_cave_vines</c></summary>
+    public const string LevelSoundEvent_PickBerriesCaveVines = "pick_berries_cave_vines";
+    /// <summary>Equivalent to <c>drip_lava_pointed_dripstone</c></summary>
+    public const string LevelSoundEvent_DripLavaPointedDripstone = "drip_lava_pointed_dripstone";
+    /// <summary>Equivalent to <c>copper_wax_on</c></summary>
+    public const string LevelSoundEvent_CopperWaxOn = "copper_wax_on";
+    /// <summary>Equivalent to <c>copper_wax_off</c></summary>
+    public const string LevelSoundEvent_CopperWaxOff = "copper_wax_off";
+    /// <summary>Equivalent to <c>scrape</c></summary>
+    public const string LevelSoundEvent_Scrape = "scrape";
+    /// <summary>Equivalent to <c>item_spyglass_use</c></summary>
+    public const string LevelSoundEvent_ItemSpyglassUse = "item_spyglass_use";
+    /// <summary>Equivalent to <c>item_spyglass_stop_using</c></summary>
+    public const string LevelSoundEvent_ItemSpyglassStopUsing = "item_spyglass_stop_using";
+    /// <summary>Equivalent to <c>chime_amethyst_block</c></summary>
+    public const string LevelSoundEvent_ChimeAmethystBlock = "chime_amethyst_block";
+    /// <summary>Equivalent to <c>mob_player_hurt_drown</c></summary>
+    public const string LevelSoundEvent_MobPlayerHurtDrown = "mob_player_hurt_drown";
+    /// <summary>Equivalent to <c>mob_player_hurt_on_fire</c></summary>
+    public const string LevelSoundEvent_MobPlayerHurtOnFire = "mob_player_hurt_on_fire";
+    /// <summary>Equivalent to <c>mob_player_hurt_freeze</c></summary>
+    public const string LevelSoundEvent_MobPlayerHurtFreeze = "mob_player_hurt_freeze";
+    /// <summary>Equivalent to <c>ambient_screamer</c></summary>
+    public const string LevelSoundEvent_AmbientScreamer = "ambient_screamer";
+    /// <summary>Equivalent to <c>hurt_screamer</c></summary>
+    public const string LevelSoundEvent_HurtScreamer = "hurt_screamer";
+    /// <summary>Equivalent to <c>death_screamer</c></summary>
+    public const string LevelSoundEvent_DeathScreamer = "death_screamer";
+    /// <summary>Equivalent to <c>milk_screamer</c></summary>
+    public const string LevelSoundEvent_MilkScreamer = "milk_screamer";
+    /// <summary>Equivalent to <c>jump_to_block</c></summary>
+    public const string LevelSoundEvent_JumpToBlock = "jump_to_block";
+    /// <summary>Equivalent to <c>pre_ram</c></summary>
+    public const string LevelSoundEvent_PreRam = "pre_ram";
+    /// <summary>Equivalent to <c>pre_ram_screamer</c></summary>
+    public const string LevelSoundEvent_PreRamScreamer = "pre_ram_screamer";
+    /// <summary>Equivalent to <c>ram_impact</c></summary>
+    public const string LevelSoundEvent_RamImpact = "ram_impact";
+    /// <summary>Equivalent to <c>ram_impact_screamer</c></summary>
+    public const string LevelSoundEvent_RamImpactScreamer = "ram_impact_screamer";
+    /// <summary>Equivalent to <c>squid_ink_squirt</c></summary>
+    public const string LevelSoundEvent_SquidInkSquirt = "squid_ink_squirt";
+    /// <summary>Equivalent to <c>glow_squid_ink_squirt</c></summary>
+    public const string LevelSoundEvent_GlowSquidInkSquirt = "glow_squid_ink_squirt";
+    /// <summary>Equivalent to <c>convert_to_stray</c></summary>
+    public const string LevelSoundEvent_ConvertToStray = "convert_to_stray";
+    /// <summary>Equivalent to <c>cake_add_candle</c></summary>
+    public const string LevelSoundEvent_CakeAddCandle = "cake_add_candle";
+    /// <summary>Equivalent to <c>extinguish_candle</c></summary>
+    public const string LevelSoundEvent_ExtinguishCandle = "extinguish_candle";
+    /// <summary>Equivalent to <c>ambient_candle</c></summary>
+    public const string LevelSoundEvent_AmbientCandle = "ambient_candle";
+    /// <summary>Equivalent to <c>block_click</c></summary>
+    public const string LevelSoundEvent_BlockClick = "block_click";
+    /// <summary>Equivalent to <c>block_click_fail</c></summary>
+    public const string LevelSoundEvent_BlockClickFail = "block_click_fail";
+    /// <summary>Equivalent to <c>block_sculk_catalyst_bloom</c></summary>
+    public const string LevelSoundEvent_BlockSculkCatalystBloom = "block_sculk_catalyst_bloom";
+    /// <summary>Equivalent to <c>block_sculk_shrieker_shriek</c></summary>
+    public const string LevelSoundEvent_BlockSculkShriekerShriek = "block_sculk_shrieker_shriek";
+    /// <summary>Equivalent to <c>nearby_close</c></summary>
+    public const string LevelSoundEvent_NearbyClose = "nearby_close";
+    /// <summary>Equivalent to <c>nearby_closer</c></summary>
+    public const string LevelSoundEvent_NearbyCloser = "nearby_closer";
+    /// <summary>Equivalent to <c>nearby_closest</c></summary>
+    public const string LevelSoundEvent_NearbyClosest = "nearby_closest";
+    /// <summary>Equivalent to <c>agitated</c></summary>
+    public const string LevelSoundEvent_Agitated = "agitated";
+    /// <summary>Equivalent to <c>listening</c></summary>
+    public const string LevelSoundEvent_Listening = "listening";
+    /// <summary>Equivalent to <c>heartbeat</c></summary>
+    public const string LevelSoundEvent_Heartbeat = "heartbeat";
+    /// <summary>Equivalent to <c>tongue</c></summary>
+    public const string LevelSoundEvent_Tongue = "tongue";
+    /// <summary>Equivalent to <c>item_given</c></summary>
+    public const string LevelSoundEvent_ItemGiven = "item_given";
+    /// <summary>Equivalent to <c>item_taken</c></summary>
+    public const string LevelSoundEvent_ItemTaken = "item_taken";
+    /// <summary>Equivalent to <c>item_thrown</c></summary>
+    public const string LevelSoundEvent_ItemThrown = "item_thrown";
+    /// <summary>Equivalent to <c>irongolem_crack</c></summary>
+    public const string LevelSoundEvent_IrongolemCrack = "irongolem_crack";
+    /// <summary>Equivalent to <c>irongolem_repair</c></summary>
+    public const string LevelSoundEvent_IrongolemRepair = "irongolem_repair";
+    /// <summary>Equivalent to <c>horn_break</c></summary>
+    public const string LevelSoundEvent_HornBreak = "horn_break";
+    /// <summary>Equivalent to <c>horn_call0</c></summary>
+    public const string LevelSoundEvent_HornCall0 = "horn_call0";
+    /// <summary>Equivalent to <c>horn_call1</c></summary>
+    public const string LevelSoundEvent_HornCall1 = "horn_call1";
+    /// <summary>Equivalent to <c>horn_call2</c></summary>
+    public const string LevelSoundEvent_HornCall2 = "horn_call2";
+    /// <summary>Equivalent to <c>horn_call3</c></summary>
+    public const string LevelSoundEvent_HornCall3 = "horn_call3";
+    /// <summary>Equivalent to <c>horn_call4</c></summary>
+    public const string LevelSoundEvent_HornCall4 = "horn_call4";
+    /// <summary>Equivalent to <c>horn_call5</c></summary>
+    public const string LevelSoundEvent_HornCall5 = "horn_call5";
+    /// <summary>Equivalent to <c>horn_call6</c></summary>
+    public const string LevelSoundEvent_HornCall6 = "horn_call6";
+    /// <summary>Equivalent to <c>horn_call7</c></summary>
+    public const string LevelSoundEvent_HornCall7 = "horn_call7";
+    /// <summary>Equivalent to <c>imitate_warden</c></summary>
+    public const string LevelSoundEvent_ImitateWarden = "imitate_warden";
+    /// <summary>Equivalent to <c>listening_angry</c></summary>
+    public const string LevelSoundEvent_ListeningAngry = "listening_angry";
+    /// <summary>Equivalent to <c>sonic_boom</c></summary>
+    public const string LevelSoundEvent_SonicBoom = "sonic_boom";
+    /// <summary>Equivalent to <c>sonic_charge</c></summary>
+    public const string LevelSoundEvent_SonicCharge = "sonic_charge";
+    /// <summary>Equivalent to <c>convert_to_frog</c></summary>
+    public const string LevelSoundEvent_ConvertToFrog = "convert_to_frog";
+    /// <summary>Equivalent to <c>block_sculk_spread</c></summary>
+    public const string LevelSoundEvent_BlockSculkSpread = "block_sculk_spread";
+    /// <summary>Equivalent to <c>charge_sculk</c></summary>
+    public const string LevelSoundEvent_ChargeSculk = "charge_sculk";
+    /// <summary>Equivalent to <c>block_sculk_sensor_place</c></summary>
+    public const string LevelSoundEvent_BlockSculkSensorPlace = "block_sculk_sensor_place";
+    /// <summary>Equivalent to <c>block_sculk_shrieker_place</c></summary>
+    public const string LevelSoundEvent_BlockSculkShriekerPlace = "block_sculk_shrieker_place";
+    /// <summary>Equivalent to <c>block_enchanting_table_use</c></summary>
+    public const string LevelSoundEvent_BlockEnchantingTableUse = "block_enchanting_table_use";
+    /// <summary>Equivalent to <c>bundle_drop_contents</c></summary>
+    public const string LevelSoundEvent_BundleDropContents = "bundle_drop_contents";
+    /// <summary>Equivalent to <c>bundle_insert</c></summary>
+    public const string LevelSoundEvent_BundleInsert = "bundle_insert";
+    /// <summary>Equivalent to <c>bundle_insert_fail</c></summary>
+    public const string LevelSoundEvent_BundleInsertFail = "bundle_insert_fail";
+    /// <summary>Equivalent to <c>bundle_remove_one</c></summary>
+    public const string LevelSoundEvent_BundleRemoveOne = "bundle_remove_one";
+    /// <summary>Equivalent to <c>step_sand</c></summary>
+    public const string LevelSoundEvent_StepSand = "step_sand";
+    /// <summary>Equivalent to <c>dash_ready</c></summary>
+    public const string LevelSoundEvent_DashReady = "dash_ready";
+    /// <summary>Equivalent to <c>pressure_plate_click_off</c></summary>
+    public const string LevelSoundEvent_PressurePlateClickOff = "pressure_plate_click_off";
+    /// <summary>Equivalent to <c>pressure_plate_click_on</c></summary>
+    public const string LevelSoundEvent_PressurePlateClickOn = "pressure_plate_click_on";
+    /// <summary>Equivalent to <c>button_click_off</c></summary>
+    public const string LevelSoundEvent_ButtonClickOff = "button_click_off";
+    /// <summary>Equivalent to <c>button_click_on</c></summary>
+    public const string LevelSoundEvent_ButtonClickOn = "button_click_on";
+    /// <summary>Equivalent to <c>door_open</c></summary>
+    public const string LevelSoundEvent_DoorOpen = "door_open";
+    /// <summary>Equivalent to <c>door_close</c></summary>
+    public const string LevelSoundEvent_DoorClose = "door_close";
+    /// <summary>Equivalent to <c>trapdoor_open</c></summary>
+    public const string LevelSoundEvent_TrapdoorOpen = "trapdoor_open";
+    /// <summary>Equivalent to <c>trapdoor_close</c></summary>
+    public const string LevelSoundEvent_TrapdoorClose = "trapdoor_close";
+    /// <summary>Equivalent to <c>fence_gate_open</c></summary>
+    public const string LevelSoundEvent_FenceGateOpen = "fence_gate_open";
+    /// <summary>Equivalent to <c>fence_gate_close</c></summary>
+    public const string LevelSoundEvent_FenceGateClose = "fence_gate_close";
+    /// <summary>Equivalent to <c>insert</c></summary>
+    public const string LevelSoundEvent_Insert = "insert";
+    /// <summary>Equivalent to <c>pickup</c></summary>
+    public const string LevelSoundEvent_Pickup = "pickup";
+    /// <summary>Equivalent to <c>insert_enchanted</c></summary>
+    public const string LevelSoundEvent_InsertEnchanted = "insert_enchanted";
+    /// <summary>Equivalent to <c>pickup_enchanted</c></summary>
+    public const string LevelSoundEvent_PickupEnchanted = "pickup_enchanted";
+    /// <summary>Equivalent to <c>shatter_pot</c></summary>
+    public const string LevelSoundEvent_ShatterPot = "shatter_pot";
+    /// <summary>Equivalent to <c>break_pot</c></summary>
+    public const string LevelSoundEvent_BreakPot = "break_pot";
+    /// <summary>Equivalent to <c>brush</c></summary>
+    public const string LevelSoundEvent_Brush = "brush";
+    /// <summary>Equivalent to <c>brush_completed</c></summary>
+    public const string LevelSoundEvent_BrushCompleted = "brush_completed";
+    /// <summary>Equivalent to <c>block_sign_waxed_interact_fail</c></summary>
+    public const string LevelSoundEvent_BlockSignWaxedInteractFail = "block_sign_waxed_interact_fail";
+    /// <summary>Equivalent to <c>note_bass</c></summary>
+    public const string LevelSoundEvent_NoteBass = "note_bass";
+    /// <summary>Equivalent to <c>pumpkin_carve</c></summary>
+    public const string LevelSoundEvent_PumpkinCarve = "pumpkin_carve";
+    /// <summary>Equivalent to <c>mob_husk_convert_to_zombie</c></summary>
+    public const string LevelSoundEvent_MobHuskConvertToZombie = "mob_husk_convert_to_zombie";
+    /// <summary>Equivalent to <c>mob_pig_death</c></summary>
+    public const string LevelSoundEvent_MobPigDeath = "mob_pig_death";
+    /// <summary>Equivalent to <c>mob_hoglin_converted_to_zombified</c></summary>
+    public const string LevelSoundEvent_MobHoglinConvertedToZombified = "mob_hoglin_converted_to_zombified";
+    /// <summary>Equivalent to <c>ambient_underwater_enter</c></summary>
+    public const string LevelSoundEvent_AmbientUnderwaterEnter = "ambient_underwater_enter";
+    /// <summary>Equivalent to <c>ambient_underwater_exit</c></summary>
+    public const string LevelSoundEvent_AmbientUnderwaterExit = "ambient_underwater_exit";
+    /// <summary>Equivalent to <c>bottle_fill</c></summary>
+    public const string LevelSoundEvent_BottleFill = "bottle_fill";
+    /// <summary>Equivalent to <c>bottle_empty</c></summary>
+    public const string LevelSoundEvent_BottleEmpty = "bottle_empty";
+    /// <summary>Equivalent to <c>block_decorated_pot_insert</c></summary>
+    public const string LevelSoundEvent_BlockDecoratedPotInsert = "block_decorated_pot_insert";
+    /// <summary>Equivalent to <c>block_decorated_pot_insert_fail</c></summary>
+    public const string LevelSoundEvent_BlockDecoratedPotInsertFail = "block_decorated_pot_insert_fail";
+    /// <summary>Equivalent to <c>crafter_craft</c></summary>
+    public const string LevelSoundEvent_CrafterCraft = "crafter_craft";
+    /// <summary>Equivalent to <c>crafter_fail</c></summary>
+    public const string LevelSoundEvent_CrafterFail = "crafter_fail";
+    /// <summary>Equivalent to <c>crafter_disable_slot</c></summary>
+    public const string LevelSoundEvent_CrafterDisableSlot = "crafter_disable_slot";
+    /// <summary>Equivalent to <c>block_copper_bulb_turn_on</c></summary>
+    public const string LevelSoundEvent_BlockCopperBulbTurnOn = "block_copper_bulb_turn_on";
+    /// <summary>Equivalent to <c>block_copper_bulb_turn_off</c></summary>
+    public const string LevelSoundEvent_BlockCopperBulbTurnOff = "block_copper_bulb_turn_off";
+    /// <summary>Equivalent to <c>breeze_wind_charge_burst</c></summary>
+    public const string LevelSoundEvent_BreezeWindChargeBurst = "breeze_wind_charge_burst";
+    /// <summary>Equivalent to <c>imitate_breeze</c></summary>
+    public const string LevelSoundEvent_ImitateBreeze = "imitate_breeze";
+    /// <summary>Equivalent to <c>trial_spawner_open_shutter</c></summary>
+    public const string LevelSoundEvent_TrialSpawnerOpenShutter = "trial_spawner_open_shutter";
+    /// <summary>Equivalent to <c>trial_spawner_detect_player</c></summary>
+    public const string LevelSoundEvent_TrialSpawnerDetectPlayer = "trial_spawner_detect_player";
+    /// <summary>Equivalent to <c>trial_spawner_close_shutter</c></summary>
+    public const string LevelSoundEvent_TrialSpawnerCloseShutter = "trial_spawner_close_shutter";
+    /// <summary>Equivalent to <c>trial_spawner_spawn_mob</c></summary>
+    public const string LevelSoundEvent_TrialSpawnerSpawnMob = "trial_spawner_spawn_mob";
+    /// <summary>Equivalent to <c>trial_spawner_eject_item</c></summary>
+    public const string LevelSoundEvent_TrialSpawnerEjectItem = "trial_spawner_eject_item";
+    /// <summary>Equivalent to <c>trial_spawner_ambient</c></summary>
+    public const string LevelSoundEvent_TrialSpawnerAmbient = "trial_spawner_ambient";
+    /// <summary>Equivalent to <c>mob_armadillo_brush</c></summary>
+    public const string LevelSoundEvent_MobArmadilloBrush = "mob_armadillo_brush";
+    /// <summary>Equivalent to <c>mob_armadillo_scute_drop</c></summary>
+    public const string LevelSoundEvent_MobArmadilloScuteDrop = "mob_armadillo_scute_drop";
+    /// <summary>Equivalent to <c>armor_equip_wolf</c></summary>
+    public const string LevelSoundEvent_ArmorEquipWolf = "armor_equip_wolf";
+    /// <summary>Equivalent to <c>armor_unequip_wolf</c></summary>
+    public const string LevelSoundEvent_ArmorUnequipWolf = "armor_unequip_wolf";
+    /// <summary>Equivalent to <c>reflect</c></summary>
+    public const string LevelSoundEvent_Reflect = "reflect";
+    /// <summary>Equivalent to <c>vault_open_shutter</c></summary>
+    public const string LevelSoundEvent_VaultOpenShutter = "vault_open_shutter";
+    /// <summary>Equivalent to <c>vault_close_shutter</c></summary>
+    public const string LevelSoundEvent_VaultCloseShutter = "vault_close_shutter";
+    /// <summary>Equivalent to <c>vault_eject_item</c></summary>
+    public const string LevelSoundEvent_VaultEjectItem = "vault_eject_item";
+    /// <summary>Equivalent to <c>vault_insert_item</c></summary>
+    public const string LevelSoundEvent_VaultInsertItem = "vault_insert_item";
+    /// <summary>Equivalent to <c>vault_insert_item_fail</c></summary>
+    public const string LevelSoundEvent_VaultInsertItemFail = "vault_insert_item_fail";
+    /// <summary>Equivalent to <c>vault_ambient</c></summary>
+    public const string LevelSoundEvent_VaultAmbient = "vault_ambient";
+    /// <summary>Equivalent to <c>vault_activate</c></summary>
+    public const string LevelSoundEvent_VaultActivate = "vault_activate";
+    /// <summary>Equivalent to <c>vault_deactivate</c></summary>
+    public const string LevelSoundEvent_VaultDeactivate = "vault_deactivate";
+    /// <summary>Equivalent to <c>hurt_reduced</c></summary>
+    public const string LevelSoundEvent_HurtReduced = "hurt_reduced";
+    /// <summary>Equivalent to <c>wind_charge_burst</c></summary>
+    public const string LevelSoundEvent_WindChargeBurst = "wind_charge_burst";
+    /// <summary>Equivalent to <c>armor_break_wolf</c></summary>
+    public const string LevelSoundEvent_ArmorBreakWolf = "armor_break_wolf";
+    /// <summary>Equivalent to <c>armor_crack_wolf</c></summary>
+    public const string LevelSoundEvent_ArmorCrackWolf = "armor_crack_wolf";
+    /// <summary>Equivalent to <c>armor_repair_wolf</c></summary>
+    public const string LevelSoundEvent_ArmorRepairWolf = "armor_repair_wolf";
+    /// <summary>Equivalent to <c>mace_smash_air</c></summary>
+    public const string LevelSoundEvent_MaceSmashAir = "mace_smash_air";
+    /// <summary>Equivalent to <c>mace_smash_ground</c></summary>
+    public const string LevelSoundEvent_MaceSmashGround = "mace_smash_ground";
+    /// <summary>Equivalent to <c>mace_heavy_smash_ground</c></summary>
+    public const string LevelSoundEvent_MaceHeavySmashGround = "mace_heavy_smash_ground";
+    /// <summary>Equivalent to <c>trial_spawner_charge_activate</c></summary>
+    public const string LevelSoundEvent_TrialSpawnerChargeActivate = "trial_spawner_charge_activate";
+    /// <summary>Equivalent to <c>trial_spawner_ambient_ominous</c></summary>
+    public const string LevelSoundEvent_TrialSpawnerAmbientOminous = "trial_spawner_ambient_ominous";
+    /// <summary>Equivalent to <c>apply_effect_bad_omen</c></summary>
+    public const string LevelSoundEvent_ApplyEffectBadOmen = "apply_effect_bad_omen";
+    /// <summary>Equivalent to <c>apply_effect_raid_omen</c></summary>
+    public const string LevelSoundEvent_ApplyEffectRaidOmen = "apply_effect_raid_omen";
+    /// <summary>Equivalent to <c>apply_effect_trial_omen</c></summary>
+    public const string LevelSoundEvent_ApplyEffectTrialOmen = "apply_effect_trial_omen";
+    /// <summary>Equivalent to <c>ominous_item_spawner_spawn_item</c></summary>
+    public const string LevelSoundEvent_OminousItemSpawnerSpawnItem = "ominous_item_spawner_spawn_item";
+    /// <summary>Equivalent to <c>ominous_bottle_end_use</c></summary>
+    public const string LevelSoundEvent_OminousBottleEndUse = "ominous_bottle_end_use";
+    /// <summary>Equivalent to <c>ominous_item_spawner_spawn_item_begin</c></summary>
+    public const string LevelSoundEvent_OminousItemSpawnerSpawnItemBegin = "ominous_item_spawner_spawn_item_begin";
+    /// <summary>Equivalent to <c>ominous_item_spawner_about_to_spawn_item</c></summary>
+    public const string LevelSoundEvent_OminousItemSpawnerAboutToSpawnItem = "ominous_item_spawner_about_to_spawn_item";
+    /// <summary>Equivalent to <c>imitate_bogged</c></summary>
+    public const string LevelSoundEvent_ImitateBogged = "imitate_bogged";
+    /// <summary>Equivalent to <c>vault_reject_rewarded_player</c></summary>
+    public const string LevelSoundEvent_VaultRejectRewardedPlayer = "vault_reject_rewarded_player";
+    /// <summary>Equivalent to <c>imitate_drowned</c></summary>
+    public const string LevelSoundEvent_ImitateDrowned = "imitate_drowned";
+    /// <summary>Equivalent to <c>sponge_absorb</c></summary>
+    public const string LevelSoundEvent_SpongeAbsorb = "sponge_absorb";
+    /// <summary>Equivalent to <c>imitate_creaking</c></summary>
+    public const string LevelSoundEvent_ImitateCreaking = "imitate_creaking";
+    /// <summary>Equivalent to <c>block_creaking_heart_trail</c></summary>
+    public const string LevelSoundEvent_BlockCreakingHeartTrail = "block_creaking_heart_trail";
+    /// <summary>Equivalent to <c>creaking_heart_spawn</c></summary>
+    public const string LevelSoundEvent_CreakingHeartSpawn = "creaking_heart_spawn";
+    /// <summary>Equivalent to <c>activate</c></summary>
+    public const string LevelSoundEvent_Activate = "activate";
+    /// <summary>Equivalent to <c>deactivate</c></summary>
+    public const string LevelSoundEvent_Deactivate = "deactivate";
+    /// <summary>Equivalent to <c>freeze</c></summary>
+    public const string LevelSoundEvent_Freeze = "freeze";
+    /// <summary>Equivalent to <c>unfreeze</c></summary>
+    public const string LevelSoundEvent_Unfreeze = "unfreeze";
+    /// <summary>Equivalent to <c>open</c></summary>
+    public const string LevelSoundEvent_Open = "open";
+    /// <summary>Equivalent to <c>open_long</c></summary>
+    public const string LevelSoundEvent_OpenLong = "open_long";
+    /// <summary>Equivalent to <c>close</c></summary>
+    public const string LevelSoundEvent_Close = "close";
+    /// <summary>Equivalent to <c>close_long</c></summary>
+    public const string LevelSoundEvent_CloseLong = "close_long";
+    /// <summary>Equivalent to <c>imitate_phantom</c></summary>
+    public const string LevelSoundEvent_ImitatePhantom = "imitate_phantom";
+    /// <summary>Equivalent to <c>imitate_zoglin</c></summary>
+    public const string LevelSoundEvent_ImitateZoglin = "imitate_zoglin";
+    /// <summary>Equivalent to <c>imitate_guardian</c></summary>
+    public const string LevelSoundEvent_ImitateGuardian = "imitate_guardian";
+    /// <summary>Equivalent to <c>imitate_ravager</c></summary>
+    public const string LevelSoundEvent_ImitateRavager = "imitate_ravager";
+    /// <summary>Equivalent to <c>imitate_pillager</c></summary>
+    public const string LevelSoundEvent_ImitatePillager = "imitate_pillager";
+    /// <summary>Equivalent to <c>place_in_water</c></summary>
+    public const string LevelSoundEvent_PlaceInWater = "place_in_water";
+    /// <summary>Equivalent to <c>state_change</c></summary>
+    public const string LevelSoundEvent_StateChange = "state_change";
+    /// <summary>Equivalent to <c>imitate_happy_ghast</c></summary>
+    public const string LevelSoundEvent_ImitateHappyGhast = "imitate_happy_ghast";
+    /// <summary>Equivalent to <c>armor_unequip_generic</c></summary>
+    public const string LevelSoundEvent_ArmorUnequipGeneric = "armor_unequip_generic";
+    /// <summary>Equivalent to <c>ambient_weather_the_end_light_flash</c></summary>
+    public const string LevelSoundEvent_AmbientWeatherTheEndLightFlash = "ambient_weather_the_end_light_flash";
+    /// <summary>Equivalent to <c>lead_leash</c></summary>
+    public const string LevelSoundEvent_LeadLeash = "lead_leash";
+    /// <summary>Equivalent to <c>lead_unleash</c></summary>
+    public const string LevelSoundEvent_LeadUnleash = "lead_unleash";
+    /// <summary>Equivalent to <c>lead_break</c></summary>
+    public const string LevelSoundEvent_LeadBreak = "lead_break";
+    /// <summary>Equivalent to <c>unsaddle</c></summary>
+    public const string LevelSoundEvent_Unsaddle = "unsaddle";
+    /// <summary>Equivalent to <c>armor_equip_copper</c></summary>
+    public const string LevelSoundEvent_ArmorEquipCopper = "armor_equip_copper";
+    /// <summary>Equivalent to <c>place_item</c></summary>
+    public const string LevelSoundEvent_PlaceItem = "place_item";
+    /// <summary>Equivalent to <c>single_swap</c></summary>
+    public const string LevelSoundEvent_SingleSwap = "single_swap";
+    /// <summary>Equivalent to <c>multi_swap</c></summary>
+    public const string LevelSoundEvent_MultiSwap = "multi_swap";
+    /// <summary>Equivalent to <c>item_enchant_lunge1</c></summary>
+    public const string LevelSoundEvent_ItemEnchantLunge1 = "item_enchant_lunge1";
+    /// <summary>Equivalent to <c>item_enchant_lunge2</c></summary>
+    public const string LevelSoundEvent_ItemEnchantLunge2 = "item_enchant_lunge2";
+    /// <summary>Equivalent to <c>item_enchant_lunge3</c></summary>
+    public const string LevelSoundEvent_ItemEnchantLunge3 = "item_enchant_lunge3";
+    /// <summary>Equivalent to <c>attack_critical</c></summary>
+    public const string LevelSoundEvent_AttackCritical = "attack_critical";
+    /// <summary>Equivalent to <c>item_spear_attack_hit</c></summary>
+    public const string LevelSoundEvent_ItemSpearAttackHit = "item_spear_attack_hit";
+    /// <summary>Equivalent to <c>item_spear_attack_miss</c></summary>
+    public const string LevelSoundEvent_ItemSpearAttackMiss = "item_spear_attack_miss";
+    /// <summary>Equivalent to <c>item_wooden_spear_attack_hit</c></summary>
+    public const string LevelSoundEvent_ItemWoodenSpearAttackHit = "item_wooden_spear_attack_hit";
+    /// <summary>Equivalent to <c>item_wooden_spear_attack_miss</c></summary>
+    public const string LevelSoundEvent_ItemWoodenSpearAttackMiss = "item_wooden_spear_attack_miss";
+    /// <summary>Equivalent to <c>imitate_parched</c></summary>
+    public const string LevelSoundEvent_ImitateParched = "imitate_parched";
+    /// <summary>Equivalent to <c>imitate_camel_husk</c></summary>
+    public const string LevelSoundEvent_ImitateCamelHusk = "imitate_camel_husk";
+    /// <summary>Equivalent to <c>item_spear_use</c></summary>
+    public const string LevelSoundEvent_ItemSpearUse = "item_spear_use";
+    /// <summary>Equivalent to <c>item_wooden_spear_use</c></summary>
+    public const string LevelSoundEvent_ItemWoodenSpearUse = "item_wooden_spear_use";
+    /// <summary>Equivalent to <c>saddle_in_water</c></summary>
+    public const string LevelSoundEvent_SaddleInWater = "saddle_in_water";
+    /// <summary>Equivalent to <c>item_stone_spear_attack_hit</c></summary>
+    public const string LevelSoundEvent_ItemStoneSpearAttackHit = "item_stone_spear_attack_hit";
+    /// <summary>Equivalent to <c>item_iron_spear_attack_hit</c></summary>
+    public const string LevelSoundEvent_ItemIronSpearAttackHit = "item_iron_spear_attack_hit";
+    /// <summary>Equivalent to <c>item_copper_spear_attack_hit</c></summary>
+    public const string LevelSoundEvent_ItemCopperSpearAttackHit = "item_copper_spear_attack_hit";
+    /// <summary>Equivalent to <c>item_golden_spear_attack_hit</c></summary>
+    public const string LevelSoundEvent_ItemGoldenSpearAttackHit = "item_golden_spear_attack_hit";
+    /// <summary>Equivalent to <c>item_diamond_spear_attack_hit</c></summary>
+    public const string LevelSoundEvent_ItemDiamondSpearAttackHit = "item_diamond_spear_attack_hit";
+    /// <summary>Equivalent to <c>item_netherite_spear_attack_hit</c></summary>
+    public const string LevelSoundEvent_ItemNetheriteSpearAttackHit = "item_netherite_spear_attack_hit";
+    /// <summary>Equivalent to <c>item_stone_spear_attack_miss</c></summary>
+    public const string LevelSoundEvent_ItemStoneSpearAttackMiss = "item_stone_spear_attack_miss";
+    /// <summary>Equivalent to <c>item_iron_spear_attack_miss</c></summary>
+    public const string LevelSoundEvent_ItemIronSpearAttackMiss = "item_iron_spear_attack_miss";
+    /// <summary>Equivalent to <c>item_copper_spear_attack_miss</c></summary>
+    public const string LevelSoundEvent_ItemCopperSpearAttackMiss = "item_copper_spear_attack_miss";
+    /// <summary>Equivalent to <c>item_golden_spear_attack_miss</c></summary>
+    public const string LevelSoundEvent_ItemGoldenSpearAttackMiss = "item_golden_spear_attack_miss";
+    /// <summary>Equivalent to <c>item_diamond_spear_attack_miss</c></summary>
+    public const string LevelSoundEvent_ItemDiamondSpearAttackMiss = "item_diamond_spear_attack_miss";
+    /// <summary>Equivalent to <c>item_netherite_spear_attack_miss</c></summary>
+    public const string LevelSoundEvent_ItemNetheriteSpearAttackMiss = "item_netherite_spear_attack_miss";
+    /// <summary>Equivalent to <c>item_stone_spear_use</c></summary>
+    public const string LevelSoundEvent_ItemStoneSpearUse = "item_stone_spear_use";
+    /// <summary>Equivalent to <c>item_iron_spear_use</c></summary>
+    public const string LevelSoundEvent_ItemIronSpearUse = "item_iron_spear_use";
+    /// <summary>Equivalent to <c>item_copper_spear_use</c></summary>
+    public const string LevelSoundEvent_ItemCopperSpearUse = "item_copper_spear_use";
+    /// <summary>Equivalent to <c>item_golden_spear_use</c></summary>
+    public const string LevelSoundEvent_ItemGoldenSpearUse = "item_golden_spear_use";
+    /// <summary>Equivalent to <c>item_diamond_spear_use</c></summary>
+    public const string LevelSoundEvent_ItemDiamondSpearUse = "item_diamond_spear_use";
+    /// <summary>Equivalent to <c>item_netherite_spear_use</c></summary>
+    public const string LevelSoundEvent_ItemNetheriteSpearUse = "item_netherite_spear_use";
+    /// <summary>Equivalent to <c>pause_growth</c></summary>
+    public const string LevelSoundEvent_PauseGrowth = "pause_growth";
+    /// <summary>Equivalent to <c>reset_growth</c></summary>
+    public const string LevelSoundEvent_ResetGrowth = "reset_growth";
+    /// <summary>Equivalent to <c>pushed_by_player</c></summary>
+    public const string LevelSoundEvent_PushedByPlayer = "pushed_by_player";
+    /// <summary>Equivalent to <c>bounce</c></summary>
+    public const string LevelSoundEvent_Bounce = "bounce";
+    /// <summary>Equivalent to <c>slime_landing</c></summary>
+    public const string LevelSoundEvent_SlimeLanding = "slime_landing";
+    /// <summary>Equivalent to <c>absorb_block</c></summary>
+    public const string LevelSoundEvent_AbsorbBlock = "absorb_block";
+    /// <summary>Equivalent to <c>eject_block</c></summary>
+    public const string LevelSoundEvent_EjectBlock = "eject_block";
+    /// <summary>Equivalent to <c>geyser_eruption_start</c></summary>
+    public const string LevelSoundEvent_GeyserEruptionStart = "geyser_eruption_start";
+    /// <summary>Equivalent to <c>geyser_eruption_active</c></summary>
+    public const string LevelSoundEvent_GeyserEruptionActive = "geyser_eruption_active";
+    /// <summary>Equivalent to <c>record_bounce</c></summary>
+    public const string LevelSoundEvent_RecordBounce = "record_bounce";
+    /// <summary>Equivalent to <c>bucket_fill_land_animal</c></summary>
+    public const string LevelSoundEvent_BucketFillLandAnimal = "bucket_fill_land_animal";
+    /// <summary>Equivalent to <c>bucket_empty_land_animal</c></summary>
+    public const string LevelSoundEvent_BucketEmptyLandAnimal = "bucket_empty_land_animal";
+    /// <summary>Equivalent to <c>geyser_continuous_eruption_start</c></summary>
+    public const string LevelSoundEvent_GeyserContinuousEruptionStart = "geyser_continuous_eruption_start";
+    /// <summary>Equivalent to <c>geyser_continuous_eruption_active</c></summary>
+    public const string LevelSoundEvent_GeyserContinuousEruptionActive = "geyser_continuous_eruption_active";
+    /// <summary>Equivalent to <c>undefined</c></summary>
+    public const string LevelSoundEvent_Undefined = "undefined";
     /// <summary>Equivalent to <c>if_first</c></summary>
     public const string StartUsing_IfFirst = "if_first";
     /// <summary>Equivalent to <c>always</c></summary>
@@ -22,26 +1156,25 @@ public interface IUseModifiers : IItemTrait
     [TraitProperty]
     public virtual bool EmitVibrations => true;
     /// <summary>
-    /// Multiplier applied to the player&apos;s movement speed while the item is in use.
+    /// Multiplier applied to the player's movement speed while the item is in use.
     /// </summary>
     [TraitProperty]
-    [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.Range, 0,1)]
     public abstract float MovementModifier { get; }
     /// <summary>
-    /// Sound played when the item starts being used. Accepts a sound event name string.
+    /// Sound played when the item starts being used.
     /// </summary>
     [TraitProperty]
+    [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.OneOf, "item.use.on","hit","step","step.baby","fly","jump","jump.prevent","break","place","heavy.step","gallop","fall","hurt","hurt.baby","hurt.in.water","death","death.baby","death.in.water","death.to.zombie","ambient","ambient.baby","ambient.in.water","ambient.in.air","ambient.tame","ambient.pollinate","breathe","mad","boost","bow","squish.big","squish.small","fall.big","fall.small","splash","fizz","flap","swim","drink","drink.honey","drink.milk","eat","takeoff","shake","plop","land","saddle","armor","mob.armor_stand.place","add.chest","throw","attack","attack.nodamage","attack.strong","warn","shear","milk","thunder","explode","fire","ignite","fuse","stare","spawn","born","shoot","break.block","launch","blast","large.blast","twinkle","remedy","unfect","convert_to_drowned","levelup","bow.hit","bullet.hit","extinguish.fire","item.fizz","chest.open","chest.closed","shulkerbox.open","shulkerbox.closed","enderchest.open","enderchest.closed","power.on","power.off","attach","detach","deny","tripod","pop","drop.slot","note","thorns","piston.in","piston.out","portal","water","lava.pop","lava","beacon.activate","beacon.ambient","beacon.deactivate","beacon.power","conduit.activate","conduit.ambient","conduit.attack","conduit.deactivate","conduit.short","bubble.pop","bubble.up","bubble.upinside","bubble.down","bubble.downinside","burp","bucket.fill.water","bucket.empty.water","bucket.fill.lava","bucket.empty.lava","bucket.fill.fish","bucket.empty.fish","armor.equip_chain","armor.equip_diamond","armor.equip_elytra","armor.equip_generic","armor.equip_gold","armor.equip_iron","armor.equip_leather","armor.equip_netherite","record.13","record.cat","record.blocks","record.chirp","record.creator","record.creator_music_box","record.far","record.mall","record.mellohi","record.stal","record.strad","record.ward","record.11","record.wait","record.null","record.pigstep","record.precipice","record.relic","record.otherside","record.5","record.tears","record.lava_chicken","flop","elderguardian.curse","teleport","shulker.open","shulker.close","mob.warning","mob.warning.baby","haggle","haggle.yes","haggle.no","haggle.idle","disappeared","reappeared","chorusgrow","chorusdeath","glass","potion.brewed","cast.spell","prepare.attack","prepare.summon","prepare.wololo","fang","charge","camera.take_picture","leashknot.break","leashknot.place","growl","whine","pant","purr","purreow","death.min.volume","death.mid.volume","imitate.blaze","imitate.cave_spider","imitate.creeper","imitate.elder_guardian","imitate.ender_dragon","imitate.enderman","imitate.endermite","imitate.evocation_illager","imitate.ghast","imitate.husk","imitate.magma_cube","imitate.polar_bear","imitate.shulker","imitate.silverfish","imitate.skeleton","imitate.slime","imitate.spider","imitate.stray","imitate.vex","imitate.vindication_illager","imitate.witch","imitate.wither","imitate.wither_skeleton","imitate.wolf","imitate.zombie","imitate.zombie_pigman","imitate.zombie_villager","block.end_portal_frame.fill","block.end_portal.spawn","random.anvil_use","bottle.dragonbreath","balloonpop","sparkler.active","item.trident.hit","item.trident.hit_ground","item.trident.return","item.trident.riptide_1","item.trident.riptide_2","item.trident.riptide_3","item.trident.throw","item.trident.thunder","block.fletching_table.use","elemconstruct.open","icebomb.hit","lt.reaction.icebomb","lt.reaction.bleach","lt.reaction.epaste","lt.reaction.epaste2","lt.reaction.fertilizer","lt.reaction.fireball","lt.reaction.mgsalt","lt.reaction.miscfire","lt.reaction.fire","lt.reaction.miscexplosion","lt.reaction.miscmystical","lt.reaction.miscmystical2","lt.reaction.product","sparkler.use","glowstick.use","block.turtle_egg.break","block.turtle_egg.crack","block.turtle_egg.hatch","block.turtle_egg.attack","block.sniffer_egg.crack","block.sniffer_egg.hatch","block.frog_spawn.hatch","block.frog_spawn.break","swoop","presneeze","sneeze","scared","ambient.aggressive","ambient.worried","cant_breed","block.scaffolding.climb","block.bamboo_sapling.place","crossbow.loading.start","crossbow.loading.middle","crossbow.loading.end","crossbow.shoot","crossbow.quick_charge.start","crossbow.quick_charge.middle","crossbow.quick_charge.end","item.shield.block","portal.travel","item.book.put","block.grindstone.use","block.bell.hit","block.campfire.crackle","block.sweet_berry_bush.hurt","block.sweet_berry_bush.pick","block.stonecutter.use","block.cartography_table.use","block.composter.empty","block.composter.fill","block.composter.fill_success","block.composter.ready","roar","stun","block.barrel.open","block.barrel.close","raid.horn","ui.stonecutter.take_result","ui.cartography_table.take_result","ui.loom.take_result","block.smoker.smoke","block.blastfurnace.fire_crackle","block.smithing_table.use","block.loom.use","ambient.in.raid","screech","sleep","block.furnace.lit","convert_mooshroom","milk_suspiciously","celebrate","block.beehive.enter","block.beehive.exit","block.beehive.shear","block.beehive.work","block.beehive.drip","ambient.cave","angry","retreat","converted_to_zombified","step_lava","tempt","panic","admire","particle.soul_escape.quiet","particle.soul_escape.loud","respawn_anchor.charge","respawn_anchor.deplete","respawn_anchor.set_spawn","respawn_anchor.ambient","ambient.crimson_forest.mood","ambient.warped_forest.mood","ambient.soulsand_valley.mood","ambient.nether_wastes.mood","ambient.crimson_forest.additions","ambient.warped_forest.additions","ambient.soulsand_valley.additions","ambient.nether_wastes.additions","ambient.basalt_deltas.additions","ambient.crimson_forest.loop","ambient.warped_forest.loop","ambient.soulsand_valley.loop","ambient.nether_wastes.loop","ambient.basalt_deltas.loop","lodestone_compass.link_compass_to_lodestone","ambient.basalt_deltas.mood","power.on.sculk_sensor","power.off.sculk_sensor","smithing_table.use","default","lay_egg","lay_spawn","bucket.fill.powder_snow","bucket.empty.powder_snow","cauldron_drip.water.pointed_dripstone","cauldron_drip.lava.pointed_dripstone","tilt_down.big_dripleaf","tilt_up.big_dripleaf","drip.water.pointed_dripstone","pick_berries.cave_vines","drip.lava.pointed_dripstone","copper.wax.on","copper.wax.off","scrape","item.spyglass.use","item.spyglass.stop_using","chime.amethyst_block","mob.player.hurt_drown","mob.player.hurt_on_fire","mob.player.hurt_freeze","ambient.screamer","hurt.screamer","death.screamer","milk.screamer","jump_to_block","pre_ram","pre_ram.screamer","ram_impact","ram_impact.screamer","squid.ink_squirt","glow_squid.ink_squirt","convert_to_stray","cake.add_candle","extinguish.candle","ambient.candle","block.click","block.click.fail","block.sculk_catalyst.bloom","block.sculk_shrieker.shriek","nearby_close","nearby_closer","nearby_closest","agitated","listening","heartbeat","tongue","item_given","item_taken","item_thrown","irongolem.crack","irongolem.repair","horn_break","horn_call0","horn_call1","horn_call2","horn_call3","horn_call4","horn_call5","horn_call6","horn_call7","imitate.warden","listening_angry","sonic_boom","sonic_charge","convert_to_frog","block.sculk.spread","charge.sculk","block.sculk_sensor.place","block.sculk_shrieker.place","block.enchanting_table.use","bundle.drop_contents","bundle.insert","bundle.insert_fail","bundle.remove_one","step_sand","dash_ready","pressure_plate.click_off","pressure_plate.click_on","button.click_off","button.click_on","door.open","door.close","trapdoor.open","trapdoor.close","fence_gate.open","fence_gate.close","insert","pickup","insert_enchanted","pickup_enchanted","shatter_pot","break_pot","brush","brush_completed","block.sign.waxed_interact_fail","note.bass","pumpkin.carve","mob.husk.convert_to_zombie","mob.pig.death","mob.hoglin.converted_to_zombified","ambient.underwater.enter","ambient.underwater.exit","bottle.fill","bottle.empty","block.decorated_pot.insert","block.decorated_pot.insert_fail","crafter.craft","crafter.fail","crafter.disable_slot","block.copper_bulb.turn_on","block.copper_bulb.turn_off","breeze_wind_charge.burst","imitate.breeze","trial_spawner.open_shutter","trial_spawner.detect_player","trial_spawner.close_shutter","trial_spawner.spawn_mob","trial_spawner.eject_item","trial_spawner.ambient","mob.armadillo.brush","mob.armadillo.scute_drop","armor.equip_wolf","armor.unequip_wolf","reflect","vault.open_shutter","vault.close_shutter","vault.eject_item","vault.insert_item","vault.insert_item_fail","vault.ambient","vault.activate","vault.deactivate","hurt.reduced","wind_charge.burst","armor.break_wolf","armor.crack_wolf","armor.repair_wolf","mace.smash_air","mace.smash_ground","mace.heavy_smash_ground","trial_spawner.charge_activate","trial_spawner.ambient_ominous","apply_effect.bad_omen","apply_effect.raid_omen","apply_effect.trial_omen","ominous_item_spawner.spawn_item","ominous_bottle.end_use","ominous_item_spawner.spawn_item_begin","ominous_item_spawner.about_to_spawn_item","imitate.bogged","vault.reject_rewarded_player","imitate.drowned","sponge.absorb","imitate.creaking","block.creaking_heart.trail","creaking_heart_spawn","activate","deactivate","freeze","unfreeze","open","open_long","close","close_long","imitate.phantom","imitate.zoglin","imitate.guardian","imitate.ravager","imitate.pillager","place_in_water","state_change","imitate.happy_ghast","armor.unequip_generic","ambient.weather.the_end_light_flash","lead.leash","lead.unleash","lead.break","unsaddle","armor.equip_copper","place_item","single_swap","multi_swap","item.enchant.lunge1","item.enchant.lunge2","item.enchant.lunge3","attack.critical","item.spear.attack_hit","item.spear.attack_miss","item.wooden_spear.attack_hit","item.wooden_spear.attack_miss","imitate.parched","imitate.camel_husk","item.spear.use","item.wooden_spear.use","saddle_in_water","item.stone_spear.attack_hit","item.iron_spear.attack_hit","item.copper_spear.attack_hit","item.golden_spear.attack_hit","item.diamond_spear.attack_hit","item.netherite_spear.attack_hit","item.stone_spear.attack_miss","item.iron_spear.attack_miss","item.copper_spear.attack_miss","item.golden_spear.attack_miss","item.diamond_spear.attack_miss","item.netherite_spear.attack_miss","item.stone_spear.use","item.iron_spear.use","item.copper_spear.use","item.golden_spear.use","item.diamond_spear.use","item.netherite_spear.use","pause_growth","reset_growth","pushed_by_player","bounce","slime_landing","absorb_block","eject_block","geyser_eruption_start","geyser_eruption_active","record.bounce","bucket.fill.land_animal","bucket.empty.land_animal","geyser_continuous_eruption_start","geyser_continuous_eruption_active","undefined")]
     public abstract string StartSound { get; }
     /// <summary>
-    /// Controls how using the item triggers start using behavior. &quot;if_first&quot; only starts if no other component has started using yet; &quot;always&quot; always restarts using. Defaults to &quot;if_first&quot;.
+    /// Controls how using the item triggers start using behavior. "if_first" only starts if no other component has started using yet; "always" always restarts using. Defaults to "if_first".
     /// </summary>
     [TraitProperty]
     [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.OneOf, "if_first","always")]
-    public virtual string? StartUsing => "if_first";
+    public virtual string StartUsing => "if_first";
     /// <summary>
     /// Time, in seconds, that the item takes to use.
     /// </summary>
     [TraitProperty]
-    [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.GreaterThanEq, 0)]
-    public virtual float UseDuration => 0f;
+    public virtual float UseDuration => 0;
 }

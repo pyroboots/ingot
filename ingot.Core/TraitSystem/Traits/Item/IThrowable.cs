@@ -21,22 +21,22 @@ public interface IThrowable : IItemTrait
     /// The scale at which the power of the throw increases. Default is set to 1.0.
     /// </summary>
     [TraitProperty]
-    public virtual float LaunchPowerScale => 1f;
+    public virtual float LaunchPowerScale => 1;
     /// <summary>
     /// The maximum duration to draw a throwable item. Default is set to 0.0.
     /// </summary>
     [TraitProperty]
-    public virtual float MaxDrawDuration => 0f;
+    public virtual float MaxDrawDuration => 0;
     /// <summary>
     /// The maximum power to launch the throwable item. Default is set to 1.0.
     /// </summary>
     [TraitProperty]
-    public virtual float MaxLaunchPower => 1f;
+    public virtual float MaxLaunchPower => 1;
     /// <summary>
     /// The minimum duration to draw a throwable item. Default is set to 0.0.
     /// </summary>
     [TraitProperty]
-    public virtual float MinDrawDuration => 0f;
+    public virtual float MinDrawDuration => 0;
     /// <summary>
     /// Whether or not the power of the throw increases with duration charged. Default is set to false.
     /// </summary>
