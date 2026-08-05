@@ -8,7 +8,7 @@ public static class IngotCommon
     /// <summary>
     /// Current ingot version
     /// </summary>
-    public static readonly Version IngotVersion = new(1, 1, 0);
+    public static readonly Version IngotVersion = new(0, 1, 0);
 
     /// <summary>
     /// Writes the branded ingot header (icon + version) when the console supports it.

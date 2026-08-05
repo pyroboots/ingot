@@ -6,7 +6,7 @@ using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
 /// <summary>
-/// Adds a cooldown to the item so that, after performing an action of the specified &quot;type&quot;, all items with a &quot;minecraft:cooldown&quot; component in the same &quot;category&quot; become unable to perform that same type of action for the number of seconds defined in &quot;duration&quot;.
+/// Adds a cooldown to the item so that, after performing an action of the specified "type", all items with a "minecraft:cooldown" component in the same "category" become unable to perform that same type of action for the number of seconds defined in "duration".
 /// </summary>
 [Trait("minecraft:cooldown", TraitSystem.TraitType.Item)]
 [TraitFormatVersion("1.20.50")]
@@ -17,19 +17,19 @@ public interface ICooldown : IItemTrait
     /// <summary>Equivalent to <c>attack</c></summary>
     public const string ItemCooldownType_Attack = "attack";
     /// <summary>
-    /// All items sharing the same &quot;category&quot; are put on cooldown when an action of the specified &quot;type&quot; is performed.
+    /// All items sharing the same "category" are put on cooldown when an action of the specified "type" is performed.
     /// </summary>
     [TraitProperty]
     public abstract string Category { get; }
     /// <summary>
-    /// Duration of the cooldown, in seconds, before the item can perform an action of the specified &quot;type&quot; again.
+    /// Duration of the cooldown, in seconds, before the item can perform an action of the specified "type" again.
     /// </summary>
     [TraitProperty]
     public abstract float Duration { get; }
     /// <summary>
-    /// The type of action the cooldown applies to. Options are mutually exclusive, so cooldown for one type of action does not affect the others. Values: &quot;use&quot; (when using an item), &quot;attack&quot; (when attack with an item).
+    /// The type of action the cooldown applies to. Options are mutually exclusive, so cooldown for one type of action does not affect the others. Values: "use" (when using an item), "attack" (when attack with an item).
     /// </summary>
     [TraitProperty]
     [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.OneOf, "use","attack")]
-    public virtual string? Type => "use";
+    public virtual string Type => "use";
 }

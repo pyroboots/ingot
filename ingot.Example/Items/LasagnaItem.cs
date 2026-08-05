@@ -18,7 +18,7 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
 
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
+    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
     
     string IUseAnimation.Value => "eat";
     float IUseModifiers.MovementModifier => 0.35f;
@@ -27,6 +27,6 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     [IngotExclude]
     string IUseModifiers.StartSound => null;
     
-    BlockTypeDescriptor IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    string IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }
