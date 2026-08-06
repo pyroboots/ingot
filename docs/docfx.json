@@ -16,6 +16,11 @@
     }
   ],
   "build": {
+    "markdownEngineProperties": {
+      "alerts": {
+        "SUCCESS": "alert alert-secondary"
+      }
+    },
     "content": [
       {
         "files": [

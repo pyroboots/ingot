@@ -1,10 +1,25 @@
 - name: Getting Started
-  href: getting-started.md
 - name: Resource Packs & Textures
   href: resource-packs.md
 - name: Script Services and Events
   href: script-services.md
   tag: Scripts
+- name: Your First Pack
+  items:
+  - name: Setup
+    href: your-first-pack/setup.md
+  - name: 1. Your First Item
+    href: your-first-pack/your-first-item.md
+  - name: 2. Your First Block
+    href: your-first-pack/your-first-block.md
+  - name: 3. Your First Entity
+    href: your-first-pack/your-first-entity.md
+  - name: 4. Compile Your Pack
+    href: your-first-pack/compile.md
+  - name: 5. Adding Scripts
+    href: your-first-pack/adding-scripts.md
+  - name: 6. Advanced Compiling
+    href: your-first-pack/advanced-compiling.md
 
 - name: 1. Blocks
 - href: block/block.md
