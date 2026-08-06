@@ -31,8 +31,16 @@ internal class JsonHelper
         if (value is string && ((string)value) == string.Empty) return;
 
         w.WritePropertyName(key);
-        if (value is ICompilableFragment)
-            ((ICompilableFragment)value).Compile(ref w);
+        if (value is ICompilableFragment fragment)
+            fragment.Compile(ref w);
+        else if (value is ICompilableFragment[] fragments)
+        {
+            // overs Identifier[], BlockTypeDescriptor[], and other fragment arrays via covariance.
+            w.WriteStartArray();
+            foreach (ICompilableFragment item in fragments)
+                item.Compile(ref w);
+            w.WriteEndArray();
+        }
         else
             JsonSerializer.CreateDefault().Serialize(w, value);
     }

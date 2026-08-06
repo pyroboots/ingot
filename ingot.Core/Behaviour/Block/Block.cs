@@ -1,3 +1,4 @@
+using ingot.Core.Behaviour.Block.BlockTraits;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem;
@@ -104,6 +105,13 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
     
     /// <inheritdoc/>
     public virtual Dictionary<Identifier, object> Singles => new();
+
+    /// <summary>
+    /// Vanilla description traits under <c>minecraft:block/description/traits</c>
+    /// (placement direction/position, connection, multi-block, etc.).
+    /// Not to be confused with component traits (<see cref="TraitSystem.Traits.IBlockTrait"/>).
+    /// </summary>
+    public virtual IVanillaBlockTrait[] BlockTraits => [];
     
     /// <inheritdoc/>
     public static string Compile(Type tType)
@@ -147,6 +155,24 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
                         json.Property("group", inst.Group);
                         string categoryName = Enum.GetName(typeof(Enums.CatalogueCategory), inst.Category)!.ToLower();
                         json.Property("category", categoryName);
+                    });
+                }
+
+                if (inst.BlockTraits.Length > 0)
+                {
+                    json.Object("traits", () =>
+                    {
+                        foreach (IVanillaBlockTrait trait in inst.BlockTraits)
+                        {
+                            if (inst.FormatVersion < trait.MinimumFormatVersion)
+                            {
+                                throw new ArgumentException(
+                                    $"{trait.Identifier} requires minimum format version {trait.MinimumFormatVersion}, " +
+                                    $"but {tType.Name} has {inst.FormatVersion}");
+                            }
+
+                            trait.Compile(ref w);
+                        }
                     });
                 }
 
