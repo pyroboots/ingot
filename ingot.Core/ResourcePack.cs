@@ -17,7 +17,7 @@ using Version = Common.Version;
 public class ResourcePack
 {
     private readonly record struct TextureSource(string SourcePath, string RpName);
-    private readonly record struct GeometrySource(string SourcePath, string RpName, string ModelsSubdir);
+    internal readonly record struct GeometrySource(string SourcePath, string RpName, string ModelsSubdir);
     private readonly record struct ParticleSource(string SourcePath, string RpName);
     private readonly record struct SoundDefinitionSource(
         string? Category,
@@ -55,13 +55,13 @@ public class ResourcePack
     private readonly Dictionary<string, TextureSource> _itemTextureSources = new();
     private readonly Dictionary<string, TextureSource> _entityTextureSources = new();
     private readonly Dictionary<string, TextureSource> _particleTextureSources = new();
-    private readonly Dictionary<string, GeometrySource> _geometrySources = new();
+    internal readonly Dictionary<string, GeometrySource> GeometrySources = new();
     private readonly Dictionary<string, ParticleSource> _particleSources = new(StringComparer.Ordinal);
     private readonly Dictionary<string, string> _animationSources = new(StringComparer.Ordinal); // rp name -> source path
     private readonly Dictionary<string, SoundDefinitionSource> _soundDefinitions = new(StringComparer.Ordinal);
     private readonly List<ClientEntity> _clientEntities = new();
     private readonly List<RenderController> _renderControllers = new();
-    private readonly HashSet<string> _registeredRenderControllerIds = new(StringComparer.Ordinal);
+    internal readonly HashSet<string> RegisteredRenderControllerIds = new(StringComparer.Ordinal);
 
     /// <summary>
     /// Client entity definitions registered on this pack.
@@ -154,7 +154,7 @@ public class ResourcePack
             throw new ArgumentException("models subdir cannot be empty", nameof(modelsSubdir));
 
         string resolvedRpName = rpName ?? ResolveGeometryRpName(identifier);
-        _geometrySources[identifier] = new GeometrySource(
+        GeometrySources[identifier] = new GeometrySource(
             Path.GetFullPath(sourceGeoJsonPath),
             resolvedRpName,
             modelsSubdir.Trim().Trim('/', '\\'));
@@ -324,7 +324,7 @@ public class ResourcePack
     private void RegisterRenderControllerInstance(RenderController inst)
     {
         _renderControllers.Add(inst);
-        _registeredRenderControllerIds.Add(inst.ControllerId);
+        RegisteredRenderControllerIds.Add(inst.ControllerId);
     }
 
     private static void RegisterTexture(
@@ -387,7 +387,7 @@ public class ResourcePack
 
         EmitTextureAtlas("item_texture.json", _itemTextureSources, "items", dir, packName, "atlas.items");
 
-        if (_geometrySources.Count > 0)
+        if (GeometrySources.Count > 0)
             EmitGeometries(dir);
 
         if (_animationSources.Count > 0)
@@ -460,7 +460,7 @@ public class ResourcePack
         }
 
         // Auto-emit simple controllers referenced by client entities but not registered
-        HashSet<string> emittedIds = new(_registeredRenderControllerIds, StringComparer.Ordinal);
+        HashSet<string> emittedIds = new(RegisteredRenderControllerIds, StringComparer.Ordinal);
         int autoCount = 0;
         foreach (ClientEntity clientEntity in _clientEntities)
         {
@@ -866,7 +866,7 @@ public class ResourcePack
         CompilerState.Push("geometries");
 
         int c = 0;
-        foreach (var (identifier, source) in _geometrySources)
+        foreach (var (identifier, source) in GeometrySources)
         {
             c++;
             string targetDir = Path.Combine(outputDir, "models", source.ModelsSubdir);
@@ -882,10 +882,10 @@ public class ResourcePack
 
             File.Copy(source.SourcePath, targetFull, overwrite: true);
             CompilerState.Info(
-                $"({c}/{_geometrySources.Count}) registered geometry '{identifier}' -> models/{source.ModelsSubdir}/{source.RpName}.geo.json");
+                $"({c}/{GeometrySources.Count}) registered geometry '{identifier}' -> models/{source.ModelsSubdir}/{source.RpName}.geo.json");
         }
 
-        CompilerState.Info($"wrote {_geometrySources.Count} geometry file(s)");
+        CompilerState.Info($"wrote {GeometrySources.Count} geometry file(s)");
         CompilerState.Pop();
     }
 

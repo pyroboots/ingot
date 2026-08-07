@@ -1,4 +1,7 @@
+using System.Runtime.CompilerServices;
+
 using ingot.Core.Common;
+using ingot.Core.Resource;
 using ingot.Core.TraitSystem;
 
 using Newtonsoft.Json;
@@ -55,6 +58,11 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable, ITraitabl
     /// Shortcut for the <c>minecraft:allow_off_hand</c> component
     /// </summary>
     public virtual bool AllowOffhand => false;
+
+    /// <summary>
+    /// Recipe to craft this item
+    /// </summary>
+    public virtual RecipeReference? Recipe => null;
 
     /// <summary>
     /// Script API event bindings
@@ -145,6 +153,11 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable, ITraitabl
 
                 ITraitable.CompileTraits(inst, ref w, TraitSystem.TraitSystem.TraitType.Item);
             });
+
+            // c# doesnt actually run ctors until accessed because its lazy, so 
+            // we have to touch it in some way to get it to. we can just pipe the
+            // value into discard
+            _ = inst.Recipe;
         });
 
         w.WriteEndObject();

@@ -1,7 +1,9 @@
 using ingot.Core.Behaviour.Block.BlockTraits;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
+using ingot.Core.Resource;
 using ingot.Core.TraitSystem;
+using ingot.Core.TraitSystem.Traits;
 
 using Newtonsoft.Json;
 
@@ -109,9 +111,14 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
     /// <summary>
     /// Vanilla description traits under <c>minecraft:block/description/traits</c>
     /// (placement direction/position, connection, multi-block, etc.).
-    /// Not to be confused with component traits (<see cref="TraitSystem.Traits.IBlockTrait"/>).
+    /// Not to be confused with component traits (<see cref="IBlockTrait"/>).
     /// </summary>
     public virtual IVanillaBlockTrait[] BlockTraits => [];
+    
+    /// <summary>
+    /// Recipe to craft this block
+    /// </summary>
+    public virtual RecipeReference? Recipe => null;
     
     /// <inheritdoc/>
     public static string Compile(Type tType)
@@ -249,6 +256,11 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
 
                 ITraitable.CompileTraits(inst, ref w, TraitSystem.TraitSystem.TraitType.Block);
             });
+            
+            // c# doesnt actually run ctors until accessed because its lazy, so 
+            // we have to touch it in some way to get it to. we can just pipe the
+            // value into discard
+            _ = inst.Recipe;
         });
 
         w.WriteEndObject();

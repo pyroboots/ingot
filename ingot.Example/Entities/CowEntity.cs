@@ -1,5 +1,6 @@
 using ingot.Core.Behaviour.Entity;
 using ingot.Core.Common;
+using ingot.Core.Resource;
 using ingot.Core.TraitSystem.Traits.Entity;
 
 using Version = ingot.Core.Common.Version;
@@ -159,7 +160,7 @@ public class CowEntity : Entity, IEntityPresetPassiveLand, IEntityPresetSameSpec
         [ClientEntityGeometry("cold")]
         public string ColdGeometry => "geometry.cow.cold";
 
-        public override string[] RenderControllers => ["controller.render.cow.v3"];
+        public override string[] RenderControllers => [new RenderControllerReference<CowV3RenderController>()];
         public override bool EmitDefaultRenderController => false;
 
         public override Dictionary<string, string>? Animations => new()

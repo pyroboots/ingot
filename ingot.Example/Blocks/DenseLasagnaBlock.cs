@@ -2,6 +2,7 @@ using ingot.Core;
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
+using ingot.Core.Resource;
 using ingot.Core.Scripting;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Block;
@@ -17,7 +18,6 @@ public class DenseLasagnaBlockHooks : ICompileHooks
 [CompileHooks(typeof(DenseLasagnaBlockHooks))]
 public class DenseLasagnaBlock : Block, IDestructibleByMining
 {
-    // Use the default 1.21.90+ format so custom components are valid as direct component entries.
     public override Identifier Identifier => new("test:block_of_dense_lasagna");
     public override string DisplayName => "Block of Dense Lasagna";
     public override string? Geometry => "minecraft:geometry.full_block";
@@ -34,7 +34,7 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
 
     public override MaterialInstances MaterialInstances => new()
     {
-        All = new MaterialInstance("shroomlight", MaterialInstance.RenderMethods.AlphaTest)
+        All = new MaterialInstance(new TextureReference<DenseLasagnaBlock>(Path.Combine(AppContext.BaseDirectory, "Data", "dense_lasagna.png")), MaterialInstance.RenderMethods.AlphaTest)
     };
 
     public override Dictionary<string, dynamic[]> States => new()

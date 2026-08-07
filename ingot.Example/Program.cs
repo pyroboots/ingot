@@ -2,7 +2,6 @@ using ingot.Core;
 using ingot.Example.Blocks;
 using ingot.Example.Entities;
 using ingot.Example.Items;
-using ingot.Example.LootTables;
 using ingot.Example.Recipes;
 
 using Version = ingot.Core.Common.Version;
@@ -23,22 +22,12 @@ class Program
                 "ingot example",
                 "Example pack made with ingot",
                 rpUuid)
-            // items
             .AddItem<LasagnaItem>()
             .AddItem<CheeseItem>()
             .AddItem<PastaItem>()
             .AddItem<SauceItem>()
-            // blocks
             .AddBlock<DenseLasagnaBlock>()
-            // entities (client entity auto-discovered; RC registered explicitly)
-            .AddEntity<CowEntity>()
-            .AddRenderController<CowV3RenderController>()
-            // recipes
-            .AddRecipe<LasagnaRecipe>()
-            // loot tables
-            // not needed as DenseLasagnaBlock will auto register it for us! :sparkle:
-            //.AddLootTable<DenseLasagnaLoot>()
-            .AddLootTable<LasagnaSpiritLoot>();
+            .AddEntity<CowEntity>();
 
         pack.MinEngineVersion = new Version(1, 21, 0);
         pack.PackIcon = Path.Combine(dataDir, "pack_icon.png");
@@ -47,12 +36,6 @@ class Program
 
         string scriptsDir = Path.Combine(AppContext.BaseDirectory, "scripts");
         pack.AddService(Path.Combine(scriptsDir, "services", "tick_service.js"), intervalTicks: 20);
-
-        pack.AddBlockTexture("block_of_dense_lasagna", Path.Combine(dataDir, "dense_lasagna.png"))
-            .AddItemTexture("lasagna", Path.Combine(dataDir, "lasagna.png"))
-            .AddItemTexture("cheese", Path.Combine(dataDir, "cheese.png"))
-            .AddItemTexture("pasta", Path.Combine(dataDir, "pasta.png"))
-            .AddItemTexture("spooky_special_sauce", Path.Combine(dataDir, "spooky_special_sauce.png"));
         
         pack.CompileComMojang("/home/pyro/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang/", cache: true);
     }
