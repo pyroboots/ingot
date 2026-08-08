@@ -33,12 +33,10 @@ public class GeometryReference<TParent> where TParent : class, IIdentifiable, IT
         
         if (typeof(TParent).IsAssignableTo(typeof(Entity)))
             pack.ResourcePack.AddGeometry(_id, path, modelsSubdir: "entity");
-        else if (typeof(TParent).IsAssignableTo(typeof(Item)))
-            pack.ResourcePack.AddGeometry(_id, path, modelsSubdir: "item");
         else if (typeof(TParent).IsAssignableTo(typeof(Block)))
-            pack.ResourcePack.AddGeometry(_id, path, modelsSubdir: "block");
+            pack.ResourcePack.AddGeometry(_id, path, modelsSubdir: "blocks");
         else
-            throw new ArgumentException("TParent must be Entity, Item, or Block");
+            throw new ArgumentException("TParent must be Entity or Block");
         
         CompilerState.Info($"implicitly registered geometry {_id}");
     }

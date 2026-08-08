@@ -52,3 +52,6 @@
 - name: Compile Hooks
   href: advanced/compile-hooks.md
   tag: C#
+- name: Asset References
+  href: advanced/asset-references.md
+  tag: C#
