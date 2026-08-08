@@ -38,5 +38,7 @@ class Program
         pack.AddService(Path.Combine(scriptsDir, "services", "tick_service.js"), intervalTicks: 20);
         
         pack.CompileComMojang("/home/pyro/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang/", cache: true);
+        
+        //IPack.GetPack<ExamplePack>().CompileComMojang("/home/pyro/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang/");
     }
 }
