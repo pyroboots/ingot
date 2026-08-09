@@ -24,8 +24,7 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
     public override string? Sound => "shroomlight";
     public override LootTable? Loot => new DenseLasagnaLoot();
     public override string[] Tags => ["minecraft:is_hoe_item_destructible"];
-
-    dynamic? IDestructibleByMining.ItemSpecificSpeeds => null;
+    
     float IDestructibleByMining.SecondsToDestroy => 2f;
 
     public override BlockPermutation[] Permutations =>

@@ -6,15 +6,15 @@ using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
 /// <summary>
-/// 
+/// Adds per-instance metadata for this block.
 /// </summary>
-[Trait("minecraft:placement_filter", TraitSystem.TraitType.Block)]
+[Trait("minecraft:block_entity", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IPlacementFilter : IItemTrait
+public interface IBlockEntity : IItemTrait
 {
     /// <summary>
-    /// List of conditions where the block can be placed/survive
+    /// Sets dynamic-properties capabilities on the block-entity.
     /// </summary>
     [TraitProperty]
-    public virtual string[] Conditions => [];
+    public virtual bool DynamicProperties => false;
 }

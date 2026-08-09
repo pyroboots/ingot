@@ -1,7 +1,3 @@
-using System.Text;
-
-using ingot.Core.Behaviour.Item;
-using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 
 using Newtonsoft.Json;
@@ -11,7 +7,8 @@ using Version = ingot.Core.Common.Version;
 
 namespace ingot.Generators;
 
-public struct ComponentSchema
+// record so i can use with
+public record struct ComponentSchema
 {
     public struct ComponentSchemaProperty
     {
@@ -37,9 +34,13 @@ public struct ComponentSchema
     [JsonProperty("description")] public string Description;
     [JsonProperty("title")] public string Component;
     [JsonProperty("x-format-version")] public string FormatVer;
+    // needed for block components with no oneOf props or vals
+    [JsonProperty("type")] public string Type;
     [JsonProperty("required")] public string[] Required;
     [JsonProperty("properties")] public Dictionary<string, ComponentSchemaProperty> Properties;
     [JsonProperty("oneOf")] public ComponentSchemaOneOfNode[] OneOf;
+    // some block components can be deprecated, so we skip if they are
+    [JsonProperty("deprecated")] public bool? Deprecated;
 }
 
 public static class TraitGeneratorV2
@@ -58,44 +59,62 @@ public static class TraitGeneratorV2
         if (type is null) return "dynamic";
         return TypeMap.ContainsKey(type) ? TypeMap[type] : "dynamic";
     }
-
-    public static string GenerateItemTraitFromSchema(string json, string ns)
+    
+    public static string GenerateTraitFromSchema(string json, string ns, TraitSystem.TraitType type)
     {
         // get rid of $refs for clean serialization
         json = JsonResolver.Resolve(json);
 
         ComponentSchema schema = JsonConvert.DeserializeObject<ComponentSchema>(json);
-        return GenerateItemTraitFromSchema(schema, ns);
+        return GenerateTraitFromSchema(schema, ns, type);
     }
 
-    public static string GenerateItemTraitFromSchema(ComponentSchema schema, string ns)
+    public static string GenerateTraitFromSchema(ComponentSchema schema, string ns, TraitSystem.TraitType type)
     {
         TraitInterfaceBuilder iface = new(schema.Description,
             Formatting.SnakeToPascalCase(schema.Component.Split(':')[1]), new(schema.Component),
-            TraitSystem.TraitType.Item,
+            type,
             new(schema.FormatVer), ns,
             ["ingot.Core.Common", "ingot.Core.TraitSystem", "ingot.Core.TraitSystem.Traits"]);
 
         List<string> logs = new();
         
-        // really fragile system to resolve oneOf nodes
+        // resolve oneOf / primitive-root / empty marker schemas into a properties map
         if (schema.Properties is null)
         {
-            // prefer paths that have properties
-            if (schema.OneOf.Any((node) => node.Properties is not null))
+            if (schema.OneOf is not null && schema.OneOf.Any(node => node.Properties is not null))
             {
-                ComponentSchema.ComponentSchemaOneOfNode node =
-                    schema.OneOf.First((node) => node.Properties is not null);
-                schema.Properties = node.Properties;
+                // prefer oneOf branches that expose object properties
+                schema.Properties = schema.OneOf.First(node => node.Properties is not null).Properties;
+            }
+            else if (schema.OneOf is { Length: > 0 } && schema.OneOf[0].Type is not null)
+            {
+                // oneOf is bare types only - invent a synthetic value property
+                schema.Properties = new()
+                {
+                    ["value"] = new()
+                    {
+                        Default = null, Description = "Value of the component", Type = schema.OneOf[0].Type
+                    }
+                };
+            }
+            else if (schema.Type is not null)
+            {
+                // single's type
+                schema.Properties = new()
+                {
+                    ["value"] = new()
+                    {
+                        Default = null,
+                        Description = schema.Description ?? "Value of the component",
+                        Type = schema.Type
+                    }
+                };
             }
             else
             {
-                // and if we cant fine one, we'll just make one that will likely work
-                string type = schema.OneOf[0].Type;
-                schema.Properties = new()
-                {
-                    ["value"] = new() { Default = null, Description = "Value of the component", Type = type }
-                };
+                // some components are markers with no props, like flower_pottable
+                schema.Properties = new();
             }
         }
 
@@ -107,7 +126,8 @@ public static class TraitGeneratorV2
             List<TraitPropertyConstraintAttribute> constraints = new();
             if (prop.Enum is not null)
             {
-                iface.Enum(prop.EnumTitle ?? name, prop.Enum);
+                // i was lucky with items, turns out block component enums can have spaces in
+                iface.Enum(Formatting.SnakeToPascalCase((prop.EnumTitle ?? name).Replace(" ", "_")), prop.Enum);
                 constraints.Add(new(TraitPropertyConstraintAttribute.Constraint.OneOf, prop.Enum));
             }
             else if (prop is { Type: "integer", Max: not null, Min: not null })
@@ -149,101 +169,68 @@ public static class TraitGeneratorV2
                 Console.WriteLine($"({c}/{files.Length}) skipped {schema.Component} - not a component");
                 continue;
             }
+            if (schema.Deprecated == true)
+            {
+                Console.WriteLine($"({c}/{files.Length}) skipped {schema.Component} - deprecated");
+                continue;
+            }
 
-            string iface = GenerateItemTraitFromSchema(schema, "ingot.Core.TraitSystem.Traits.Item");
+            string iface = GenerateTraitFromSchema(schema, "ingot.Core.TraitSystem.Traits.Item", TraitSystem.TraitType.Item);
             string fileName = $"I{Path.GetFileNameWithoutExtension(file.path).Replace(" ", "")}.cs";
 
             Console.WriteLine($"({c}/{files.Length}) generated {fileName}");
             await File.WriteAllTextAsync(Path.Combine(outputDir, fileName), iface);
         }
     }
-    
-    public static string GenerateBlockTraitFromSchema(ComponentSchema schema, string ns)
-    {
-        TraitInterfaceBuilder iface = new(schema.Description,
-            Formatting.SnakeToPascalCase(schema.Component.Split(':')[1]), new(schema.Component),
-            TraitSystem.TraitType.Item,
-            new(schema.FormatVer), ns,
-            ["ingot.Core.Common", "ingot.Core.TraitSystem", "ingot.Core.TraitSystem.Traits"]);
 
-        List<string> logs = new();
+    // inline attributes on properties what?!
+    record BlockComponentsJson(Dictionary<string, ComponentSchema> properties, [JsonProperty("x-format-version")] string fmtVer);
+    public static async Task GenerateBlockTraits(string outputDir)
+    {
+        // all in a single file
+        string json = await new HttpClient().GetStringAsync(
+            "https://raw.githubusercontent.com/Mojang/bedrock-samples/refs/heads/main/metadata/json_schemas/server/block_components/1.26.20/Block%20Components.json");
+        json = JsonResolver.Resolve(json);
         
-        // really fragile system to resolve oneOf nodes
-        if (schema.Properties is null)
-        {
-            // prefer paths that have properties
-            if (schema.OneOf.Any((node) => node.Properties is not null))
-            {
-                ComponentSchema.ComponentSchemaOneOfNode node =
-                    schema.OneOf.First((node) => node.Properties is not null);
-                schema.Properties = node.Properties;
-            }
-            else
-            {
-                // and if we cant fine one, we'll just make one that will likely work
-                string type = schema.OneOf[0].Type;
-                schema.Properties = new()
-                {
-                    ["value"] = new() { Default = null, Description = "Value of the component", Type = type }
-                };
-            }
-        }
-
-        foreach (var kvp in schema.Properties)
-        {
-            ComponentSchema.ComponentSchemaProperty prop = kvp.Value;
-            string name = Formatting.SnakeToPascalCase(kvp.Key);
-
-            List<TraitPropertyConstraintAttribute> constraints = new();
-            if (prop.Enum is not null)
-            {
-                iface.Enum(prop.EnumTitle ?? name, prop.Enum);
-                constraints.Add(new(TraitPropertyConstraintAttribute.Constraint.OneOf, prop.Enum));
-            }
-            else if (prop is { Type: "integer", Max: not null, Min: not null })
-                constraints.Add(new(TraitPropertyConstraintAttribute.Constraint.Range, prop.Min, prop.Max));
-            else if (prop is { Type: "integer", Min: not null })
-                constraints.Add(new(TraitPropertyConstraintAttribute.Constraint.GreaterThanEq, prop.Min));
-            else if (prop is { Type: "integer", Max: not null })
-                constraints.Add(new(TraitPropertyConstraintAttribute.Constraint.LessThanEq, prop.Max));
-
-            if (ConvertType(prop.Type) == "dynamic")
-                logs.Add($"log: unable to resolve type {prop.Type} on property {name}");
-            iface.AddProperty(prop.Description, name,
-                prop.Default is null || prop.Default is string && (string)prop.Default == "", ConvertType(prop.Type),
-                prop.Default, constraints.ToArray());
-        }
-
-        iface.ExtraHeaders = logs.ToArray();
-        return iface.Generate();
-    }
-
-    public static async Task GenerateBlockTraits(string outputDir, string token)
-    {
-        string treeJson = await RepoTreeCrawler.GetTree("mojang", "bedrock-samples",
-            "metadata/json_schemas/server/item_components", token: token);
-        (string path, string content)[] files = await RepoTreeCrawler.GetFileContentsWithPaths(treeJson, token);
-
-        Directory.Delete(outputDir, true);
+        if (Directory.Exists(outputDir)) Directory.Delete(outputDir, true);
         Directory.CreateDirectory(outputDir);
+        
+        BlockComponentsJson componentsJson = JsonConvert.DeserializeObject<BlockComponentsJson>(json)!;
+        Dictionary<string, ComponentSchema> components = componentsJson.properties
+            .Select(kvp =>
+            {
+                KeyValuePair<string, ComponentSchema> newKvp = new(kvp.Key,
+                    kvp.Value with { FormatVer = componentsJson.fmtVer });
+                return newKvp;
+            }).ToDictionary();
 
         int c = 0;
-        foreach (var file in files)
+        foreach (var kvp in components)
         {
             c++;
-            string resolved = JsonResolver.Resolve(file.content);
-            ComponentSchema schema = JsonConvert.DeserializeObject<ComponentSchema>(resolved);
+
+            ComponentSchema schema = kvp.Value;
+            // we swap here because TraitInterfaceBuilder relies on Component being the id, not
+            // the human readable name with spaces
+            string friendlyName = schema.Component;
+            schema.Component = kvp.Key;
+            
             bool isComponent = schema.Component.Contains("minecraft:") && !schema.Component.Contains(" ");
             if (isComponent == false)
             {
-                Console.WriteLine($"({c}/{files.Length}) skipped {schema.Component} - not a component");
+                Console.WriteLine($"({c}/{components.Count}) skipped {schema.Component} - not a component");
+                continue;
+            }
+            if (schema.Deprecated == true)
+            {
+                Console.WriteLine($"({c}/{components.Count}) skipped {schema.Component} - deprecated");
                 continue;
             }
 
-            string iface = GenerateItemTraitFromSchema(schema, "ingot.Core.TraitSystem.Traits.Item");
-            string fileName = $"I{Path.GetFileNameWithoutExtension(file.path).Replace(" ", "")}.cs";
+            string iface = GenerateTraitFromSchema(schema, "ingot.Core.TraitSystem.Traits.Block", TraitSystem.TraitType.Block);
+            string fileName = $"I{Path.GetFileNameWithoutExtension(Formatting.SnakeToPascalCase(friendlyName.Replace(" ", "_")))}.cs";
 
-            Console.WriteLine($"({c}/{files.Length}) generated {fileName}");
+            Console.WriteLine($"({c}/{components.Count}) generated {fileName}");
             await File.WriteAllTextAsync(Path.Combine(outputDir, fileName), iface);
         }
     }
