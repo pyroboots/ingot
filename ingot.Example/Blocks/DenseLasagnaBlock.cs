@@ -27,10 +27,11 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
 
     dynamic? IDestructibleByMining.ItemSpecificSpeeds => null;
     float IDestructibleByMining.SecondsToDestroy => 2f;
-    public override List<BlockPermutation> Permutations => new()
-    {
+
+    public override BlockPermutation[] Permutations =>
+    [
         new DenseLasagnaGlowyPermutation()
-    };
+    ];
 
     public override MaterialInstances MaterialInstances => new()
     {

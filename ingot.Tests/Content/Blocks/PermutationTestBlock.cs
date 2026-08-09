@@ -7,7 +7,7 @@ internal class PermutationTestBlock : Block
 {
     public override Identifier Identifier => new("test:permutation_block");
 
-    public override List<BlockPermutation> Permutations => [new GlowyTestPermutation()];
+    public override BlockPermutation[] Permutations => [new GlowyTestPermutation()];
 
     public override MaterialInstances MaterialInstances => new()
     {
