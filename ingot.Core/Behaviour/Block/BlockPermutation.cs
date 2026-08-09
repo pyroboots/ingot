@@ -75,7 +75,19 @@ public abstract class BlockPermutation : ITraitable
     /// <param name="writer">JSON source stream to write to</param>
     public static void Compile(Type tBlockPermutation, ref JsonTextWriter writer)
     {
-        BlockPermutation permutation = (Activator.CreateInstance(tBlockPermutation) as BlockPermutation)!;
+        BlockPermutation permutation = (BlockPermutation)Activator.CreateInstance(tBlockPermutation)!;
+        CompileFromInstance(permutation, ref writer);
+    }
+
+    /// <summary>
+    /// Compiles a pre-constructed instance of a <see cref="BlockPermutation"/> to JSON.
+    /// Useful for runtime configuration and deriving multiple objects from a single parent concrete type (e.g. having a <c>MasterStone</c> type and changing the explosion resistance at runtime to create a new block)
+    /// </summary>
+    /// <param name="permutation">Instance to compile</param>
+    /// <param name="writer">JSON source stream to write to</param>
+    /// <returns>Compiled JSON</returns>
+    public static void CompileFromInstance(BlockPermutation permutation, ref JsonTextWriter writer)
+    {
         List<Trait> traits = TraitSystem.TraitSystem.GetTraits(permutation, TraitSystem.TraitSystem.TraitType.Block);
 
         if (permutation.MaterialInstances is not null)

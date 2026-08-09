@@ -37,7 +37,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
     /// <summary>
     /// List of possible block permutations
     /// </summary>
-    public virtual List<BlockPermutation> Permutations => new();
+    public virtual BlockPermutation[] Permutations => [];
     /// <summary>
     /// Array of block tags that can enable / expand vanilla functionality
     /// </summary>
@@ -199,7 +199,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
                 }
             });
 
-            if (inst.Permutations.Count > 0)
+            if (inst.Permutations.Length > 0)
             {
                 json.Array("permutations", () =>
                 {
@@ -208,8 +208,8 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
                     foreach (BlockPermutation p in inst.Permutations)
                     {
                         c++;
-                        BlockPermutation.Compile(p.GetType(), ref w);
-                        CompilerState.Info($"({c}/{inst.Permutations.Count}) compiled block permutation {p.GetType().Name}");
+                        BlockPermutation.CompileFromInstance(p, ref w);
+                        CompilerState.Info($"({c}/{inst.Permutations.Length}) compiled block permutation {p.GetType().Name}");
                     }
                     CompilerState.Info("compiled block permutations");
                 });

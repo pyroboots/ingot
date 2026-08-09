@@ -703,11 +703,6 @@ public class Pack
             Console.WriteLine($"ingot compilation log available at {Path.Combine(cacheDir, "ingot.log")}");
             Console.WriteLine($"pack compiled in {timer.ElapsedMilliseconds}ms");
             Console.ResetColor();
-
-            // technically blocks are permutations, just default ones
-            int blockPermCount = BehaviourPack.Blocks.Count;
-            foreach (Block b in BehaviourPack.Blocks)
-                blockPermCount += b.Permutations.Count;
         }
         
         if (cache && File.Exists(Path.Combine(cacheDir, ".ingot")) == false)
