@@ -3,6 +3,9 @@ using ingot.Core.Behaviour.Entity;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace ingot.Core.Resource;
 
 /// <summary>
@@ -24,15 +27,16 @@ public class GeometryReference<TParent> where TParent : class, IIdentifiable, IT
     {
         Pack pack = CompilerState.CurrentPack 
                     ?? throw new InvalidOperationException("geometry registration only valid during pack compilation");
-
-        Identifier identifier = new TParent().Identifier;
-        _id = id ?? $"{identifier.Namespace}_{identifier.Name}_{Path.GetFileNameWithoutExtension(path)}";
+        
+        JObject json = JObject.Parse(File.ReadAllText(path));
+        _id = (string?)json.SelectToken("['minecraft:geometry'][0].description.identifier") 
+              ?? throw new Exception("could not extract geometry id from source json");
         
         if (pack.ResourcePack.GeometrySources.ContainsKey(_id))
             return;
         
         if (typeof(TParent).IsAssignableTo(typeof(Entity)))
-            pack.ResourcePack.AddGeometry(_id, path, modelsSubdir: "entity");
+            pack.ResourcePack.AddEntityGeometry(_id, path);
         else if (typeof(TParent).IsAssignableTo(typeof(Block)))
             pack.ResourcePack.AddGeometry(_id, path, modelsSubdir: "blocks");
         else

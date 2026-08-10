@@ -1,5 +1,6 @@
 using ingot.Core.Common;
 using ingot.Core.Common.SharedConstructs;
+using ingot.Core.TraitSystem.Traits.Block;
 
 using Newtonsoft.Json;
 
@@ -13,6 +14,54 @@ namespace ingot.Core.Behaviour.Block.BlockTraits;
 /// </summary>
 public class PlacementDirectionVanillaBlockTrait : IVanillaBlockTrait
 {
+    /// <summary>
+    /// Helper method that returns pre-defined block permutations that handle the <c>minecraft:cardinal_direction</c> state
+    /// </summary>
+    /// <typeparam name="TBlock">Parent <see cref="Block"/> of the permutation</typeparam>
+    public static IEnumerable<NDirectionBlockPermutation<TBlock>> CardinalDirectionStateHelper<TBlock>() where TBlock : Block, new()
+    {
+        string[] dirs = ["north", "east", "south", "west"];
+        for (int i = 0; i < dirs.Length; i++)
+        {
+            string dir = dirs[i];
+            int rot = 90 * i;
+            yield return new NDirectionBlockPermutation<TBlock>(dir, rot);
+        }
+    }
+    
+    /// <summary>
+    /// Helper block permutation to simplify cardinal direction rotation
+    /// </summary>
+    public class NDirectionBlockPermutation<TBlock> : BlockPermutation, ITransformation where TBlock : Block, new()
+    {
+        /// <summary>
+        /// Helper block permutation to simplify cardinal direction rotation
+        /// </summary>
+        /// <param name="direction">Cardinal direction used in the molang</param>
+        /// <param name="rotation">Axis aligned (n % 90 == 0) angle to transform</param>
+        /// <typeparam name="TBlock">Parent <see cref="Block"/> of the permutation</typeparam>
+        public NDirectionBlockPermutation(string direction, int rotation)
+        {
+            string[] dirs = ["north", "east", "south", "west"];
+            if (dirs.Contains(direction) == false)
+                throw new ArgumentException("direction must be a valid cardinal direction");
+            if (rotation % 90 != 0)
+                throw new ArgumentException("rotation angle must be axis aligned");
+            
+            Condition = direction;
+            _rot = rotation;
+        }
+
+        private readonly int _rot;
+        
+        /// <inheritdoc/>
+        public override string Condition => $"q.block_state('minecraft:cardinal_direction') == '{field}'";
+        /// <inheritdoc/>
+        public override Block Parent => new TBlock();
+
+        dynamic ITransformation.Rotation => new[] {0, _rot, 0};
+    }
+    
     private static readonly HashSet<string> ValidEnabledStates =
     [
         "minecraft:cardinal_direction",

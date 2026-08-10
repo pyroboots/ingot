@@ -9,9 +9,18 @@ using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core;
 
+/// <summary>
+/// Interface to implement the properties of a pack
+/// </summary>
 public interface IPack
 {
+    /// <summary>
+    /// UUID for the BP
+    /// </summary>
     public string BehaviourUuid { get; }
+    /// <summary>
+    /// UUID for the RP
+    /// </summary>
     public string ResourceUuid { get; }
     
     /// <summary>
@@ -41,22 +50,73 @@ public interface IPack
     /// </summary>
     public Version MinEngineVersion => new(1, 21, 90);
 
+    /// <summary>
+    /// Homogeneous type array of <see cref="Item"/>s
+    /// </summary>
     public Type[] Items => [];
+    /// <summary>
+    /// Homogeneous type array of <see cref="Block"/>s
+    /// </summary>
     public Type[] Blocks => [];
+    /// <summary>
+    /// Homogeneous type array of <see cref="Entity"/>s
+    /// </summary>
     public Type[] Entities => [];
 
+    /// <summary>
+    /// Homogeneous type array of <see cref="IRecipe"/>s
+    /// </summary>
     public Type[] Recipes => [];
+    /// <summary>
+    /// Homogeneous type array of <see cref="LootTable"/>s
+    /// </summary>
     public Type[] LootTables => [];
 
+    /// <summary>
+    /// Represents a sound definition in <c>sound_definitions.json</c>
+    /// </summary>
+    /// <param name="SoundId">ID of the sound</param>
+    /// <param name="Sounds">Array of sounds this definition can play</param>
+    /// <param name="Category">Sound category</param>
     public record SoundDefinition(string SoundId, Sound[] Sounds, string Category = "neutral");
+    /// <summary>
+    /// Array of sound definitions to register in <c>sound_definitions.json</c>
+    /// </summary>
     public SoundDefinition[] SoundDefinitions => [];
 
+    /// <summary>
+    /// Represents a Minecraft function
+    /// </summary>
+    /// <param name="Identifier">Identifier to use in commands for this function</param>
+    /// <param name="SourceFile">Source function file</param>
+    /// <param name="Service">Whether to run this function every tick as a service</param>
     public record McFunction(string Identifier, string SourceFile, bool Service = false);
+    /// <summary>
+    /// Array of functions to register
+    /// </summary>
     public McFunction[] Functions => [];
     
+    /// <summary>
+    /// Represents a Minecraft script service
+    /// </summary>
+    /// <param name="SourceFile">JS source file for this service</param>
+    /// <param name="Name">Identifier of the service</param>
+    /// <param name="Interval">Run this service every n ticks</param>
     public record ScriptService(string SourceFile, string? Name = null, int Interval = 1);
+    /// <summary>
+    /// Array of services to register
+    /// </summary>
     public ScriptService[] Services => [];
+    /// <summary>
+    /// Represents a Minecraft script event
+    /// </summary>
+    /// <param name="Handler">Handler source for this event</param>
+    /// <param name="EventId">Identifier of the event</param>
+    /// <param name="Name">Name to qualify this event to fire</param>
     public record ScriptEvent(string EventId, ScriptHandler Handler, string? Name = null);
+    /// <summary>
+    /// Array of script events to register
+    /// </summary>
     public ScriptEvent[] Events => [];
     
     /// <summary>
@@ -68,7 +128,7 @@ public interface IPack
     /// </summary>
     public string ScriptEntry => "scripts/main.js";
     
-    private static void ValidateHomogenous<TExpected>(Type[] array, string name, Action<Type> regFunc)
+    private static void ValidateHomogeneous<TExpected>(Type[] array, string name, Action<Type> regFunc)
     {
         foreach (Type t in array)
         {
@@ -80,6 +140,9 @@ public interface IPack
         }
     }
 
+    /// <summary>
+    /// Returns the underlying <see cref="Pack"/> for extra configuration if necessary
+    /// </summary>
     public static Pack GetPack<TPack>() where TPack : IPack, new()
     {
         IPack iPack = new TPack();
@@ -92,11 +155,11 @@ public interface IPack
         pack.ScriptsEnabled = iPack.ScriptsEnabled;
         pack.ScriptEntry = iPack.ScriptEntry;
 
-        ValidateHomogenous<Item>(iPack.Items, nameof(Item), t => pack.AddItem(t));
-        ValidateHomogenous<Block>(iPack.Blocks, nameof(Block), t => pack.AddBlock(t));
-        ValidateHomogenous<Entity>(iPack.Entities, nameof(Entity), t => pack.AddEntity(t));
-        ValidateHomogenous<IRecipe>(iPack.Recipes, "Recipe", t => pack.AddRecipe(t));
-        ValidateHomogenous<LootTable>(iPack.LootTables, nameof(LootTable), t => pack.AddLootTable(t));
+        ValidateHomogeneous<Item>(iPack.Items, nameof(Item), t => pack.AddItem(t));
+        ValidateHomogeneous<Block>(iPack.Blocks, nameof(Block), t => pack.AddBlock(t));
+        ValidateHomogeneous<Entity>(iPack.Entities, nameof(Entity), t => pack.AddEntity(t));
+        ValidateHomogeneous<IRecipe>(iPack.Recipes, "Recipe", t => pack.AddRecipe(t));
+        ValidateHomogeneous<LootTable>(iPack.LootTables, nameof(LootTable), t => pack.AddLootTable(t));
 
         foreach (SoundDefinition def in iPack.SoundDefinitions)
             pack.RegisterSoundDefinition(def.SoundId, def.Sounds, def.Category);
