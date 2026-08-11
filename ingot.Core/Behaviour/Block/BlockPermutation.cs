@@ -100,7 +100,7 @@ public abstract class BlockPermutation : ITraitable
 
         writer.WriteStartObject();
 
-        json.Property("condition", permutation.Condition);
+        json.Property("condition", permutation.Condition.ToString());
         json.Object("components", () =>
         {
             foreach (string t in permutation.Tags)
