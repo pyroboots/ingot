@@ -48,14 +48,15 @@ public class PlacementDirectionVanillaBlockTrait : IVanillaBlockTrait
             if (rotation % 90 != 0)
                 throw new ArgumentException("rotation angle must be axis aligned");
             
-            Condition = direction;
+            _dir = direction;
             _rot = rotation;
         }
 
         private readonly int _rot;
-        
+        private readonly string _dir;
+
         /// <inheritdoc/>
-        public override string Condition => $"q.block_state('minecraft:cardinal_direction') == '{field}'";
+        public override Molang Condition => new Molang().BlockState("minecraft:cardinal_direction").Eq(_dir);
         /// <inheritdoc/>
         public override Block Parent => new TBlock();
 

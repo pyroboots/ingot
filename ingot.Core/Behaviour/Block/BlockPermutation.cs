@@ -16,7 +16,7 @@ public abstract class BlockPermutation : ITraitable
     /// <summary>
     /// Molang condition that determines when this permutation is active
     /// </summary>
-    public abstract string Condition { get; }
+    public abstract Molang Condition { get; }
     /// <summary>
     /// Parent <see cref="Block"/> of this <see cref="BlockPermutation"/>
     /// </summary>

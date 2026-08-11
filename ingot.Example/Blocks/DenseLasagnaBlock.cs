@@ -51,7 +51,7 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
 
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
-    public override string Condition => "query.block_state('test:radioactive') == true";
+    public override Molang Condition => new Molang().BlockState("test:radioactive").Eq(true);
     public override Block Parent => new DenseLasagnaBlock();
 
     public override int? LightEmission => 7;
