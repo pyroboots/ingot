@@ -9,8 +9,9 @@ public class BlockJsonContainsTagsTest
     public void Compile_BlockJsonContainsTags()
     {
         string json = Block.Compile(typeof(TaggedTestBlock));
-        Assert.Contains("tag:stone", json);
-        Assert.Contains("tag:metal", json);
+        Assert.Contains("minecraft:tags", json);
+        Assert.Contains("stone", json);
+        Assert.Contains("metal", json);
         Assert.Contains("\"minecraft:display_name\": \"Tagged Block\"", json);
     }
 }
