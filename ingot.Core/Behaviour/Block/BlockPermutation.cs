@@ -88,8 +88,6 @@ public abstract class BlockPermutation : ITraitable
     /// <returns>Compiled JSON</returns>
     public static void CompileFromInstance(BlockPermutation permutation, ref JsonTextWriter writer)
     {
-        List<Trait> traits = TraitSystem.TraitSystem.GetTraits(permutation, TraitSystem.TraitSystem.TraitType.Block);
-
         if (permutation.MaterialInstances is not null)
         {
             JsonTextWriter? warnWriter = null;
@@ -103,8 +101,7 @@ public abstract class BlockPermutation : ITraitable
         json.Property("condition", permutation.Condition.ToString());
         json.Object("components", () =>
         {
-            foreach (string t in permutation.Tags)
-                json.Object($"tag:{t}", () => { });
+            json.Property("minecraft:tags", permutation.Tags);
 
             json.Property("minecraft:display_name", permutation.DisplayName);
             json.Property("minecraft:friction", permutation.Friction);

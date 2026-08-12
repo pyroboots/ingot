@@ -217,8 +217,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
 
             json.Object("components", () =>
             {
-                foreach (string t in inst.Tags)
-                    json.Object($"tag:{t}", () => { });
+                json.Property("minecraft:tags", inst.Tags);
 
                 json.Property("minecraft:display_name", inst.DisplayName);
                 json.Property("minecraft:friction", inst.Friction);
