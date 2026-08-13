@@ -2,8 +2,12 @@
 # .nupkg / .snupkg to that release. Package version is the release tag
 # with a leading "v" stripped (e.g. v0.23.0 -> 0.23.0).
 #
-# Optional: add a NUGET_API_KEY repository secret to also push the
-# package to nuget.org.
+# Pushes to nuget.org via Trusted Publishing (OIDC). No API key secret.
+# Create a policy at https://www.nuget.org/account/trustedpublishing :
+#   Repository Owner: pyroboots
+#   Repository:       ingot
+#   Workflow File:    nuget.yml
+#   Environment:      release
 name: NuGet
 
 on:
@@ -12,10 +16,12 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   pack:
     runs-on: ubuntu-latest
+    environment: release
 
     steps:
     - uses: actions/checkout@v4
@@ -56,12 +62,15 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: gh release upload "${{ github.event.release.tag_name }}" artifacts/nuget/* --clobber
 
+    - name: NuGet login (OIDC)
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: pyroboots
+
     - name: Publish to NuGet.org
-      if: ${{ secrets.NUGET_API_KEY != '' }}
-      env:
-        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
       run: >
         dotnet nuget push artifacts/nuget/*.nupkg
-        --api-key "$NUGET_API_KEY"
+        --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
         --source https://api.nuget.org/v3/index.json
         --skip-duplicate
