@@ -7,6 +7,8 @@ using ingot.Core.Scripting;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Block;
 
+using Version = ingot.Core.Common.Version;
+
 namespace ingot.Example.Blocks;
 
 public class DenseLasagnaBlockHooks : ICompileHooks
@@ -18,6 +20,8 @@ public class DenseLasagnaBlockHooks : ICompileHooks
 [CompileHooks(typeof(DenseLasagnaBlockHooks))]
 public class DenseLasagnaBlock : Block, IDestructibleByMining
 {
+    public override Version FormatVersion => new(1, 26, 20);
+
     public override Identifier Identifier => new("test:block_of_dense_lasagna");
     public override string DisplayName => "Block of Dense Lasagna";
     public override string? Geometry => "minecraft:geometry.full_block";

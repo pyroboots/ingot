@@ -12,7 +12,15 @@ This guide walks you through setting up a project, defining your first content, 
 
 ## Installation
 
-ingot is distributed as source today. The recommended approach is to add a project reference to `ingot.Core`:
+Add the NuGet package to your project:
+
+```bash
+dotnet add package ingot.Core
+```
+
+Each GitHub Release also attaches `ingot.Core.*.nupkg` if you want to install from a downloaded file.
+
+To work against this repo instead, clone it and add a project reference:
 
 ```bash
 git clone https://github.com/pyroboots/ingot.git
@@ -20,16 +28,11 @@ cd ingot
 dotnet build ingot.sln
 ```
 
-In your own addon project, reference the core library:
-
 ```xml
 <ItemGroup>
   <ProjectReference Include="path/to/ingot/ingot.Core/ingot.Core.csproj" />
 </ItemGroup>
 ```
-
-> [!NOTE]
-> ingot will be published to NuGet once the API stabilizes. Until then, use a project reference to `ingot.Core`.
 
 ## Create a Project
 
@@ -38,7 +41,7 @@ Create a console application that will act as your pack compiler:
 ```bash
 dotnet new console -n MyAddon
 cd MyAddon
-# add the ProjectReference to ingot.Core as shown above
+dotnet add package ingot.Core
 ```
 
 > [!TIP]

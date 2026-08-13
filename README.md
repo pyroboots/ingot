@@ -22,21 +22,20 @@
 
 ## Installation
 
-**ingot** is currently distributed via source. The easiest way to get started is:
-
-### Option 1: Add as a Project Reference (Recommended for now)
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/pyroboots/ingot.git
-   ```
-2. Add a reference to `ingot.Core` in your .NET project.
-
-### Option 2: Build from Source
 ```bash
+dotnet add package ingot.Core
+```
+
+Each GitHub Release also attaches `ingot.Core.*.nupkg` (and a symbols package) if you want to install from a downloaded file.
+
+To reference the library from this repo instead:
+
+```bash
+git clone https://github.com/pyroboots/ingot.git
 dotnet build ingot.sln
 ```
 
-> **Future**: **ingot** will be published to NuGet once it reaches a stable API.
+Then add a `ProjectReference` to `ingot.Core/ingot.Core.csproj`.
 
 ## Quick Start
 
