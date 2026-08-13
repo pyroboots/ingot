@@ -7,7 +7,7 @@ internal class StatefulTestBlock : Block
 {
     public override Identifier Identifier => new("test:stateful_block");
 
-    public override Dictionary<string, dynamic[]> States => new()
+    public override Dictionary<Identifier, dynamic[]> States => new()
     {
         { "test:powered", [true, false] }
     };

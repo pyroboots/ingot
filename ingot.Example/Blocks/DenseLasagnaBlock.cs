@@ -37,7 +37,7 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining
         All = new MaterialInstance(new TextureReference<DenseLasagnaBlock>(Path.Combine(AppContext.BaseDirectory, "Data", "dense_lasagna.png")), MaterialInstance.RenderMethods.AlphaTest)
     };
 
-    public override Dictionary<string, dynamic[]> States => new()
+    public override Dictionary<Identifier, dynamic[]> States => new()
     {
         { "test:radioactive", [false, true] }
     };

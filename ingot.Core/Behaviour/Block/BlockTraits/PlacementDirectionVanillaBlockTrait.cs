@@ -18,21 +18,21 @@ public class PlacementDirectionVanillaBlockTrait : IVanillaBlockTrait
     /// Helper method that returns pre-defined block permutations that handle the <c>minecraft:cardinal_direction</c> state
     /// </summary>
     /// <typeparam name="TBlock">Parent <see cref="Block"/> of the permutation</typeparam>
-    public static IEnumerable<NDirectionBlockPermutation<TBlock>> CardinalDirectionStateHelper<TBlock>() where TBlock : Block, new()
+    public static IEnumerable<CardinalDirectionBlockPermutation<TBlock>> CardinalDirectionStateHelper<TBlock>() where TBlock : Block, new()
     {
         string[] dirs = ["north", "east", "south", "west"];
         for (int i = 0; i < dirs.Length; i++)
         {
             string dir = dirs[i];
             int rot = 90 * i;
-            yield return new NDirectionBlockPermutation<TBlock>(dir, rot);
+            yield return new CardinalDirectionBlockPermutation<TBlock>(dir, rot);
         }
     }
     
     /// <summary>
     /// Helper block permutation to simplify cardinal direction rotation
     /// </summary>
-    public class NDirectionBlockPermutation<TBlock> : BlockPermutation, ITransformation where TBlock : Block, new()
+    public class CardinalDirectionBlockPermutation<TBlock> : BlockPermutation, ITransformation where TBlock : Block, new()
     {
         /// <summary>
         /// Helper block permutation to simplify cardinal direction rotation
@@ -40,7 +40,7 @@ public class PlacementDirectionVanillaBlockTrait : IVanillaBlockTrait
         /// <param name="direction">Cardinal direction used in the molang</param>
         /// <param name="rotation">Axis aligned (n % 90 == 0) angle to transform</param>
         /// <typeparam name="TBlock">Parent <see cref="Block"/> of the permutation</typeparam>
-        public NDirectionBlockPermutation(string direction, int rotation)
+        public CardinalDirectionBlockPermutation(string direction, int rotation)
         {
             string[] dirs = ["north", "east", "south", "west"];
             if (dirs.Contains(direction) == false)

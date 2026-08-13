@@ -37,112 +37,120 @@ public partial class Molang
     /// <summary>
     /// <c>... == rightExpr</c>
     /// </summary>
-    public Molang Eq(object rightExpr)
+    public Molang Eq(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"== {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"== {s}".Trim());
         return this;
     }
     /// <summary>
     /// <c>... != rightExpr</c>
     /// </summary>
-    public Molang NotEq(object rightExpr)
+    public Molang NotEq(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"!= {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"!= {s}".Trim());
         return this;
     }
     
     /// <summary>
     /// <c>... && rightExpr</c>
     /// </summary>
-    public Molang And(object rightExpr)
+    public Molang And()
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"&& {asString}");
+        _tokens.Add("&& ".Trim());
         return this;
     }
     /// <summary>
     /// <c>... || rightExpr</c>
     /// </summary>
-    public Molang Or(object rightExpr)
+    public Molang Or()
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"|| {asString}");
+        _tokens.Add("|| ".Trim());
         return this;
     }
     
     /// <summary>
     /// <c>... + rightExpr</c>
     /// </summary>
-    public Molang Add(object rightExpr)
+    public Molang Add(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"+ {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"+ {s}".Trim());
         return this;
     }
     /// <summary>
     /// <c>... - rightExpr</c>
     /// </summary>
-    public Molang Sub(object rightExpr)
+    public Molang Sub(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"- {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"- {s}".Trim());
         return this;
     }
     /// <summary>
     /// <c>... / rightExpr</c>
     /// </summary>
-    public Molang Div(object rightExpr)
+    public Molang Div(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"/ {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"/ {s}".Trim());
         return this;
     }
     /// <summary>
     /// <c>... * rightExpr</c>
     /// </summary>
-    public Molang Mul(object rightExpr)
+    public Molang Mul(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"* {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"* {s}".Trim());
         return this;
     }
     
     /// <summary>
     /// <c>... &lt; rightExpr</c>
     /// </summary>
-    public Molang Lt(object rightExpr)
+    public Molang Lt(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"< {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"< {s}".Trim());
         return this;
     }
     /// <summary>
     /// <c>... > rightExpr</c>
     /// </summary>
-    public Molang Gt(object rightExpr)
+    public Molang Gt(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"> {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"> {s}".Trim());
         return this;
     }
     /// <summary>
     /// <c>... &lt;= rightExpr</c>
     /// </summary>
-    public Molang LtEq(object rightExpr)
+    public Molang LtEq(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"<= {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($"<= {s}".Trim());
         return this;
     }
     /// <summary>
     /// <c>... >= rightExpr</c>
     /// </summary>
-    public Molang GtEq(object rightExpr)
+    public Molang GtEq(object? rightExpr = null)
     {
-        string asString = FormatParams([rightExpr]);
-        _tokens.Add($"== {asString}");
+        string s = rightExpr == null ? "" : FormatParams([rightExpr]);
+        
+        _tokens.Add($">= {s}".Trim());
         return this;
     }
 }
