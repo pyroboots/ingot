@@ -1,14 +1,19 @@
 # Version History
 
-This page is a historical reference for ingot's past versions including the version number, what changed, and classification.
+This page is a historical reference for ingot's past versions including the version number, what changed and classification.
 
 ## `1.0.0` - nuget
 
 **Classification:** `major`
 
+**Name:** `WeatheredStrider`
+
 **Changes:**
 
 * ingot is finally being published to nuget! woohoo!
+* changed example `DenseLasagnaBlock` min fmt ver to `1.26.20`
+* add version history page
+* each version now has a randomly generated build name! 1.0.0's build name is: `WeatheredStrider` 
 
 ## `0.23.0-d1` - docs update
 
