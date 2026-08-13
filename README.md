@@ -44,7 +44,6 @@ dotnet build ingot.sln
 using ingot.Core;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
-using ingot.Core.Common.SharedConstructs;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
@@ -53,8 +52,8 @@ using Version = ingot.Core.Common.Version;
 // inherit traits to add behaviour
 public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers
 {
-    // IBlockPlacer requires format_version >= 1.26.0 (see TraitFormatVersion)
-    public override Version FormatVersion => new(1, 26, 0);
+    // IUseModifiers requires format_version >= 1.26.30 (see TraitFormatVersion)
+    public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
     public override string DisplayName => "Lasagna";
@@ -62,7 +61,7 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     // food requires use_modifiers (use duration) and usually an eat animation
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
+    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
 
     string IUseAnimation.Value => "eat";
     float IUseModifiers.UseDuration => 1.6f;
@@ -71,7 +70,7 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     [IngotExclude]
     string IUseModifiers.StartSound => null!;
 
-    BlockTypeDescriptor IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    string IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }
 

@@ -59,7 +59,7 @@ For food you typically want three traits together:
 | `IUseModifiers` | Non-zero `use_duration` so eating actually works |
 
 > [!IMPORTANT]
-> `IFood` requires a non-zero **`use_duration`**. Implement `IUseModifiers` and set `UseDuration` (for example `1.6f` for a normal eat). Without it, the content log warns and eating may not work.
+> `IFood` requires a non-zero **`use_duration`**. Implement `IUseModifiers` and set `UseDuration` (for example `1.6f` for a normal eat). Without it, the content log warns and eating may not work. `IUseModifiers` also requires `FormatVersion` `1.26.30` or compile throws.
 
 ```cs
 using ingot.Core.Behaviour.Item;
@@ -67,10 +67,14 @@ using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
+using Version = ingot.Core.Common.Version;
+
 namespace MyAddon.Content.Items;
 
 public class DirtSoupItem : Item, IFood, IUseAnimation, IUseModifiers
 {
+    // IUseModifiers requires format_version >= 1.26.30
+    public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => "myaddon:dirt_soup";
     public override string Texture => "dirt_soup";
     public override string DisplayName => "Dirt Soup";
@@ -148,10 +152,13 @@ using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
+using Version = ingot.Core.Common.Version;
+
 namespace MyAddon.Content.Items;
 
 public class DirtSoupItem : Item, IFood, IUseAnimation, IUseModifiers
 {
+    public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => "myaddon:dirt_soup";
     public override string Texture => "dirt_soup";
     public override string DisplayName => "Dirt Soup";

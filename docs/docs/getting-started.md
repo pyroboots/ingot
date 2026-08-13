@@ -54,8 +54,12 @@ using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
+using Version = ingot.Core.Common.Version;
+
 public class CustomFood : Item, IFood, IUseAnimation, IUseModifiers
 {
+    // IUseModifiers requires format_version >= 1.26.30
+    public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => new("myaddon", "custom_food");
     public override string Texture => "custom_food";
 
@@ -123,7 +127,7 @@ Pack pack = Pack.Create(packUuid, "My Addon", "My first ingot pack")
 pack.Compile("./output");
 ```
 
-For pre-configured instances (runtime variants, generators), register through the behaviour pack: `pack.BehaviourPack.AddBlockFromInstance(inst)` (and the matching item/entity/recipe/loot helpers). See [Compiling Instances](advanced/trait-system.md#compiling-instances).
+For pre-configured instances (runtime variants, generators), register through the behaviour pack: `pack.BehaviourPack.AddBlockFromInstance(inst)` (and the matching item/entity/recipe/loot helpers). See [Compiling Instances](advanced/trait-system.md#compiling-instances). For a declarative alternative, implement `IPack` and call `IPack.GetPack<T>()` - see [Advanced Compiling](your-first-pack/advanced-compiling.md#declarative-packs-ipack).
 
 > [!IMPORTANT]
 > Use a **fixed** behaviour-pack UUID in real projects. Generating a new UUID every build makes Minecraft treat each compile as a different pack.
@@ -187,7 +191,7 @@ using Version = ingot.Core.Common.Version;
 pack.MinEngineVersion = new Version(1, 21, 0);
 ```
 
-Some traits also require a higher content `FormatVersion` on the class itself (for example `IBlockPlacer` needs `1.26.0`). See [Trait System - Format version requirements](advanced/trait-system.md#format-version-requirements).
+Some traits also require a higher content `FormatVersion` on the class itself (for example `IUseModifiers` needs `1.26.30`, and most regenerated block traits need `1.26.20`). See [Trait System - Format version requirements](advanced/trait-system.md#format-version-requirements).
 
 ## Add Textures
 

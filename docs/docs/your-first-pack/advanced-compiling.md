@@ -81,6 +81,38 @@ pack.PackVersion = new ingot.Core.Common.Version(1, 0, 1);
 pack.OmitMetadata = false; // default
 ```
 
+## Declarative Packs (`IPack`)
+
+`IPack` is an alternative to chaining `Pack.Create(...)`. Implement the interface, then call `IPack.GetPack<T>()`:
+
+```cs
+using ingot.Core;
+using MyAddon.Content.Blocks;
+using MyAddon.Content.Entities;
+using MyAddon.Content.Items;
+using MyAddon.Content.Recipes;
+
+public class MyAddonPack : IPack
+{
+    public string BehaviourUuid => "77f1fef2-bb39-411a-b25c-ae475c21169f";
+    public string ResourceUuid => "88a2fef2-bb39-411a-b25c-ae475c21169f";
+    public string Name => "My Addon";
+    public string Description => "Dirt soup pack";
+
+    public Type[] Items => [typeof(DirtSoupItem)];
+    public Type[] Blocks => [typeof(CompactDirtBlock)];
+    public Type[] Entities => [typeof(DirtlingEntity)];
+    public Type[] Recipes => [typeof(DirtSoupRecipe)];
+}
+
+Pack pack = IPack.GetPack<MyAddonPack>();
+pack.Compile("./output");
+```
+
+`GetPack` copies authors, icon, versions, scripts, sound definitions, functions, services, and script events from the interface defaults. It does **not** copy `ScriptApiModules`, `ScriptEntryBody`, `OmitMetadata`, textures, geometry, particles, or render controllers - configure those on the returned `Pack` if you need them.
+
+See `ExamplePack` in `ingot.Example` for a working `IPack`.
+
 ## Instance Registration
 
 Generic `AddBlock<T>()` / `AddItem<T>()` construct types with a parameterless constructor. When you build **configured instances** at runtime (generators, variants), register through the behaviour pack:
@@ -159,6 +191,7 @@ You now have a start-to-finish path: project setup, item, block, entity, compile
 |-------|-----|
 | Trait composition and custom traits | [Trait System](../advanced/trait-system.md) |
 | Block states and permutations | [Block Permutations](../block/block-permutations.md) |
+| Vanilla placement / connection traits | [Vanilla Block Traits](../block/block.md#vanilla-block-traits) |
 | Full item / block / entity references | [Item](../item/item.md), [Block](../block/block.md), [Entity](../entity/entity.md) |
 | Recipes and loot | [Recipes](../item/recipe.md), [Loot Tables](../item/loot-table.md) |
 | Textures, geometry, particles | [Resource Packs](../resource-packs.md) |

@@ -21,7 +21,7 @@ Registration is **deduplicated**: existing texture keys, geometry ids, recipes, 
 | Type | Registers | String value | Typical assignment |
 |------|-----------|--------------|--------------------|
 | [`TextureReference<TParent>`](#texturereference) | Block / item / entity PNG into the matching atlas or entity textures | Atlas key or texture key | `Item.Texture`, `MaterialInstance` texture |
-| [`GeometryReference<TParent>`](#geometryreference) | `.geo.json` under `models/{entity\|item\|block}/` | Geometry id | Geometry traits / client geometry strings |
+| [`GeometryReference<TParent>`](#geometryreference) | `.geo.json` under `models/{entity\|blocks}/` (entity or block parent only) | Geometry id from the geo JSON | Geometry traits / client geometry strings |
 | [`RecipeReference<TRecipe>`](#recipereference) | `IRecipe` on the behaviour pack | Recipe `Identifier` | `Item.Recipe`, `Block.Recipe` |
 | [`LootTableReference<TLootTable>`](#loottablereference) | `LootTable` on the behaviour pack | `LootTable.Reference` directory | String properties that need a loot path + registration |
 | [`RenderControllerReference<T>`](#rendercontrollerreference) | `RenderController` on the resource pack | `ControllerId` | `ClientEntity.RenderControllers` |
@@ -122,7 +122,7 @@ public class GeometryReference<TParent>
     where TParent : class, IIdentifiable, ITraitable, IConcreteCompilable<TParent>, new()
 ```
 
-Same `TParent` constraint as textures. Registers a `.geo.json` source and returns the geometry id string.
+`TParent` must be an `Entity` or `Block` subclass (`Item` throws `ArgumentException`). Registers a `.geo.json` source and returns the geometry id string.
 
 ### Constructor
 
@@ -133,26 +133,25 @@ public GeometryReference(string path, string? id = null)
 | Parameter | Description |
 |-----------|-------------|
 | `path` | Source `.geo.json` on disk |
-| `id` | Geometry identifier. If omitted, `{namespace}_{name}_{filenameWithoutExtension}` |
+| `id` | Unused. The id is read from `minecraft:geometry[0].description.identifier` in the source JSON |
 
 Subdirectory under `models/` depends on `TParent`:
 
 | `TParent` | `modelsSubdir` |
 |-----------|----------------|
-| `Entity` | `entity` |
-| `Item` | `item` |
-| `Block` | `block` |
+| `Entity` | `entity` (`AddEntityGeometry`) |
+| `Block` | `blocks` (`AddGeometry`) |
 
-If `GeometrySources` already contains `_id`, registration is skipped.
+If `GeometrySources` already contains that id, registration is skipped.
 
-> [!TIP]
-> You should probably pass a custom `id` that matches the identifier inside your geo JSON (often `geometry.my_thing`).
+> [!IMPORTANT]
+> The geometry identifier must already be inside the `.geo.json` file. The constructor does not generate or override it.
 
 ### Example
 
 ```csharp
 public override string? Geometry =>
-    new GeometryReference<MyBlock>("assets/my_block.geo.json", id: "geometry.my_block");
+    new GeometryReference<MyBlock>("assets/my_block.geo.json");
 ```
 
 ---
@@ -280,7 +279,7 @@ With `verbose: true` (default), successful first-time registrations appear in th
 | Situation | Prefer |
 |-----------|--------|
 | Texture path lives next to the item/block that uses it | `TextureReference<T>` on `Texture` / `MaterialInstance` |
-| Geometry file tied to one content type | `GeometryReference<T>` with an explicit `id` matching the geo JSON |
+| Geometry file tied to one block or entity | `GeometryReference<T>` (id comes from the geo JSON) |
 | Recipe only exists for one item/block | `Recipe => new RecipeReference<MyRecipe>()` |
 | Shared or standalone recipe | `pack.AddRecipe<T>()` |
 | Block drops | `Loot => new MyLoot()` (instance) |

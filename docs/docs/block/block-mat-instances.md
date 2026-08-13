@@ -96,7 +96,7 @@ Use these for leaves, grass, vines, waterlogged blocks, etc.
 ```csharp
 public class GlowingPermutation : BlockPermutation
 {
-    public override string Condition => "query.block_state('mynamespace:lit') == true";
+    public override Molang Condition => new Molang().BlockState("mynamespace:lit").Eq(true);
     public override Block Parent => new MyBlock();
 
     public override MaterialInstances? MaterialInstances => new()

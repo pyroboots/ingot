@@ -1,4 +1,5 @@
 - name: Getting Started
+  href: getting-started.md
 - name: Resource Packs & Textures
   href: resource-packs.md
 - name: Script Services and Events

@@ -101,7 +101,7 @@ public class LasagnaItem : Item, IFood
 
     // NOT serialised
     [IngotExclude]
-    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
+    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
 }
 ```
 
@@ -121,7 +121,7 @@ public interface IGeometry : IBlockTrait
 
     // can be a string, string array, or bool
     [TraitProperty]
-    public abstract string UvLock { get; }
+    public virtual dynamic UvLock => null;
 }
 
 public class DenseLasagnaBlock : Block, IDestructibleByMining, IGeometry
@@ -135,7 +135,7 @@ public class DenseLasagnaBlock : Block, IDestructibleByMining, IGeometry
 
     // overrides this to true
     [IngotOverride(true)]
-    string IGeometry.UvLock => null; // this value will be ignored, so it doesnt matter what you set it as - usually null
+    dynamic IGeometry.UvLock => null; // this value will be ignored, so it doesnt matter what you set it as - usually null
 }
 ```
 
@@ -153,18 +153,18 @@ public interface IUseAnimation : IItemTrait
 {
     [TraitProperty]
     [TraitPropertyConstraint(TraitPropertyConstraintAttribute.Constraint.OneOf,
-        "eat", 
+        "none",
+        "eat",
         "drink",
-        "bow", // broken
-        "block", // broken
-        "camera", // broken
-        "crossbow", // broken
-        "none", // broken
-        "brush",
+        "block",
+        "bow",
+        "camera",
+        "crossbow",
         "spear",
-        "spyglass"
+        "spyglass",
+        "brush"
     )]
-    public abstract string Value { get; }
+    public virtual string Value => "none";
 }
 ```
 
@@ -191,14 +191,14 @@ The `TraitPropertyWarning` attribute is placed on properties inside a trait inte
 public interface IUseAnimation : IItemTrait
 {
     [TraitProperty]
-    [TraitPropertyWarning("animation '{x}' is broken and will display an incorrect animation", TraitPropertyConstraintAttribute.Constraint.OneOf, 
+    [TraitPropertyWarning("animation '{x}' may display incorrectly", TraitPropertyConstraintAttribute.Constraint.OneOf,
         "bow",
         "block",
         "camera",
         "crossbow",
         "none"
     )]
-    public abstract string Value { get; }
+    public virtual string Value => "none";
 }
 ```
 

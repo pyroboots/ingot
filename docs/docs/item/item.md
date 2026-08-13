@@ -35,6 +35,7 @@ Optionally override `TexturePath` to provide the source PNG. When set, ingot aut
 | `AllowOffhand`      | `bool`             | `false`          | Shortcut for `minecraft:allow_off_hand`. |
 | `TexturePath`       | `string?`          | `null`           | Optional source PNG for `Texture`. Auto-registered during compile. |
 | `ItemEvents`        | `ItemEvents?`      | `null`           | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Item Events](item-events.md). |
+| `Recipe`            | `RecipeReference?` | `null`           | Optional recipe attached to this item. Touched during compile so a `RecipeReference<T>` can register the recipe without a separate `AddRecipe<T>()` call. See [Asset References](../advanced/asset-references.md#recipereference). |
 | `DynamicTraits`     | `Trait[]`          | `[]`             | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../advanced/trait-system.md#dynamic-traits). |
 | `Singles`           | `Dictionary<Identifier, object>` | `{}`       | Components written as a single scalar value instead of an object body (`"namespace:comp": value`). See [Singles](../advanced/trait-system.md#singles). |
 
@@ -47,7 +48,6 @@ The vast majority of interesting item features come from implementing `IItemTrai
 ```csharp
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
-using ingot.Core.Common.SharedConstructs;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
@@ -55,8 +55,8 @@ using Version = ingot.Core.Common.Version;
 
 public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers
 {
-    // IBlockPlacer is marked [TraitFormatVersion("1.26.0")]; raise FormatVersion accordingly
-    public override Version FormatVersion => new(1, 26, 0);
+    // IUseModifiers is marked [TraitFormatVersion("1.26.30")]; raise FormatVersion accordingly
+    public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
     public override string DisplayName => "Lasagna";
@@ -64,7 +64,7 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     // IFood
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
+    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
 
     // Required with food: non-zero use duration (and usually an eat animation)
     string IUseAnimation.Value => "eat";
@@ -76,19 +76,19 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     string IUseModifiers.StartSound => null!;
 
     // IBlockPlacer
-    BlockTypeDescriptor IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    string IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }
 ```
 
 > [!IMPORTANT]
-> `IFood` requires a non-zero **`minecraft:use_modifiers` / `use_duration`**. Implement `IUseModifiers` and set `UseDuration` (e.g. `1.6f` for a normal eat). Without it, the content log warns and eating may not work correctly. `IUseModifiers` also has abstract `MovementModifier` and `StartSound` - implement them, or mark unused ones with `[IngotExclude]`.
+> `IFood` requires a non-zero **`minecraft:use_modifiers` / `use_duration`**. Implement `IUseModifiers` and set `UseDuration` (e.g. `1.6f` for a normal eat). Without it, the content log warns and eating may not work correctly. `IUseModifiers` also has abstract `MovementModifier` and `StartSound` - implement them, or mark unused ones with `[IngotExclude]`. `EmitVibrations` is optional (`virtual`, default `true`).
 
 > [!IMPORTANT]
-> Some item traits declare a minimum content `format_version` via `[TraitFormatVersion]`. Reflection **throws** if your item's `FormatVersion` is lower. Notable examples: `IBlockPlacer` and `IDamage` require `1.26.0`; `ICompostable` requires `1.21.50`. Default `Item.FormatVersion` is `1.21.90`.
+> Some item traits declare a minimum content `format_version` via `[TraitFormatVersion]`. Reflection **throws** if your item's `FormatVersion` is lower. Notable examples: `IUseModifiers` requires `1.26.30`; `IBlockPlacer` and `IDamage` require `1.26.0`; `ICompostable` requires `1.21.50`. Default `Item.FormatVersion` is `1.21.90`.
 
 > [!NOTE]
-> Schema-generated item traits use [shared constructs](../advanced/trait-system.md#shared-constructs) such as `ItemTypeDescriptor` and `BlockTypeDescriptor`. Strings convert implicitly, so `=> "minecraft:bowl"` is valid.
+> Regenerated item traits typically use `string`, `dynamic`, or `string[]` for identifiers and unresolved schema types. Strings are valid for `IFood.UsingConvertsTo` and `IBlockPlacer.Block`. Optional [shared constructs](../advanced/trait-system.md#shared-constructs) still exist for hand-written traits and helpers.
 
 > [!TIP]
 > Because some traits will have common property names, its recommended to implement the properties explicitly to be more readable, less ambiguous and it also looks prettier.

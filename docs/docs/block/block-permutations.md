@@ -9,7 +9,7 @@ Derive from `BlockPermutation`:
 ```csharp
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
-    public override string Condition => "query.block_state('test:radioactive') == true";
+    public override Molang Condition => new Molang().BlockState("test:radioactive").Eq(true);
     public override Block Parent => new DenseLasagnaBlock();
 
     public override int? LightEmission => 7;
@@ -18,8 +18,10 @@ public class DenseLasagnaGlowyPermutation : BlockPermutation
 
 Every permutation **must** implement:
 
-- `Condition` - a Molang expression that must evaluate to true for the permutation's components to be applied.
+- `Condition` - a `Molang` expression (`ingot.Core`) that must evaluate to true for the permutation's components to be applied.
 - `Parent` - the owning `Block` instance.
+
+There is no implicit conversion from `string` to `Molang`. Build the expression with the `Molang` fluent API, or pass a raw string through `new Molang().Raw("query.block_state('test:radioactive') == true")`.
 
 ## What You Can Override
 
@@ -39,13 +41,15 @@ A permutation can provide its own versions of the same shortcuts available on `B
 In addition, any [block trait](../advanced/trait-system.md) can be implemented directly on the permutation class. The trait components will only be written when the condition matches.
 
 ```csharp
+using ingot.Core;
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Common;
+using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Block;
 
 public class GlowyPermutation : BlockPermutation, IGeometry
 {
-    public override string Condition => "query.block_state('mynamespace:mode') == 2";
+    public override Molang Condition => new Molang().BlockState("mynamespace:mode").Eq(2);
     public override Block Parent => new MyBlock();
 
     public override int? LightEmission => 15;
@@ -57,13 +61,20 @@ public class GlowyPermutation : BlockPermutation, IGeometry
         All = new MaterialInstance("glowy_variant", MaterialInstance.RenderMethods.Blend, "assets/glowy_variant.png")
     };
 
-    // IGeometry via trait
-    bool IGeometry.BoneVisibility => true;
-    string IGeometry.Culling => "my_culling";
-    Identifier IGeometry.Identifier => new("geometry.my_glowy_block");
-    string IGeometry.UvLock => "true";
+    // IGeometry abstracts must be implemented (or excluded)
+    string IGeometry.Identifier => "geometry.my_glowy_block";
+    [IngotExclude]
+    string IGeometry.Culling => null!;
+    [IngotExclude]
+    string IGeometry.CullingLayer => null!;
+    [IngotExclude]
+    string IGeometry.CullingShape => null!;
+    [IngotExclude]
+    dynamic IGeometry.NWayVisualRotation => null!;
 }
 ```
+
+Trait format-version checks on a permutation use `Parent.FormatVersion`. Raise the parent block to `1.26.20` (or higher) when the permutation implements a regenerated block trait such as `IGeometry`.
 
 Register the geometry file in `Program.cs` so it is copied into the resource pack:
 
@@ -89,11 +100,11 @@ public class MyBlock : Block
         All = new MaterialInstance("my_block")
     };
 
-    public override List<BlockPermutation> Permutations => new()
-    {
+    public override BlockPermutation[] Permutations =>
+    [
         new GlowyPermutation(),
         new AnotherSpecialCasePermutation()
-    };
+    ];
 }
 ```
 
@@ -106,19 +117,30 @@ public class MyBlock : Block
 
 ## Condition Examples
 
+`Condition` is a `Molang` builder. Chain queries and operators; `ToString()` is what lands in JSON.
+
 ```csharp
 // Simple boolean state
-"query.block_state('test:is_active') == true"
+new Molang().BlockState("test:is_active").Eq(true)
+// query.block_state('test:is_active') == true
 
 // Integer comparison
-"query.block_state('mynamespace:power') >= 3"
+new Molang().BlockState("mynamespace:power").GtEq(3)
+// query.block_state('mynamespace:power') >= 3
 
 // String state
-"query.block_state('mynamespace:color') == 'red'"
+new Molang().BlockState("mynamespace:color").Eq("red")
+// query.block_state('mynamespace:color') == 'red'
 
 // Multiple conditions
-"query.block_state('test:mode') == 1 && query.block_state('test:powered') == true"
+new Molang().BlockState("test:mode").Eq(1).And().BlockState("test:powered").Eq(true)
+// query.block_state('test:mode') == 1 && query.block_state('test:powered') == true
+
+// Raw string when you already have the expression
+new Molang().Raw("query.block_state('test:is_active') == true")
 ```
+
+`Molang` also exposes the other Bedrock queries (`HasBlockState`, `AllTags`, ...). Use `Raw(...)` for anything the builder does not cover.
 
 > [!TIP]
 > Use the exact state names (including namespace) that you declared in the block's `States` dictionary.
@@ -130,7 +152,7 @@ The example project contains a complete permutation:
 ```csharp
 public class DenseLasagnaGlowyPermutation : BlockPermutation
 {
-    public override string Condition => "query.block_state('test:radioactive') == true";
+    public override Molang Condition => new Molang().BlockState("test:radioactive").Eq(true);
     public override Block Parent => new DenseLasagnaBlock();
     
     public override int? LightEmission => 7;

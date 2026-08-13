@@ -67,16 +67,19 @@ Add `IDestructibleByMining` so the block takes a moment to break:
 ```cs
 using ingot.Core.TraitSystem.Traits.Block;
 
+using Version = ingot.Core.Common.Version;
+
 public class CompactDirtBlock : Block, IDestructibleByMining
 {
+    // IDestructibleByMining requires format_version >= 1.26.20
+    public override Version FormatVersion => new(1, 26, 20);
     // ...
 
-    dynamic? IDestructibleByMining.ItemSpecificSpeeds => null;
     float IDestructibleByMining.SecondsToDestroy => 1.25f;
 }
 ```
 
-`ItemSpecificSpeeds` is abstract on the trait - return `null` for a flat destroy time, or pass item-specific speed objects when you care about tools. See [Making a Block](../block/block.md).
+`ItemSpecificSpeeds` is optional (`virtual string[]`, default empty). Leave it alone for a flat destroy time, or override it when you care about tools. See [Making a Block](../block/block.md).
 
 Optional tags help vanilla tools treat the block correctly:
 
@@ -143,10 +146,13 @@ using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Block;
 using MyAddon.Content.LootTables;
 
+using Version = ingot.Core.Common.Version;
+
 namespace MyAddon.Content.Blocks;
 
 public class CompactDirtBlock : Block, IDestructibleByMining
 {
+    public override Version FormatVersion => new(1, 26, 20);
     public override Identifier Identifier => "myaddon:compact_dirt";
     public override string? DisplayName => "Compact Dirt";
     public override string? ResourceTexture => "compact_dirt";
@@ -168,22 +174,16 @@ public class CompactDirtBlock : Block, IDestructibleByMining
             Path.Combine(AppContext.BaseDirectory, "Data", "compact_dirt.png"))
     };
 
-    dynamic? IDestructibleByMining.ItemSpecificSpeeds => null;
     float IDestructibleByMining.SecondsToDestroy => 1.25f;
 }
 ```
 
 ## Optional: Place Compact Dirt from Dirt Soup
 
-If you want Dirt Soup to place Compact Dirt when used on a block face, add `IBlockPlacer` to the item and raise its `FormatVersion` (that trait requires `1.26.0`):
+If you want Dirt Soup to place Compact Dirt when used on a block face, add `IBlockPlacer` to the item. Dirt Soup already uses `FormatVersion` `1.26.30` for `IUseModifiers`, which also covers `IBlockPlacer` (`1.26.0`):
 
 ```cs
-// on DirtSoupItem
-using Version = ingot.Core.Common.Version;
-
-public override Version FormatVersion => new(1, 26, 0);
-
-// also implement IBlockPlacer:
+// on DirtSoupItem, also implement IBlockPlacer:
 string IBlockPlacer.Block => "myaddon:compact_dirt";
 bool IBlockPlacer.ReplaceBlockItem => false;
 ```
