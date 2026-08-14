@@ -2,11 +2,11 @@
 
 This page is a historical reference for ingot's past versions including the version number, what changed and classification.
 
-## `1.0.1` - resolve issue 22
+## `1.0.0-e1` - resolve issue 22
 
 **Classification:** `patch`
 
-**Name:** `CoalBeacon`
+**Name:** `GlazedAxolotl`
 
 **Changes:**
 
