@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:friction", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IFriction : IItemTrait
+public interface IFriction : IBlockTrait
 {
     /// <summary>
     /// Describes the friction for this block in a range of (0.0-0.9). Friction affects an entity's movement speed when it travels on the block. Greater value results in more friction.

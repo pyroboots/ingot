@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:connection_rule", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IConnectionRule : IItemTrait
+public interface IConnectionRule : IBlockTrait
 {
     /// <summary>Equivalent to <c>none</c></summary>
     public const string ConnectionType_None = "none";

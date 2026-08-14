@@ -10,6 +10,6 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:flower_pottable", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IFlowerPottable : IItemTrait
+public interface IFlowerPottable : IBlockTrait
 {
 }

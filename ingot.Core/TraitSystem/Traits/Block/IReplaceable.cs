@@ -10,6 +10,6 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:replaceable", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IReplaceable : IItemTrait
+public interface IReplaceable : IBlockTrait
 {
 }

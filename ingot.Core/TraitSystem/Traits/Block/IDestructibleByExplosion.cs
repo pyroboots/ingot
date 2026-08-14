@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:destructible_by_explosion", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IDestructibleByExplosion : IItemTrait
+public interface IDestructibleByExplosion : IBlockTrait
 {
     /// <summary>
     /// Sets the explosion resistance for the block. Greater values result in greater resistance to explosions. The scale will be different for different explosion power levels. A negative value or 0 means it will easily explode; larger numbers increase level of resistance.

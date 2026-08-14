@@ -13,7 +13,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:geometry", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IGeometry : IItemTrait
+public interface IGeometry : IBlockTrait
 {
     /// <summary>
     /// A JSON object that contains a list of key/value pairs that map from bone name in the specified geometry file (key) to a Molang expression that tells whether the bone should be visible or not (value). The expression is limited to using the "query.block_state()" query. When using "bone_visibility" in geometry components in the "permutations" section, you must also have a default version of the geometry component with "bone_visibility" in the "components" section.

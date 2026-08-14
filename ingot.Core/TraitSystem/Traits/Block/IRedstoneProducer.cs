@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:redstone_producer", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IRedstoneProducer : IItemTrait
+public interface IRedstoneProducer : IBlockTrait
 {
     /// <summary>Equivalent to <c>down</c></summary>
     public const string Facing_Down = "down";

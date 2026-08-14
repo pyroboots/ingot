@@ -11,7 +11,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:map_color", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IMapColor : IItemTrait
+public interface IMapColor : IBlockTrait
 {
     /// <summary>Equivalent to <c>none</c></summary>
     public const string TintMethod_None = "none";

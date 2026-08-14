@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:crafting_table", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ICraftingTable : IItemTrait
+public interface ICraftingTable : IBlockTrait
 {
     /// <summary>
     /// Defines the tags recipes should define to be crafted on this table. Limited to 64 tags. Each tag is limited to 64 characters.

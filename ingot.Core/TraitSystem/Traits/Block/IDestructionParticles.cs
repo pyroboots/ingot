@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:destruction_particles", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IDestructionParticles : IItemTrait
+public interface IDestructionParticles : IBlockTrait
 {
     /// <summary>Equivalent to <c>none</c></summary>
     public const string TintMethod_None = "none";

@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:redstone_consumer", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IRedstoneConsumer : IItemTrait
+public interface IRedstoneConsumer : IBlockTrait
 {
     /// <summary>
     /// Optional minimum value for incoming signal strength. If signal strength is greater than or equal to this value then the 'onRedstoneUpdate' event is sent to Scripts. Defaults to 0 meaning event is always emitted.

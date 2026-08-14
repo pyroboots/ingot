@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:chest_obstruction", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IChestObstruction : IItemTrait
+public interface IChestObstruction : IBlockTrait
 {
     /// <summary>Equivalent to <c>always</c></summary>
     public const string ChestObstructionRule_Always = "always";

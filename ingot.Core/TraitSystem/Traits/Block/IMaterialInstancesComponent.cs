@@ -11,7 +11,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:material_instances", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IMaterialInstances : IItemTrait
+public interface IMaterialInstances : IBlockTrait
 {
     /// <summary>
     /// The material instances for a block.Maps face or material_instance names in a geometry file to an actual material instance. Material instance can either be a full material instance or a name to another already defined instance.Limited to 64 instances.

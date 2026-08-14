@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:tags", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ITags : IItemTrait
+public interface ITags : IBlockTrait
 {
     /// <summary>
     /// Use this component to define tags, vanilla or custom. Valid tags are of the format "namespace:tag_name". The array of tags must be non-empty.

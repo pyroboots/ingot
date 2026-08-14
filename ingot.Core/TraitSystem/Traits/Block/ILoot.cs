@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:loot", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ILoot : IItemTrait
+public interface ILoot : IBlockTrait
 {
     /// <summary>
     /// The path to the loot table, relative to the behavior pack. Path string is limited to 256 characters.

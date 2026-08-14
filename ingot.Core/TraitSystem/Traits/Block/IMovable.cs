@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:movable", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IMovable : IItemTrait
+public interface IMovable : IBlockTrait
 {
     /// <summary>Equivalent to <c>push_pull</c></summary>
     public const string MovementType_PushPull = "push_pull";

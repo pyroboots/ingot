@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:block_entity", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IBlockEntity : IItemTrait
+public interface IBlockEntity : IBlockTrait
 {
     /// <summary>
     /// Sets dynamic-properties capabilities on the block-entity.

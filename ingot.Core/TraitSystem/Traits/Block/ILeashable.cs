@@ -11,7 +11,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:leashable", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ILeashable : IItemTrait
+public interface ILeashable : IBlockTrait
 {
     /// <summary>
     /// 

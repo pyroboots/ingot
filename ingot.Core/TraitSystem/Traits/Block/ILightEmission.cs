@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:light_emission", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ILightEmission : IItemTrait
+public interface ILightEmission : IBlockTrait
 {
     /// <summary>
     /// The amount of light this block will emit. Higher value means more light will be emitted.

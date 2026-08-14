@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:placement_filter", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IPlacementFilter : IItemTrait
+public interface IPlacementFilter : IBlockTrait
 {
     /// <summary>
     /// List of conditions where the block can be placed/survive

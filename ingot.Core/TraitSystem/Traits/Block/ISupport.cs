@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:support", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ISupport : IItemTrait
+public interface ISupport : IBlockTrait
 {
     /// <summary>Equivalent to <c>fence</c></summary>
     public const string SupportShape_Fence = "fence";

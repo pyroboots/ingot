@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:liquid_detection", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ILiquidDetection : IItemTrait
+public interface ILiquidDetection : IBlockTrait
 {
     /// <summary>
     /// 

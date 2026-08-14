@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:destructible_by_mining", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IDestructibleByMining : IItemTrait
+public interface IDestructibleByMining : IBlockTrait
 {
     /// <summary>
     /// Optional array with item specific mining speeds.

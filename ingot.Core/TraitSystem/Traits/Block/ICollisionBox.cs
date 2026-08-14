@@ -12,7 +12,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:collision_box", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ICollisionBox : IItemTrait
+public interface ICollisionBox : IBlockTrait
 {
     /// <summary>
     /// Minimal position of the bounds of the collision box.

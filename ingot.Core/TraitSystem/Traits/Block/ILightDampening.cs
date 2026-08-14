@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:light_dampening", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ILightDampening : IItemTrait
+public interface ILightDampening : IBlockTrait
 {
     /// <summary>
     /// The amount that light will be dampened when it passes through the block. Higher value means the light will be dampened more.

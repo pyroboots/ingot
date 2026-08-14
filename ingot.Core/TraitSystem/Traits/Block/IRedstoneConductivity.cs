@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:redstone_conductivity", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IRedstoneConductivity : IItemTrait
+public interface IRedstoneConductivity : IBlockTrait
 {
     /// <summary>
     /// Specifies if redstone wire can stair-step downward on the block.

@@ -15,7 +15,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:transformation", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface ITransformation : IItemTrait
+public interface ITransformation : IBlockTrait
 {
     /// <summary>
     /// The block's rotation in increments of 90 degrees

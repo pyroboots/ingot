@@ -13,7 +13,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:random_offset", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IRandomOffset : IItemTrait
+public interface IRandomOffset : IBlockTrait
 {
     /// <summary>
     /// 

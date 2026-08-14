@@ -12,7 +12,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:embedded_visual", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IEmbeddedVisual : IItemTrait
+public interface IEmbeddedVisual : IBlockTrait
 {
     /// <summary>
     /// The "minecraft:geometry" component of the embedded block.

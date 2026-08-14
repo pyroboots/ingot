@@ -60,21 +60,21 @@ public static class TraitGeneratorV2
         return TypeMap.ContainsKey(type) ? TypeMap[type] : "dynamic";
     }
     
-    public static string GenerateTraitFromSchema(string json, string ns, TraitSystem.TraitType type)
+    public static string GenerateTraitFromSchema(string json, string ns, TraitSystem.TraitType type, string traitInterface)
     {
         // get rid of $refs for clean serialization
         json = JsonResolver.Resolve(json);
 
         ComponentSchema schema = JsonConvert.DeserializeObject<ComponentSchema>(json);
-        return GenerateTraitFromSchema(schema, ns, type);
+        return GenerateTraitFromSchema(schema, ns, type, traitInterface);
     }
 
-    public static string GenerateTraitFromSchema(ComponentSchema schema, string ns, TraitSystem.TraitType type)
+    public static string GenerateTraitFromSchema(ComponentSchema schema, string ns, TraitSystem.TraitType type, string traitInterface)
     {
         TraitInterfaceBuilder iface = new(schema.Description,
             Formatting.SnakeToPascalCase(schema.Component.Split(':')[1]), new(schema.Component),
             type,
-            new(schema.FormatVer), ns,
+            new(schema.FormatVer), traitInterface, ns,
             ["ingot.Core.Common", "ingot.Core.TraitSystem", "ingot.Core.TraitSystem.Traits"]);
 
         List<string> logs = new();
@@ -175,7 +175,7 @@ public static class TraitGeneratorV2
                 continue;
             }
 
-            string iface = GenerateTraitFromSchema(schema, "ingot.Core.TraitSystem.Traits.Item", TraitSystem.TraitType.Item);
+            string iface = GenerateTraitFromSchema(schema, "ingot.Core.TraitSystem.Traits.Item", TraitSystem.TraitType.Item, nameof(Core.TraitSystem.Traits.IItemTrait));
             string fileName = $"I{Path.GetFileNameWithoutExtension(file.path).Replace(" ", "")}.cs";
 
             Console.WriteLine($"({c}/{files.Length}) generated {fileName}");
@@ -227,7 +227,7 @@ public static class TraitGeneratorV2
                 continue;
             }
 
-            string iface = GenerateTraitFromSchema(schema, "ingot.Core.TraitSystem.Traits.Block", TraitSystem.TraitType.Block);
+            string iface = GenerateTraitFromSchema(schema, "ingot.Core.TraitSystem.Traits.Block", TraitSystem.TraitType.Block, nameof(Core.TraitSystem.Traits.IBlockTrait));
             string fileName = $"I{Path.GetFileNameWithoutExtension(Formatting.SnakeToPascalCase(friendlyName.Replace(" ", "_")))}.cs";
 
             Console.WriteLine($"({c}/{components.Count}) generated {fileName}");

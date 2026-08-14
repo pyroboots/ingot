@@ -12,7 +12,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:item_visual", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IItemVisual : IItemTrait
+public interface IItemVisual : IBlockTrait
 {
     /// <summary>
     /// The "minecraft:geometry" component of the item.

@@ -11,7 +11,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:instrument_sound", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IInstrumentSound : IItemTrait
+public interface IInstrumentSound : IBlockTrait
 {
     /// <summary>
     /// This defines what sound will play based on above or below relative position to a note block.An instrument can be assigned to the "up" and "down" faces where at least one face needs to be defined for the component to be valid.An undefined face will use its default value: "up" = "note.harp" and "down" = "note.none"."note.none" can be used to specify no sound for a face.

@@ -17,17 +17,18 @@ public class TraitInterfaceBuilder
     public Version FormatVersion;
     public string Namespace;
     public string[] ExtraHeaders = [];
-    
-    /// <param name="id">Schema ID</param>
+    public string TraitInterface;
+
     /// <param name="description">Description of the component</param>
     /// <param name="name">Name of interface without the "I" prefix</param>
     /// <param name="componentId">Identifier of the component this interface is for</param>
     /// <param name="type">Type of trait interface</param>
     /// <param name="formatVer">Minimum format version for this trait</param>
+    /// <param name="traitInterface">The marker interface for the trait type</param>
     /// <param name="ns">Namespace</param>
     /// <param name="usings">Array of usings to insert</param>
     public TraitInterfaceBuilder(string description, string name, Identifier componentId, TraitSystem.TraitType type,
-        Version formatVer, string ns, string[]? usings = null)
+        Version formatVer, string traitInterface, string ns, string[]? usings = null)
     {
         _usings = usings ?? [];
         Description = description;
@@ -36,6 +37,7 @@ public class TraitInterfaceBuilder
         Type = type;
         FormatVersion = formatVer;
         Namespace = ns;
+        TraitInterface = traitInterface;
     }
 
     private readonly List<InterfaceProperty> _properties = new();
@@ -58,7 +60,6 @@ public class TraitInterfaceBuilder
     // in case things ever get renamed, generator stays up to date
     private static string TraitAttribute => nameof(Core.TraitSystem.TraitAttribute);
     private static string FmtVerAttribute => nameof(TraitFormatVersionAttribute);
-    private static string ItemTraitInterface => nameof(Core.TraitSystem.Traits.IItemTrait);
     private static string TraitPropertyAttribute => nameof(Core.TraitSystem.TraitPropertyAttribute);
     private static string TraitPropertyConstraintAttribute => nameof(Core.TraitSystem.TraitPropertyConstraintAttribute);
     private static string TraitPropertyWarningAttribute => nameof(Core.TraitSystem.TraitPropertyConstraintAttribute);
@@ -97,7 +98,7 @@ public class TraitInterfaceBuilder
         sw.WriteLine("/// </summary>");
         sw.WriteLine($"[{TraitAttribute.Replace("Attribute", "")}(\"{Component}\", TraitSystem.TraitType.{System.Enum.GetName(Type)})]");
         sw.WriteLine($"[{FmtVerAttribute.Replace("Attribute", "")}(\"{FormatVersion}\")]");
-        sw.WriteLine($"public interface I{Name} : {ItemTraitInterface}");
+        sw.WriteLine($"public interface I{Name} : {TraitInterface}");
         sw.WriteLine("{");
         
         foreach (var enumName in _enums) foreach (string enumValue in enumName.Value)

@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:flammable", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IFlammable : IItemTrait
+public interface IFlammable : IBlockTrait
 {
     /// <summary>Equivalent to <c>always</c></summary>
     public const string LavaFlammable_Always = "always";

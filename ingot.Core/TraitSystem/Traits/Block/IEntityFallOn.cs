@@ -10,7 +10,7 @@ using ingot.Core.TraitSystem.Traits;
 /// </summary>
 [Trait("minecraft:entity_fall_on", TraitSystem.TraitType.Block)]
 [TraitFormatVersion("1.26.20")]
-public interface IEntityFallOn : IItemTrait
+public interface IEntityFallOn : IBlockTrait
 {
     /// <summary>
     /// The minimum distance in blocks that an actor needs to fall before events are triggered.
