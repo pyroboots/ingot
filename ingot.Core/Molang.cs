@@ -19,11 +19,21 @@ public partial class Molang
 
         return string.Join(", ", formattedArgs);
     }
+
+    /// <summary/>
+    public Molang(string? raw = null)
+    {
+        if (raw is null) return;
+        
+        _tokens = raw.Split(" ").ToList();
+    }
     
     /// <summary/>
     public override string ToString() => string.Join(' ', _tokens.ToArray());
     /// <summary/>
     public static implicit operator string(Molang molang) => molang.ToString();
+    /// <summary/>
+    public static implicit operator Molang(string raw) => new(raw);
 
     /// <summary>
     /// Adds the raw <paramref name="molang"/> to the builder
