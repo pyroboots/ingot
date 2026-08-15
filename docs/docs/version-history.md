@@ -19,6 +19,16 @@ So a version with 2 consecutive documentation updates without a release would us
 
 ## Versions
 
+### `1.1.0-a1` - `string[]` `ITick.IntervalRange` to `int[]`
+
+**Classification:** `patch`
+
+**Name:** `LapisLodestone`
+
+**Changes:**
+
+* changed `string[]` `ITick.IntervalRange` to `int[]`
+
 ### `1.1.0` - versioning docs update + molang builder ctor
 
 **Classification:** `docs + minor`
