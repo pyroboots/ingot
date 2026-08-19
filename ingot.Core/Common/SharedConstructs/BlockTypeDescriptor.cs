@@ -7,6 +7,7 @@ namespace ingot.Core.Common.SharedConstructs;
 /// <summary>
 /// References a block type
 /// </summary>
+[JsonConverter(typeof(CompilableFragmentJsonConverter<BlockTypeDescriptor>))]
 public class BlockTypeDescriptor : ICompilableFragment
 {
     /// <summary>

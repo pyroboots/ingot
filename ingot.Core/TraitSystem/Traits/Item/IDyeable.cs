@@ -17,5 +17,5 @@ public interface IDyeable : IItemTrait
     /// 
     /// </summary>
     [TraitProperty]
-    public virtual dynamic DefaultColor => null;
+    public virtual Either<string, int[]>? DefaultColor => null;
 }

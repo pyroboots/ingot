@@ -7,6 +7,7 @@ namespace ingot.Core.Common.SharedConstructs;
 /// <summary>
 /// Used to reference a permutation of a block
 /// </summary>
+[JsonConverter(typeof(CompilableFragmentJsonConverter<BlockPermutationDescriptor>))]
 public class BlockPermutationDescriptor : ICompilableFragment
 {
     /// <summary>

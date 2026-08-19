@@ -5,6 +5,8 @@ namespace ingot.Core.TraitSystem.Traits.Entity;
 using ingot.Core.Common;
 using ingot.Core.Behaviour.Entity;
 
+using Molang = ingot.Core.Molang;
+
 /// <summary>
 /// .
 /// </summary>
@@ -15,11 +17,11 @@ public interface IExperienceReward : IEntityTrait
     /// XP amount (or Molang expression) awarded when this entity is bred.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic? OnBred => null;
+    public virtual Either<int, Molang>? OnBred => null;
 
     /// <summary>
     /// XP amount (or Molang expression) awarded when this entity dies.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic? OnDeath => null;
+    public virtual Either<int, Molang>? OnDeath => null;
 }

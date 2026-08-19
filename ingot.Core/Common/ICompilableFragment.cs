@@ -14,7 +14,7 @@ public interface ICompilableFragment
     public void Compile(ref JsonWriter writer);
 }
 
-internal class CompilableFragmentJsonConverter : JsonConverter
+internal class CompilableFragmentJsonConverter<T> : JsonConverter
 {
     public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
     {
@@ -24,5 +24,5 @@ internal class CompilableFragmentJsonConverter : JsonConverter
 
     public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer) => throw new InvalidOperationException();
 
-    public override bool CanConvert(Type objectType) => objectType.IsAssignableTo(typeof(ICompilableFragment));
+    public override bool CanConvert(Type objectType) => objectType.IsAssignableTo(typeof(T));
 }

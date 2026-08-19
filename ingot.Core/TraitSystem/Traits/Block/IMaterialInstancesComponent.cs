@@ -17,5 +17,5 @@ public interface IMaterialInstances : IBlockTrait
     /// The material instances for a block.Maps face or material_instance names in a geometry file to an actual material instance. Material instance can either be a full material instance or a name to another already defined instance.Limited to 64 instances.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Value { get; }
+    public abstract Dictionary<string, Either<string, Dictionary<string, object>>> Value { get; }
 }

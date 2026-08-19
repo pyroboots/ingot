@@ -15,5 +15,5 @@ public interface ITypeFamily : IEntityTrait
     /// A set of tags that describe the categories of this entity.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Family { get; }
+    public abstract Either<string, string[]> Family { get; }
 }

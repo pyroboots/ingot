@@ -19,7 +19,7 @@ internal class FoodTestItem : Item, IFood, IUseAnimation, IUseModifiers
 
     int IFood.Nutrition => 4;
     float IFood.SaturationModifier => 0.5f;
-    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
+    Identifier IFood.UsingConvertsTo => new("minecraft:bowl");
 
     string IUseAnimation.Value => "eat";
     float IUseModifiers.UseDuration => 1.6f;

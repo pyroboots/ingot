@@ -15,11 +15,11 @@ public interface IMovement : IEntityTrait
     /// The base movement speed value. Higher values result in faster movement. Can be a single number or a range object with range_min and range_max properties.
     /// </summary>
     [TraitProperty]
-    public abstract float Value { get; }
+    public abstract Either<float, FloatRange> Value { get; }
 
     /// <summary>
     /// Maximum movement speed this entity can have. Defaults to <see cref="Value"/>.
     /// </summary>
     [TraitProperty]
-    public virtual float Max => Value;
+    public virtual float Max => Value.Value is FloatRange range ? range.RangeMax : Convert.ToSingle(Value.Value);
 }

@@ -27,6 +27,9 @@ internal class JsonHelper
 
     public static void Property(ref JsonWriter w, string key, object? value)
     {
+        if (value is Either either)
+            value = either.Value;
+
         if (value is null) return;
         if (value is string && ((string)value) == string.Empty) return;
 

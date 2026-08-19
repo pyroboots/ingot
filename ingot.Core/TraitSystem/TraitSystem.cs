@@ -3,6 +3,7 @@ using System.Reflection;
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Entity;
 using ingot.Core.Behaviour.Item;
+using ingot.Core.Common;
 using Newtonsoft.Json;
 using Version = ingot.Core.Common.Version;
 
@@ -335,6 +336,9 @@ public static class TraitSystem
             GetAttributes<TraitPropertyConstraintAttribute>(interfaceProperty, iface, concreteType) ?? [];
         TraitPropertyWarningAttribute[] warnings =
             GetAttributes<TraitPropertyWarningAttribute>(interfaceProperty, iface, concreteType) ?? [];
+
+        if (value is Either either)
+            value = either.Value;
 
         if (constraints.Length == 0 && warnings.Length == 0)
             return;

@@ -17,12 +17,16 @@ public interface IRepairable : IItemTrait
     /// <summary>
     /// Repair entry in <see cref="IRepairable"/>
     /// </summary>
-    public struct RepairItem
+    public struct RepairItem(Either<int, Molang> amount, params Either<Identifier, ItemTagsDescriptor>[] items)
     {
-        public RepairItem() { }
-        
-        [JsonProperty("items")] public required OneOf<Identifier, ItemTagsDescriptor>[] Items;
-        [JsonProperty("repair_amount")] public OneOf<int, Molang> RepairAmount;
+        /// <summary>
+        /// The items used to repair the item
+        /// </summary>
+        [JsonProperty("items")] public required Either<Identifier, ItemTagsDescriptor>[] Items = items;
+        /// <summary>
+        /// How much durability is repaired
+        /// </summary>
+        [JsonProperty("repair_amount")] public Either<int, Molang> RepairAmount = amount;
     }
 
     /// <summary>

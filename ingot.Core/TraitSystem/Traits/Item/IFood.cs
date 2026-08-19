@@ -2,9 +2,9 @@
 // log: unable to resolve type  on property UsingConvertsTo
 
 namespace ingot.Core.TraitSystem.Traits.Item;
-using ingot.Core.Common;
+using Common;
 using ingot.Core.TraitSystem;
-using ingot.Core.TraitSystem.Traits;
+using Traits;
 
 /// <summary>
 /// When an item has a food component, it becomes edible to the player. Must have the 'minecraft:use_duration' component in order to function properly.
@@ -32,5 +32,5 @@ public interface IFood : IItemTrait
     /// When used, converts to the item specified by the string in this field. Default does not convert item.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic UsingConvertsTo => null;
+    public virtual Identifier UsingConvertsTo => null;
 }

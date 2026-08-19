@@ -49,5 +49,5 @@ public interface IGeometry : IBlockTrait
     /// A field that is either a Boolean or an array of strings, max size 64 strings. This field locks UV orientation for all/some bones in the geometry, regardless of how the block is rotated using "minecraft:transformation" component. For performance reasons it's recommended to use the Boolean.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic UvLock => null;
+    public virtual Either<bool, string[]>? UvLock => null;
 }

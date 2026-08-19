@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour.Entity;
+using ingot.Core.Common;
 using ingot.Tests.Content;
 
 namespace ingot.Tests.Content.Entities;
@@ -36,7 +37,7 @@ internal class TestClientEntity : ClientEntity<TestEntity>
     {
         Volume = 1f,
         Pitch = [0.8f, 1.2f],
-        Events = new Dictionary<string, object>
+        Events = new Dictionary<string, Either<string, Dictionary<string, object>>>
         {
             ["ambient"] = "mob.test.say",
             ["hurt"] = "mob.test.hurt",

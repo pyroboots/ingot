@@ -24,5 +24,5 @@ public interface ITrusting : IEntityTrait
     /// The list of items that can be used to get the entity to trust players. Can be an array or a single item string.
     /// </summary>
     [TraitProperty]
-    public virtual string[]? TrustItems => null;
+    public virtual Either<string, string[]>? TrustItems => null;
 }

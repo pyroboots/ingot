@@ -15,7 +15,7 @@ public interface ISpawnEntity : IEntityTrait
     /// List of entity spawn definitions. Can be a single object or an array of objects.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic? Entities => null;
+    public virtual Either<Dictionary<string, object>, Dictionary<string, object>[]>? Entities => null;
 
     /// <summary>
     /// If present, the specified entity will only spawn if the filter evaluates to true.

@@ -109,7 +109,7 @@ public class ClientEntitySounds
     /// Event name → sound definition (e.g. <c>hurt</c> → <c>mob.cow.hurt</c>).
     /// Values may be a sound name string or a richer object (volume/pitch/sound).
     /// </summary>
-    public required Dictionary<string, object> Events { get; init; }
+    public required Dictionary<string, Either<string, Dictionary<string, object>>> Events { get; init; }
 
     /// <summary>
     /// Maps common gameplay events to vanilla <c>mob.{name}.*</c> sound definitions
@@ -124,7 +124,7 @@ public class ClientEntitySounds
         float[]? pitch = null)
     {
         string mob = vanillaMobName.Trim().ToLowerInvariant();
-        Dictionary<string, object> events = new()
+        Dictionary<string, Either<string, Dictionary<string, object>>> events = new()
         {
             ["ambient"] = $"mob.{mob}.say",
             ["hurt"] = $"mob.{mob}.hurt",
@@ -162,7 +162,7 @@ public class ClientEntityScripts
     /// Animation / animation-controller short-names to play each frame.
     /// Entries may be a short-name string, or a single-entry dictionary mapping a short-name to a Molang blend value.
     /// </summary>
-    public object[]? Animate { get; init; }
+    public Either<string, Dictionary<string, string>>[]? Animate { get; init; }
 
     /// <summary>
     /// Uniform model scale (Molang or number as string).
@@ -507,37 +507,8 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
             {
                 json.Array("animate", () =>
                 {
-                    foreach (object entry in scripts.Animate)
-                    {
-                        if (entry is string shortName)
-                        {
-                            w.WriteValue(shortName);
-                        }
-                        else if (entry is Dictionary<string, string> blend)
-                        {
-                            w.WriteStartObject();
-                            foreach (var kvp in blend)
-                            {
-                                w.WritePropertyName(kvp.Key);
-                                w.WriteValue(kvp.Value);
-                            }
-                            w.WriteEndObject();
-                        }
-                        else if (entry is IReadOnlyDictionary<string, string> blendRo)
-                        {
-                            w.WriteStartObject();
-                            foreach (var kvp in blendRo)
-                            {
-                                w.WritePropertyName(kvp.Key);
-                                w.WriteValue(kvp.Value);
-                            }
-                            w.WriteEndObject();
-                        }
-                        else
-                        {
-                            JsonSerializer.CreateDefault().Serialize(w, entry);
-                        }
-                    }
+                    foreach (Either<string, Dictionary<string, string>> entry in scripts.Animate)
+                        JsonSerializer.CreateDefault().Serialize(w, entry);
                 });
             }
 

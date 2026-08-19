@@ -33,7 +33,7 @@ public interface ITimer : IEntityTrait
     /// Amount of time in seconds for the timer. Can be specified as a number or a pair of numbers (min and max). Incompatible with random_time_choices.
     /// </summary>
     [TraitProperty]
-    public virtual FloatRange? Time => null;
+    public virtual Either<float, FloatRange>? Time => null;
 
     [TraitProperty]
     public virtual string? TimeDownEvent => null;

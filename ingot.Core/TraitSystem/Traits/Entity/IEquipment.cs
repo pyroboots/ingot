@@ -5,6 +5,8 @@ namespace ingot.Core.TraitSystem.Traits.Entity;
 using ingot.Core.Common;
 using ingot.Core.Behaviour.Entity;
 
+using Newtonsoft.Json;
+
 /// <summary>
 /// Sets the Equipment table to use for this Entity.
 /// </summary>
@@ -12,10 +14,19 @@ using ingot.Core.Behaviour.Entity;
 public interface IEquipment : IEntityTrait
 {
     /// <summary>
+    /// Slot drop-chance object form used by <see cref="SlotDropChance"/>.
+    /// </summary>
+    public struct SlotDropChanceEntry
+    {
+        [JsonProperty("slot")] public required string Slot;
+        [JsonProperty("drop_chance")] public float DropChance;
+    }
+
+    /// <summary>
     /// A list of slots with the chance to drop an equipped item from that slot. Can be an array of slot name strings or an array of objects with slot and drop_chance properties.
     /// </summary>
     [TraitProperty]
-    public virtual string[]? SlotDropChance => null;
+    public virtual Either<string[], SlotDropChanceEntry[]>? SlotDropChance => null;
 
     /// <summary>
     /// The file path to the equipment table, relative to the behavior pack's root.

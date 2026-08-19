@@ -24,7 +24,7 @@ public interface IBehaviorFollowCaravan : IEntityTrait
     /// List of entity types that this mob can follow in a caravan. Can be a single filter object or an array of filter objects.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic EntityTypes => null;
+    public virtual Either<EntityFilter, EntityFilter[]>? EntityTypes => null;
 
     /// <summary>
     /// As priority approaches 0, the priority is increased. The higher the priority, the sooner this behavior will be executed as a goal.

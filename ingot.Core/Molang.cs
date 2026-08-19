@@ -1,8 +1,30 @@
+using Newtonsoft.Json;
+
 namespace ingot.Core;
+
+internal class MolangJsonConverter : JsonConverter
+{
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        => writer.WriteValue(value is Molang molang ? molang.ToString() : null);
+
+    public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.Null)
+            return null;
+
+        if (reader.Value is string raw)
+            return new Molang(raw);
+
+        throw new JsonSerializationException($"cannot convert {reader.TokenType} to {nameof(Molang)}");
+    }
+
+    public override bool CanConvert(Type objectType) => objectType == typeof(Molang);
+}
 
 /// <summary>
 /// Builder for molang expressions
 /// </summary>
+[JsonConverter(typeof(MolangJsonConverter))]
 public partial class Molang
 {
     private readonly List<string> _tokens = new();

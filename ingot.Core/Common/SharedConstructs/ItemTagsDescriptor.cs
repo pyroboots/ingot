@@ -5,7 +5,7 @@ namespace ingot.Core.Common.SharedConstructs;
 /// <summary>
 /// References items with valid tags
 /// </summary>
-[JsonConverter(typeof(CompilableFragmentJsonConverter))]
+[JsonConverter(typeof(CompilableFragmentJsonConverter<ItemTagsDescriptor>))]
 public class ItemTagsDescriptor : ICompilableFragment
 {
     /// <summary>

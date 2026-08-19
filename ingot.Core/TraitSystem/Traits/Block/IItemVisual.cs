@@ -18,10 +18,10 @@ public interface IItemVisual : IBlockTrait
     /// The "minecraft:geometry" component of the item.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Geometry { get; }
+    public abstract Either<string, Dictionary<string, object>> Geometry { get; }
     /// <summary>
     /// The "minecraft:material_instances" component of the item.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic MaterialInstances { get; }
+    public abstract Dictionary<string, Either<string, Dictionary<string, object>>> MaterialInstances { get; }
 }

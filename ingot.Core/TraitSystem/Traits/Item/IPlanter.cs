@@ -2,6 +2,7 @@
 
 namespace ingot.Core.TraitSystem.Traits.Item;
 using ingot.Core.Common;
+using ingot.Core.Common.SharedConstructs;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 
@@ -31,5 +32,5 @@ public interface IBlockPlacer : IItemTrait
     /// List of block descriptors of the blocks that this item can be used on. If left empty, all blocks will be allowed.
     /// </summary>
     [TraitProperty]
-    public virtual string[] UseOn => [];
+    public virtual Either<Identifier, BlockPermutationDescriptor>[] UseOn => [];
 }

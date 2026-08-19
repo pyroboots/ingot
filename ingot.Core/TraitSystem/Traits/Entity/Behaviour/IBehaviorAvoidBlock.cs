@@ -24,7 +24,7 @@ public interface IBehaviorAvoidBlock : IEntityTrait
     /// Event triggers that fire when the entity escapes from the avoided block. Can be a single trigger or an array of triggers.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic OnEscape => null;
+    public virtual Either<Dictionary<string, object>, Dictionary<string, object>[]>? OnEscape => null;
 
     /// <summary>
     /// As priority approaches 0, the priority is increased. The higher the priority, the sooner this behavior will be executed as a goal.

@@ -31,7 +31,7 @@ public interface IMapColor : IBlockTrait
     /// Sets the color of the block when rendered to a map.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Color { get; }
+    public abstract Either<string, int[]> Color { get; }
     /// <summary>
     /// Sets the tint method of the block when rendered to a map. Tint method logic varies, but often refers to the "rain" and "temperature" of the biome the block is placed in to compute the tint. Supported tint methods are "none", "default_foliage", "birch_foliage", "evergreen_foliage", "dry_foliage", "grass" and "water"
     /// </summary>

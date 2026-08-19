@@ -13,8 +13,8 @@ using ingot.Core.TraitSystem.Traits;
 public interface IInteractButton : IItemTrait
 {
     /// <summary>
-    /// Value of the component
+    /// Value of the component. <c>true</c> shows the default "Use Item" label; a string sets custom button text.
     /// </summary>
     [TraitProperty]
-    public abstract bool Value { get; }
+    public abstract Either<bool, string> Value { get; }
 }

@@ -22,7 +22,7 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
 
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
+    Identifier IFood.UsingConvertsTo => new("minecraft:bowl");
     
     string IUseAnimation.Value => "eat";
     float IUseModifiers.MovementModifier => 0.35f;

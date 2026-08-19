@@ -19,13 +19,13 @@ public class CheeseItem : Item, IRepairable
         new()
         {
             Items = [
-                new OneOf<Identifier, ItemTagsDescriptor>(new Identifier("minecraft:diamond")),
-                new OneOf<Identifier, ItemTagsDescriptor>(new ItemTagsDescriptor()
+                new Either<Identifier, ItemTagsDescriptor>(new Identifier("minecraft:diamond")),
+                new Either<Identifier, ItemTagsDescriptor>(new ItemTagsDescriptor()
                 {
                     AnyTags = [new("minecraft:planks")]
                 })
             ],
-            RepairAmount = new OneOf<int, Molang>(1)
+            RepairAmount = new Either<int, Molang>(1)
         }
     ];
 }
