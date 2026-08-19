@@ -26,7 +26,7 @@ public interface ITraitable
     /// <param name="inst">Instance to read from</param>
     /// <param name="w"><see cref="JsonTextWriter"/> to write JSON to</param>
     /// <param name="type">Expected trait type</param>
-    public static void CompileTraits(ITraitable inst, ref JsonTextWriter w, TraitSystem.TraitSystem.TraitType type)
+    public static void CompileTraits(ITraitable inst, ref JsonWriter w, TraitSystem.TraitSystem.TraitType type)
     {
         CompilerState.Info("compiling traits...");
         List<Trait> traits = TraitSystem.TraitSystem.GetTraits(inst, type);
