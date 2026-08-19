@@ -19,6 +19,15 @@ So a version with 2 consecutive documentation updates without a release would us
 
 ## Versions
 
+### `1.2.0` - `json + IPack fixes`
+
+**Classification:** `minor`
+
+**Name:** `CursedNautilus`
+
+* added IdentifierJsonConverter to convert Identifiers to json - small step to moving away from ICompilableFragments
+* added IPack.Configure
+
 ### `1.1.0-a1` - `string[]` `ITick.IntervalRange` to `int[]`
 
 **Classification:** `patch`

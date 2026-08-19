@@ -1,14 +1,38 @@
 using ingot.Core;
-
 using Newtonsoft.Json;
+
+using JsonConverter = Newtonsoft.Json.JsonConverter;
 
 namespace ingot.Core.Common;
 
 using System.Text.RegularExpressions;
 
+internal class IdentifierJsonConverter : JsonConverter
+{
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    {
+        Identifier id = (value as Identifier)!;
+        writer.WriteValue(id.ToString());
+    }
+
+    public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.Null)
+            return null;
+
+        if (reader.Value is string id)
+            return new Identifier(id);
+
+        throw new JsonSerializationException($"cannot convert {reader.TokenType} to Identifier");
+    }
+
+    public override bool CanConvert(Type objectType) => objectType == typeof(Identifier);
+}
+
 /// <summary>
 /// Internal use class to represent a Minecraft identifier
 /// </summary>
+[JsonConverter(typeof(IdentifierJsonConverter))]
 public class Identifier : IEquatable<Identifier>, ICompilableFragment
 {
     /// <summary>

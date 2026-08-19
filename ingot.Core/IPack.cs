@@ -15,6 +15,12 @@ namespace ingot.Core;
 public interface IPack
 {
     /// <summary>
+    /// Allows extra configuration of the underlying <see cref="Pack"/> for properties
+    /// that <see cref="IPack"/> does not yet expose
+    /// </summary>
+    public virtual Pack Configure(Pack pack) => pack;
+    
+    /// <summary>
     /// UUID for the BP
     /// </summary>
     public string BehaviourUuid { get; }
@@ -173,4 +179,10 @@ public interface IPack
         
         return pack;
     }
+
+    public static void CompileToMcaddon<TPack>(string outputPath, bool verbose = true) where TPack : IPack, new()
+        => new TPack().Configure(GetPack<TPack>()).CompileMcaddon(outputPath, verbose, false);
+    
+    public static void CompileComMojang<TPack>(string mojangPath, bool verbose = true) where TPack : IPack, new()
+        => new TPack().Configure(GetPack<TPack>()).CompileComMojang(mojangPath, verbose, false);
 }
