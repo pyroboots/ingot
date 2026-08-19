@@ -22,9 +22,9 @@ public class LootPool : ICompilableFragment
     public required LootEntry[] Entries { get; init; }
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
-        JsonTextWriter w = writer;
+        JsonWriter w = writer;
 
         if (Entries.Length == 0)
             CompilerState.Warn(ref w, "loot pool has no entries");

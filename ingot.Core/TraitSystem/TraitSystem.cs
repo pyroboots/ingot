@@ -353,7 +353,7 @@ public static class TraitSystem
             if (!OperatorMatches(warning.Operation, warning.Values, value, interfaceProperty.Name))
                 continue;
 
-            JsonTextWriter? dummy = null;
+            JsonWriter? dummy = null;
             string message = warning.Warning.Replace("{x}", value?.ToString() ?? "null");
             CompilerState.Warn(ref dummy, message);
         }

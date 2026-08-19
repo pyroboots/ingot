@@ -34,7 +34,7 @@ internal static class ScriptEventValidator
     ];
 
     /// <summary>Validates block event bindings against implemented traits.</summary>
-    public static void ValidateBlock(Type blockType, BlockEvents events, ref JsonTextWriter? writer)
+    public static void ValidateBlock(Type blockType, BlockEvents events, ref JsonWriter? writer)
     {
         foreach (ScriptEventBinding binding in events.Bindings)
         {
@@ -62,7 +62,7 @@ internal static class ScriptEventValidator
     }
 
     /// <summary>Validates item event bindings against implemented traits.</summary>
-    public static void ValidateItem(Type itemType, ItemEvents events, ref JsonTextWriter? writer)
+    public static void ValidateItem(Type itemType, ItemEvents events, ref JsonWriter? writer)
     {
         foreach (ScriptEventBinding binding in events.Bindings)
         {

@@ -46,7 +46,7 @@ public abstract class FurnaceRecipe : IRecipe, IConcreteCompilable<FurnaceRecipe
     {
         CompilerState.Push(inst.Identifier.ToString());
 
-        (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();
+        (StringWriter sw, JsonWriter w) = RecipeCompileHelper.CreateWriter();
 
         JsonHelper json = new(ref w);
 

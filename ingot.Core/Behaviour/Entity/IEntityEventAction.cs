@@ -30,7 +30,7 @@ public class ComponentGroupRemoveEntityEventAction : IEntityEventAction
     public Identifier[] ComponentGroups = [];
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         
@@ -56,7 +56,7 @@ public class ComponentGroupAddEntityEventAction : IEntityEventAction
     public required Identifier[] ComponentGroups;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         
@@ -81,7 +81,7 @@ public class DropItemEntityEventAction : IEntityEventAction
     public required Enums.InventorySlot Slot; 
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         
@@ -106,7 +106,7 @@ public class EmitParticleEntityEventAction : IEntityEventAction
     public required Identifier Particle;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         
@@ -144,7 +144,7 @@ public class EmitVibrationEntityEventAction : IEntityEventAction
     public required VibrationType Type; 
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         
@@ -173,7 +173,7 @@ public class RandomizeEntityEventAction : IEntityEventAction
     public required EventActionPool[] EventActions;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         
@@ -203,7 +203,7 @@ public class SequenceEntityEventAction : IEntityEventAction
     public required IEntityEventAction[] EventActions;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         
@@ -234,7 +234,7 @@ public class TriggerEntityEventAction : IEntityEventAction
     public Enums.Target? Target;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
 
@@ -271,7 +271,7 @@ public class QueueCommandEntityEventAction : IEntityEventAction
     public Enums.Target Target = Enums.Target.Self;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         

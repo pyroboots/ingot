@@ -4,7 +4,7 @@ namespace ingot.Core.Common;
 
 internal class JsonHelper
 {
-    public static void Object(ref JsonTextWriter w, string key, Action<JsonTextWriter> content)
+    public static void Object(ref JsonWriter w, string key, Action<JsonWriter> content)
     {
         bool trace = !string.IsNullOrEmpty(key);
         if (trace)
@@ -25,7 +25,7 @@ internal class JsonHelper
         }
     }
 
-    public static void Property(ref JsonTextWriter w, string key, object? value)
+    public static void Property(ref JsonWriter w, string key, object? value)
     {
         if (value is null) return;
         if (value is string && ((string)value) == string.Empty) return;
@@ -45,7 +45,7 @@ internal class JsonHelper
             JsonSerializer.CreateDefault().Serialize(w, value);
     }
 
-    public static void Array(ref JsonTextWriter w, string key, Action<JsonTextWriter> items)
+    public static void Array(ref JsonWriter w, string key, Action<JsonWriter> items)
     {
         bool trace = !string.IsNullOrEmpty(key);
         if (trace)
@@ -66,8 +66,8 @@ internal class JsonHelper
         }
     }
 
-    public JsonTextWriter Writer;
-    public JsonHelper(ref JsonTextWriter w) => Writer = w;
+    public JsonWriter Writer;
+    public JsonHelper(ref JsonWriter w) => Writer = w;
     public void Property(string key, object? value) => Property(ref Writer, key, value);
     public void Object(string key, Action content) => Object(ref Writer, key, (_writer) => content());
     public void Array(string key, Action content) => Array(ref Writer, key, (_writer) => content());

@@ -19,7 +19,7 @@ internal static class ScriptCompiler
     /// <returns>Whether the behaviour pack requires a script module in the manifest.</returns>
     public static bool Compile(Pack pack, string behaviourPackDir)
     {
-        JsonTextWriter? writer = null;
+        JsonWriter? writer = null;
         bool hasEventBindings = CollectEventScripts(pack, ref writer);
 
         bool hasServices = pack.Services.Count > 0;
@@ -68,7 +68,7 @@ internal static class ScriptCompiler
             pack.ScriptApiModules["@minecraft/server"] = new(2, 8, 0);
     }
 
-    private static bool CollectEventScripts(Pack pack, ref JsonTextWriter? writer)
+    private static bool CollectEventScripts(Pack pack, ref JsonWriter? writer)
     {
         bool hasEventBindings = false;
 

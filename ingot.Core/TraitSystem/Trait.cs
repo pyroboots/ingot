@@ -36,7 +36,7 @@ public record TraitProperty : ICompilableFragment
     public object? Value;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer) => Property(ref writer, Formatting.PascalToSnakeCase(Name), Value);
+    public void Compile(ref JsonWriter writer) => Property(ref writer, Formatting.PascalToSnakeCase(Name), Value);
 }
 
 /// <summary>
@@ -68,7 +68,7 @@ public class Trait : IIdentifiable, ICompilableFragment
     public Type? RootTrait;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
 

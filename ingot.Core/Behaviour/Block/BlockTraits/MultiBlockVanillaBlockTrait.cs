@@ -40,7 +40,7 @@ public class MultiBlockVanillaBlockTrait : IVanillaBlockTrait
     public required int Parts { get; init; }
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (Parts is < 2 or > 4)
             throw new ArgumentOutOfRangeException(nameof(Parts), Parts, "Parts must be between 2 and 4 inclusive");

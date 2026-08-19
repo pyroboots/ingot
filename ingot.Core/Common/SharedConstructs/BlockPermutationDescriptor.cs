@@ -20,7 +20,7 @@ public class BlockPermutationDescriptor : ICompilableFragment
     public required Dictionary<Identifier, object[]> States;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Object("", () =>

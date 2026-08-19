@@ -296,5 +296,5 @@ public static class TextureGenerator
     private static byte Luminance(SKColor c) =>
         (byte)Math.Clamp((c.Red * 299 + c.Green * 587 + c.Blue * 114) / 1000, 0, 255);
 
-    private static Newtonsoft.Json.JsonTextWriter? _dummy;
+    private static Newtonsoft.Json.JsonWriter? _dummy;
 }

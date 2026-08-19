@@ -6,10 +6,10 @@ namespace ingot.Core.Behaviour.Recipe;
 
 internal static class RecipeCompileHelper
 {
-    internal static (StringWriter StringWriter, JsonTextWriter Writer) CreateWriter()
+    internal static (StringWriter StringWriter, JsonWriter Writer) CreateWriter()
     {
         StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,

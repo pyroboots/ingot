@@ -35,7 +35,7 @@ public record IntRange : ICompilableFragment
     }
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (Min == Max)
             writer.WriteValue(Min);

@@ -66,14 +66,14 @@ public abstract class BlockPermutation : ITraitable
     /// Compiles the <typeparamref name="TBlockPermutation"/> to JSON
     /// </summary>
     /// <typeparam name="TBlockPermutation">The type class block permutation to compile</typeparam>
-    public static void Compile<TBlockPermutation>(ref JsonTextWriter writer) where TBlockPermutation : BlockPermutation => Compile(typeof(TBlockPermutation), ref writer);
+    public static void Compile<TBlockPermutation>(ref JsonWriter writer) where TBlockPermutation : BlockPermutation => Compile(typeof(TBlockPermutation), ref writer);
 
     /// <summary>
     /// Compiles the <see cref="BlockPermutation"/> (as <paramref name="tBlockPermutation"/>) to JSON
     /// </summary>
     /// <param name="tBlockPermutation">Concrete type of <see cref="BlockPermutation"/></param>
     /// <param name="writer">JSON source stream to write to</param>
-    public static void Compile(Type tBlockPermutation, ref JsonTextWriter writer)
+    public static void Compile(Type tBlockPermutation, ref JsonWriter writer)
     {
         BlockPermutation permutation = (BlockPermutation)Activator.CreateInstance(tBlockPermutation)!;
         CompileFromInstance(permutation, ref writer);
@@ -86,11 +86,11 @@ public abstract class BlockPermutation : ITraitable
     /// <param name="permutation">Instance to compile</param>
     /// <param name="writer">JSON source stream to write to</param>
     /// <returns>Compiled JSON</returns>
-    public static void CompileFromInstance(BlockPermutation permutation, ref JsonTextWriter writer)
+    public static void CompileFromInstance(BlockPermutation permutation, ref JsonWriter writer)
     {
         if (permutation.MaterialInstances is not null)
         {
-            JsonTextWriter? warnWriter = null;
+            JsonWriter? warnWriter = null;
             TextureAutoRegistration.RegisterMaterialInstances(permutation.MaterialInstances.Value, ref warnWriter);
         }
 

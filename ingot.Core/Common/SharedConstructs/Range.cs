@@ -17,7 +17,7 @@ public class Range : ICompilableFragment
     public required float Max;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (Max < Min) throw new ArgumentOutOfRangeException(nameof(Max));
         

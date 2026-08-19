@@ -41,7 +41,7 @@ public class BooleanEntityProperty : IEntityProperty
     public bool ClientSync { get; set; } = true;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Object("", () =>
@@ -75,7 +75,7 @@ public class EnumEntityProperty : IEntityProperty
     public bool ClientSync { get; set; } = true;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (Values.Contains(Default) == false)
             throw new InvalidEnumArgumentException($"value {Default} is not present in enum ({string.Join(',', Values)})");
@@ -118,7 +118,7 @@ public class FloatEntityProperty : IEntityProperty
     public bool ClientSync { get; set; } = true;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (Default > Max || Default < Min)
             throw new ArgumentOutOfRangeException($"value {Default} must between the range {Max} and {Min}");
@@ -161,7 +161,7 @@ public class IntEntityProperty : IEntityProperty
     public bool ClientSync { get; set; } = true;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (Default > Max || Default < Min)
             throw new ArgumentOutOfRangeException($"value {Default} must between the range {Max} and {Min}");

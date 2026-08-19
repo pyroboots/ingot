@@ -549,7 +549,7 @@ public class ResourcePack
         }
 
         using StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,
@@ -645,7 +645,7 @@ public class ResourcePack
         EmitSoundFiles(dir);
 
         using StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,
@@ -815,7 +815,7 @@ public class ResourcePack
         }
 
         using StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,
@@ -1036,9 +1036,12 @@ public class ResourcePack
 
         using (StringWriter sw = new())
         {
-            JsonTextWriter w = new(sw);
-            w.Formatting = Formatting.Indented;
-            w.Indentation = 4;
+            JsonWriter w = new JsonTextWriter(sw)
+            {
+                Formatting = Formatting.Indented,
+                Indentation = 4,
+            };
+            
 
             JsonHelper json = new(ref w);
 

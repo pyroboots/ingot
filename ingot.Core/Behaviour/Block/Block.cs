@@ -138,9 +138,11 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
-        JsonTextWriter w = new(sw);
-        w.Formatting = Formatting.Indented;
-        w.Indentation = 4;
+        JsonWriter w = new JsonTextWriter(sw)
+        {
+            Formatting = Formatting.Indented,
+            Indentation = 4,
+        };
         JsonHelper json = new(ref w);
 
         w.WriteStartObject();

@@ -95,9 +95,12 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable, ITrai
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
-        JsonTextWriter w = new(sw);
-        w.Formatting = Formatting.Indented;
-        w.Indentation = 4;
+        JsonWriter w = new JsonTextWriter(sw)
+        {
+            Formatting = Formatting.Indented, 
+            Indentation = 4,
+        };
+        
 
         JsonHelper json = new(ref w);
 

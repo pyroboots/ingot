@@ -310,7 +310,7 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,
@@ -389,7 +389,7 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         return sw.ToString();
     }
 
-    private static void TryRegisterDefaultTexture(ClientEntity inst, ref JsonTextWriter w)
+    private static void TryRegisterDefaultTexture(ClientEntity inst, ref JsonWriter w)
     {
         if (CompilerState.CurrentPack is null || string.IsNullOrWhiteSpace(inst.DefaultTexturePath))
             return;
@@ -409,7 +409,7 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         if (string.IsNullOrWhiteSpace(relative))
             return;
 
-        JsonTextWriter? warnWriter = w;
+        JsonWriter? warnWriter = w;
         ResourcePack rp = CompilerState.CurrentPack.ResourcePack;
         if (rp.TryAddEntityTexture(relative, inst.DefaultTexturePath))
             CompilerState.Info($"auto-registered entity texture '{relative}'");
@@ -432,13 +432,13 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
 
             if (string.IsNullOrEmpty(value))
             {
-                JsonTextWriter? dummy = null;
+                JsonWriter? dummy = null;
                 CompilerState.Warn(ref dummy, $"client entity short-name '{key}' has an empty value (member {entry.Key})");
             }
 
             if (!result.TryAdd(key, value))
             {
-                JsonTextWriter? dummy = null;
+                JsonWriter? dummy = null;
                 CompilerState.Warn(ref dummy, $"duplicate client entity short-name '{key}' from member {entry.Key}; keeping first value");
             }
         }
@@ -481,7 +481,7 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         });
     }
 
-    private static void WriteScripts(JsonHelper json, JsonTextWriter w, ClientEntityScripts scripts)
+    private static void WriteScripts(JsonHelper json, JsonWriter w, ClientEntityScripts scripts)
     {
         json.Object("scripts", () =>
         {

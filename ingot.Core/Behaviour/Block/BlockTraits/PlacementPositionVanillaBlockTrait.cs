@@ -42,7 +42,7 @@ public class PlacementPositionVanillaBlockTrait : IVanillaBlockTrait
     ];
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (EnabledStates.Length == 0)
             throw new ArgumentException("EnabledStates must contain at least one state", nameof(EnabledStates));

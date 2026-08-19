@@ -9,7 +9,7 @@ internal static class TextureAutoRegistration
     public static bool IsCustomTextureKey(string key) =>
         !string.IsNullOrWhiteSpace(key) && !key.Contains(':');
 
-    public static void RegisterMaterialInstances(MaterialInstances instances, ref JsonTextWriter? warnWriter)
+    public static void RegisterMaterialInstances(MaterialInstances instances, ref JsonWriter? warnWriter)
     {
         if (CompilerState.CurrentPack is null)
             return;
@@ -39,7 +39,7 @@ internal static class TextureAutoRegistration
         }
     }
 
-    public static void RegisterItemTexture(string key, string? sourcePath, ref JsonTextWriter? warnWriter)
+    public static void RegisterItemTexture(string key, string? sourcePath, ref JsonWriter? warnWriter)
     {
         if (CompilerState.CurrentPack is null || string.IsNullOrWhiteSpace(sourcePath) || !IsCustomTextureKey(key))
             return;

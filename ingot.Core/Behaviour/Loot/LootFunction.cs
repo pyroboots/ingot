@@ -19,10 +19,10 @@ public abstract class LootFunction : ICompilableFragment
     /// <summary>
     /// Writes function-specific parameters
     /// </summary>
-    protected abstract void CompileParameters(ref JsonTextWriter writer);
+    protected abstract void CompileParameters(ref JsonWriter writer);
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
 
@@ -47,7 +47,7 @@ public class SetCount : LootFunction
     public override string FunctionName => "set_count";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("count", Count);
@@ -99,7 +99,7 @@ public class ExplorationMap : LootFunction
     public override string FunctionName => "exploration_map";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("destination", Enum.GetName(Destination)!.ToLower());
@@ -120,7 +120,7 @@ public class LootingEnchant : LootFunction
     public override string FunctionName => "looting_enchant";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("count", Count);
@@ -141,7 +141,7 @@ public class RandomAuxiliaryValue : LootFunction
     public override string FunctionName => "random_aux_value";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("values", Values);
@@ -166,7 +166,7 @@ public class RandomBlockState : LootFunction
     public override string FunctionName => "random_block_state";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("values", Values);
@@ -184,7 +184,7 @@ public class RandomDye : LootFunction
 
     // has no parameters, its a tag
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer) { }
+    protected override void CompileParameters(ref JsonWriter writer) { }
 }
 
 /// <summary>
@@ -201,7 +201,7 @@ public class SetActorId : LootFunction
     public override string FunctionName => "set_actor_id";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("id", Identifier);
@@ -232,7 +232,7 @@ public class SetBookContents : LootFunction
     public override string FunctionName => "set_book_contents";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("author", Author);
@@ -255,7 +255,7 @@ public class SetDamage : LootFunction
     public override string FunctionName => "set_damage";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("damage", Damage);
@@ -276,7 +276,7 @@ public class SetLore : LootFunction
     public override string FunctionName => "set_lore";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("lore", Lore);
@@ -297,7 +297,7 @@ public class SetName : LootFunction
     public override string FunctionName => "set_name";
 
     /// <inheritdoc/>
-    protected override void CompileParameters(ref JsonTextWriter writer)
+    protected override void CompileParameters(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("name", Name);

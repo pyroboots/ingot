@@ -54,7 +54,7 @@ public class Version : ICompilableFragment, IComparable<Version>
     public int[] AsArray() => new[] { Major, Minor, Patch };
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         writer.WriteStartArray();
         writer.WriteValue(Major);

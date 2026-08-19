@@ -19,6 +19,16 @@ So a version with 2 consecutive documentation updates without a release would us
 
 ## Versions
 
+### `1.2.0-s1` - `JsonTextWriter -> JsonWriter + CompilableFragmentJsonConverter`
+
+**Classification:** `staging`
+
+**Changes:**
+
+* replaced all JsonTextWriters with JsonWriter
+* added CompilableFragmentJsonConverter as a drop in bridge between the current fragment system and the planned JsonConverter system
+* in favour of moving towards using the more versatile `JsonConverter` system, theres some tidying up that needs to be done around the codebase first to make planned additions possible
+
 ### `1.2.0` - `json + IPack fixes`
 
 **Classification:** `minor`
