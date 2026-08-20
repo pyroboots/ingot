@@ -19,6 +19,17 @@ So a version with 2 consecutive documentation updates without a release would us
 
 ## Versions
 
+### `1.2.0-e1a1` - `TraitGeneratorV2 oneOf resolver`
+
+**Classification:** `staging + accumulating`
+
+**Changes:**
+
+* TraitGeneratorV2 now resolves oneOf paths to Either<> objects
+* added an extra Either<> overflow for 3 valid types
+* removed BlockPermutationDescriptor in favor of unified BlockTypeDescriptor
+
+
 ### `1.2.0-s2` - `Either object for JSON loose typing`
 
 **Classification:** `staging`
