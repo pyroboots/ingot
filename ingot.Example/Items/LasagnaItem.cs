@@ -22,15 +22,15 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
 
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    Identifier IFood.UsingConvertsTo => new("minecraft:bowl");
+    Either<string, Dictionary<string, string>> IFood.UsingConvertsTo => "minecraft:bowl";
     
     string IUseAnimation.Value => "eat";
     float IUseModifiers.MovementModifier => 0.35f;
     float IUseModifiers.UseDuration => 1.6f;
-    string IUseModifiers.StartUsing => IUseModifiers.StartUsing_Always;
+    string IUseModifiers.StartUsing => IUseModifiers.Startusing_Always;
     [IngotExclude]
     string IUseModifiers.StartSound => null;
     
-    string IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    Identifier IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }

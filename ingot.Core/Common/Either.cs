@@ -115,7 +115,7 @@ public class Either<T1, T2> : Either
 public class Either<T1, T2, T3> : Either
 {
     /// <summary/>
-    public Either(object value) : base(value, typeof(T1), typeof(T2)) {}
+    public Either(object value) : base(value, typeof(T1), typeof(T2), typeof(T3)) {}
 
     /// <summary>
     /// Wraps a <typeparamref name="T1"/> value.
@@ -128,7 +128,34 @@ public class Either<T1, T2, T3> : Either
     public static implicit operator Either<T1, T2, T3>(T2 value) => new(value!);
     
     /// <summary>
-    /// Wraps a <typeparamref name="T2"/> value.
+    /// Wraps a <typeparamref name="T3"/> value.
     /// </summary>
     public static implicit operator Either<T1, T2, T3>(T3 value) => new(value!);
+}
+
+/// <inheritdoc/>
+public class Either<T1, T2, T3, T4> : Either
+{
+    /// <summary/>
+    public Either(object value) : base(value, typeof(T1), typeof(T2), typeof(T3), typeof(T4)) {}
+
+    /// <summary>
+    /// Wraps a <typeparamref name="T1"/> value.
+    /// </summary>
+    public static implicit operator Either<T1, T2, T3, T4>(T1 value) => new(value!);
+
+    /// <summary>
+    /// Wraps a <typeparamref name="T2"/> value.
+    /// </summary>
+    public static implicit operator Either<T1, T2, T3, T4>(T2 value) => new(value!);
+    
+    /// <summary>
+    /// Wraps a <typeparamref name="T3"/> value.
+    /// </summary>
+    public static implicit operator Either<T1, T2, T3, T4>(T3 value) => new(value!);
+    
+    /// <summary>
+    /// Wraps a <typeparamref name="T4"/> value.
+    /// </summary>
+    public static implicit operator Either<T1, T2, T3, T4>(T4 value) => new(value!);
 }

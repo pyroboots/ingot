@@ -40,7 +40,7 @@ public interface INavigationWalk : IEntityTrait
     /// List of block descriptors that the pathfinder should avoid. Items can be block identifier strings or objects with name/tags properties.
     /// </summary>
     [TraitProperty]
-    public virtual Either<Identifier, BlockPermutationDescriptor>[]? BlocksToAvoid => null;
+    public virtual Either<Identifier, BlockTypeDescriptor>[]? BlocksToAvoid => null;
 
     /// <summary>
     /// Tells the pathfinder whether or not it can jump out of water (like a dolphin)
