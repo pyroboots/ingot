@@ -19,6 +19,17 @@ So a version with 2 consecutive documentation updates without a release would us
 
 ## Versions
 
+### `1.2.1` - `particle textures now register to correct dir`
+
+**Classification:** `patch`
+
+**Name:** `LushShelf`
+
+**Changes:**
+
+* particle textures used to be emitted to `textures/particles` which was incorrect according to https://wiki.bedrock.dev/documentation/pack-structure
+* particle textures now emit to `textures/particle`
+
 ### `1.2.0-e1a1` - `TraitGeneratorV2 oneOf resolver`
 
 **Classification:** `staging + accumulating`
@@ -55,6 +66,8 @@ So a version with 2 consecutive documentation updates without a release would us
 **Classification:** `minor`
 
 **Name:** `CursedNautilus`
+
+**Changes:**
 
 * added IdentifierJsonConverter to convert Identifiers to json - small step to moving away from ICompilableFragments
 * added IPack.Configure

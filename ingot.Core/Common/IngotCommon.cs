@@ -10,7 +10,7 @@ public static class IngotCommon
     /// <summary>
     /// Current ingot version
     /// </summary>
-    public static readonly string IngotVersion = "1.2.0";
+    public static readonly string IngotVersion = "1.2.1";
 
     /// <summary>
     /// Writes the ingot version and name to the console at the start of compilation

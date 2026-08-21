@@ -969,7 +969,7 @@ public class ResourcePack
     {
         CompilerState.Push("particle textures");
 
-        string texturesRoot = Path.Combine(outputDir, "textures", "particles");
+        string texturesRoot = Path.Combine(outputDir, "textures", "particle");
         Directory.CreateDirectory(texturesRoot);
 
         int c = 0;
@@ -991,7 +991,7 @@ public class ResourcePack
 
             File.Copy(source.SourcePath, targetFull, overwrite: true);
             CompilerState.Info(
-                $"({c}/{_particleTextureSources.Count}) registered particle texture '{key}' -> textures/particles/{rpRelative}.png");
+                $"({c}/{_particleTextureSources.Count}) registered particle texture '{key}' -> textures/particle/{rpRelative}.png");
         }
 
         CompilerState.Info($"wrote {_particleTextureSources.Count} particle texture(s)");
