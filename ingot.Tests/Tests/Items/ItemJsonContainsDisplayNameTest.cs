@@ -1,6 +1,5 @@
-using ingot.Core.Behaviour;
-using ingot.Core.Behaviour.Item;
 using ingot.Tests.Content.Items;
+using ingot.Tests.Support;
 
 namespace ingot.Tests.Items;
 
@@ -9,7 +8,7 @@ public class ItemJsonContainsDisplayNameTest
     [Fact]
     public void Compile_ItemJsonContainsDisplayName()
     {
-        string json = Item.Compile(typeof(EquipmentTestItem));
+        string json = CompileTestHelper.CompileItemJson<EquipmentTestItem>();
         Assert.Contains("\"value\": \"Equipment Item\"", json);
     }
 }

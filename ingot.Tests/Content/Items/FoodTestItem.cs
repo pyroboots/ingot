@@ -2,6 +2,7 @@ using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.Common.SharedConstructs;
+using ingot.Core.Resource;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
@@ -13,8 +14,8 @@ internal class FoodTestItem : Item, IFood, IUseAnimation, IUseModifiers
 {
     public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => new("test:food_item");
-    public override string Texture => "food_item";
-    public override string? TexturePath => FixturePaths.Resolve("test_item.png");
+    public override string Texture =>
+        new TextureReference<FoodTestItem>(FixturePaths.Resolve("test_item.png"), "food_item");
     public override string DisplayName => "Food Item";
 
     int IFood.Nutrition => 4;

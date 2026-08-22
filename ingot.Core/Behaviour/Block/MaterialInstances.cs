@@ -145,6 +145,7 @@ public struct MaterialInstance : ICompilableFragment
 /// <summary>
 /// Texture and material configuration for the faces of a <see cref="Block"/>
 /// </summary>
+[JsonConverter(typeof(CompilableFragmentJsonConverter<MaterialInstances>))]
 public struct MaterialInstances : ICompilableFragment
 {
     /// <summary>
