@@ -9,6 +9,7 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
+using ingot.Core.Resource;
 using ingot.Core.Scripting;
 
 using Newtonsoft.Json;
@@ -337,7 +338,7 @@ public class Pack
     /// </summary>
     public Pack AddBlockTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddBlockTexture(key, sourcePngPath, rpName);
+        ResourcePack.Textures.AddBlockTexture(key, sourcePngPath, rpName);
         return this;
     }
 
@@ -346,7 +347,7 @@ public class Pack
     /// </summary>
     public Pack AddItemTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddItemTexture(key, sourcePngPath, rpName);
+        ResourcePack.Textures.AddItemTexture(key, sourcePngPath, rpName);
         return this;
     }
 
@@ -360,7 +361,7 @@ public class Pack
         string? rpName = null,
         string modelsSubdir = "blocks")
     {
-        ResourcePack.AddGeometry(identifier, sourceGeoJsonPath, rpName, modelsSubdir);
+        ResourcePack.Models.Add(identifier, sourceGeoJsonPath, rpName, modelsSubdir);
         return this;
     }
 
@@ -369,7 +370,7 @@ public class Pack
     /// </summary>
     public Pack AddEntityGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null)
     {
-        ResourcePack.AddEntityGeometry(identifier, sourceGeoJsonPath, rpName);
+        ResourcePack.Models.AddEntity(identifier, sourceGeoJsonPath, rpName);
         return this;
     }
 
@@ -378,7 +379,7 @@ public class Pack
     /// </summary>
     public Pack AddAnimation(string sourceJsonPath, string rpName)
     {
-        ResourcePack.AddAnimation(sourceJsonPath, rpName);
+        ResourcePack.Animations.Add(sourceJsonPath, rpName);
         return this;
     }
 
@@ -393,7 +394,7 @@ public class Pack
     /// Defaults to the name segment of <paramref name="identifier"/>.</param>
     public Pack AddParticle(string identifier, string sourceJsonPath, string? rpName = null)
     {
-        ResourcePack.AddParticle(identifier, sourceJsonPath, rpName);
+        ResourcePack.Particles.Add(identifier, sourceJsonPath, rpName);
         return this;
     }
 
@@ -403,7 +404,7 @@ public class Pack
     /// </summary>
     public Pack AddParticleTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddParticleTexture(key, sourcePngPath, rpName);
+        ResourcePack.Textures.AddParticleTexture(key, sourcePngPath, rpName);
         return this;
     }
 
@@ -412,7 +413,7 @@ public class Pack
     /// </summary>
     public Pack AddEntityTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddEntityTexture(key, sourcePngPath, rpName);
+        ResourcePack.Textures.AddEntityTexture(key, sourcePngPath, rpName);
         return this;
     }
 
@@ -479,7 +480,7 @@ public class Pack
         float? maxDistance = null,
         float? minDistance = null)
     {
-        ResourcePack.RegisterSoundDefinition(soundId, sounds, category, maxDistance, minDistance);
+        ResourcePack.SoundDefinitions.Add(soundId, sounds, category, maxDistance, minDistance);
         return this;
     }
 

@@ -3,6 +3,7 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.Common.SharedConstructs;
 using ingot.Core.Resource;
+using ingot.Core.Resource.Referencers;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 using ingot.Example.Recipes;

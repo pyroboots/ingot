@@ -1,6 +1,6 @@
 using ingot.Core.Behaviour.Entity;
 
-namespace ingot.Core.Resource;
+namespace ingot.Core.Resource.Referencers;
 
 /// <summary>
 /// Represents an entity render controller

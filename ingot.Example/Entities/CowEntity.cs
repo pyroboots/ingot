@@ -2,6 +2,7 @@ using ingot.Core;
 using ingot.Core.Behaviour.Entity;
 using ingot.Core.Common;
 using ingot.Core.Resource;
+using ingot.Core.Resource.Referencers;
 using ingot.Core.TraitSystem.Traits.Entity;
 
 using Version = ingot.Core.Common.Version;

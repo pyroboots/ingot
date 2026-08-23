@@ -2,6 +2,7 @@ using ingot.Core.Behaviour.Block.BlockTraits;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
 using ingot.Core.Resource;
+using ingot.Core.Resource.Referencers;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
 

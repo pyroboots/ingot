@@ -1,6 +1,7 @@
 using System.Reflection;
 
 using ingot.Core.Common;
+using ingot.Core.Resource;
 
 using Newtonsoft.Json;
 
@@ -411,7 +412,7 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
 
         JsonWriter? warnWriter = w;
         ResourcePack rp = CompilerState.CurrentPack.ResourcePack;
-        if (rp.TryAddEntityTexture(relative, inst.DefaultTexturePath))
+        if (rp.Textures.TryAddEntityTexture(relative, inst.DefaultTexturePath))
             CompilerState.Info($"auto-registered entity texture '{relative}'");
         else
             CompilerState.Warn(ref warnWriter, $"entity texture '{relative}' was not auto-registered because it is already defined on the resource pack");

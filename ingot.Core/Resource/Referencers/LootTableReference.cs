@@ -1,6 +1,6 @@
 using ingot.Core.Behaviour.Loot;
 
-namespace ingot.Core.Resource;
+namespace ingot.Core.Resource.Referencers;
 
 /// <summary>
 /// Represents a loot table

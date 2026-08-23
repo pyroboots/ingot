@@ -1,12 +1,10 @@
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Behaviour.Entity;
-using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace ingot.Core.Resource;
+namespace ingot.Core.Resource.Referencers;
 
 /// <summary>
 /// Represents a Minecraft geometry
@@ -32,13 +30,13 @@ public class GeometryReference<TParent> where TParent : class, IIdentifiable, IT
         _id = (string?)json.SelectToken("['minecraft:geometry'][0].description.identifier") 
               ?? throw new Exception("could not extract geometry id from source json");
         
-        if (pack.ResourcePack.GeometrySources.ContainsKey(_id))
+        if (pack.ResourcePack.Models.Contains(_id))
             return;
         
         if (typeof(TParent).IsAssignableTo(typeof(Entity)))
-            pack.ResourcePack.AddEntityGeometry(_id, path);
+            pack.ResourcePack.Models.AddEntity(_id, path);
         else if (typeof(TParent).IsAssignableTo(typeof(Block)))
-            pack.ResourcePack.AddGeometry(_id, path, modelsSubdir: "blocks");
+            pack.ResourcePack.Models.Add(_id, path, modelsSubdir: "blocks");
         else
             throw new ArgumentException("TParent must be Entity or Block");
         

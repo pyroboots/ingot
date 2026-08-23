@@ -1,6 +1,6 @@
 using ingot.Core.Behaviour.Recipe;
 
-namespace ingot.Core.Resource;
+namespace ingot.Core.Resource.Referencers;
 
 /// <summary>
 /// Represents a recipe reference

@@ -3,7 +3,7 @@ using ingot.Core.Behaviour.Entity;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 
-namespace ingot.Core.Resource;
+namespace ingot.Core.Resource.Referencers;
 
 /// <summary>
 /// Represents a Minecraft texture
@@ -31,11 +31,11 @@ public class TextureReference<TParent> where TParent : class, IIdentifiable, ITr
 
         bool registered;
         if (typeof(TParent).IsAssignableTo(typeof(Entity)))
-            registered = pack.ResourcePack.TryAddEntityTexture(_id, path);
+            registered = pack.ResourcePack.Textures.TryAddEntityTexture(_id, path);
         else if (typeof(TParent).IsAssignableTo(typeof(Item)))
-            registered = pack.ResourcePack.TryAddItemTexture(_id, path);
+            registered = pack.ResourcePack.Textures.TryAddItemTexture(_id, path);
         else if (typeof(TParent).IsAssignableTo(typeof(Block)))
-            registered = pack.ResourcePack.TryAddBlockTexture(_id, path);
+            registered = pack.ResourcePack.Textures.TryAddBlockTexture(_id, path);
         else
             throw new ArgumentException("TParent must be Entity, Item, or Block");
         

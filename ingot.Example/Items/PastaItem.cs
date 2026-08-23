@@ -2,6 +2,7 @@ using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.Resource;
+using ingot.Core.Resource.Referencers;
 
 namespace ingot.Example.Items;
 
