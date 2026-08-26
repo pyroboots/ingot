@@ -56,6 +56,8 @@ public class Either
     /// <summary/>
     public Either(object value, params Type[] validTypes)
     {
+        ArgumentNullException.ThrowIfNull(value);
+
         Type type = value.GetType();
         if (validTypes.All(t => type.IsAssignableTo(t) == false))
             throw new ArgumentException($"value must be one of the allowed types: {string.Join(' ', validTypes.Select(t => t.Name))}");
@@ -84,6 +86,7 @@ public class Either
         get => _value!;
         set
         {
+            ArgumentNullException.ThrowIfNull(value);
             if (ValidTypes.Contains(value.GetType()) == false)
                 throw new ArgumentException(
                     $"value must be one of the allowed types: {string.Join(' ', ValidTypes.Select(t => t.Name))}");
@@ -103,12 +106,12 @@ public class Either<T1, T2> : Either
     /// <summary>
     /// Wraps a <typeparamref name="T1"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2>(T1 value) => new(value!);
+    public static implicit operator Either<T1, T2>(T1 value) => value is null ? null! : new(value);
 
     /// <summary>
     /// Wraps a <typeparamref name="T2"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2>(T2 value) => new(value!);
+    public static implicit operator Either<T1, T2>(T2 value) => value is null ? null! : new(value);
 }
 
 /// <inheritdoc/>
@@ -120,17 +123,17 @@ public class Either<T1, T2, T3> : Either
     /// <summary>
     /// Wraps a <typeparamref name="T1"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2, T3>(T1 value) => new(value!);
+    public static implicit operator Either<T1, T2, T3>(T1 value) => value is null ? null! : new(value);
 
     /// <summary>
     /// Wraps a <typeparamref name="T2"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2, T3>(T2 value) => new(value!);
+    public static implicit operator Either<T1, T2, T3>(T2 value) => value is null ? null! : new(value);
     
     /// <summary>
     /// Wraps a <typeparamref name="T3"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2, T3>(T3 value) => new(value!);
+    public static implicit operator Either<T1, T2, T3>(T3 value) => value is null ? null! : new(value);
 }
 
 /// <inheritdoc/>
@@ -142,20 +145,20 @@ public class Either<T1, T2, T3, T4> : Either
     /// <summary>
     /// Wraps a <typeparamref name="T1"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2, T3, T4>(T1 value) => new(value!);
+    public static implicit operator Either<T1, T2, T3, T4>(T1 value) => value is null ? null! : new(value);
 
     /// <summary>
     /// Wraps a <typeparamref name="T2"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2, T3, T4>(T2 value) => new(value!);
+    public static implicit operator Either<T1, T2, T3, T4>(T2 value) => value is null ? null! : new(value);
     
     /// <summary>
     /// Wraps a <typeparamref name="T3"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2, T3, T4>(T3 value) => new(value!);
+    public static implicit operator Either<T1, T2, T3, T4>(T3 value) => value is null ? null! : new(value);
     
     /// <summary>
     /// Wraps a <typeparamref name="T4"/> value.
     /// </summary>
-    public static implicit operator Either<T1, T2, T3, T4>(T4 value) => new(value!);
+    public static implicit operator Either<T1, T2, T3, T4>(T4 value) => value is null ? null! : new(value);
 }

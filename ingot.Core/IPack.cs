@@ -3,6 +3,7 @@ using ingot.Core.Behaviour.Entity;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
+using ingot.Core.Resource;
 using ingot.Core.Scripting;
 
 using Version = ingot.Core.Common.Version;
@@ -77,18 +78,11 @@ public interface IPack
     /// Homogeneous type array of <see cref="LootTable"/>s
     /// </summary>
     public Type[] LootTables => [];
-
-    /// <summary>
-    /// Represents a sound definition in <c>sound_definitions.json</c>
-    /// </summary>
-    /// <param name="SoundId">ID of the sound</param>
-    /// <param name="Sounds">Array of sounds this definition can play</param>
-    /// <param name="Category">Sound category</param>
-    public record SoundDefinition(string SoundId, Sound[] Sounds, string Category = "neutral");
+    
     /// <summary>
     /// Array of sound definitions to register in <c>sound_definitions.json</c>
     /// </summary>
-    public SoundDefinition[] SoundDefinitions => [];
+    public SoundDefinitions.SoundDefinition[] SoundDefinitions => [];
 
     /// <summary>
     /// Represents a Minecraft function
@@ -167,8 +161,8 @@ public interface IPack
         ValidateHomogeneous<IRecipe>(iPack.Recipes, "Recipe", t => pack.AddRecipe(t));
         ValidateHomogeneous<LootTable>(iPack.LootTables, nameof(LootTable), t => pack.AddLootTable(t));
 
-        foreach (SoundDefinition def in iPack.SoundDefinitions)
-            pack.RegisterSoundDefinition(def.SoundId, def.Sounds, def.Category);
+        foreach (SoundDefinitions.SoundDefinition def in iPack.SoundDefinitions)
+            pack.RegisterSoundDefinition(def.Identifier, def.Sounds, def.Category);
         
         foreach (McFunction f in iPack.Functions)
             pack.AddFunction(f.Identifier, f.SourceFile, f.Service);

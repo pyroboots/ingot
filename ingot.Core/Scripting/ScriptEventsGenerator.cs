@@ -29,6 +29,20 @@ internal static class ScriptEventsGenerator
 
         sb.AppendLine();
 
+        List<(string EventName, string Body)> resolved = [];
+        List<string> hoistedImports = [];
+        foreach (ScriptEventBinding binding in events.Bindings)
+        {
+            (IReadOnlyList<string> imports, string body) = ScriptImportHoist.Split(binding.Handler.ResolveBody());
+            hoistedImports.AddRange(imports);
+            resolved.Add((binding.ScriptApiEvent, body));
+        }
+
+        foreach (string import in hoistedImports.Distinct(StringComparer.Ordinal))
+            sb.AppendLine(import);
+        if (hoistedImports.Count > 0)
+            sb.AppendLine();
+
         string suffix = events.ComponentKind == ScriptComponentKind.Block
             ? "block_events_component"
             : "item_events_component";
@@ -42,11 +56,8 @@ internal static class ScriptEventsGenerator
 
         sb.AppendLine($"const {codeComponentName} = {{");
 
-        foreach (ScriptEventBinding binding in events.Bindings)
-        {
-            string body = binding.Handler.ResolveBody();
-            sb.AppendLine(ComponentEvent(binding.ScriptApiEvent, body));
-        }
+        foreach ((string eventName, string body) in resolved)
+            sb.AppendLine(ComponentEvent(eventName, body));
 
         sb.AppendLine("};");
         sb.AppendLine();

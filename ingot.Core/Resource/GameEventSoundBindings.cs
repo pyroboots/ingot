@@ -112,7 +112,7 @@ public class GameEventSoundBindings
             get;
             set
             {
-                if (CompilerState.CurrentPack.ResourcePack.SoundDefinitionIds.Contains(value) == false)
+                if (CompilerState.CurrentPack?.ResourcePack.SoundDefinitionIds.Contains(value) == false)
                     CompilerState.Warn($"sound id {value} not present in sound definitions - ignore this warning if using a vanilla sound id");
                 field = value;
             }

@@ -7,6 +7,7 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
+using ingot.Core.Resource;
 using ingot.Core.TraitSystem;
 
 using Newtonsoft.Json;
@@ -75,6 +76,10 @@ public class BehaviourPack
     /// Dictionary of <c>.mcfunction</c>s by identifier and source file
     /// </summary>
     public Dictionary<string, string> Functions = new();
+    /// <summary>
+    /// Arbitrary extra files copied at caller-specified paths (Script API helper modules, ...).
+    /// </summary>
+    public ExtraFileManager ExtraFiles = new();
     
     /// <summary>
     /// Adds an entity to the pack
@@ -281,6 +286,8 @@ public class BehaviourPack
         CompilerState.Pop();
         CompilerState.Pop();
         #endregion
+
+        ResourcePackIo.CopyFiles(dir, ExtraFiles.EnumerateCopies(), "extra behaviour files");
 
         CompilerState.Pop();
     }

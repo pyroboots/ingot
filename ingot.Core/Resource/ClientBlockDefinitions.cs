@@ -132,12 +132,14 @@ public class ClientBlockDefinitions
                 continue;
 
 #pragma warning disable CS0618 // ResourceTexture is the blocks.json texture shortcut
-            Add(new ClientBlockDefinition
+            ClientBlockDefinition definition = new()
             {
                 Identifier = block.Identifier,
                 Sound = block.Sound,
-                Textures = block.ResourceTexture,
-            });
+            };
+            if (block.ResourceTexture is not null)
+                definition.Textures = block.ResourceTexture;
+            Add(definition);
 #pragma warning restore CS0618
         }
     }

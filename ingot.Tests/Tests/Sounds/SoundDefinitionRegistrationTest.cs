@@ -1,7 +1,11 @@
 using System.Text.Json;
 
 using ingot.Core;
+using ingot.Core.Resource;
 using ingot.Tests.Support;
+
+using Sound = ingot.Core.Resource.SoundDefinitions.SoundDefinition.Sound;
+using SoundCategory = ingot.Core.Resource.SoundDefinitions.SoundDefinition.SoundDefinitionCategory;
 
 namespace ingot.Tests.Sounds;
 
@@ -16,28 +20,28 @@ public class SoundDefinitionRegistrationTest
             .RegisterSoundDefinition(
                 "ambient.basalt_deltas.additions",
                 [
-                    Sound.Create(
+                    Sound.Reference(
                         "sounds/ambient/nether/basalt_deltas/basaltground1",
                         volume: 0.55f,
                         weight: 10,
                         is3D: false),
-                    Sound.Create(
+                    Sound.Reference(
                         "sounds/ambient/nether/basalt_deltas/click1",
                         volume: 0.19f,
                         weight: 20,
                         is3D: false),
                 ],
-                category: "ambient")
+                category: SoundCategory.Ambient)
             .RegisterSoundDefinition(
                 "ambient.basalt_deltas.loop",
                 [
-                    Sound.Create(
+                    Sound.Reference(
                         "sounds/ambient/nether/basalt_deltas/ambience",
                         volume: 4.0f,
                         is3D: false,
                         stream: true),
                 ],
-                category: "ambient",
+                category: SoundCategory.Ambient,
                 maxDistance: 64f,
                 minDistance: 8f)
             .Compile(output.Path, verbose: false);
@@ -90,30 +94,30 @@ public class SoundDefinitionRegistrationTest
                 "ambient.basalt_deltas.additions",
                 [
                     Sound.Create(
-                        "sounds/ambient/nether/basalt_deltas/basaltground1",
                         groundSource,
+                        "sounds/ambient/nether/basalt_deltas/basaltground1",
                         volume: 0.55f,
                         weight: 10,
                         is3D: false),
                     Sound.Create(
-                        "sounds/ambient/nether/basalt_deltas/click1",
                         clickSource,
+                        "sounds/ambient/nether/basalt_deltas/click1",
                         volume: 0.19f,
                         weight: 20,
                         is3D: false),
                 ],
-                category: "ambient")
+                category: SoundCategory.Ambient)
             .RegisterSoundDefinition(
                 "ambient.basalt_deltas.loop",
                 [
                     Sound.Create(
-                        "sounds/ambient/nether/basalt_deltas/ambience",
                         ambienceSource,
+                        "sounds/ambient/nether/basalt_deltas/ambience",
                         volume: 4.0f,
                         is3D: false,
                         stream: true),
                 ],
-                category: "ambient")
+                category: SoundCategory.Ambient)
             .Compile(output.Path, verbose: false);
 
         string groundTarget = Path.Combine(
@@ -144,6 +148,35 @@ public class SoundDefinitionRegistrationTest
     }
 
     [Fact]
+    public void Compile_PathWithoutNameAutoResolvesPackPathFromCategory()
+    {
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
+        string source = Path.Combine(output.Path, "toot.ogg");
+        File.WriteAllBytes(source, [0x4F, 0x67, 0x67, 0x53]);
+
+        PackTestBuilder.Create()
+            .RegisterSoundDefinition(
+                "example.toot",
+                [Sound.Create(source)],
+                category: SoundCategory.Block)
+            .Compile(output.Path, verbose: false);
+
+        string target = Path.Combine(output.Path, "rp", "sounds", "block", "toot.ogg");
+        Assert.True(File.Exists(target), $"expected {target}");
+
+        using JsonDocument doc = JsonDocument.Parse(
+            File.ReadAllText(Path.Combine(output.Path, "rp", "sounds", "sound_definitions.json")));
+        Assert.Equal(
+            "sounds/block/toot",
+            doc.RootElement
+                .GetProperty("sound_definitions")
+                .GetProperty("example.toot")
+                .GetProperty("sounds")[0]
+                .GetProperty("name")
+                .GetString());
+    }
+
+    [Fact]
     public void Compile_SameSoundSourceSharedAcrossDefinitionsCopiedOnce()
     {
         using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
@@ -153,12 +186,12 @@ public class SoundDefinitionRegistrationTest
         PackTestBuilder.Create()
             .RegisterSoundDefinition(
                 "example.a",
-                [Sound.Create("sounds/custom/shared", source)],
-                category: "neutral")
+                [Sound.Create(source, "sounds/custom/shared")],
+                category: SoundCategory.Neutral)
             .RegisterSoundDefinition(
                 "example.b",
-                [Sound.Create("sounds/custom/shared", source)],
-                category: "neutral")
+                [Sound.Create(source, "sounds/custom/shared")],
+                category: SoundCategory.Neutral)
             .Compile(output.Path, verbose: false);
 
         string target = Path.Combine(output.Path, "rp", "sounds", "custom", "shared.ogg");
@@ -176,8 +209,8 @@ public class SoundDefinitionRegistrationTest
             PackTestBuilder.Create()
                 .RegisterSoundDefinition(
                     "example.toot",
-                    [Sound.Create("sounds/trumpet", missing)],
-                    category: "neutral")
+                    [Sound.Create(missing, "sounds/trumpet")],
+                    category: SoundCategory.Neutral)
                 .Compile(output.Path, verbose: false));
 
         Assert.Contains("trumpet", ex.Message);
@@ -197,10 +230,10 @@ public class SoundDefinitionRegistrationTest
             PackTestBuilder.Create()
                 .RegisterSoundDefinition(
                     "example.a",
-                    [Sound.Create("sounds/custom/note", a)])
+                    [Sound.Create(a, "sounds/custom/note")])
                 .RegisterSoundDefinition(
                     "example.b",
-                    [Sound.Create("sounds/custom/note", b)])
+                    [Sound.Create(b, "sounds/custom/note")])
                 .Compile(output.Path, verbose: false));
 
         Assert.Contains("sounds/custom/note.ogg", ex.Message);
@@ -229,8 +262,8 @@ public class SoundDefinitionRegistrationTest
 
         Pack result = pack.RegisterSoundDefinition(
             "example.toot",
-            [Sound.Create("sounds/trumpet")],
-            category: "neutral");
+            [Sound.Reference("sounds/trumpet")],
+            category: SoundCategory.Neutral);
 
         Assert.Same(pack, result);
         Assert.Contains("example.toot", pack.ResourcePack.SoundDefinitionIds);
@@ -242,7 +275,7 @@ public class SoundDefinitionRegistrationTest
         Pack pack = PackTestBuilder.Create();
 
         ArgumentException ex = Assert.Throws<ArgumentException>(() =>
-            pack.RegisterSoundDefinition("", [Sound.Create("sounds/trumpet")]));
+            pack.RegisterSoundDefinition("", [Sound.Reference("sounds/trumpet")]));
         Assert.Equal("soundId", ex.ParamName);
     }
 
@@ -257,12 +290,12 @@ public class SoundDefinitionRegistrationTest
     }
 
     [Fact]
-    public void RegisterSoundDefinition_ThrowsWhenSoundNameEmpty()
+    public void RegisterSoundDefinition_ThrowsWhenPathAndNameEmpty()
     {
         Pack pack = PackTestBuilder.Create();
 
         ArgumentException ex = Assert.Throws<ArgumentException>(() =>
-            pack.RegisterSoundDefinition("example.toot", [new Sound { Name = "  " }]));
+            pack.RegisterSoundDefinition("example.toot", [new Sound("  ", "  ")]));
         Assert.Equal("sounds", ex.ParamName);
     }
 
@@ -272,8 +305,14 @@ public class SoundDefinitionRegistrationTest
         using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
 
         PackTestBuilder.Create()
-            .RegisterSoundDefinition("example.toot", [Sound.Create("sounds/old")], category: "block")
-            .RegisterSoundDefinition("example.toot", [Sound.Create("sounds/new")], category: "music")
+            .RegisterSoundDefinition(
+                "example.toot",
+                [Sound.Reference("sounds/old")],
+                category: SoundCategory.Block)
+            .RegisterSoundDefinition(
+                "example.toot",
+                [Sound.Reference("sounds/new")],
+                category: SoundCategory.Music)
             .Compile(output.Path, verbose: false);
 
         string path = Path.Combine(output.Path, "rp", "sounds", "sound_definitions.json");

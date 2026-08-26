@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace ingot.Core.Resource;
 
 /// <summary>
-/// Texture atlases, loose entity/particle PNGs, and flipbook definitions for a resource pack.
+/// Texture atlases, loose entity/particle/UI PNGs, and flipbook definitions for a resource pack.
 /// </summary>
 public class TextureManager(ResourcePack pack)
 {
@@ -28,11 +28,17 @@ public class TextureManager(ResourcePack pack)
 
     internal readonly Dictionary<string, TextureSource> EntityTextures = new();
     internal readonly Dictionary<string, TextureSource> ParticleTextures = new();
+    internal readonly Dictionary<string, TextureSource> UiTextures = new();
 
     /// <summary>
     /// Particle texture keys registered under <c>textures/particle/</c>.
     /// </summary>
     public IReadOnlyCollection<string> ParticleTextureKeys => ParticleTextures.Keys;
+
+    /// <summary>
+    /// UI texture keys registered under <c>textures/ui/</c>.
+    /// </summary>
+    public IReadOnlyCollection<string> UiTextureKeys => UiTextures.Keys;
 
     /// <summary>
     /// Entity texture keys registered under <c>textures/entity/</c>.
@@ -63,6 +69,13 @@ public class TextureManager(ResourcePack pack)
     public void AddParticleTexture(string key, string sourcePngPath, string? rpName = null) =>
         RegisterLooseTexture(ParticleTextures, key, sourcePngPath, rpName);
 
+    /// <summary>
+    /// Registers a UI texture copied under <c>textures/ui/</c>.
+    /// Reference it from JSON UI as <c>textures/ui/{rpName}</c> (no extension).
+    /// </summary>
+    public void AddUiTexture(string key, string sourcePngPath, string? rpName = null) =>
+        RegisterLooseTexture(UiTextures, key, sourcePngPath, rpName);
+
     internal bool TryAddBlockTexture(string key, string? sourcePngPath) =>
         BlockTextureAtlas.TryAdd(key, sourcePngPath);
 
@@ -77,6 +90,9 @@ public class TextureManager(ResourcePack pack)
 
     internal IEnumerable<ResourceCopy> EnumerateParticleCopies() =>
         EnumerateLooseCopies(ParticleTextures, "textures/particle", "particle texture");
+
+    internal IEnumerable<ResourceCopy> EnumerateUiCopies() =>
+        EnumerateLooseCopies(UiTextures, "textures/ui", "ui texture");
 
     private static void RegisterLooseTexture(
         Dictionary<string, TextureSource> sources,

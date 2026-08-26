@@ -60,6 +60,8 @@ public class ResourcePack
         Models = new();
         Animations = new();
         Particles = new();
+        Ui = new();
+        ExtraFiles = new();
         Texts = new();
         Splashes = new();
     }
@@ -97,6 +99,15 @@ public class ResourcePack
     /// </summary>
     public ParticleManager Particles;
     /// <summary>
+    /// JSON UI files copied under <c>ui/</c>, plus generated <c>_ui_defs.json</c>.
+    /// </summary>
+    public UiManager Ui;
+    /// <summary>
+    /// Arbitrary extra files copied at caller-specified paths (UI libraries, nineslice JSON, ...).
+    /// Copied last so they can overlay generated files such as a provided <c>ui/_ui_defs.json</c>.
+    /// </summary>
+    public ExtraFileManager ExtraFiles;
+    /// <summary>
     /// Language files under <c>texts/</c>.
     /// </summary>
     public LanguageDefinitions Texts;
@@ -133,6 +144,16 @@ public class ResourcePack
     /// Particle texture keys registered on this pack (under <c>textures/particle/</c>).
     /// </summary>
     public IReadOnlyCollection<string> ParticleTextureKeys => Textures.ParticleTextureKeys;
+
+    /// <summary>
+    /// UI file names registered on this pack (under <c>ui/</c>).
+    /// </summary>
+    public IReadOnlyCollection<string> UiIds => Ui.Names;
+
+    /// <summary>
+    /// UI texture keys registered on this pack (under <c>textures/ui/</c>).
+    /// </summary>
+    public IReadOnlyCollection<string> UiTextureKeys => Textures.UiTextureKeys;
 
     /// <summary>
     /// Adds a client entity definition to the resource pack.
@@ -216,6 +237,9 @@ public class ResourcePack
         ResourcePackIo.CopyFiles(dir, Animations.EnumerateCopies(), "animations");
         ResourcePackIo.CopyFiles(dir, Particles.EnumerateCopies(), "particles");
         ResourcePackIo.CopyFiles(dir, Textures.EnumerateParticleCopies(), "particle textures");
+        ResourcePackIo.CopyFiles(dir, Ui.EnumerateCopies(), "ui");
+        Ui.WriteUiDefs(dir);
+        ResourcePackIo.CopyFiles(dir, Textures.EnumerateUiCopies(), "ui textures");
 
         CompileClientEntities(dir);
 
@@ -261,6 +285,8 @@ public class ResourcePack
                 ? $"wrote sounds.json with {GameEventSoundBindings.EntitySounds.Count} entity sound mapping(s)"
                 : "wrote empty sounds.json");
 
+        ResourcePackIo.CopyFiles(dir, ExtraFiles.EnumerateCopies(), "extra resource files");
+
         CompilerState.Pop();
     }
 
@@ -279,6 +305,8 @@ public class ResourcePack
         Directory.CreateDirectory(Path.Combine(dir, "textures", "particle"));
         Directory.CreateDirectory(Path.Combine(dir, "textures", "particles"));
         Directory.CreateDirectory(Path.Combine(dir, "particles"));
+        Directory.CreateDirectory(Path.Combine(dir, "ui"));
+        Directory.CreateDirectory(Path.Combine(dir, "textures", "ui"));
         Directory.CreateDirectory(Path.Combine(dir, "sounds"));
         Directory.CreateDirectory(Path.Combine(dir, "texts"));
         CompilerState.Info("created folder structure");

@@ -1,4 +1,6 @@
 using ingot.Core;
+using ingot.Core.Behaviour.Block;
+using ingot.Core.Common;
 using ingot.Core.Scripting;
 using ingot.Tests.Content;
 using ingot.Tests.Content.Blocks;
@@ -120,6 +122,36 @@ public class ScriptServicesAndFromFileTest
     }
 
     [Fact]
+    public void Compile_BlockEventsFromFile_HoistsLeadingImports()
+    {
+        using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
+        string helperPath = Path.Combine(output.Path, "helper.js");
+        File.WriteAllText(helperPath, "export class Helper {}\n");
+        string handlerPath = Path.Combine(output.Path, "interact.js");
+        File.WriteAllText(handlerPath, """
+            import { Helper } from "../helper.js";
+
+            const helper = new Helper();
+            event.player.sendMessage("ok");
+            """);
+
+        Pack pack = PackTestBuilder.Create();
+        pack.BehaviourPack.AddBlockFromInstance(new ImportHoistTestBlock(handlerPath));
+        pack.ScriptsEnabled = true;
+        pack.AddScriptFile(helperPath);
+        pack.Compile(output.Path, verbose: false);
+
+        string script = File.ReadAllText(Path.Combine(output.Path, "bp", "scripts", "blocks", "test_import_hoist_block_events.js"));
+        int importIndex = script.IndexOf("import { Helper } from \"../helper.js\";", StringComparison.Ordinal);
+        int componentIndex = script.IndexOf("const TestImportHoistBlockBlockEventsComponent", StringComparison.Ordinal);
+        Assert.True(importIndex >= 0, "expected hoisted helper import");
+        Assert.True(componentIndex >= 0, "expected generated component");
+        Assert.True(importIndex < componentIndex, "helper import must sit at file scope");
+        Assert.Contains("const helper = new Helper();", script);
+        Assert.True(File.Exists(Path.Combine(output.Path, "bp", "scripts", "helper.js")));
+    }
+
+    [Fact]
     public void Compile_BlockEventsMissingTrait_WritesWarningToLog()
     {
         using TempOutputDirectory output = CompileTestHelper.CreateTempDirectory();
@@ -132,4 +164,22 @@ public class ScriptServicesAndFromFileTest
             Assert.Contains("requires trait ITick", log);
         }
     }
+}
+
+internal sealed class ImportHoistTestBlock(string handlerPath) : Block
+{
+    public override Identifier Identifier => new("test:import_hoist_block");
+
+    public override MaterialInstances MaterialInstances => new()
+    {
+        All = new MaterialInstance(
+            "import_hoist_block",
+            MaterialInstance.RenderMethods.Opaque,
+            FixturePaths.Resolve("test_block.png"))
+    };
+
+    public override BlockEvents? BlockEvents => new()
+    {
+        PlayerInteractEvent = ScriptHandler.FromFile(handlerPath)
+    };
 }
