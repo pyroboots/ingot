@@ -33,7 +33,7 @@ public interface IAgeable : IEntityTrait
     /// Event to fire when the entity grows up. Can be an event name string or an object with <c>event</c> / <c>target</c>.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic? GrowUp => null;
+    public virtual Either<string, Dictionary<string, string>>? GrowUp => null;
 
     /// <summary>
     /// List of conditions to meet so that the entity can be fed.

@@ -71,9 +71,12 @@ public abstract class LootTable : IConcreteCompilable<LootTable>, IIdentifiable
         }
 
         StringWriter sw = new();
-        JsonTextWriter w = new(sw);
-        w.Formatting = Formatting.Indented;
-        w.Indentation = 4;
+        JsonWriter w = new JsonTextWriter(sw)
+        {
+            Formatting = Formatting.Indented,
+            Indentation = 4,
+        };
+        
 
         JsonHelper json = new(ref w);
 
@@ -110,5 +113,5 @@ public abstract class LootTable : IConcreteCompilable<LootTable>, IIdentifiable
     /// </summary>
     public string RelativePath => Path.Combine(Reference, $"{Identifier.Name}.json");
 
-    private static JsonTextWriter? _dummyWriter;
+    private static JsonWriter? _dummyWriter;
 }

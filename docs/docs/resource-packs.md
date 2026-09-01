@@ -76,9 +76,14 @@ Key `Pack` members:
 - `AddAnimation(string sourceJsonPath, string rpName)` - animation JSON under `animations/{rpName}.json`.
 - `AddParticle(string identifier, string sourceJsonPath, string? rpName = null)` - register a particle effect JSON under `particles/`.
 - `AddParticleTexture(string key, string sourcePngPath, string? rpName = null)` - particle texture PNG under `textures/particles/`.
+- `AddUi(string sourceJsonPath, string? rpName = null, bool? includeInUiDefs = null)` - JSON UI under `ui/` (`.json` / `.jsonc`).
+- `AddUiTexture(string key, string sourcePngPath, string? rpName = null)` - UI texture PNG under `textures/ui/`.
+- `AddResourceFile(string sourcePath, string relativePath)` - copy any file into the resource pack at a caller-specified path.
+- `AddResourceTree(string sourceDir, string? relativePrefix = null)` - copy a directory tree into the resource pack.
+- `AddScriptFile(string sourcePath, string? relativePath = null)` - copy a Script API helper module into `bp/scripts/`.
 - `AddClientEntity<T>()` - resource-pack client entity (materials, textures, geometry, spawn egg, and related fields).
 - `AddRenderController<T>()` - custom render controller; simple per-entity controllers are auto-emitted when a client entity lists them.
-- `RegisterSoundDefinition(soundId, sounds, category?, maxDistance?, minDistance?)` - sound definitions written to `sounds/sound_definitions.json` (optional source audio copy via `Sound.SourcePath`).
+- `RegisterSoundDefinition(soundId, sounds, category?, maxDistance?, minDistance?)` - sound definitions written to `sounds/sound_definitions.json`. Pass `Sound.Path` for a disk audio file (copied into the RP; `Name` is auto-resolved and serialized as `name`), or `Sound.Reference(name)` for a pack-path-only entry.
 - `AddFunction(identifier, sourceFile, service = false)` - copies a `.mcfunction` into `bp/functions/`; when `service` is true, also lists it in `functions/tick.json`.
 - `ScriptsEnabled` - enables Script API script generation during compile.
 - `AddService(sourceFile, name?, intervalTicks?)` - registers a [service](script-services.md) whose tick body is wrapped in `system.runInterval` (default every tick) and written to `bp/scripts/services/`.
@@ -330,6 +335,37 @@ pack.AddAnimation(Path.Combine(dataDir, "my_entity.animation.json"), "my_entity"
 ```
 
 Reference the animation ids from `ClientEntity.Animations` and drive them via `Scripts`. ingot copies the file as-is; it does not author animation graphs.
+
+## Extra Resource Files (UI libraries)
+
+`AddUi` / `AddUiTexture` cover JSON UI under `ui/` and PNGs under `textures/ui/`. Overlay libraries such as Qwo often need more than that: `.jsonc` namespace files, a handwritten `ui/_ui_defs.json`, nineslice `*.json` next to PNGs, and textures under a custom folder like `textures/qwo/`.
+
+| Method | Output | Description |
+|--------|--------|-------------|
+| `Pack.AddResourceFile(sourcePath, relativePath)` | `rp/{relativePath}` | Copies one file as-is. |
+| `Pack.AddResourceTree(sourceDir, relativePrefix?)` | `rp/{prefix}/...` | Copies a directory tree. Junk files (`Gallery.cache`, dotfiles) are skipped. |
+| `Pack.AddUi(sourceJsonPath, rpName?, includeInUiDefs?)` | `ui/{rpName}.json` or `.jsonc` | `.jsonc` sources keep that extension so `_ui_defs.json` can list them. Pass `includeInUiDefs: false` for vanilla overlays (`server_form`, `ui_common`). |
+| `Pack.AddScriptFile(sourcePath, relativePath?)` | `bp/scripts/{relativePath}` | Copies a Script API helper module as-is (not imported from `main.js`). Leading `import` statements in `ScriptHandler.FromFile` bodies are hoisted to the generated script. |
+
+A UI library already laid out as a resource-pack fragment can be registered in one call:
+
+```csharp
+pack.AddResourceTree(Path.Combine(dataDir, "qwo"));
+// Assets/qwo/ui/server_form.json      -> rp/ui/server_form.json
+// Assets/qwo/ui/starlib2/global.jsonc -> rp/ui/starlib2/global.jsonc
+// Assets/qwo/textures/qwo/button/default.png -> rp/textures/qwo/button/default.png
+
+pack.AddScriptFile(Path.Combine(scriptsDir, "qwo-builder.js"));
+// -> bp/scripts/qwo-builder.js
+```
+
+Handler files can then import the helper with a path relative to the generated script (`scripts/blocks/*.js` → `../qwo-builder.js`):
+
+```javascript
+import { QwoFormBuilder } from "../qwo-builder.js";
+
+new QwoFormBuilder().title("Menu").addButton("Ok").build().show(event.player);
+```
 
 ## Behaviour Pack Functions
 

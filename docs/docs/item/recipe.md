@@ -42,7 +42,7 @@ Key members:
 The compiler maps distinct `Identifier` values in the pattern to single-character symbols and emits a `minecraft:recipe_shaped` JSON file.
 
 > [!CAUTION]
-> Patterns wider than 3 columns or taller than 3 rows produce compile-time warnings.
+> Patterns wider than 3 columns or taller than 3 rows throw `ArgumentException` at compile time.
 
 ## Shapeless Recipe
 

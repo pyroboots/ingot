@@ -76,7 +76,7 @@ public static class CompilerState
     /// </summary>
     /// <param name="w">Used to write the warning in the JSON source</param>
     /// <param name="msg">Message to write</param>
-    public static void Warn(ref JsonTextWriter? w, string msg)
+    public static void Warn(ref JsonWriter? w, string msg)
     {
         WarningCount++;
         string warning = $"/!\\ [{GetTrace()}] {msg}";
@@ -99,7 +99,7 @@ public static class CompilerState
     /// <param name="msg">Message to write</param>
     public static void Warn(string msg)
     {
-        JsonTextWriter? dummy = null;
+        JsonWriter? dummy = null;
         Warn(ref dummy, msg);
     }
 

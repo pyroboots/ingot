@@ -88,7 +88,7 @@ public interface IRideable : IEntityTrait
     /// The list of positions and number of riders for each position for entities riding this entity.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic Seats { get; }
+    public abstract Either<Dictionary<string, object>, Dictionary<string, object>[]> Seats { get; }
 
     /// <summary>
     /// Generator typo/duplicate of <see cref="PullInEntities"/>; never emit.

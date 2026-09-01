@@ -1,6 +1,7 @@
 using System.Reflection;
 
 using ingot.Core.Common;
+using ingot.Core.Resource;
 
 using Newtonsoft.Json;
 
@@ -109,7 +110,7 @@ public class ClientEntitySounds
     /// Event name → sound definition (e.g. <c>hurt</c> → <c>mob.cow.hurt</c>).
     /// Values may be a sound name string or a richer object (volume/pitch/sound).
     /// </summary>
-    public required Dictionary<string, object> Events { get; init; }
+    public required Dictionary<string, Either<string, Dictionary<string, object>>> Events { get; init; }
 
     /// <summary>
     /// Maps common gameplay events to vanilla <c>mob.{name}.*</c> sound definitions
@@ -124,7 +125,7 @@ public class ClientEntitySounds
         float[]? pitch = null)
     {
         string mob = vanillaMobName.Trim().ToLowerInvariant();
-        Dictionary<string, object> events = new()
+        Dictionary<string, Either<string, Dictionary<string, object>>> events = new()
         {
             ["ambient"] = $"mob.{mob}.say",
             ["hurt"] = $"mob.{mob}.hurt",
@@ -162,7 +163,7 @@ public class ClientEntityScripts
     /// Animation / animation-controller short-names to play each frame.
     /// Entries may be a short-name string, or a single-entry dictionary mapping a short-name to a Molang blend value.
     /// </summary>
-    public object[]? Animate { get; init; }
+    public Either<string, Dictionary<string, string>>[]? Animate { get; init; }
 
     /// <summary>
     /// Uniform model scale (Molang or number as string).
@@ -310,7 +311,7 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,
@@ -389,7 +390,7 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         return sw.ToString();
     }
 
-    private static void TryRegisterDefaultTexture(ClientEntity inst, ref JsonTextWriter w)
+    private static void TryRegisterDefaultTexture(ClientEntity inst, ref JsonWriter w)
     {
         if (CompilerState.CurrentPack is null || string.IsNullOrWhiteSpace(inst.DefaultTexturePath))
             return;
@@ -409,9 +410,9 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         if (string.IsNullOrWhiteSpace(relative))
             return;
 
-        JsonTextWriter? warnWriter = w;
+        JsonWriter? warnWriter = w;
         ResourcePack rp = CompilerState.CurrentPack.ResourcePack;
-        if (rp.TryAddEntityTexture(relative, inst.DefaultTexturePath))
+        if (rp.Textures.TryAddEntityTexture(relative, inst.DefaultTexturePath))
             CompilerState.Info($"auto-registered entity texture '{relative}'");
         else
             CompilerState.Warn(ref warnWriter, $"entity texture '{relative}' was not auto-registered because it is already defined on the resource pack");
@@ -432,13 +433,13 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
 
             if (string.IsNullOrEmpty(value))
             {
-                JsonTextWriter? dummy = null;
+                JsonWriter? dummy = null;
                 CompilerState.Warn(ref dummy, $"client entity short-name '{key}' has an empty value (member {entry.Key})");
             }
 
             if (!result.TryAdd(key, value))
             {
-                JsonTextWriter? dummy = null;
+                JsonWriter? dummy = null;
                 CompilerState.Warn(ref dummy, $"duplicate client entity short-name '{key}' from member {entry.Key}; keeping first value");
             }
         }
@@ -481,7 +482,7 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
         });
     }
 
-    private static void WriteScripts(JsonHelper json, JsonTextWriter w, ClientEntityScripts scripts)
+    private static void WriteScripts(JsonHelper json, JsonWriter w, ClientEntityScripts scripts)
     {
         json.Object("scripts", () =>
         {
@@ -507,37 +508,8 @@ public abstract class ClientEntity : IConcreteCompilable<ClientEntity>, IIdentif
             {
                 json.Array("animate", () =>
                 {
-                    foreach (object entry in scripts.Animate)
-                    {
-                        if (entry is string shortName)
-                        {
-                            w.WriteValue(shortName);
-                        }
-                        else if (entry is Dictionary<string, string> blend)
-                        {
-                            w.WriteStartObject();
-                            foreach (var kvp in blend)
-                            {
-                                w.WritePropertyName(kvp.Key);
-                                w.WriteValue(kvp.Value);
-                            }
-                            w.WriteEndObject();
-                        }
-                        else if (entry is IReadOnlyDictionary<string, string> blendRo)
-                        {
-                            w.WriteStartObject();
-                            foreach (var kvp in blendRo)
-                            {
-                                w.WritePropertyName(kvp.Key);
-                                w.WriteValue(kvp.Value);
-                            }
-                            w.WriteEndObject();
-                        }
-                        else
-                        {
-                            JsonSerializer.CreateDefault().Serialize(w, entry);
-                        }
-                    }
+                    foreach (Either<string, Dictionary<string, string>> entry in scripts.Animate)
+                        JsonSerializer.CreateDefault().Serialize(w, entry);
                 });
             }
 

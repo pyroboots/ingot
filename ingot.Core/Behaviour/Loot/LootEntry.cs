@@ -29,12 +29,12 @@ public abstract class LootEntry : ICompilableFragment
     /// <summary>
     /// Writes entry-type-specific properties
     /// </summary>
-    protected abstract void CompileEntry(ref JsonTextWriter writer);
+    protected abstract void CompileEntry(ref JsonWriter writer);
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
-        JsonTextWriter w = writer;
+        JsonWriter w = writer;
 
         if (Weight <= 0)
             CompilerState.Warn(ref w, "loot entry has non-positive weight");
@@ -77,7 +77,7 @@ public class ItemLootEntry : LootEntry
     public override string EntryType => "item";
 
     /// <inheritdoc/>
-    protected override void CompileEntry(ref JsonTextWriter writer)
+    protected override void CompileEntry(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Property("name", Item.ToString());
@@ -93,5 +93,5 @@ public class EmptyLootEntry : LootEntry
     public override string EntryType => "empty";
 
     /// <inheritdoc/>
-    protected override void CompileEntry(ref JsonTextWriter writer) { }
+    protected override void CompileEntry(ref JsonWriter writer) { }
 }

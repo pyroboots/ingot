@@ -21,7 +21,7 @@ public abstract class EntityComponentGroup : ICompilableFragment, IIdentifiable
     public abstract Entity Parent { get; }
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         CompilerState.Push(Identifier.ToString());
         

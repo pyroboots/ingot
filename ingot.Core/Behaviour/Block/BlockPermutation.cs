@@ -16,7 +16,7 @@ public abstract class BlockPermutation : ITraitable
     /// <summary>
     /// Molang condition that determines when this permutation is active
     /// </summary>
-    public abstract string Condition { get; }
+    public abstract Molang Condition { get; }
     /// <summary>
     /// Parent <see cref="Block"/> of this <see cref="BlockPermutation"/>
     /// </summary>
@@ -66,21 +66,31 @@ public abstract class BlockPermutation : ITraitable
     /// Compiles the <typeparamref name="TBlockPermutation"/> to JSON
     /// </summary>
     /// <typeparam name="TBlockPermutation">The type class block permutation to compile</typeparam>
-    public static void Compile<TBlockPermutation>(ref JsonTextWriter writer) where TBlockPermutation : BlockPermutation => Compile(typeof(TBlockPermutation), ref writer);
+    public static void Compile<TBlockPermutation>(ref JsonWriter writer) where TBlockPermutation : BlockPermutation => Compile(typeof(TBlockPermutation), ref writer);
 
     /// <summary>
     /// Compiles the <see cref="BlockPermutation"/> (as <paramref name="tBlockPermutation"/>) to JSON
     /// </summary>
     /// <param name="tBlockPermutation">Concrete type of <see cref="BlockPermutation"/></param>
     /// <param name="writer">JSON source stream to write to</param>
-    public static void Compile(Type tBlockPermutation, ref JsonTextWriter writer)
+    public static void Compile(Type tBlockPermutation, ref JsonWriter writer)
     {
-        BlockPermutation permutation = (Activator.CreateInstance(tBlockPermutation) as BlockPermutation)!;
-        List<Trait> traits = TraitSystem.TraitSystem.GetTraits(permutation, TraitSystem.TraitSystem.TraitType.Block);
+        BlockPermutation permutation = (BlockPermutation)Activator.CreateInstance(tBlockPermutation)!;
+        CompileFromInstance(permutation, ref writer);
+    }
 
+    /// <summary>
+    /// Compiles a pre-constructed instance of a <see cref="BlockPermutation"/> to JSON.
+    /// Useful for runtime configuration and deriving multiple objects from a single parent concrete type (e.g. having a <c>MasterStone</c> type and changing the explosion resistance at runtime to create a new block)
+    /// </summary>
+    /// <param name="permutation">Instance to compile</param>
+    /// <param name="writer">JSON source stream to write to</param>
+    /// <returns>Compiled JSON</returns>
+    public static void CompileFromInstance(BlockPermutation permutation, ref JsonWriter writer)
+    {
         if (permutation.MaterialInstances is not null)
         {
-            JsonTextWriter? warnWriter = null;
+            JsonWriter? warnWriter = null;
             TextureAutoRegistration.RegisterMaterialInstances(permutation.MaterialInstances.Value, ref warnWriter);
         }
 
@@ -88,11 +98,10 @@ public abstract class BlockPermutation : ITraitable
 
         writer.WriteStartObject();
 
-        json.Property("condition", permutation.Condition);
+        json.Property("condition", permutation.Condition.ToString());
         json.Object("components", () =>
         {
-            foreach (string t in permutation.Tags)
-                json.Object($"tag:{t}", () => { });
+            json.Property("minecraft:tags", permutation.Tags);
 
             json.Property("minecraft:display_name", permutation.DisplayName);
             json.Property("minecraft:friction", permutation.Friction);

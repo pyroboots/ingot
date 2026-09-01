@@ -17,7 +17,7 @@ public class Fraction : ICompilableFragment
     public required int Denominator;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (Numerator == 1 || Denominator == 1)
             throw new ArgumentException("cannot be equal to 1");

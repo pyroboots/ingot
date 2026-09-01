@@ -35,13 +35,13 @@ public interface IBreedable : IEntityTrait
     /// The list of items that can be used to get the entity into the 'love' state. Can be a single item or an array.
     /// </summary>
     [TraitProperty]
-    public abstract string[] BreedItems { get; }
+    public abstract Either<string, string[]> BreedItems { get; }
 
     /// <summary>
     /// The entity definitions that this entity can breed with. Can be a single object or an array.
     /// </summary>
     [TraitProperty]
-    public abstract dynamic BreedsWith { get; }
+    public abstract Either<Dictionary<string, object>, Dictionary<string, object>[]> BreedsWith { get; }
 
     /// <summary>
     /// If true, the entity will become pregnant instead of spawning a baby.

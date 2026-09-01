@@ -2,9 +2,12 @@
 // log: unable to resolve type object on property Textures
 
 namespace ingot.Core.TraitSystem.Traits.Item;
+using ingot.Core;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits;
+using ingot.Core.Common.SharedConstructs;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Icon item component determines which icon graphic will be used to represent the item in the UI and elsewhere.

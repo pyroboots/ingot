@@ -22,7 +22,7 @@ public class EntityRider : ICompilableFragment
     public required Identifier SpawnEvent;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Object("", () =>
@@ -48,7 +48,7 @@ public class EntityFeedItem : ICompilableFragment
     public required float Growth;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Object("", () =>
@@ -74,7 +74,7 @@ public class EntitySoundEventName : ICompilableFragment
     public required string EventName;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Object("", () =>
@@ -100,7 +100,7 @@ public class EntityEventTrigger : ICompilableFragment
     public required string Event;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Object("", () =>
@@ -126,7 +126,7 @@ public class EntityBlockBreakEntry : ICompilableFragment
     public required Identifier OnBlockBroken;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Object("", () =>
@@ -164,7 +164,7 @@ public class EntitySpellEffect : ICompilableFragment
     public bool InfiniteDuration = false;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
         json.Object("", () =>

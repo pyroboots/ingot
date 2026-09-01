@@ -1,5 +1,8 @@
+using ingot.Core;
 using ingot.Core.Behaviour.Entity;
 using ingot.Core.Common;
+using ingot.Core.Resource;
+using ingot.Core.Resource.Referencers;
 using ingot.Core.TraitSystem.Traits.Entity;
 
 using Version = ingot.Core.Common.Version;
@@ -20,9 +23,9 @@ public class CowEntity : Entity, IEntityPresetPassiveLand, IEntityPresetSameSpec
 
     string IEntityPresetSameSpeciesOffspring.SpeciesId => Identifier.ToString();
 
-    dynamic ITypeFamily.Family => new[] { "cow", "mob" };
+    Either<string, string[]> ITypeFamily.Family => new[] { "cow", "mob" };
     int IHealth.Max => 10;
-    float IMovement.Value => 0.25f;
+    Either<float, FloatRange> IMovement.Value => 0.25f;
     string[] IBehaviorTempt.Items => ["wheat"];
 
     float ICollisionBox.Width => 0.9f;
@@ -49,13 +52,13 @@ public class CowEntity : Entity, IEntityPresetPassiveLand, IEntityPresetSameSpec
         float IScale.Value => 0.5f;
         float IAgeable.Duration => 1200f;
         dynamic IAgeable.FeedItems => "wheat";
-        dynamic IAgeable.GrowUp => EntityEventTargets.GrowUpSelf("minecraft:ageable_grow_up");
+        Either<string, Dictionary<string, string>>? IAgeable.GrowUp => EntityEventTargets.GrowUpSelf("minecraft:ageable_grow_up");
         string[] IAgeable.PauseGrowthItems => ["golden_dandelion"];
         string[] IAgeable.ResetGrowthItems => ["golden_dandelion"];
 
         int IRideable.SeatCount => 1;
         string[] IRideable.FamilyTypes => ["baby_undead"];
-        dynamic IRideable.Seats => new Dictionary<string, object>
+        Either<Dictionary<string, object>, Dictionary<string, object>[]> IRideable.Seats => new Dictionary<string, object>
         {
             ["position"] = new[] { 0.0, 1.0, 0.0 },
         };
@@ -71,21 +74,21 @@ public class CowEntity : Entity, IEntityPresetPassiveLand, IEntityPresetSameSpec
         public static Identifier Id { get; } = new("test", "custom_cow_adult");
         public override Identifier Identifier => Id;
 
-        dynamic IExperienceReward.OnBred => "Math.Random(1,7)";
-        dynamic IExperienceReward.OnDeath => "query.last_hit_by_player ? Math.Random(1,3) : 0";
+        Either<int, Molang>? IExperienceReward.OnBred => new Molang("Math.Random(1,7)");
+        Either<int, Molang>? IExperienceReward.OnDeath => new Molang("query.last_hit_by_player ? Math.Random(1,3) : 0");
         string ILoot.Table => "loot_tables/entities/cow.json";
 
         int IRideable.SeatCount => 1;
         string[] IRideable.FamilyTypes => ["baby_undead"];
-        dynamic IRideable.Seats => new Dictionary<string, object>
+        Either<Dictionary<string, object>, Dictionary<string, object>[]> IRideable.Seats => new Dictionary<string, object>
         {
             ["position"] = new[] { 0.0, 1.15, 0.0 },
         };
 
         int IBehaviorBreed.Priority => 3;
         bool IBreedable.RequireTame => false;
-        string[] IBreedable.BreedItems => ["wheat"];
-        dynamic IBreedable.BreedsWith => new Dictionary<string, object>
+        Either<string, string[]> IBreedable.BreedItems => new[] { "wheat" };
+        Either<Dictionary<string, object>, Dictionary<string, object>[]> IBreedable.BreedsWith => new Dictionary<string, object>
         {
             ["test:custom_cow"] = new Dictionary<string, object>(),
         };
@@ -159,7 +162,7 @@ public class CowEntity : Entity, IEntityPresetPassiveLand, IEntityPresetSameSpec
         [ClientEntityGeometry("cold")]
         public string ColdGeometry => "geometry.cow.cold";
 
-        public override string[] RenderControllers => ["controller.render.cow.v3"];
+        public override string[] RenderControllers => [new RenderControllerReference<CowV3RenderController>()];
         public override bool EmitDefaultRenderController => false;
 
         public override Dictionary<string, string>? Animations => new()

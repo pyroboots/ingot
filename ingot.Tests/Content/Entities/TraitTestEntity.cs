@@ -8,5 +8,5 @@ internal class TraitTestEntity : Entity, IHealth, ITypeFamily
 {
     public override Identifier Identifier => new("test:trait_entity");
     int IHealth.Max => 20;
-    dynamic ITypeFamily.Family => "test";
+    Either<string, string[]> ITypeFamily.Family => "test";
 }

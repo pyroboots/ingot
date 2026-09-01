@@ -185,7 +185,7 @@ file static class JsonTextWriterSink
     public static void AssertCompileThrows(IVanillaBlockTrait trait, Type exceptionType)
     {
         using StringWriter sw = new();
-        JsonTextWriter writer = new(sw);
+        JsonWriter writer = new JsonTextWriter(sw);
         Exception ex = Assert.Throws(exceptionType, () => trait.Compile(ref writer));
         Assert.NotNull(ex);
     }

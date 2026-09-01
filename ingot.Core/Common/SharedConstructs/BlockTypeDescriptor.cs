@@ -7,6 +7,7 @@ namespace ingot.Core.Common.SharedConstructs;
 /// <summary>
 /// References a block type
 /// </summary>
+[JsonConverter(typeof(CompilableFragmentJsonConverter<BlockTypeDescriptor>))]
 public class BlockTypeDescriptor : ICompilableFragment
 {
     /// <summary>
@@ -14,11 +15,29 @@ public class BlockTypeDescriptor : ICompilableFragment
     /// </summary>
     public required Identifier Name;
     
+    /// <summary>
+    /// Required states to qualify this permutation
+    /// </summary>
+    public Dictionary<Identifier, Either<int, float, string, bool>>? States;
+    
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
-        // name-only block descriptors compile as a bare identifier string
-        writer.WriteValue(Name.ToString());
+        JsonHelper json = new(ref writer);
+
+        if (States is not null)
+        {
+            json.Object("", () =>
+            {
+                json.Property("name", Name);
+                json.Object("states", () =>
+                {
+                    foreach (var state in States)
+                        json.Property(state.Key, state.Value.Value);
+                });
+            });   
+        }
+        else writer.WriteValue(Name);
     }
 
     /// <summary>

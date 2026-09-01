@@ -1,7 +1,10 @@
 using ingot.Core.Behaviour.Block.BlockTraits;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Common;
+using ingot.Core.Resource;
+using ingot.Core.Resource.Referencers;
 using ingot.Core.TraitSystem;
+using ingot.Core.TraitSystem.Traits;
 
 using Newtonsoft.Json;
 
@@ -31,11 +34,11 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
     /// <summary>
     /// Dictionary of possible block states. Valid state types are: <see cref="int"/>[], <see cref="float"/>[], <see cref="bool"/>[], <see cref="string"/>[], 
     /// </summary>
-    public virtual Dictionary<string, object[]> States => new();
+    public virtual Dictionary<Identifier, object[]> States => new();
     /// <summary>
     /// List of possible block permutations
     /// </summary>
-    public virtual List<BlockPermutation> Permutations => new();
+    public virtual BlockPermutation[] Permutations => [];
     /// <summary>
     /// Array of block tags that can enable / expand vanilla functionality
     /// </summary>
@@ -109,9 +112,14 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
     /// <summary>
     /// Vanilla description traits under <c>minecraft:block/description/traits</c>
     /// (placement direction/position, connection, multi-block, etc.).
-    /// Not to be confused with component traits (<see cref="TraitSystem.Traits.IBlockTrait"/>).
+    /// Not to be confused with component traits (<see cref="IBlockTrait"/>).
     /// </summary>
     public virtual IVanillaBlockTrait[] BlockTraits => [];
+    
+    /// <summary>
+    /// Recipe to craft this block
+    /// </summary>
+    public virtual RecipeReference? Recipe => null;
     
     /// <inheritdoc/>
     public static string Compile(Type tType)
@@ -131,9 +139,11 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
-        JsonTextWriter w = new(sw);
-        w.Formatting = Formatting.Indented;
-        w.Indentation = 4;
+        JsonWriter w = new JsonTextWriter(sw)
+        {
+            Formatting = Formatting.Indented,
+            Indentation = 4,
+        };
         JsonHelper json = new(ref w);
 
         w.WriteStartObject();
@@ -192,7 +202,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
                 }
             });
 
-            if (inst.Permutations.Count > 0)
+            if (inst.Permutations.Length > 0)
             {
                 json.Array("permutations", () =>
                 {
@@ -201,8 +211,8 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
                     foreach (BlockPermutation p in inst.Permutations)
                     {
                         c++;
-                        BlockPermutation.Compile(p.GetType(), ref w);
-                        CompilerState.Info($"({c}/{inst.Permutations.Count}) compiled block permutation {p.GetType().Name}");
+                        BlockPermutation.CompileFromInstance(p, ref w);
+                        CompilerState.Info($"({c}/{inst.Permutations.Length}) compiled block permutation {p.GetType().Name}");
                     }
                     CompilerState.Info("compiled block permutations");
                 });
@@ -210,8 +220,7 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
 
             json.Object("components", () =>
             {
-                foreach (string t in inst.Tags)
-                    json.Object($"tag:{t}", () => { });
+                json.Property("minecraft:tags", inst.Tags);
 
                 json.Property("minecraft:display_name", inst.DisplayName);
                 json.Property("minecraft:friction", inst.Friction);
@@ -249,6 +258,11 @@ public abstract class Block : IConcreteCompilable<Block>, IIdentifiable, ITraita
 
                 ITraitable.CompileTraits(inst, ref w, TraitSystem.TraitSystem.TraitType.Block);
             });
+            
+            // c# doesnt actually run ctors until accessed because its lazy, so 
+            // we have to touch it in some way to get it to. we can just pipe the
+            // value into discard
+            _ = inst.Recipe;
         });
 
         w.WriteEndObject();

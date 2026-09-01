@@ -1,6 +1,5 @@
-using ingot.Core.Behaviour;
-using ingot.Core.Behaviour.Item;
 using ingot.Tests.Content.Items;
+using ingot.Tests.Support;
 
 namespace ingot.Tests.Items;
 
@@ -9,7 +8,7 @@ public class ItemJsonContainsFoodTraitTest
     [Fact]
     public void Compile_ItemJsonContainsFoodTrait()
     {
-        string json = Item.Compile(typeof(FoodTestItem));
+        string json = CompileTestHelper.CompileItemJson<FoodTestItem>();
         Assert.Contains("minecraft:food", json);
         Assert.Contains("\"nutrition\": 4", json);
         Assert.Contains("\"using_converts_to\": \"minecraft:bowl\"", json);
@@ -18,7 +17,7 @@ public class ItemJsonContainsFoodTraitTest
     [Fact]
     public void Compile_FoodItemJsonContainsUseDuration()
     {
-        string json = Item.Compile(typeof(FoodTestItem));
+        string json = CompileTestHelper.CompileItemJson<FoodTestItem>();
         Assert.Contains("minecraft:use_modifiers", json);
         Assert.Contains("\"use_duration\": 1.6", json);
         Assert.Contains("minecraft:use_animation", json);

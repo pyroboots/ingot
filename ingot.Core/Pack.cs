@@ -9,6 +9,7 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Behaviour.Loot;
 using ingot.Core.Behaviour.Recipe;
 using ingot.Core.Common;
+using ingot.Core.Resource;
 using ingot.Core.Scripting;
 
 using Newtonsoft.Json;
@@ -337,7 +338,7 @@ public class Pack
     /// </summary>
     public Pack AddBlockTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddBlockTexture(key, sourcePngPath, rpName);
+        ResourcePack.Textures.AddBlockTexture(key, sourcePngPath, rpName);
         return this;
     }
 
@@ -346,7 +347,7 @@ public class Pack
     /// </summary>
     public Pack AddItemTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddItemTexture(key, sourcePngPath, rpName);
+        ResourcePack.Textures.AddItemTexture(key, sourcePngPath, rpName);
         return this;
     }
 
@@ -360,7 +361,7 @@ public class Pack
         string? rpName = null,
         string modelsSubdir = "blocks")
     {
-        ResourcePack.AddGeometry(identifier, sourceGeoJsonPath, rpName, modelsSubdir);
+        ResourcePack.Models.Add(identifier, sourceGeoJsonPath, rpName, modelsSubdir);
         return this;
     }
 
@@ -369,7 +370,7 @@ public class Pack
     /// </summary>
     public Pack AddEntityGeometry(string identifier, string sourceGeoJsonPath, string? rpName = null)
     {
-        ResourcePack.AddEntityGeometry(identifier, sourceGeoJsonPath, rpName);
+        ResourcePack.Models.AddEntity(identifier, sourceGeoJsonPath, rpName);
         return this;
     }
 
@@ -378,7 +379,7 @@ public class Pack
     /// </summary>
     public Pack AddAnimation(string sourceJsonPath, string rpName)
     {
-        ResourcePack.AddAnimation(sourceJsonPath, rpName);
+        ResourcePack.Animations.Add(sourceJsonPath, rpName);
         return this;
     }
 
@@ -393,7 +394,7 @@ public class Pack
     /// Defaults to the name segment of <paramref name="identifier"/>.</param>
     public Pack AddParticle(string identifier, string sourceJsonPath, string? rpName = null)
     {
-        ResourcePack.AddParticle(identifier, sourceJsonPath, rpName);
+        ResourcePack.Particles.Add(identifier, sourceJsonPath, rpName);
         return this;
     }
 
@@ -403,8 +404,99 @@ public class Pack
     /// </summary>
     public Pack AddParticleTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddParticleTexture(key, sourcePngPath, rpName);
+        ResourcePack.Textures.AddParticleTexture(key, sourcePngPath, rpName);
         return this;
+    }
+
+    /// <summary>
+    /// Registers a JSON UI file under <c>ui/{rpName}</c> with the source extension
+    /// (<c>.json</c> or <c>.jsonc</c>).
+    /// Custom namespace files are listed in generated <c>ui/_ui_defs.json</c> unless
+    /// <paramref name="includeInUiDefs"/> is <see langword="false"/> (use that for vanilla
+    /// screen overlays such as <c>hud_screen</c> or <c>server_form</c>).
+    /// </summary>
+    /// <param name="sourceJsonPath">Path to the source UI JSON on disk (copied as-is).</param>
+    /// <param name="rpName">Filename without extension under <c>ui/</c>. Nested paths are allowed.
+    /// Defaults to the source file name.</param>
+    /// <param name="includeInUiDefs">Whether to list the file in <c>_ui_defs.json</c>.
+    /// Defaults to <see langword="true"/> except for names starting with <c>_</c>.</param>
+    public Pack AddUi(string sourceJsonPath, string? rpName = null, bool? includeInUiDefs = null)
+    {
+        ResourcePack.Ui.Add(sourceJsonPath, rpName, includeInUiDefs);
+        return this;
+    }
+
+    /// <summary>
+    /// Registers a UI texture PNG under <c>textures/ui/</c>.
+    /// Reference it from JSON UI as <c>textures/ui/{rpName}</c> (no extension).
+    /// </summary>
+    public Pack AddUiTexture(string key, string sourcePngPath, string? rpName = null)
+    {
+        ResourcePack.Textures.AddUiTexture(key, sourcePngPath, rpName);
+        return this;
+    }
+
+    /// <summary>
+    /// Copies a source file into the resource pack at <paramref name="relativePath"/>.
+    /// Use this for assets that are not block/item/entity/UI-atlas textures, such as
+    /// JSON UI libraries, nineslice metadata next to PNGs, or files under <c>textures/qwo/</c>.
+    /// </summary>
+    /// <param name="sourcePath">Path to the source file on disk (copied as-is).</param>
+    /// <param name="relativePath">Destination path relative to the resource pack root.</param>
+    public Pack AddResourceFile(string sourcePath, string relativePath)
+    {
+        ResourcePack.ExtraFiles.Add(sourcePath, relativePath);
+        return this;
+    }
+
+    /// <summary>
+    /// Copies every file under <paramref name="sourceDir"/> into the resource pack,
+    /// preserving relative paths under optional <paramref name="relativePrefix"/>.
+    /// Junk files such as <c>Gallery.cache</c> are skipped.
+    /// A folder already laid out as a resource-pack fragment (for example
+    /// <c>ui/</c> + <c>textures/qwo/</c>) can be registered with an empty prefix.
+    /// </summary>
+    /// <param name="sourceDir">Directory whose contents should be copied into the resource pack.</param>
+    /// <param name="relativePrefix">Optional prefix prepended to each relative path.
+    /// Omit to copy the tree at the resource pack root.</param>
+    public Pack AddResourceTree(string sourceDir, string? relativePrefix = null)
+    {
+        ResourcePack.ExtraFiles.AddTree(sourceDir, relativePrefix);
+        return this;
+    }
+
+    /// <summary>
+    /// Copies a source file into the behaviour pack at <paramref name="relativePath"/>.
+    /// </summary>
+    /// <param name="sourcePath">Path to the source file on disk (copied as-is).</param>
+    /// <param name="relativePath">Destination path relative to the behaviour pack root.</param>
+    public Pack AddBehaviourFile(string sourcePath, string relativePath)
+    {
+        BehaviourPack.ExtraFiles.Add(sourcePath, relativePath);
+        return this;
+    }
+
+    /// <summary>
+    /// Copies a JavaScript helper module into <c>bp/scripts/</c>.
+    /// Unlike services and event handlers, the file is copied as-is and is not imported from
+    /// <c>main.js</c> — generated handler scripts can <c>import</c> it with a relative path
+    /// (leading <c>import</c> statements in <see cref="ScriptHandler.FromFile"/> bodies are
+    /// hoisted to the top of the generated file).
+    /// </summary>
+    /// <param name="sourcePath">Path to the source <c>.js</c> file on disk.</param>
+    /// <param name="relativePath">Path under <c>scripts/</c> (for example <c>qwo-builder.js</c>
+    /// or <c>lib/qwo-builder.js</c>). Defaults to the source file name. A leading
+    /// <c>scripts/</c> prefix is optional.</param>
+    public Pack AddScriptFile(string sourcePath, string? relativePath = null)
+    {
+        string dest = relativePath ?? Path.GetFileName(sourcePath);
+        dest = dest.Replace('\\', '/').Trim().TrimStart('/');
+        if (dest.StartsWith("scripts/", StringComparison.OrdinalIgnoreCase))
+            dest = dest["scripts/".Length..];
+        if (string.IsNullOrWhiteSpace(dest))
+            throw new ArgumentException("script relative path cannot be empty", nameof(relativePath));
+
+        return AddBehaviourFile(sourcePath, $"scripts/{dest}");
     }
 
     /// <summary>
@@ -412,7 +504,7 @@ public class Pack
     /// </summary>
     public Pack AddEntityTexture(string key, string sourcePngPath, string? rpName = null)
     {
-        ResourcePack.AddEntityTexture(key, sourcePngPath, rpName);
+        ResourcePack.Textures.AddEntityTexture(key, sourcePngPath, rpName);
         return this;
     }
 
@@ -464,22 +556,24 @@ public class Pack
     /// <summary>
     /// Registers a sound definition written to <c>rp/sounds/sound_definitions.json</c>.
     /// The <paramref name="soundId"/> is the event name used by gameplay - a plain string,
-    /// not an <see cref="Identifier"/>. Entries with a <see cref="Sound.SourcePath"/> are
-    /// copied into the resource pack at <see cref="Sound.Name"/> (nested dirs under <c>sounds/</c>).
+    /// not an <see cref="Identifier"/>. Entries with a <see cref="SoundDefinitions.SoundDefinition.Sound.Path"/>
+    /// are copied into the resource pack; the pack path is taken from
+    /// <see cref="SoundDefinitions.SoundDefinition.Sound.Name"/> when set, otherwise auto-resolved
+    /// from the file name and category (serialized as <c>name</c>).
     /// </summary>
     /// <param name="soundId">Sound event id (e.g. <c>example.toot</c> or <c>ambient.basalt_deltas.loop</c>).</param>
     /// <param name="sounds">One or more sound file entries for this event.</param>
-    /// <param name="category">Volume slider category (<c>ambient</c>, <c>hostile</c>, <c>music</c>, ...).</param>
+    /// <param name="category">Volume slider category.</param>
     /// <param name="maxDistance">Distance beyond which the sound can no longer be heard.</param>
     /// <param name="minDistance">Distance at which attenuation begins.</param>
     public Pack RegisterSoundDefinition(
         string soundId,
-        Sound[] sounds,
-        string? category = null,
+        SoundDefinitions.SoundDefinition.Sound[] sounds,
+        SoundDefinitions.SoundDefinition.SoundDefinitionCategory category = SoundDefinitions.SoundDefinition.SoundDefinitionCategory.Neutral,
         float? maxDistance = null,
         float? minDistance = null)
     {
-        ResourcePack.RegisterSoundDefinition(soundId, sounds, category, maxDistance, minDistance);
+        ResourcePack.SoundDefinitions.Add(soundId, sounds, category, maxDistance, minDistance);
         return this;
     }
 
@@ -703,11 +797,6 @@ public class Pack
             Console.WriteLine($"ingot compilation log available at {Path.Combine(cacheDir, "ingot.log")}");
             Console.WriteLine($"pack compiled in {timer.ElapsedMilliseconds}ms");
             Console.ResetColor();
-
-            // technically blocks are permutations, just default ones
-            int blockPermCount = BehaviourPack.Blocks.Count;
-            foreach (Block b in BehaviourPack.Blocks)
-                blockPermCount += b.Permutations.Count;
         }
         
         if (cache && File.Exists(Path.Combine(cacheDir, ".ingot")) == false)

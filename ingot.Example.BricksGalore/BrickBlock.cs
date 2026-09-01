@@ -33,8 +33,7 @@ public class BrickBlock : Block, IDestructibleByMining, IDestructibleByExplosion
             MaterialInstance.RenderMethods.Opaque,
             Spec.TexturePath),
     };
-
-    dynamic? IDestructibleByMining.ItemSpecificSpeeds => null;
+    
     float IDestructibleByMining.SecondsToDestroy => Spec.SecondsToDestroy;
     float IDestructibleByExplosion.ExplosionResistance => Spec.ExplosionResistance;
 }

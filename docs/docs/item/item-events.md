@@ -181,8 +181,11 @@ using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Item;
 
+using Version = ingot.Core.Common.Version;
+
 public class HealingBerryItem : Item, IFood, IUseModifiers
 {
+    public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => new("mynamespace:healing_berry");
     public override string Texture => "healing_berry";
     public override string DisplayName => "Healing Berry";

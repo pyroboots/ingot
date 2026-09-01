@@ -1,4 +1,8 @@
+- name: Version History
+  href: version-history.md
+  tag: Meta
 - name: Getting Started
+  href: getting-started.md
 - name: Resource Packs & Textures
   href: resource-packs.md
 - name: Script Services and Events
@@ -51,4 +55,7 @@
   tag: C#
 - name: Compile Hooks
   href: advanced/compile-hooks.md
+  tag: C#
+- name: Asset References
+  href: advanced/asset-references.md
   tag: C#

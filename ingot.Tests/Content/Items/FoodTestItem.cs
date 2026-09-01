@@ -2,6 +2,8 @@ using ingot.Core.Behaviour;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
 using ingot.Core.Common.SharedConstructs;
+using ingot.Core.Resource;
+using ingot.Core.Resource.Referencers;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
@@ -13,18 +15,18 @@ internal class FoodTestItem : Item, IFood, IUseAnimation, IUseModifiers
 {
     public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => new("test:food_item");
-    public override string Texture => "food_item";
-    public override string? TexturePath => FixturePaths.Resolve("test_item.png");
+    public override string Texture =>
+        new TextureReference<FoodTestItem>(FixturePaths.Resolve("test_item.png"), "food_item");
     public override string DisplayName => "Food Item";
 
     int IFood.Nutrition => 4;
     float IFood.SaturationModifier => 0.5f;
-    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
+    Either<string, Dictionary<string, string>> IFood.UsingConvertsTo => "minecraft:bowl";
 
     string IUseAnimation.Value => "eat";
     float IUseModifiers.UseDuration => 1.6f;
     float IUseModifiers.MovementModifier => 0.35f;
-    string IUseModifiers.StartUsing => IUseModifiers.StartUsing_Always;
+    string IUseModifiers.StartUsing => IUseModifiers.Startusing_Always;
     
     [IngotExclude]
     string IUseModifiers.StartSound => null;

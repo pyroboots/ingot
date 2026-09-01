@@ -1,3 +1,4 @@
+using ingot.Core;
 using ingot.Core.Behaviour.Block;
 using ingot.Core.Common;
 
@@ -5,7 +6,7 @@ namespace ingot.Tests.Content.Blocks;
 
 internal class GlowyTestPermutation : BlockPermutation
 {
-    public override string Condition => "query.block_state('test:lit') == true";
+    public override Molang Condition => new Molang().BlockState("test:lit").Eq(true);
     public override Block Parent => new PermutationTestBlock();
     public override int? LightEmission => 10;
 

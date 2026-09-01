@@ -47,7 +47,7 @@ public abstract class ShapelessRecipe : IConcreteCompilable<ShapelessRecipe>, IR
     {
         CompilerState.Push(inst.Identifier.ToString());
 
-        (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();
+        (StringWriter sw, JsonWriter w) = RecipeCompileHelper.CreateWriter();
 
         JsonHelper json = new(ref w);
 
@@ -104,7 +104,7 @@ public record RecipeItem : ICompilableFragment
     public string? Tag = null;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         JsonHelper json = new(ref writer);
 

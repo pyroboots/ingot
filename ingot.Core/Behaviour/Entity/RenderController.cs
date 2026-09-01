@@ -122,7 +122,7 @@ public abstract class RenderController : IConcreteCompilable<RenderController>
         CompilerState.Push(inst.ControllerId);
 
         StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,
@@ -217,7 +217,7 @@ public abstract class RenderController : IConcreteCompilable<RenderController>
 
     private static void WriteArrayGroup(
         JsonHelper json,
-        JsonTextWriter w,
+        JsonWriter w,
         string groupName,
         Dictionary<string, string[]> arrays)
     {

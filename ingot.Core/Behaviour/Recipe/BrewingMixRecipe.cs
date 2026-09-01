@@ -50,7 +50,7 @@ public abstract class BrewingMixRecipe : IRecipe, IConcreteCompilable<BrewingMix
     {
         CompilerState.Push(inst.Identifier.ToString());
 
-        (StringWriter sw, JsonTextWriter w) = RecipeCompileHelper.CreateWriter();
+        (StringWriter sw, JsonWriter w) = RecipeCompileHelper.CreateWriter();
 
         JsonHelper json = new(ref w);
 

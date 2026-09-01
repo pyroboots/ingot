@@ -118,7 +118,7 @@ public struct MaterialInstance : ICompilableFragment
     public TintMethods TintMethod = TintMethods.None;
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         // lambda cannot access struct members
         var ao = AmbientOcclusion;
@@ -145,6 +145,7 @@ public struct MaterialInstance : ICompilableFragment
 /// <summary>
 /// Texture and material configuration for the faces of a <see cref="Block"/>
 /// </summary>
+[JsonConverter(typeof(CompilableFragmentJsonConverter<MaterialInstances>))]
 public struct MaterialInstances : ICompilableFragment
 {
     /// <summary>
@@ -210,7 +211,7 @@ public struct MaterialInstances : ICompilableFragment
     /// Compiles <see cref="MaterialInstances"/> to JSON
     /// </summary>
     /// <param name="writer">JSON source stream to write to</param>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         // lambda cannot access struct members
         var a = All;

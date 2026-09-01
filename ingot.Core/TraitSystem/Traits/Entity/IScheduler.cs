@@ -21,5 +21,5 @@ public interface IScheduler : IEntityTrait
     /// The list of triggers that fire when the conditions match the given filter criteria. Can be an array of event objects or a single event object.
     /// </summary>
     [TraitProperty]
-    public virtual dynamic? ScheduledEvents => null;
+    public virtual Either<Dictionary<string, object>, Dictionary<string, object>[]>? ScheduledEvents => null;
 }

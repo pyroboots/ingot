@@ -1,4 +1,8 @@
+using System.Runtime.CompilerServices;
+
 using ingot.Core.Common;
+using ingot.Core.Resource;
+using ingot.Core.Resource.Referencers;
 using ingot.Core.TraitSystem;
 
 using Newtonsoft.Json;
@@ -39,11 +43,6 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable, ITraitabl
     /// </summary>
     public abstract string Texture { get; }
     /// <summary>
-    /// Optional path to the source PNG for <see cref="Texture"/>. When set, ingot auto-registers the
-    /// item icon in the resource pack during compilation unless it was already added manually.
-    /// </summary>
-    public virtual string? TexturePath => null;
-    /// <summary>
     /// Shortcut for the <c>minecraft:max_stack_size</c> component
     /// </summary>
     public virtual int MaxStackSize => 64;
@@ -55,6 +54,11 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable, ITraitabl
     /// Shortcut for the <c>minecraft:allow_off_hand</c> component
     /// </summary>
     public virtual bool AllowOffhand => false;
+
+    /// <summary>
+    /// Recipe to craft this item
+    /// </summary>
+    public virtual RecipeReference? Recipe => null;
 
     /// <summary>
     /// Script API event bindings
@@ -85,9 +89,12 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable, ITraitabl
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
-        JsonTextWriter w = new(sw);
-        w.Formatting = Formatting.Indented;
-        w.Indentation = 4;
+        JsonWriter w = new JsonTextWriter(sw)
+        {
+            Formatting = Formatting.Indented,
+            Indentation = 4,
+        };
+        
 
         JsonHelper json = new(ref w);
 
@@ -113,8 +120,6 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable, ITraitabl
 
             json.Object("components", () =>
             {
-                TextureAutoRegistration.RegisterItemTexture(inst.Texture, inst.TexturePath, ref w);
-
                 json.Object("minecraft:icon", () =>
                 {
                     if (inst.FormatVersion.Major > 1
@@ -145,6 +150,11 @@ public abstract class Item : IConcreteCompilable<Item>, IIdentifiable, ITraitabl
 
                 ITraitable.CompileTraits(inst, ref w, TraitSystem.TraitSystem.TraitType.Item);
             });
+
+            // c# doesnt actually run ctors until accessed because its lazy, so 
+            // we have to touch it in some way to get it to. we can just pipe the
+            // value into discard
+            _ = inst.Recipe;
         });
 
         w.WriteEndObject();

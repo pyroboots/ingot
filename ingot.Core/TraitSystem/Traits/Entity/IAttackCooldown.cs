@@ -18,5 +18,5 @@ public interface IAttackCooldown : IEntityTrait
     /// Amount of time in seconds for the cooldown. Can be specified as a number or a pair of numbers (min and max).
     /// </summary>
     [TraitProperty]
-    public virtual FloatRange? AttackCooldownTime => null;
+    public virtual Either<float, FloatRange>? AttackCooldownTime => null;
 }

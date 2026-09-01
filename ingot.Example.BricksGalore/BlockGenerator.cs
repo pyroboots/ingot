@@ -30,7 +30,7 @@ public static class BlockGenerator
             string name = Path.GetFileNameWithoutExtension(path);
             if (!TryParseCompositeName(name, out string body, out string pattern, out string? overlay))
             {
-                JsonTextWriter? dummy = null;
+                JsonWriter? dummy = null;
                 CompilerState.Warn(ref dummy, $"skipping composite with unrecognised name: {name}");
                 continue;
             }

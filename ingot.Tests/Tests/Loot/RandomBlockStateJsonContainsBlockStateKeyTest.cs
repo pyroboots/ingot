@@ -17,7 +17,7 @@ public class RandomBlockStateJsonContainsBlockStateKeyTest
         };
 
         using StringWriter writer = new();
-        JsonTextWriter jsonWriter = new(writer);
+        JsonWriter jsonWriter = new JsonTextWriter(writer);
         function.Compile(ref jsonWriter);
 
         Assert.Contains("\"block_state\"", writer.ToString());

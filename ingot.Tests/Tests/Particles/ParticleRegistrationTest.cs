@@ -60,7 +60,7 @@ public class ParticleRegistrationTest
             .AddParticleTexture("sparkle", texturePath)
             .Compile(output.Path, verbose: false);
 
-        string copiedPath = Path.Combine(output.Path, "rp", "textures", "particles", "sparkle.png");
+        string copiedPath = Path.Combine(output.Path, "rp", "textures", "particle", "sparkle.png");
         Assert.True(File.Exists(copiedPath));
         Assert.Equal(expectedBytes, File.ReadAllBytes(copiedPath));
     }
@@ -75,7 +75,7 @@ public class ParticleRegistrationTest
             .AddParticleTexture("effects/sparkle", texturePath)
             .Compile(output.Path, verbose: false);
 
-        Assert.True(File.Exists(Path.Combine(output.Path, "rp", "textures", "particles", "effects", "sparkle.png")));
+        Assert.True(File.Exists(Path.Combine(output.Path, "rp", "textures", "particle", "effects", "sparkle.png")));
     }
 
     [Fact]

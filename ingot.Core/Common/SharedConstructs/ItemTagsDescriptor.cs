@@ -5,6 +5,7 @@ namespace ingot.Core.Common.SharedConstructs;
 /// <summary>
 /// References items with valid tags
 /// </summary>
+[JsonConverter(typeof(CompilableFragmentJsonConverter<ItemTagsDescriptor>))]
 public class ItemTagsDescriptor : ICompilableFragment
 {
     /// <summary>
@@ -17,11 +18,11 @@ public class ItemTagsDescriptor : ICompilableFragment
     public Identifier[]? AllTags = null;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         if (AnyTags is null && AllTags is null)
             throw new ArgumentException("at least one tag selector must not be null");
-        if (AnyTags?.Length > 0 || AllTags?.Length > 0)
+        if (AnyTags?.Length > 0 && AllTags?.Length > 0)
             throw new ArgumentException("tag selector cannot be empty");
 
         string molang = "";

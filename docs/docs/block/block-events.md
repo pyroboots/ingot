@@ -208,11 +208,13 @@ Handler bodies are inserted verbatim into the generated JavaScript. Use valid Sc
 Some Script API events only fire when the block also has the matching vanilla component. Add the appropriate [trait](../advanced/trait-system.md) on your block class:
 
 ```csharp
-using System.Numerics;
 using ingot.Core.TraitSystem.Traits.Block;
+
+using Version = ingot.Core.Common.Version;
 
 public class FallDamageBlock : Block, IEntityFallOn, ICollisionBox
 {
+    public override Version FormatVersion => new(1, 26, 20);
     // ...
 
     public override BlockEvents? BlockEvents => new()
@@ -222,8 +224,8 @@ public class FallDamageBlock : Block, IEntityFallOn, ICollisionBox
             """
     };
 
-    float IEntityFallOn.MinimumFallDistance => 2f;
-    Vector3 ICollisionBox.Size => new(16, 24, 16);
+    float IEntityFallOn.MinFallDistance => 2f;
+    dynamic ICollisionBox.Size => new[] { 16, 24, 16 };
 }
 ```
 

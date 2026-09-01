@@ -15,7 +15,7 @@ public class ItemTypeDescriptor : ICompilableFragment
     public required Identifier Name;
     
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer)
+    public void Compile(ref JsonWriter writer)
     {
         // name-only item descriptors compile as a bare identifier string
         writer.WriteValue(Name.ToString());

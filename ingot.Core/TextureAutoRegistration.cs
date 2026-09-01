@@ -1,4 +1,5 @@
 using ingot.Core.Behaviour.Block;
+using ingot.Core.Resource;
 
 using Newtonsoft.Json;
 
@@ -9,7 +10,7 @@ internal static class TextureAutoRegistration
     public static bool IsCustomTextureKey(string key) =>
         !string.IsNullOrWhiteSpace(key) && !key.Contains(':');
 
-    public static void RegisterMaterialInstances(MaterialInstances instances, ref JsonTextWriter? warnWriter)
+    public static void RegisterMaterialInstances(MaterialInstances instances, ref JsonWriter? warnWriter)
     {
         if (CompilerState.CurrentPack is null)
             return;
@@ -24,7 +25,7 @@ internal static class TextureAutoRegistration
             if (!IsCustomTextureKey(key))
                 continue;
 
-            if (rp.TryAddBlockTexture(key, sourcePath))
+            if (rp.Textures.TryAddBlockTexture(key, sourcePath))
             {
                 CompilerState.Info($"auto-registered block texture '{key}'");
                 continue;
@@ -39,14 +40,14 @@ internal static class TextureAutoRegistration
         }
     }
 
-    public static void RegisterItemTexture(string key, string? sourcePath, ref JsonTextWriter? warnWriter)
+    public static void RegisterItemTexture(string key, string? sourcePath, ref JsonWriter? warnWriter)
     {
         if (CompilerState.CurrentPack is null || string.IsNullOrWhiteSpace(sourcePath) || !IsCustomTextureKey(key))
             return;
 
         ResourcePack rp = CompilerState.CurrentPack.ResourcePack;
 
-        if (rp.TryAddItemTexture(key, sourcePath))
+        if (rp.Textures.TryAddItemTexture(key, sourcePath))
         {
             CompilerState.Info($"auto-registered item texture '{key}'");
             return;

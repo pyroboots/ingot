@@ -3,6 +3,7 @@
 
 namespace ingot.Core.TraitSystem.Traits.Entity;
 using ingot.Core.Common;
+using ingot.Core.Common.SharedConstructs;
 using ingot.Core.Behaviour.Entity;
 
 /// <summary>
@@ -39,7 +40,7 @@ public interface INavigationWalk : IEntityTrait
     /// List of block descriptors that the pathfinder should avoid. Items can be block identifier strings or objects with name/tags properties.
     /// </summary>
     [TraitProperty]
-    public virtual string[]? BlocksToAvoid => null;
+    public virtual Either<Identifier, BlockTypeDescriptor>[]? BlocksToAvoid => null;
 
     /// <summary>
     /// Tells the pathfinder whether or not it can jump out of water (like a dolphin)

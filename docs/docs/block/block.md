@@ -28,11 +28,12 @@ Every block **must** implement:
 
 | Member              | Type                        | Default / Required | Description |
 |---------------------|-----------------------------|--------------------|-----------|
-| `FormatVersion`     | `Version`                   | `"1.21.90"`        | Target format version. Required for Custom Components V2 (custom components as direct `components` entries). |
+| `FormatVersion`     | `Version`                   | `"1.21.90"`        | Target format version. Required for Custom Components V2 (custom components as direct `components` entries). Most regenerated block traits need `1.26.20`. |
 | `Category`          | `Enums.CatalogueCategory`   | `Items`            | Creative inventory tab (`Construction`, `Nature`, `Equipment`, `Items`, or `None`). |
 | `Group`             | `string?`                   | `null`             | Sub-group inside the chosen category (max 256 characters). |
-| `States`            | `Dictionary<string, object[]>` | `{}`           | Custom block states (see below). |
-| `Permutations`      | `List<BlockPermutation>`    | `[]`               | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
+| `States`            | `Dictionary<Identifier, object[]>` | `{}`      | Custom block states (see below). String keys convert implicitly to `Identifier`. |
+| `Permutations`      | `BlockPermutation[]`        | `[]`               | Conditional variants of the block (see [Block Permutations](block-permutations.md)). |
+| `BlockTraits`       | `IVanillaBlockTrait[]`      | `[]`               | Vanilla description traits under `minecraft:block/description/traits` (placement direction/position, connection, multi-block). Not the same as `IBlockTrait` component traits. See [Vanilla Block Traits](#vanilla-block-traits). |
 | `Tags`              | `string[]`                  | `[]`               | Block tags written as empty `tag:<name>` components. |
 | `DisplayName`       | `string?`                   | `null`             | Shortcut for `minecraft:display_name`. |
 | `LangName`          | `string?`                   | `DisplayName`      | Localized name written to `texts/en_US.lang`. Defaults to `DisplayName`. |
@@ -45,6 +46,7 @@ Every block **must** implement:
 | `Replaceable`       | `bool?`                     | `null`             | Shortcut for `minecraft:replaceable`. |
 | `Loot`              | `LootTable?`                | `null`             | Loot table reference for `minecraft:loot`. Auto-registers the table during compile. See [Loot Tables](../item/loot-table.md). |
 | `BlockEvents`       | `BlockEvents?`              | `null`             | Script API event handlers (`ScriptHandler` inline or `FromFile`). See [Block Events](block-events.md). |
+| `Recipe`            | `RecipeReference?`          | `null`             | Optional recipe attached to this block. Touched during compile so a `RecipeReference<T>` can register the recipe without a separate `AddRecipe<T>()` call. See [Asset References](../advanced/asset-references.md#recipereference). |
 | `DynamicTraits`     | `Trait[]`                   | `[]`               | Hand-built `Trait` components for identifiers without a generated trait interface. See [Dynamic Traits](../advanced/trait-system.md#dynamic-traits). |
 | `Singles`           | `Dictionary<Identifier, object>` | `{}`          | Components written as a single scalar value instead of an object body (`"namespace:comp": value`). See [Singles](../advanced/trait-system.md#singles). |
 
@@ -76,7 +78,7 @@ Permutations can also declare their own `Tags` - see [Block Permutations](block-
 Custom states let you drive permutations and Molang queries. Declare them by overriding `States`:
 
 ```csharp
-public override Dictionary<string, object[]> States => new()
+public override Dictionary<Identifier, object[]> States => new()
 {
     { "mynamespace:power_level", [0, 1, 2, 3, 4] },
     { "mynamespace:is_active", [true, false] }
@@ -101,8 +103,12 @@ using ingot.Core.Behaviour.Block;
 using ingot.Core.Common;
 using ingot.Core.TraitSystem.Traits.Block;
 
+using Version = ingot.Core.Common.Version;
+
 public class TickableOreBlock : Block, IDestructibleByMining, IFlammable, ITick
 {
+    // Regenerated block traits require format_version >= 1.26.20
+    public override Version FormatVersion => new(1, 26, 20);
     public override Identifier Identifier => new("mynamespace:tickable_ore");
 
     public override MaterialInstances MaterialInstances => new()
@@ -110,13 +116,13 @@ public class TickableOreBlock : Block, IDestructibleByMining, IFlammable, ITick
         All = new MaterialInstance("tickable_ore", MaterialInstance.RenderMethods.Opaque)
     };
 
-    // IDestructibleByMining (abstract property requires implementation)
-    dynamic? IDestructibleByMining.ItemSpecificSpeeds => null;
+    // IDestructibleByMining (SecondsToDestroy is abstract; ItemSpecificSpeeds is optional)
     float IDestructibleByMining.SecondsToDestroy => 1.5f;
 
     // IFlammable (all virtual, only override what you need)
     int IFlammable.CatchChanceModifier => 15;
     int IFlammable.DestroyChanceModifier => 30;
+    string IFlammable.LavaFlammable => IFlammable.LavaFlammable_Never;
 
     // ITick
     int[] ITick.IntervalRange => [20, 40];
@@ -209,6 +215,58 @@ This writes the full behaviour pack under `bp/` (including `bp/blocks/block_of_d
 
 See the [Resource Packs & Textures](../resource-packs.md) guide for details on asset organization, the generated atlas files, and how texture keys bridge behaviour and resources.
 
+## Vanilla Block Traits
+
+`Block.BlockTraits` writes vanilla **description** traits under `minecraft:block/description/traits`. These are not `IBlockTrait` component interfaces - they enable engine-managed states such as facing direction.
+
+```csharp
+using ingot.Core.Behaviour.Block;
+using ingot.Core.Behaviour.Block.BlockTraits;
+using ingot.Core.Common;
+
+using Version = ingot.Core.Common.Version;
+
+public class FacingLogBlock : Block
+{
+    public override Version FormatVersion => new(1, 26, 20);
+    public override Identifier Identifier => new("mynamespace:facing_log");
+
+    public override MaterialInstances MaterialInstances => new()
+    {
+        All = new MaterialInstance("facing_log")
+    };
+
+    public override IVanillaBlockTrait[] BlockTraits =>
+    [
+        new PlacementDirectionVanillaBlockTrait()
+    ];
+
+    // Optional: rotate the model to match the cardinal_direction state
+    public override BlockPermutation[] Permutations =>
+        [..PlacementDirectionVanillaBlockTrait.CardinalDirectionStateHelper<FacingLogBlock>()];
+}
+```
+
+| Class | JSON trait | Minimum `FormatVersion` | States it can enable |
+|-------|------------|-------------------------|----------------------|
+| `PlacementDirectionVanillaBlockTrait` | `minecraft:placement_direction` | `1.26.0` | `cardinal_direction` (default), `corner_and_cardinal_direction`, `facing_direction`, `sixteen_way_rotation` |
+| `PlacementPositionVanillaBlockTrait` | `minecraft:placement_position` | `1.20.20` | `block_face`, `vertical_half` |
+| `ConnectionVanillaBlockTrait` | `minecraft:connection` | `1.26.0` | `cardinal_connections` (north/south/east/west bools) |
+| `MultiBlockVanillaBlockTrait` | `minecraft:multi_block` | `1.26.0` | `multi_block_part` (`0` .. `Parts - 1`) |
+
+Useful fields:
+
+- `PlacementDirectionVanillaBlockTrait.EnabledStates` - which placement states to turn on.
+- `YRotationOffset` - extra Y rotation on place (multiples of 90 only).
+- `BlocksToCornerWith` - only valid when `minecraft:corner_and_cardinal_direction` is enabled.
+- `PlacementDirectionVanillaBlockTrait.CardinalDirectionStateHelper<TBlock>()` - yields `ITransformation` permutations that rotate the model for `north` / `east` / `south` / `west`. Those permutations need parent `FormatVersion` `1.26.20`.
+- `MultiBlockVanillaBlockTrait` requires `Direction` (`"up"` or `"down"`) and `Parts` (2-4).
+
+Compile **throws** if `FormatVersion` is below the trait's `MinimumFormatVersion`, or if `EnabledStates` / `Parts` / `Direction` are invalid.
+
+> [!IMPORTANT]
+> `BlockTraits` live in `description.traits`. Component traits (`IDestructibleByMining`, `IGeometry`, ...) still go through the [trait system](../advanced/trait-system.md) into `components`.
+
 ## Full Example
 
 See `DenseLasagnaBlock.cs` in the [`ingot.Example`](https://github.com/pyroboots/ingot/tree/master/ingot.Example) project for a working block that combines states, permutations, material instances, and a [loot table](../item/loot-table.md).
@@ -220,10 +278,11 @@ See `DenseLasagnaBlock.cs` in the [`ingot.Example`](https://github.com/pyroboots
 
 - Set `ResourceTexture` and `Sound` when you want entries in `rp/blocks.json`.
 - Block state values are serialized verbatim; make sure your Molang conditions in permutations match the exact values and state names.
+- Regenerated block traits (`IDestructibleByMining`, `ITick`, `IFlammable`, `IGeometry`, ...) require `FormatVersion` `1.26.20` or compile throws.
 - Many traits have a mixture of required (`abstract`) and optional (`virtual`) members - the compiler will emit null/empty values for missing abstracts, but you will get warnings.
 - Traits are discovered only on the concrete type you pass to `AddBlock<T>`. Inheritance of your own block base classes works as long as the interfaces are implemented somewhere in the hierarchy.
 
 > [!TIP]
 > For complex blocks, prefer many small focused traits over one giant class.
 
-Next: learn about [block events](block-events.md), [script services](../script-services.md), [block permutations](block-permutations.md), and [material instances](block-mat-instances.md).
+Next: learn about [block events](block-events.md), [script services](../script-services.md), [block permutations](block-permutations.md), [material instances](block-mat-instances.md), and [vanilla block traits](#vanilla-block-traits).

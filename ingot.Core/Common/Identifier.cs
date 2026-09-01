@@ -1,6 +1,7 @@
 using ingot.Core;
-
 using Newtonsoft.Json;
+
+using JsonConverter = Newtonsoft.Json.JsonConverter;
 
 namespace ingot.Core.Common;
 
@@ -9,6 +10,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// Internal use class to represent a Minecraft identifier
 /// </summary>
+[JsonConverter(typeof(CompilableFragmentJsonConverter<Identifier>))]
 public class Identifier : IEquatable<Identifier>, ICompilableFragment
 {
     /// <summary>
@@ -151,7 +153,7 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
         => Auxiliary is null ? $"{Namespace}:{Name}" : $"{Namespace}:{Name}:{Auxiliary}";
 
     /// <inheritdoc/>
-    public void Compile(ref JsonTextWriter writer) => writer.WriteValue(ToString());
+    public void Compile(ref JsonWriter writer) => writer.WriteValue(ToString());
 
     /// <inheritdoc/>
     public bool Equals(Identifier? other)
@@ -172,7 +174,7 @@ public class Identifier : IEquatable<Identifier>, ICompilableFragment
     /// <summary>Determines whether two identifiers are not equal.</summary>
     public static bool operator !=(Identifier? left, Identifier? right) => !(left == right);
 
-    private static JsonTextWriter? _dummyWriter;
+    private static JsonWriter? _dummyWriter;
     
     /// <summary>
     /// <see cref="Identifier"/> -> <see cref="string"/>

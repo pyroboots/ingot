@@ -22,21 +22,20 @@
 
 ## Installation
 
-**ingot** is currently distributed via source. The easiest way to get started is:
-
-### Option 1: Add as a Project Reference (Recommended for now)
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/pyroboots/ingot.git
-   ```
-2. Add a reference to `ingot.Core` in your .NET project.
-
-### Option 2: Build from Source
 ```bash
+dotnet add package ingot.Core
+```
+
+Each GitHub Release also attaches `ingot.Core.*.nupkg` (and a symbols package) if you want to install from a downloaded file.
+
+To reference the library from this repo instead:
+
+```bash
+git clone https://github.com/pyroboots/ingot.git
 dotnet build ingot.sln
 ```
 
-> **Future**: **ingot** will be published to NuGet once it reaches a stable API.
+Then add a `ProjectReference` to `ingot.Core/ingot.Core.csproj`.
 
 ## Quick Start
 
@@ -44,7 +43,6 @@ dotnet build ingot.sln
 using ingot.Core;
 using ingot.Core.Behaviour.Item;
 using ingot.Core.Common;
-using ingot.Core.Common.SharedConstructs;
 using ingot.Core.TraitSystem;
 using ingot.Core.TraitSystem.Traits.Item;
 
@@ -53,8 +51,8 @@ using Version = ingot.Core.Common.Version;
 // inherit traits to add behaviour
 public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifiers
 {
-    // IBlockPlacer requires format_version >= 1.26.0 (see TraitFormatVersion)
-    public override Version FormatVersion => new(1, 26, 0);
+    // IUseModifiers requires format_version >= 1.26.30 (see TraitFormatVersion)
+    public override Version FormatVersion => new(1, 26, 30);
     public override Identifier Identifier => new("test:lasagna");
     public override string Texture => "lasagna";
     public override string DisplayName => "Lasagna";
@@ -62,7 +60,7 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     // food requires use_modifiers (use duration) and usually an eat animation
     int IFood.Nutrition => 5;
     float IFood.SaturationModifier => 0.9f;
-    ItemTypeDescriptor? IFood.UsingConvertsTo => "minecraft:bowl";
+    dynamic IFood.UsingConvertsTo => "minecraft:bowl";
 
     string IUseAnimation.Value => "eat";
     float IUseModifiers.UseDuration => 1.6f;
@@ -71,7 +69,7 @@ public class LasagnaItem : Item, IFood, IBlockPlacer, IUseAnimation, IUseModifie
     [IngotExclude]
     string IUseModifiers.StartSound => null!;
 
-    BlockTypeDescriptor IBlockPlacer.Block => "test:block_of_dense_lasagna";
+    string IBlockPlacer.Block => "test:block_of_dense_lasagna";
     bool IBlockPlacer.ReplaceBlockItem => true;
 }
 

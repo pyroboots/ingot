@@ -14,7 +14,7 @@ internal static class ManifestWriter
     internal static void WriteBehaviourPackManifest(Pack pack, string outputPath)
     {
         using StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,
@@ -89,7 +89,7 @@ internal static class ManifestWriter
     internal static void WriteResourcePackManifest(Pack pack, string outputPath)
     {
         using StringWriter sw = new();
-        JsonTextWriter w = new(sw)
+        JsonWriter w = new JsonTextWriter(sw)
         {
             Formatting = Formatting.Indented,
             Indentation = 4,
