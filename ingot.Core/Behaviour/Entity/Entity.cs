@@ -8,8 +8,9 @@ using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core.Behaviour.Entity;
 
-
-
+/// <summary>
+/// Molang scripts section of a server entity description.
+/// </summary>
 public class ServerEntityScripts
 {
     /// <summary>
