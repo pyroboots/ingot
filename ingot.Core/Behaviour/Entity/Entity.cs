@@ -8,6 +8,19 @@ using Version = ingot.Core.Common.Version;
 
 namespace ingot.Core.Behaviour.Entity;
 
+
+
+public class ServerEntityScripts
+{
+    /// <summary>
+    /// Animation / animation-controller short-names to play each frame.
+    /// Entries may be a short-name string, or a single-entry dictionary mapping a short-name to a Molang blend value.
+    /// </summary>
+    public object[]? Animate { get; init; }
+}
+
+
+
 /// <summary>
 /// Implements basic properties of an entity
 /// </summary>
@@ -41,7 +54,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable, ITrai
     /// Optional parameter that is used to imitate a vanilla entity's hard-coded elements
     /// </summary>
     public virtual Identifier? RuntimeIdentifier => null;
-    
+
     /// <summary>
     /// List of entity <c>event</c>s
     /// </summary>
@@ -53,15 +66,26 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable, ITrai
     public virtual Dictionary<Identifier, IEntityProperty> Properties => new();
 
     /// <summary>
+    /// Animation short-name definitions (animation / animation controller identifiers).
+    /// </summary>
+    public virtual Dictionary<string, string>? Animations => null;
+
+    /// <summary>
+    /// Molang scripts (<c>animate</c>).
+    /// </summary>
+    public virtual ServerEntityScripts? Scripts => null;
+
+
+    /// <summary>
     /// Optional explicit client-entity type for resource-pack visuals.
     /// When null, <see cref="Pack.AddEntity{TEntity}"/> may discover a
     /// <c>ClientEntity&lt;TEntity&gt;</c> (or nested <c>Client</c> type) in the same assembly.
     /// </summary>
     public virtual Type? ClientEntityType => null;
-    
+
     /// <inheritdoc/>
     public virtual Trait[] DynamicTraits => [];
-    
+
     /// <inheritdoc/>
     public virtual Dictionary<Identifier, object> Singles => new();
 
@@ -91,7 +115,7 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable, ITrai
             return JsonEntity.CompileFromInstance(jsonEntity);
 
         Type tType = inst.GetType();
-        
+
         CompilerState.Push(inst.Identifier.ToString());
 
         StringWriter sw = new();
@@ -123,6 +147,8 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable, ITrai
                 json.Property("is_summonable", inst.IsSummonable);
                 json.Property("is_experimental", inst.IsExperimental);
                 json.Property("runtime_identifier", inst.RuntimeIdentifier);
+                json.Property("animations", inst.Animations);
+                WriteScripts(json, inst.Scripts);
             });
 
             json.Object("component_groups", () =>
@@ -173,4 +199,17 @@ public abstract class Entity : IConcreteCompilable<Entity>, IIdentifiable, ITrai
 
         return sw.ToString();
     }
+
+    private static void WriteScripts(JsonHelper json, ServerEntityScripts? scripts)
+    {
+        if (scripts is null)
+            return;
+
+        json.Object("scripts", () =>
+        {
+            if (scripts.Animate is not null)
+                json.Property("animate", scripts.Animate);
+        });
+    }
+
 }
